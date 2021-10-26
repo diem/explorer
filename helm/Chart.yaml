@@ -1,0 +1,7 @@
+apiVersion: v2
+name: explorer
+description: A Helm chart for deploying Diem Explorer
+
+type: application
+
+version: 0.1.0
