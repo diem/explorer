@@ -1,0 +1,5 @@
+.transaction-link {
+    color: var(--diem);
+    text-decoration: none;
+    font-weight: bold;
+}
