@@ -1,0 +1,11 @@
+repo:
+tag:
+hostname:
+ingressAnnotations:
+env:
+  chain:
+  env:
+  base_url:
+  graphql_url:
+  blockchain_jsonrpc_url:
+  blockchain_restapi_url:
