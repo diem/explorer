@@ -1,7 +1,0 @@
-apiVersion: v2
-name: diem-explorer
-description: A Helm chart for deploying Diem Explorer
-type: application
-version: 0.1.0
-sources:
-- https://github.com/diem/explorer
