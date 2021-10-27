@@ -10,6 +10,6 @@ entries:
     - https://github.com/diem/explorer
     type: application
     urls:
-    - https://sherry-x.github.io/explorer/diem-explorer-0.1.0.tgz
+    - https://diem.github.io/explorer/diem-explorer-0.1.0.tgz
     version: 0.1.0
 generated: "2021-10-26T22:06:02.559162-07:00"
