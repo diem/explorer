@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  diem-explorer:
+  - apiVersion: v2
+    created: "2021-10-26T22:06:02.561539-07:00"
+    description: A Helm chart for deploying Diem Explorer
+    digest: 4932ae8fb0ff67ebb943dd4aadbeecbaa121143afeaa837784af3d4a5058650b
+    name: diem-explorer
+    sources:
+    - https://github.com/diem/explorer
+    type: application
+    urls:
+    - https://sherry-x.github.io/explorer/diem-explorer-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-10-26T22:06:02.559162-07:00"
