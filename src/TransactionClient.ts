@@ -1,6 +1,6 @@
 import { AnalyticsTransaction } from './api_models/AnalyticsTransaction'
 import { LandingPageTransaction } from './Pages/LandingPage/LandingPageTransactionModel'
-import { getBlockchainTransaction } from './Pages/TxnDetailsPage/BlockchainClient'
+import { getBlockchainTransaction } from './BlockchainClient'
 import { BlockchainTransaction } from './api_models/BlockchainTransaction'
 import { DataOrErrors } from './FetchType'
 import { postQueryToAnalyticsApi } from './AnalyticsClient'
