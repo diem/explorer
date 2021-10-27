@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import { Container, Dropdown, DropdownButton, Nav, NavDropdown } from 'react-bootstrap'
 import logo from '../static/logo.svg'
 import Config from './config.json'
-
+import { Link } from 'react-router-dom'
 interface MainWrapperProps {
   children?: ReactChild;
 }
@@ -43,8 +43,12 @@ function MainWrapper (props: MainWrapperProps) {
                 </DropdownButton>{' '}
                 <Nav.Link href="/">Home</Nav.Link>
                 <NavDropdown title="Events" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/events/mint">Mint Events</NavDropdown.Item>
-                  <NavDropdown.Item href="/events/burn">Burn Events</NavDropdown.Item>
+                  <Link className="dropdown-item" to="/events/mint">
+                  Mint Events
+                </Link>
+                <Link className="dropdown-item" to="/events/burn">
+                  Burn Events
+                </Link>
                   <NavDropdown.Item href="#">Payment Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Gas Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Preburn Events</NavDropdown.Item>
