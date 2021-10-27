@@ -1,15 +1,22 @@
 import { ReactChild } from 'react'
 import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'
-import { Container, Dropdown, DropdownButton, Nav, NavDropdown } from 'react-bootstrap'
+import {
+  Container,
+  Dropdown,
+  DropdownButton,
+  Nav,
+  NavDropdown,
+} from 'react-bootstrap'
 import logo from '../static/logo.svg'
 import Config from './config.json'
+import { Link } from 'react-router-dom'
 
 interface MainWrapperProps {
-  children?: ReactChild;
+  children?: ReactChild
 }
 
-function MainWrapper (props: MainWrapperProps) {
+function MainWrapper(props: MainWrapperProps) {
   const { children } = props
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -21,7 +28,7 @@ function MainWrapper (props: MainWrapperProps) {
           className="border-bottom"
         >
           <Container>
-            <Navbar.Brand href="/" className="d-flex align-items-center" >
+            <Navbar.Brand href="/" className="d-flex align-items-center">
               <img src={logo} alt="Diem logo" />
               &nbsp;
               <span className="navbar-text">explorer</span>
@@ -37,13 +44,13 @@ function MainWrapper (props: MainWrapperProps) {
                   size="sm"
                   variant="secondary"
                 >
-                  <Dropdown.Item href="#">
-                    DPN Premainnet
-                  </Dropdown.Item>
+                  <Dropdown.Item href="#">DPN Premainnet</Dropdown.Item>
                 </DropdownButton>{' '}
                 <Nav.Link href="/">Home</Nav.Link>
                 <NavDropdown title="Events" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/events/mint">Mint Events</NavDropdown.Item>
+                  <Link className="dropdown-item" to="/events/mint">
+                    Mint Events
+                  </Link>
                   <NavDropdown.Item href="#">Burn Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Payment Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Gas Events</NavDropdown.Item>
