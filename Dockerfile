@@ -16,6 +16,7 @@ RUN yarn run -- vite build
 FROM nginx:1.21
 ENV JSFOLDER=/usr/share/nginx/html/assets/*.js
 COPY ./scripts/start-nginx.sh /usr/bin/start-nginx.sh
+COPY ./scripts/nginx.conf /etc/nginx/conf.d/default.conf
 RUN chmod +x /usr/bin/start-nginx.sh
 WORKDIR /usr/share/nginx/html
 COPY --from=0 /app/dist .
