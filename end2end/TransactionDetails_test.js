@@ -1,6 +1,6 @@
 Feature('transaction-details-page')
 
-function seeRowHeaders (I) {
+function seeUserTxnRowHeaders (I) {
   I.see('Version ID')
   I.see('Status')
   I.see('Transaction Type')
@@ -20,7 +20,7 @@ function seeRowHeaders (I) {
   I.see('Script Hash')
 }
 
-function seeRowData (I) {
+function seeUserTxnRowData (I) {
   I.see('64117651')
   I.see('executed')
   I.see('user')
@@ -38,12 +38,25 @@ function seeRowData (I) {
   I.see('04ea43107fafc12adcd09f6c68d63e194675d0ce843a7faf7cceb6c813db9d9a')
 }
 
-Scenario('test after data has loaded', ({ I }) => {
+function seeUnsupportedTransactionCard(I) {
+  I.see('Unsupported Transaction')
+}
+
+Scenario('user transaction', ({ I }) => {
   I.amOnPage('/txn/64117651')
   I.seeMainWrapper()
 
   I.waitForElement('table', 10)
   I.see('Transaction Details')
-  seeRowHeaders(I)
-  seeRowData(I)
+  seeUserTxnRowHeaders(I)
+  seeUserTxnRowData(I)
+})
+
+Scenario('metadata transaction', ({ I }) => {
+  I.amOnPage('/txn/321960031')
+  I.seeMainWrapper()
+
+  I.waitForElement('.accordion', 10)
+  I.see('Transaction Details')
+  seeUnsupportedTransactionCard(I)
 })

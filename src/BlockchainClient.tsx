@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch'
-import Config from '../../config.json'
+import Config from './config.json'
 import { JsonRpcResponse } from '@libra-opensource/client-sdk-typescript/dist/jsonRpc/types'
-import { BlockchainTransaction } from '../../api_models/BlockchainTransaction'
-import { DataOrErrors, FetchResponse } from '../../FetchType'
+import { BlockchainTransaction } from './api_models/BlockchainTransaction'
+import { DataOrErrors, FetchResponse } from './FetchType'
 
 function transformHttpErrorsIntoFailedPromise<T> (response: FetchResponse<T>) {
   if (!response.ok) {
