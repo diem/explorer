@@ -18,12 +18,13 @@ function seeRowData(I) {
   I.see('36')
 }
 
-Scenario('test after data has loaded', ({ I }) => {
+Scenario('navigating to mint event from landing page', ({ I }) => {
   I.amOnPage('/')
   I.click('Events')
   I.navTo('Mint Events')
   I.seeInCurrentUrl('/events/mint')
 
+  I.see('Mint Events')
   seeRowHeaders(I)
   seeRowData(I)
 })

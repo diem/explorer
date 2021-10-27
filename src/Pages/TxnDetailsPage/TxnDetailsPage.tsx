@@ -1,13 +1,13 @@
-import ApiRequestPage from '../ApiRequestPage'
-import { getTransaction } from '../TransactionClient'
+import ApiRequestPage from '../../ApiRequestPage'
+import { getTransaction } from '../../TransactionClient'
 import React from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
   PeerToPeerWithMetadataBlockChainScript
-} from '../api_models/BlockchainTransaction'
+} from '../../api_models/BlockchainTransaction'
 import { RouteComponentProps } from 'react-router-dom'
-import MainWrapper from '../MainWrapper'
+import MainWrapper from '../../MainWrapper'
 import BTable from 'react-bootstrap/Table'
 
 function ObjectPropertiesTable ({ object }: { object: Object }) {

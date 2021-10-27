@@ -2,13 +2,15 @@ import { render, screen } from '@testing-library/react'
 import ExplorerRouter from './ExplorerRouter'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { mockLandingPageText } from './LandingPage/__mocks__/LandingPage'
-import { mockTxnDetailsPageText } from './TxnDetailsPage/__mocks__/TxnDetailsPage'
-import { mockMintEventsPageText } from './MintEventsPage/__mocks__/MintEventsPage'
+import { mockLandingPageText } from './Pages/LandingPage/__mocks__/LandingPage'
+import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDetailsPage'
+import { mockMintEventsPageText } from './Pages/MintEventsPage/__mocks__/MintEventsPage'
+import { mockBurnEventsPageText } from './Pages/BurnEventsPage/__mocks__/BurnEventsPage'
 
-jest.mock('./LandingPage/LandingPage')
-jest.mock('./TxnDetailsPage/TxnDetailsPage')
-jest.mock('./MintEventsPage/MintEventsPage')
+jest.mock('./Pages/LandingPage/LandingPage')
+jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
+jest.mock('./Pages/MintEventsPage/MintEventsPage')
+jest.mock('./Pages/BurnEventsPage/BurnEventsPage')
 
 function renderWithRouter (path: string) {
   const history = createMemoryHistory()
@@ -34,6 +36,10 @@ describe('ExplorerRouter', () => {
   it('should render Mint Events page when path is /events/mint', async function () {
     renderWithRouter('/events/mint')
     expect(screen.getByRole('main').textContent).toContain(mockMintEventsPageText)
+  })
+  it('should render Burn Events page when path is /events/burn', async function () {
+    renderWithRouter('/events/burn')
+    expect(screen.getByRole('main').textContent).toContain(mockBurnEventsPageText)
   })
   it('should render 404 page when path is unknown', async function () {
     renderWithRouter('/not_a_real_url')
