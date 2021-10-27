@@ -1,6 +1,6 @@
 import { AnalyticsTransaction } from './api_models/AnalyticsTransaction'
-import { LandingPageTransaction } from './LandingPage/LandingPageTransactionModel'
-import { getBlockchainTransaction } from './TxnDetailsPage/BlockchainClient'
+import { LandingPageTransaction } from './Pages/LandingPage/LandingPageTransactionModel'
+import { getBlockchainTransaction } from './Pages/TxnDetailsPage/BlockchainClient'
 import { BlockchainTransaction } from './api_models/BlockchainTransaction'
 import { DataOrErrors } from './FetchType'
 import { postQueryToAnalyticsApi } from './AnalyticsClient'
@@ -53,24 +53,23 @@ function transformAnalyticsTransactionIntoTransaction (
 }
 
 function transformAnalyticsTransactionsOrErrors (
-  response: DataOrErrors<{ transactions: AnalyticsTransaction[] }>
-): DataOrErrors<{ transactions: LandingPageTransaction[] } | null> {
-  if (response.errors) {
+  response: DataOrErrors<AnalyticsTransaction[]>
+): DataOrErrors<LandingPageTransaction[]> {
+  if (response.data) {
     return {
-      data: null,
-      errors: response.errors
+      errors: null,
+      data: response.data.map(transformAnalyticsTransactionIntoTransaction)
     }
-  }
-  return {
-    errors: null,
-    data: {
-      transactions: response.data ? response.data.transactions.map(transformAnalyticsTransactionIntoTransaction) : []
+  } else {
+    return {
+      errors: response.errors,
+      data: null
     }
   }
 }
 
-export async function getTransactions (): Promise<DataOrErrors<{ transactions: LandingPageTransaction[] } | null>> {
-  return postQueryToAnalyticsApi<{ transactions: AnalyticsTransaction[] }>(
+export async function getTransactions (): Promise<DataOrErrors<LandingPageTransaction[]>> {
+  return postQueryToAnalyticsApi<AnalyticsTransaction[]>(
     'query getTransactions {' +
       '\n  transactions(limit: 10, where: {txn_type: {_eq: 3}}, order_by: {version: desc}) {' +
       '\n    version' +
@@ -79,7 +78,7 @@ export async function getTransactions (): Promise<DataOrErrors<{ transactions: L
       '\n    commit_timestamp' +
       '\n    status' +
       '\n    sender' +
-      '\n}\n}\n'
+      '\n}\n}\n', 'transactions'
   ).then(transformAnalyticsTransactionsOrErrors)
 }
 

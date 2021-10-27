@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ApiRequestPage from './ApiRequestPage'
 import React from 'react'

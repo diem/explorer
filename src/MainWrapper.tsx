@@ -44,7 +44,7 @@ function MainWrapper (props: MainWrapperProps) {
                 <Nav.Link href="/">Home</Nav.Link>
                 <NavDropdown title="Events" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="/events/mint">Mint Events</NavDropdown.Item>
-                  <NavDropdown.Item href="#">Burn Events</NavDropdown.Item>
+                  <NavDropdown.Item href="/events/burn">Burn Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Payment Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Gas Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">Preburn Events</NavDropdown.Item>

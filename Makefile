@@ -61,4 +61,4 @@ test: integration_test acceptance_test
 	echo "👍"
 
 integration_test:
-	node node_modules/jest/bin/jest.js --colors --verbose --runTestsByPath src/*
+	node node_modules/jest/bin/jest.js --colors --verbose
