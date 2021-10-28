@@ -19,6 +19,7 @@ variable "base_url" {
 }
 variable "graphql_url" {
   description = "The graphql indexer endpoint used"
+  default     = ""
 }
 variable "blockchain_jsonrpc_url" {
   description = "The jsonrpc endpoint used"
