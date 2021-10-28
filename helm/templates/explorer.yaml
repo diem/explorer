@@ -1,51 +1,68 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: explorer
+  name: {{ include "explorer.fullname" . }}
   labels:
-    app: explorer
+    {{- include "explorer.labels" . | nindent 4 }}
+    app.kubernetes.io/name: explorer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: explorer
+      {{- include "explorer.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: explorer
   template:
     metadata:
       labels:
-        app: explorer
+        {{- include "explorer.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: explorer
     spec:
-      serviceAccountName: default
+      serviceAccountName: {{ include "explorer.serviceAccountName" . }}
       {{- with .Values }}
       containers:
-        - name: main
-          image: "{{ required "A valid repo entry required!" .repo }}:{{ required "A valid tag entry required!" .tag }}"
-          imagePullPolicy: Always
-          env:
-          {{- with .env }}
-          - name: DIEMX_CHAIN
-            value: {{ required "chain required" .chain }}
-          - name: DIEMX_ENV
-            value: {{ required "env required" .env }}
-          - name: DIEMX_BASE_URL
-            value: {{ required "base_url required" .base_url }}
-          - name: DIEMX_GRAPHQL_URL
-            value: {{ required "graphql_url required" .graphql_url }}
-          - name: DIEMX_BLOCKCHAIN_URL
-            value: {{ required "blockchain_jsonrpc_url required" .blockchain_jsonrpc_url }}
-          - name: DIEMX_BLOCKCHAIN_API_URL
-            value: {{ required "blockchain_restapi_url required" .blockchain_restapi_url }}
-          {{- end }}
+      - name: main
+        image: "{{ required "A valid repo entry required!" .repo }}:{{ required "A valid tag entry required!" .tag }}"
+        imagePullPolicy: Always
+        env:
+        {{- with .env }}
+        - name: DIEMX_CHAIN
+          value: {{ required "chain required" .chain }}
+        - name: DIEMX_ENV
+          value: {{ required "env required" .env }}
+        - name: DIEMX_BASE_URL
+          value: {{ required "base_url required" .base_url }}
+        - name: DIEMX_GRAPHQL_URL
+          value: {{ required "graphql_url required" .graphql_url }}
+        - name: DIEMX_BLOCKCHAIN_URL
+          value: {{ required "blockchain_jsonrpc_url required" .blockchain_jsonrpc_url }}
+        - name: DIEMX_BLOCKCHAIN_API_URL
+          value: {{ required "blockchain_restapi_url required" .blockchain_restapi_url }}
+        {{- end }}
+        ports:
+        - name: http
+          containerPort: 80
       {{- end }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: explorer
+  name: {{ include "explorer.fullname" . }}
   labels:
-    app: explorer
+    {{- include "explorer.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
-  type: ClusterIP
+  selector:
+    {{- include "explorer.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: explorer
   ports:
   - port: 80
-  selector:
-    app: explorer
+    targetPort: 80
+  type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  {{- with .Values.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

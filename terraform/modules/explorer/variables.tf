@@ -7,15 +7,7 @@ variable "image_tag" {
 variable "hostname" {
   description = "The hostname where this would be deployed"
 }
-variable "ingress_annotations" {
-  description = "The list of annotations to be applied on the ingress resource"
-  default = {
-    # By default using nginx ingress class and cert-manager for certificate management
-    "kubernetes.io/ingress.class"               = "nginx"
-    "cert-manager.io/cluster-issuer"            = "letsencrypt-prod"
-    "acme.cert-manager.io/http01-ingress-class" = "nginx"
-  }
-}
+
 variable "chain" {
   description = "The blockchain type (eg: DPN, experimental)"
 }
@@ -33,4 +25,46 @@ variable "blockchain_jsonrpc_url" {
 }
 variable "blockchain_restapi_url" {
   description = "The rest api endpoint used"
+}
+
+# service account
+variable "create_service_account" {
+  description = "Whether to create service account"
+}
+variable "service_account_name" {
+  description = "Name of service account; creates if create_service_account set"
+}
+variable "service_account_annotations" {
+  description = "Service account annotations as a map"
+}
+
+# # ingress
+variable "create_ingress" {
+  description = "Whether to create a kubernetes ingress"
+}
+variable "ingress_annotations" {
+  description = "The list of annotations to be applied on the ingress resource"
+  default = {
+    # By default using nginx ingress class and cert-manager for certificate management
+    "kubernetes.io/ingress.class"               = "nginx"
+    "cert-manager.io/cluster-issuer"            = "letsencrypt-prod"
+    "acme.cert-manager.io/http01-ingress-class" = "nginx"
+  }
+}
+variable "ingress_type" {
+  description = "Supports ALB and NGINX"
+}
+
+# service
+variable "service_type" {
+  default = "ClusterIP"
+}
+variable "external_traffic_policy" {
+  default = ""
+}
+variable "load_balancer_source_ranges" {
+  default = []
+}
+variable "service_annotations" {
+  default = {}
 }
