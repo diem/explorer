@@ -16,6 +16,6 @@
       "Access-Control-Allow-Methods" : "*",
       "Access-Control-Allow-Headers": "*"
     },
-    "body": "{\n  \"data\": {\"diem_in_circulation_realtime_aggregates\": [{\"currency\": \"XUS\",\"total_net_value\": 1013830869830000,\"timestamp\": \"2021-10-29T19:49:12.372903+00:00\"}]}}"
+    "body": "{\"data\":{\"xus\":[{\"currency\":\"XUS\",\"total_net_value\":1039997150390000,\"timestamp\":\"2021-10-29T23:47:22.663507+00:00\"}],\"xdx\":[]}}"
   }
 }

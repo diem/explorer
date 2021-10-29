@@ -27,8 +27,14 @@ beforeEach(async () => {
 describe('DiemInCirculationPage', () => {
   it('should call the analytics client with a query', async () => {
     expect(postQueryToAnalyticsApi).toHaveBeenCalled()
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith('query getDiemInCirculation {\n' +
-      '  diem_in_circulation_realtime_aggregates(distinct_on: currency) {\n' +
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      'query getDiemInCirculation {\n' +
+      'xus: diem_in_circulation_realtime_aggregates(limit: 1, order_by: {timestamp: desc}, where: {currency: {_eq: "XUS"}}) {\n' +
+      '    currency\n' +
+      '    total_net_value\n' +
+      '    timestamp\n' +
+      '  }\n' +
+      'xdx: diem_in_circulation_realtime_aggregates(limit: 1, order_by: {timestamp: desc}, where: {currency: {_eq: "XDS"}}) {\n' +
       '    currency\n' +
       '    total_net_value\n' +
       '    timestamp\n' +

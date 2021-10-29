@@ -7,8 +7,8 @@ function seeRowHeaders(I) {
 }
 function seeRowData(I) {
   I.see('XUS')
-  I.see('1013830869830000')
-  I.see('2021-10-29T19:49:12.372903+00:00')
+  I.see('1039997150390000')
+  I.see('2021-10-29T23:47:22.663507+00:00')
 }
 
 Scenario('navigating to diem in circulation button', ({ I }) => {

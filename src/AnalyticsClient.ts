@@ -19,7 +19,7 @@ function transformHttpErrorsIntoFailedPromise<T> (response: FetchResponse<T>) {
   return response
 }
 
-function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey: string): DataOrErrors<T> {
+function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey?: string): DataOrErrors<T> {
   if (response.errors) {
     return {
       errors: [...response.errors],
@@ -29,7 +29,7 @@ function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey: 
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here
-      data: response.data[dataKey]
+      data: dataKey ? response.data[dataKey] : response.data
     }
   } else {
     return {
@@ -39,7 +39,7 @@ function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey: 
   }
 }
 
-export const postQueryToAnalyticsApi = async <T> (query: string, dataKey: string): Promise<DataOrErrors<T>> => {
+export const postQueryToAnalyticsApi = async <T> (query: string, dataKey?: string): Promise<DataOrErrors<T>> => {
   return await fetch(Config.DIEMX_GRAPHQL_URL + '/v1/graphql', {
     method: 'POST',
     body: JSON.stringify({
