@@ -56,6 +56,7 @@ function MainWrapper (props: MainWrapperProps) {
                     Account Creation Events
                   </NavDropdown.Item>
                 </NavDropdown>
+                <Link className="nav-link" to="/diemincirculation">Diem-In-Circulation</Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

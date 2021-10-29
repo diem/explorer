@@ -4,6 +4,7 @@ import TxnDetailsPage from './Pages/TxnDetailsPage/TxnDetailsPage'
 import NotFoundPage from './Pages/NotFoundPage'
 import MintEventsPage from './Pages/MintEventsPage/MintEventsPage'
 import BurnEventsPage from './Pages/BurnEventsPage/BurnEventsPage'
+import DiemIncirculationPage from './Pages/DiemInCirculationPage/DiemInCirculationPage'
 
 export default function ExplorerRouter () {
   return (
@@ -12,6 +13,7 @@ export default function ExplorerRouter () {
         <Route path="/txn/:version" component={TxnDetailsPage} />
         <Route path="/events/mint" component={MintEventsPage} />
         <Route path="/events/burn" component={BurnEventsPage} />
+        <Route path="/diemincirculation" component={DiemIncirculationPage} />
         <Route component={NotFoundPage} />
       </Switch>
   )

@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query getInCirculationEvents"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "{\n  \"data\": {\"diem_in_circulation_realtime_aggregates\": [{\"currency\": \"XUS\",\"total_net_value\": 1013830869830000,\"timestamp\": \"2021-10-29T19:49:12.372903+00:00\"}]}}"
+  }
+}
