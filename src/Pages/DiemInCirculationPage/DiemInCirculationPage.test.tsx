@@ -8,7 +8,7 @@ jest.mock('../../AnalyticsClient', () => ({
   ...jest.requireActual('../../AnalyticsClient'),
   postQueryToAnalyticsApi: jest.fn(),
 }))
-const mockDiemInCirculation = {
+const mockXusInCirculation = {
   currency: 'XUS',
   total_net_value: 1013830869710000,
   timestamp: '2021-10-29T19:22:26.568447+00:00'
@@ -18,7 +18,10 @@ beforeEach(async () => {
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValue({
     errors: null,
-    data: [mockDiemInCirculation]
+    data: {
+      xus: [{ ...mockXusInCirculation }],
+      xdx: []
+    }
   })
   render(<BrowserRouter><DiemInCirculationPage /></BrowserRouter>)
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
@@ -39,7 +42,7 @@ describe('DiemInCirculationPage', () => {
       '    total_net_value\n' +
       '    timestamp\n' +
       '  }\n' +
-      '}', 'diem_in_circulation_realtime_aggregates')
+      '}')
   })
   it('should display event data in a table', async function () {
     expect(screen.queryByText('Total Diem In Circulation')).toBeInTheDocument()
@@ -47,8 +50,8 @@ describe('DiemInCirculationPage', () => {
     expect(screen.queryByText('Total Net Value')).toBeInTheDocument()
     expect(screen.queryByText('Timestamp')).toBeInTheDocument()
 
-    expect(screen.queryByText(mockDiemInCirculation.currency)).toBeInTheDocument()
-    expect(screen.queryByText(mockDiemInCirculation.total_net_value)).toBeInTheDocument()
-    expect(screen.queryByText(mockDiemInCirculation.timestamp)).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.currency)).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.total_net_value)).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.timestamp)).toBeInTheDocument()
   })
 })
