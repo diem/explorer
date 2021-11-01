@@ -4,14 +4,14 @@ import { DataOrErrors, FetchError } from './FetchType'
 import MainWrapper from './MainWrapper'
 
 interface ApiRequestPageProps<T> {
-  children: ReactElement;
-  request: (...args: any[]) => Promise<DataOrErrors<T>>;
-  args?: any[];
-  loadingComponent?: ReactElement;
-  errorComponent?: ReactElement;
+  children: ReactElement
+  request: (...args: any[]) => Promise<DataOrErrors<T>>
+  args?: any[]
+  loadingComponent?: ReactElement
+  errorComponent?: ReactElement
 }
 
-function DefaultErrorComponent () {
+function DefaultErrorComponent() {
   return (
     <MainWrapper>
       <span role="dialog" className="network-error">
@@ -21,7 +21,7 @@ function DefaultErrorComponent () {
   )
 }
 
-function DefaultLoadingComponent () {
+function DefaultLoadingComponent() {
   return (
     <MainWrapper>
       <span className="loading" role="loading">
@@ -31,19 +31,19 @@ function DefaultLoadingComponent () {
   )
 }
 
-function ApiRequestPage<T> ({
+function ApiRequestPage<T>({
   request,
   args = [],
   children,
   loadingComponent = <DefaultLoadingComponent />,
-  errorComponent = <DefaultErrorComponent />
+  errorComponent = <DefaultErrorComponent />,
 }: ApiRequestPageProps<T>) {
   const [response, setResponse] = useState<T | undefined>(undefined)
   const [errors, setErrors] = useState<FetchError[] | null>([])
   const [loading, setLoading] = useState<boolean | undefined>(true)
 
   useEffect(() => {
-    async function getResponse () {
+    async function getResponse() {
       await request(...args).then((apiResponse) => {
         if (apiResponse.data) {
           setResponse(apiResponse.data)
@@ -58,7 +58,7 @@ function ApiRequestPage<T> ({
     getResponse()
   }, [])
 
-  function renderContent (): ReactJSXElement {
+  function renderContent(): ReactJSXElement {
     if (loading) {
       return <>{React.cloneElement(loadingComponent)}</>
     } else if (errors && errors.length) {

@@ -3,43 +3,49 @@ import Config from './config.json'
 import { DataOrErrors, FetchResponse } from './FetchType'
 
 export type AnalyticsResponse<T> = {
-  data: T | undefined,
+  data: T | undefined
   errors: AnalyticsError[] | undefined
-};
+}
 
 export type AnalyticsError = {
-  extensions : {path: string, code: string},
+  extensions: { path: string; code: string }
   message: string
 }
 
-function transformHttpErrorsIntoFailedPromise<T> (response: FetchResponse<T>) {
+function transformHttpErrorsIntoFailedPromise<T>(response: FetchResponse<T>) {
   if (!response.ok) {
     throw Error(response.statusText)
   }
   return response
 }
 
-function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey?: string): DataOrErrors<T> {
+function transformAnalyticsResponse<T>(
+  response: AnalyticsResponse<T>,
+  dataKey?: string
+): DataOrErrors<T> {
   if (response.errors) {
     return {
       errors: [...response.errors],
-      data: null
+      data: null,
     }
   } else if (response.data) {
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here
-      data: dataKey ? response.data[dataKey] : response.data
+      data: dataKey ? response.data[dataKey] : response.data,
     }
   } else {
     return {
       errors: null,
-      data: null
+      data: null,
     }
   }
 }
 
-export const postQueryToAnalyticsApi = async <T> (query: string, dataKey?: string): Promise<DataOrErrors<T>> => {
+export const postQueryToAnalyticsApi = async <T>(
+  query: string,
+  dataKey?: string
+): Promise<DataOrErrors<T>> => {
   return await fetch(Config.DIEMX_GRAPHQL_URL + '/v1/graphql', {
     method: 'POST',
     body: JSON.stringify({
@@ -48,17 +54,19 @@ export const postQueryToAnalyticsApi = async <T> (query: string, dataKey?: strin
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
-      Accept: '*/*'
-    }
+      Accept: '*/*',
+    },
   })
     .then((responseOrErrors: Response) => {
       return transformHttpErrorsIntoFailedPromise(responseOrErrors)
     })
     .then((response: FetchResponse<Promise<AnalyticsResponse<T>>>) => {
       return response.json()
-    }).then((response: AnalyticsResponse<T>) => {
+    })
+    .then((response: AnalyticsResponse<T>) => {
       return transformAnalyticsResponse<T>(response, dataKey)
-    }).catch((error) => {
+    })
+    .catch((error) => {
       return { data: null, errors: [{ message: error.message }] }
     })
 }

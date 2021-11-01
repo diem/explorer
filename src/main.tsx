@@ -11,7 +11,7 @@ const history = createBrowserHistory()
 ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
-        <ExplorerRouter />
+      <ExplorerRouter />
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

@@ -5,6 +5,6 @@ export interface DiemInCirculation {
 }
 
 export interface DiemCurrencies {
-  xus : DiemInCirculation[],
+  xus: DiemInCirculation[]
   xdx: DiemInCirculation[]
 }
