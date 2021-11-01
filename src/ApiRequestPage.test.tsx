@@ -2,6 +2,7 @@ import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ApiRequestPage from './ApiRequestPage'
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 const childComponentText = 'The data loaded and it was this: '
 const childComponentRole = 'main'
@@ -32,18 +33,20 @@ const ErrorComponent = (props: { errors: string[] }) => {
 const mockRequest = jest.fn()
 const mockArgs = [{ arg: 'value' }]
 
-function renderSubject (args: any[] = mockArgs) {
+function renderSubject (args: any[] | undefined) {
   render(
-    <ApiRequestPage
-      request={mockRequest}
-      args={args}
-      loadingComponent={
-        <div role={loadingComponentRole}>{loadingComponentText}</div>
-      }
-      errorComponent={<ErrorComponent errors={[]} />}
-    >
-      <ChildComponent data={undefined} />
-    </ApiRequestPage>
+    <BrowserRouter>
+      <ApiRequestPage
+        request={mockRequest}
+        args={args}
+        loadingComponent={
+          <div role={loadingComponentRole}>{loadingComponentText}</div>
+        }
+        errorComponent={<ErrorComponent errors={[]} />}
+      >
+        <ChildComponent data={undefined} />
+      </ApiRequestPage>
+    </BrowserRouter>
   )
 }
 
@@ -65,17 +68,13 @@ describe('ApiRequestPage', () => {
       expect(mockRequest).toHaveBeenCalledWith(myArgs[0], myArgs[1], myArgs[2])
     })
     it('should pass no arguments if args is undefined', function () {
-      render(
-        <ApiRequestPage request={mockRequest} args={undefined}>
-          <ChildComponent data={undefined} />
-        </ApiRequestPage>
-      )
+      renderSubject(undefined)
       expect(mockRequest).toHaveBeenCalledWith()
     })
   })
   describe('Before Fetch Promise Resolves or Rejects', function () {
     beforeEach(() => {
-      renderSubject()
+      renderSubject(mockArgs)
     })
     it('should display a loading message before api responds', async function () {
       expect(
@@ -88,7 +87,7 @@ describe('ApiRequestPage', () => {
 
   describe('After the Fetch Promise Resolves', function () {
     beforeEach(() => {
-      renderSubject()
+      renderSubject(mockArgs)
     })
     it('should render children with data if no errors', async () => {
       act(() => {

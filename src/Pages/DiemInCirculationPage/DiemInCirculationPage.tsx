@@ -3,21 +3,7 @@ import { postQueryToAnalyticsApi } from '../../AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
 import React from 'react'
-import { DiemInCirculation } from '../../api_models/DiemInCirculation'
-// props: {
-//     score: {
-//       type: Array,
-//       required: true
-//     },
-//     paperNames: {
-//       type: Array,
-//       required: true
-//     }
-//   }
-export interface DiemCurrencies {
-  xus : DiemInCirculation[],
-  xdx: DiemInCirculation[]
-}
+import { DiemCurrencies } from '../../api_models/DiemInCirculation'
 
 function DiemInCirculationPageWithResponse(props: { data: DiemCurrencies}) {
   const columns = [
