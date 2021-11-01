@@ -1,7 +1,6 @@
 repo:
 tag:
 hostname:
-ingressAnnotations:
 env:
   chain:
   env:
@@ -9,3 +8,18 @@ env:
   graphql_url:
   blockchain_jsonrpc_url:
   blockchain_restapi_url:
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+  annotations: {}
+
+service:
+  # Change this to LoadBalancer to expose the explorer endpoint externally
+  type: ClusterIP
+  externalTrafficPolicy:
+  loadBalancerSourceRanges: []
+  annotations: {}
