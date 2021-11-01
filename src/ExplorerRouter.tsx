@@ -5,6 +5,7 @@ import NotFoundPage from './Pages/NotFoundPage'
 import MintEventsPage from './Pages/MintEventsPage/MintEventsPage'
 import BurnEventsPage from './Pages/BurnEventsPage/BurnEventsPage'
 import DiemIncirculationPage from './Pages/DiemInCirculationPage/DiemInCirculationPage'
+import AccountPage from './Pages/AccountPage/AccountPage'
 
 export default function ExplorerRouter() {
   return (
@@ -14,7 +15,8 @@ export default function ExplorerRouter() {
       <Route path="/events/mint" component={MintEventsPage} />
       <Route path="/events/burn" component={BurnEventsPage} />
       <Route path="/diemincirculation" component={DiemIncirculationPage} />
-      <Route component={NotFoundPage} />
+      <Route path="/address/:address" component={AccountPage} />
+        <Route component={NotFoundPage} />
     </Switch>
   )
 }

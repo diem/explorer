@@ -1,12 +1,12 @@
-export const mockTxnDetailsPageText = 'This is txn details page'
-const mockTxnDetailsPage = (props: {
-  match: { params: { version: number } };
+export const mockAccountPageText = 'This is account page'
+const mockAccountPage = (props: {
+  match: { params: { address: string } };
 }) => {
   return (
     <div role="main">
-      {props.match.params.version}
-      {mockTxnDetailsPageText}
+      {props.match.params.address}
+      {mockAccountPageText}
     </div>
   )
 }
-export default mockTxnDetailsPage
+export default mockAccountPage
