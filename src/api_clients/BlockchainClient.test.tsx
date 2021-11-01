@@ -2,7 +2,7 @@ import {
   setBlockchainApiResponse,
   setBlockchainNetworkError,
   setupIntegrationTestApiServer,
-} from '../test_utils/IntegrationTestApiServerTools'
+} from '../../test_utils/IntegrationTestApiServerTools'
 import { getBlockchainTransaction } from './BlockchainClient'
 
 const server = setupIntegrationTestApiServer()

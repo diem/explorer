@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
-import { postQueryToAnalyticsApi } from '../../AnalyticsClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import BurnEventsPage from './BurnEventsPage'
 import {
   render,
@@ -9,8 +9,8 @@ import {
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 
-jest.mock('../../AnalyticsClient', () => ({
-  ...jest.requireActual('../../AnalyticsClient'),
+jest.mock('../../api_clients/AnalyticsClient', () => ({
+  ...jest.requireActual('../../api_clients/AnalyticsClient'),
   postQueryToAnalyticsApi: jest.fn(),
 }))
 const mockBurnEvent = {

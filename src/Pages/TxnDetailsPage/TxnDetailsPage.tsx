@@ -1,5 +1,4 @@
 import ApiRequestPage from '../../ApiRequestPage'
-import { getTransaction } from '../../TransactionClient'
 import React from 'react'
 import {
   BlockchainTransaction,
@@ -11,6 +10,7 @@ import MainWrapper from '../../MainWrapper'
 import BTable from 'react-bootstrap/Table'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
+import { getBlockchainTransaction } from '../../api_clients/BlockchainClient'
 
 function ObjectPropertiesTable({ object }: { object: Object }) {
   return (
@@ -143,8 +143,9 @@ interface TxnDetailsPageProps
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
     <ApiRequestPage
-      request={getTransaction}
-      args={[props.match.params.version]}
+      request={() => {
+          return getBlockchainTransaction(props.match.params.version)
+        }}
     >
       <TxnDetailsPageWithResponse data={undefined} />
     </ApiRequestPage>

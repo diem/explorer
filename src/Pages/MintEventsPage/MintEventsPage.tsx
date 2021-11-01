@@ -5,7 +5,7 @@ import Table from '../../Table'
 import { TransactionVersion } from '../../TableComponents/Link'
 import { TruncatedCell } from '../../TableComponents/TruncatedCell'
 import { MintEvent } from '../../api_models/MintEvent'
-import { postQueryToAnalyticsApi } from '../../AnalyticsClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 
 function MintEventsPageWithResponse(props: { data: MintEvent[] }) {
   const columns = [

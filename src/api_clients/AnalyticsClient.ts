@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
-import Config from './config.json'
-import { DataOrErrors, FetchResponse } from './FetchType'
+import Config from '../config.json'
+import { DataOrErrors, FetchResponse } from '../FetchType'
 
 export type AnalyticsResponse<T> = {
   data: T | undefined
