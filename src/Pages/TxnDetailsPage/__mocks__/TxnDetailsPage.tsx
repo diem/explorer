@@ -1,6 +1,6 @@
 export const mockTxnDetailsPageText = 'This is txn details page'
 const mockTxnDetailsPage = (props: {
-  match: { params: { version: number } };
+  match: { params: { version: number } }
 }) => {
   return (
     <div role="main">

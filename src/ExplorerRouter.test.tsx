@@ -14,13 +14,13 @@ jest.mock('./Pages/MintEventsPage/MintEventsPage')
 jest.mock('./Pages/BurnEventsPage/BurnEventsPage')
 jest.mock('./Pages/DiemInCirculationPage/DiemInCirculationPage')
 
-function renderWithRouter (path: string) {
+function renderWithRouter(path: string) {
   const history = createMemoryHistory()
   history.push(path)
   return render(
-      <Router history={history}>
-        <ExplorerRouter />
-      </Router>
+    <Router history={history}>
+      <ExplorerRouter />
+    </Router>
   )
 }
 
@@ -32,20 +32,28 @@ describe('ExplorerRouter', () => {
   it('should render Transaction Details page when path is /txn/{?}', async function () {
     const fakeId = 'some_id'
     renderWithRouter(`/txn/${fakeId}`)
-    expect(screen.getByRole('main').textContent).toContain(mockTxnDetailsPageText)
+    expect(screen.getByRole('main').textContent).toContain(
+      mockTxnDetailsPageText
+    )
     expect(screen.getByRole('main').textContent).toContain(fakeId)
   })
   it('should render Mint Events page when path is /events/mint', async function () {
     renderWithRouter('/events/mint')
-    expect(screen.getByRole('main').textContent).toContain(mockMintEventsPageText)
+    expect(screen.getByRole('main').textContent).toContain(
+      mockMintEventsPageText
+    )
   })
   it('should render Burn Events page when path is /events/burn', async function () {
     renderWithRouter('/events/burn')
-    expect(screen.getByRole('main').textContent).toContain(mockBurnEventsPageText)
+    expect(screen.getByRole('main').textContent).toContain(
+      mockBurnEventsPageText
+    )
   })
   it('should render Diem In Circulation page when path is /dieminciculation', async function () {
     renderWithRouter('/diemincirculation')
-    expect(screen.getByRole('main').textContent).toContain(mockDiemInCirculationPageText)
+    expect(screen.getByRole('main').textContent).toContain(
+      mockDiemInCirculationPageText
+    )
   })
   it('should render 404 page when path is unknown', async function () {
     renderWithRouter('/not_a_real_url')

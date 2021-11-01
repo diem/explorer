@@ -33,7 +33,7 @@ const ErrorComponent = (props: { errors: string[] }) => {
 const mockRequest = jest.fn()
 const mockArgs = [{ arg: 'value' }]
 
-function renderSubject (args: any[] | undefined) {
+function renderSubject(args: any[] | undefined) {
   render(
     <BrowserRouter>
       <ApiRequestPage

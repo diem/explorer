@@ -5,7 +5,7 @@ import { BlockchainTransaction } from './api_models/BlockchainTransaction'
 import { DataOrErrors } from './FetchType'
 import { postQueryToAnalyticsApi } from './AnalyticsClient'
 
-function getTransactionTypeFromEnum (txnType: number) {
+function getTransactionTypeFromEnum(txnType: number) {
   switch (txnType) {
     case 1:
       return 'BlockMetadata'
@@ -18,7 +18,7 @@ function getTransactionTypeFromEnum (txnType: number) {
   }
 }
 
-function getStatusFromEnum (status: number) {
+function getStatusFromEnum(status: number) {
   switch (status) {
     case 1:
       return 'Executed'
@@ -39,7 +39,7 @@ function getStatusFromEnum (status: number) {
   }
 }
 
-function transformAnalyticsTransactionIntoTransaction (
+function transformAnalyticsTransactionIntoTransaction(
   transaction: AnalyticsTransaction
 ) {
   return {
@@ -48,27 +48,29 @@ function transformAnalyticsTransactionIntoTransaction (
     commitTimestamp: transaction.commit_timestamp,
     sender: transaction.sender,
     txnType: getTransactionTypeFromEnum(transaction.txn_type),
-    status: getStatusFromEnum(transaction.status)
+    status: getStatusFromEnum(transaction.status),
   }
 }
 
-function transformAnalyticsTransactionsOrErrors (
+function transformAnalyticsTransactionsOrErrors(
   response: DataOrErrors<AnalyticsTransaction[]>
 ): DataOrErrors<LandingPageTransaction[]> {
   if (response.data) {
     return {
       errors: null,
-      data: response.data.map(transformAnalyticsTransactionIntoTransaction)
+      data: response.data.map(transformAnalyticsTransactionIntoTransaction),
     }
   } else {
     return {
       errors: response.errors,
-      data: null
+      data: null,
     }
   }
 }
 
-export async function getTransactions (): Promise<DataOrErrors<LandingPageTransaction[]>> {
+export async function getTransactions(): Promise<
+  DataOrErrors<LandingPageTransaction[]>
+  > {
   return postQueryToAnalyticsApi<AnalyticsTransaction[]>(
     'query getTransactions {' +
       '\n  transactions(limit: 10, where: {txn_type: {_eq: 3}}, order_by: {version: desc}) {' +
@@ -78,10 +80,13 @@ export async function getTransactions (): Promise<DataOrErrors<LandingPageTransa
       '\n    commit_timestamp' +
       '\n    status' +
       '\n    sender' +
-      '\n}\n}\n', 'transactions'
+      '\n}\n}\n',
+    'transactions'
   ).then(transformAnalyticsTransactionsOrErrors)
 }
 
-export async function getTransaction (version: string): Promise<DataOrErrors<BlockchainTransaction | null>> {
+export async function getTransaction(
+  version: string
+): Promise<DataOrErrors<BlockchainTransaction | null>> {
   return getBlockchainTransaction(version)
 }

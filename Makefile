@@ -6,7 +6,7 @@ no_targets__:
 list:
 	sh -c "$(MAKE) -p no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | sort"
 
-.PHONY : lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e stop sleep1 acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
+.PHONY : build fmt lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e stop sleep1 acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
 start:
 	@yarn run dev
 
@@ -24,7 +24,7 @@ else
 endif
 
 wiremock_start: wiremock_stop
-	@npx wiremock --port 8888 --root-dir end2end/wiremock > end2end/logs/wiremock.log
+	@yarn run wiremock --port 8888 --root-dir end2end/wiremock > end2end/logs/wiremock.log
 
 wiremock_start_for_e2e: hasura_stop wiremock_stop
 	@screen -m -d -S wiremock make wiremock_start & > end2end/logs/ui.log
@@ -39,11 +39,14 @@ endif
 start_for_e2e: stop
 	@screen -m -d -S ui make start &
 
-lintfix:
-	@npx eslint --fix src/**/*.?s src/**/*.?sx end2end/**/*.js
+fmt:
+	@yarn run prettier --write 'src/**'
+
+lintfix: fmt
+	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
 lint:
-	@npx eslint src/**/*.?s src/**/*.?sx end2end/**/*.js
+	@yarn run eslint 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
 sleep1:
 	@sleep 5
@@ -52,10 +55,10 @@ cleanup_acceptance_test:
 	@screen -X -S ui quit && screen -X -S wiremock quit
 
 run_acceptance_test: wiremock_start_for_e2e start_for_e2e
-	@codeceptjs run --steps --config codecept.conf.js
+	@yarn codeceptjs run --steps --config codecept.conf.js
 
 run_acceptance_test_ui: wiremock_start_for_e2e start_for_e2e
-	@codecept-ui --config codecept.conf.js --app
+	@yarn codecept-ui --config codecept.conf.js --app
 
 acceptance_test: wiremock_start_for_e2e start_for_e2e run_acceptance_test cleanup_acceptance_test
 	@echo "👍"
@@ -71,3 +74,6 @@ test: integration_test acceptance_test
 
 integration_test:
 	@node node_modules/jest/bin/jest.js --colors --verbose
+
+build:
+	@yarn run tsc && yarn run vite build
