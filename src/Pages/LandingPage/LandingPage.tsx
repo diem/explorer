@@ -12,7 +12,7 @@ import {
   AnalyticsTransaction,
   transformAnalyticsTransactionIntoTransaction
 } from '../../api_models/AnalyticsTransaction'
-import { DataOrErrors } from '../../FetchType'
+import { DataOrErrors } from '../../api_clients/FetchTypes'
 
 function Wrapper(props: { children: ReactNode }) {
   return (

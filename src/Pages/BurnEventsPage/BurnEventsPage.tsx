@@ -1,4 +1,5 @@
 import ApiRequestPage from '../../ApiRequestPage'
+import { DataOrErrors } from '../../api_clients/FetchTypes'
 import { BurnEvent } from '../../api_models/BurnEvent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'

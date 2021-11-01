@@ -7,11 +7,11 @@ import {
   within,
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { getBlockchainTransaction } from '../../api_clients/BlockchainClient'
+import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
 import { BlockchainTransaction } from '../../api_models/BlockchainTransaction'
 
-jest.mock('../../api_clients/BlockchainClient', () => ({
-  ...jest.requireActual('../../api_clients/BlockchainClient'),
+jest.mock('../../api_clients/BlockchainJsonRpcClient', () => ({
+  ...jest.requireActual('../../api_clients/BlockchainJsonRpcClient'),
   getBlockchainTransaction: jest.fn(),
 }))
 const mockUserTransaction = {

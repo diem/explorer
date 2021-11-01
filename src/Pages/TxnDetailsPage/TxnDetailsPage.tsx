@@ -10,7 +10,7 @@ import MainWrapper from '../../MainWrapper'
 import BTable from 'react-bootstrap/Table'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
-import { getBlockchainTransaction } from '../../api_clients/BlockchainClient'
+import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
 
 function ObjectPropertiesTable({ object }: { object: Object }) {
   return (

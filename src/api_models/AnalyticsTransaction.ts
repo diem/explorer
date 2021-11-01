@@ -45,7 +45,7 @@ function getStatusFromEnum (status: number) {
 
 export function transformAnalyticsTransactionIntoTransaction (
   transaction: AnalyticsTransaction
-) {
+): LandingPageTransaction {
   return {
     version: transaction.version,
     expirationTimestamp: transaction.expiration_timestamp,

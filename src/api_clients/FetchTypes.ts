@@ -3,7 +3,10 @@ export type FetchResponse<T> = {
   json: () => T
   ok: boolean
 }
-export type FetchError = { message: string }
+export type FetchError = {
+    message: string,
+    type?: string
+}
 
 export type DataOrErrors<T, R = FetchError[]> = {
   data: T | null
