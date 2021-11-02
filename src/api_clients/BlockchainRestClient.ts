@@ -2,25 +2,34 @@ import { DataOrErrors, FetchError } from './FetchTypes'
 import { getWithFetch } from './FetchBroker'
 import Config from '../config.json'
 
-interface BlockchainAccountResourceType {
+export interface BlockchainAccountResourceType {
+  name: string
+}
+
+export interface BlockchainAccountResourceValue {
 
 }
 
-interface BlockchainAccountResourceValue {
-
-}
-
-interface BlockchainAccountResource {
+export interface BlockchainAccountResource {
   type: BlockchainAccountResourceType,
   value: BlockchainAccountResourceValue
 }
 
-interface BlockchainRestError {
+export interface BlockchainRestError {
   code: number,
   message: string
 }
 
 type BlockchainRestResponse<T> = T | BlockchainRestError
+
+export type BlockchainAccountModule = any
+
+export function getAccountModules(address: string): Promise<DataOrErrors<BlockchainAccountModule[]>> {
+  return Promise.resolve({
+    data: [],
+    errors: null
+  })
+}
 
 function transformBlockchainRestResponse<T>(response: BlockchainRestResponse<T>): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {

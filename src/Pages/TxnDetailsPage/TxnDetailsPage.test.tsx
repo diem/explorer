@@ -109,6 +109,12 @@ const renderWithTransaction = async (
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
 
+it('should get data from the BlockchainJsonRpcClient', async function () {
+  await renderWithTransaction()
+
+  expect(getBlockchainTransaction).toHaveBeenCalledWith(mockUserTransaction.version.toString())
+})
+
 it('should display data in a table for user transactions', async function () {
   await renderWithTransaction()
 

@@ -7,34 +7,10 @@ import {
 } from '../../api_models/BlockchainTransaction'
 import { RouteComponentProps } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
-import BTable from 'react-bootstrap/Table'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
-
-function ObjectPropertiesTable({ object }: { object: Object }) {
-  return (
-    <BTable
-      responsive
-      bordered
-      hover
-      className="border"
-      id="objectPropertiesTable"
-    >
-      <tbody>
-        {Object.keys(object).map(function (property) {
-          return (
-            <tr key={property}>
-              <td>{property}</td>
-              {/* @ts-ignore (TS doesn't like property accessor syntax) */}
-              <td>{object[property]}</td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </BTable>
-  )
-}
+import ObjectPropertiesTablefrom '../../ObjectPropertiesTable'
 
 function UnsupportedTxnDetailsTable() {
   return (
