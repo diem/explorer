@@ -53,11 +53,11 @@ export function setBlockchainJsonRpcNetworkError(server: SetupServerApi, errorTe
 }
 
 export function setBlockchainRestApiResponse (server: SetupServerApi, path: string, responseData: Object, delay: number = 0) {
-  setGetResponseForUrl(server, Config.DIEMX_BLOCKCHAIN_API_URL + path, responseData)
+  setGetResponseForUrl(server, import.meta.env.VITE_BLOCKCHAIN_REST_URL + path, responseData)
 }
 
 export function setBlockchainRestNetworkError(server: SetupServerApi, path: string, errorText: string) {
-  setGetNetworkErrorForUrl(server, Config.DIEMX_BLOCKCHAIN_API_URL + path, errorText)
+  setGetNetworkErrorForUrl(server, import.meta.env.VITE_BLOCKCHAIN_REST_URL + path, errorText)
 }
 
 export function setupIntegrationTestApiServer (): SetupServerApi {

@@ -1,6 +1,5 @@
 import { DataOrErrors, FetchError } from './FetchTypes'
 import { getWithFetch } from './FetchBroker'
-import Config from '../config.json'
 
 export interface BlockchainAccountResourceType {
   name: string
@@ -44,7 +43,7 @@ function transformBlockchainRestResponse<T>(response: BlockchainRestResponse<T>)
 }
 
 export function getAccountResources(address: string): Promise<DataOrErrors<BlockchainAccountResource[]>> {
-  const url = `${Config.DIEMX_BLOCKCHAIN_API_URL}/accounts/${address}/resources`
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${address}/resources`
   return getWithFetch<BlockchainRestResponse<BlockchainAccountResource[]>>(url, {})
     .then((response) => {
       return transformBlockchainRestResponse<BlockchainAccountResource[]>(response)

@@ -22,10 +22,10 @@ function seeUnsupportedAccountCard(I) {
 
 Scenario('navigating to an account from landing page', ({ I }) => {
   I.amOnPage('/')
-  I.fillField('Search by Address / Txn Version', '1081322FEF2DA29D62FE4E131EF4C859')
+  I.fillField('Search by Address / Txn Version', '1081322fef2da29d62fe4e131ef4c859')
   I.pressKey('Enter')
 
-  I.seeInCurrentUrl('/address/1081322FEF2DA29D62FE4E131EF4C859')
+  I.seeInCurrentUrl('/address/1081322fef2da29d62fe4e131ef4c859')
   I.seeMainWrapper()
   I.see('Account Details')
 })

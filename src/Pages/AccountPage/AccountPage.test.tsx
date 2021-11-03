@@ -55,7 +55,6 @@ const renderSubject = async (
 describe('AccountPage', function () {
   it('should get data from the BlockchainRestClient', async function () {
     await renderSubject()
-
     expect(getAccountResources).toHaveBeenCalledWith(mockAddress)
     expect(getAccountModules).toHaveBeenCalledWith(mockAddress)
   })
@@ -68,6 +67,11 @@ describe('AccountPage', function () {
     expect(within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)).toBeInTheDocument()
     expect(within(balancesTable).queryByText(xusBalanceResource.type.generic_type_params[0].name)).toBeInTheDocument()
     expect(within(balancesTable).queryByText(xusBalanceResource.value.coin.value)).toBeInTheDocument()
+  })
+  it('should display unsupported account when balance object is not found', async function () {
+    await renderSubject([freezingBitResource])
+    expect(screen.queryByText('Balances')).not.toBeInTheDocument()
+    expect(screen.queryByText('Unsupported Account')).toBeInTheDocument()
   })
   it('should display raw resources in a pretty printed format', async () => {
     await renderSubject([freezingBitResource])

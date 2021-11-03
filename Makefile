@@ -37,7 +37,7 @@ else
 endif
 
 start_for_e2e: stop
-	@screen -m -d -S ui make start &
+	@screen -m -d -S ui yarn run dev --mode="test" &
 
 fmt:
 	@yarn run prettier --write 'src/**'
@@ -73,7 +73,7 @@ test: integration_test acceptance_test
 	@echo "👍"
 
 integration_test:
-	@node node_modules/jest/bin/jest.js --colors --verbose
+	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose
 
 build:
 	@yarn run tsc && yarn run vite build
