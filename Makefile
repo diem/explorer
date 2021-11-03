@@ -2,12 +2,19 @@ explr_pid						:= $(shell lsof -i :3000 | grep node | awk '{print $$2}')
 wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 
 .PHONY: no_targets__ list
+.PHONY: lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e
+.PHONY: stop sleep1 acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
+.PHONY: start_ui_for_e2e start_ui
+
 no_targets__:
 list:
 	sh -c "$(MAKE) -p no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | sort"
 
-.PHONY : build fmt lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e stop sleep1 acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
-start:
+
+start: hasura_start start_ui
+	@echo "✅  UI -- started in dev mode" && echo "✅  Hasura -- started in background" && echo "The app is running at http://localhost:3000"
+
+start_ui: stop
 	@yarn run dev
 
 hasura_stop:
@@ -36,7 +43,7 @@ else
 	@echo "Explorer is either not running, or isn't using port 3000" | true
 endif
 
-start_for_e2e: stop
+start_ui_for_e2e: stop
 	@screen -m -d -S ui yarn run dev --mode="test" &
 
 fmt:
@@ -44,6 +51,9 @@ fmt:
 
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
+
+start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e
+	@echo "✅  UI -- started in test mode\n✅  Wiremock -- started in background\nLogs can be found in end2end/logs\nThe app is running at http://localhost:3000"
 
 lint:
 	@yarn run eslint 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
@@ -60,10 +70,10 @@ run_acceptance_test: wiremock_start_for_e2e start_for_e2e
 run_acceptance_test_ui: wiremock_start_for_e2e start_for_e2e
 	@yarn codecept-ui --config codecept.conf.js --app
 
-acceptance_test: wiremock_start_for_e2e start_for_e2e run_acceptance_test cleanup_acceptance_test
+acceptance_test: start_for_e2e run_acceptance_test cleanup_acceptance_test
 	@echo "👍"
 
-acceptance_test_ui : wiremock_start_for_e2e start_for_e2e run_acceptance_test_ui cleanup_acceptance_test
+acceptance_test_ui : start_for_e2e run_acceptance_test_ui cleanup_acceptance_test
 	@echo "👍"
 
 ship: lint integration_test sleep1 acceptance_test
