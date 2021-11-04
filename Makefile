@@ -52,7 +52,7 @@ fmt:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
-start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e
+start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e sleep1
 	@echo "✅  UI -- started in test mode\n✅  Wiremock -- started in background\nLogs can be found in end2end/logs\nThe app is running at http://localhost:3000"
 
 lint:
@@ -64,10 +64,10 @@ sleep1:
 cleanup_acceptance_test:
 	@screen -X -S ui quit && screen -X -S wiremock quit
 
-run_acceptance_test: wiremock_start_for_e2e start_for_e2e
+run_acceptance_test:
 	@yarn codeceptjs run --steps --config codecept.conf.js
 
-run_acceptance_test_ui: wiremock_start_for_e2e start_for_e2e
+run_acceptance_test_ui:
 	@yarn codecept-ui --config codecept.conf.js --app
 
 acceptance_test: start_for_e2e run_acceptance_test cleanup_acceptance_test
