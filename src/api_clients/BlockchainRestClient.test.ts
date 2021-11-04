@@ -12,10 +12,9 @@ const modulesPath = `/accounts/${fakeAddress}/modules`
 const server = setupIntegrationTestApiServer()
 
 const testPassesDataThrough = async (methodUnderTest: Function, path: string, response: any) => {
-  const expected = { data: goodResourceResponse, errors: null }
-  setBlockchainRestApiResponse(server, path, goodResourceResponse)
+  const expected = { data: response, errors: null }
+  setBlockchainRestApiResponse(server, path, response)
   const result = await methodUnderTest(fakeAddress)
-  console.log(result)
   expect(result).toEqual(expected)
 }
 
@@ -23,7 +22,6 @@ const testPassesErrorsThrough = async (methodUnderTest: Function, path: string) 
   const expected = { data: null, errors: [{ message: errorResponse.message }] }
   setBlockchainRestApiResponse(server, path, errorResponse)
   const result = await methodUnderTest(fakeAddress)
-  console.log(result)
   expect(result).toEqual(expected)
 }
 
@@ -32,7 +30,6 @@ const testNetworkErrorsAreErrors = async (methodUnderTest: Function, path: strin
   const expected = { data: null, errors: [{ message: `FetchError: request to ${import.meta.env.VITE_BLOCKCHAIN_REST_URL}${path} failed, reason: ${error}` }] }
   setBlockchainRestNetworkError(server, path, error)
   const result = await methodUnderTest(fakeAddress)
-  console.log(result)
   expect(result).toEqual(expected)
 }
 
