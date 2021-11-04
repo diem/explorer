@@ -3,5 +3,6 @@
   "DIEMX_ENV": "Dev",
   "DIEMX_BASE_URL": "http://localhost:3000",
   "DIEMX_GRAPHQL_URL": "http://localhost:8888",
-  "DIEMX_BLOCKCHAIN_URL": "https://fn0.premainnet.aosdev.diem.com/v1"
+  "DIEMX_BLOCKCHAIN_JSON_RPC_URL": "https://fn0.premainnet.aosdev.diem.com/v1",
+  "DIEMX_BLOCKCHAIN_API_URL": "https://fn0api.premainnet.aosdev.diem.com"
 }

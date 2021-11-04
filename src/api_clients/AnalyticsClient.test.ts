@@ -3,7 +3,7 @@ import {
   setAnalyticsApiResponse,
   setAnalyticsNetworkError,
   setupIntegrationTestApiServer,
-} from '../test_utils/IntegrationTestApiServerTools'
+} from '../../test_utils/IntegrationTestApiServerTools'
 const server = setupIntegrationTestApiServer()
 
 describe('Analytics Client', function () {

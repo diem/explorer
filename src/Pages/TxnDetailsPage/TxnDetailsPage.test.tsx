@@ -7,11 +7,11 @@ import {
   within,
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { getBlockchainTransaction } from '../../BlockchainClient'
+import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
 import { BlockchainTransaction } from '../../api_models/BlockchainTransaction'
 
-jest.mock('../../BlockchainClient', () => ({
-  ...jest.requireActual('../../BlockchainClient'),
+jest.mock('../../api_clients/BlockchainJsonRpcClient', () => ({
+  ...jest.requireActual('../../api_clients/BlockchainJsonRpcClient'),
   getBlockchainTransaction: jest.fn(),
 }))
 const mockUserTransaction = {
@@ -108,6 +108,14 @@ const renderWithTransaction = async (
   )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
+
+it('should get data from the BlockchainJsonRpcClient', async function () {
+  await renderWithTransaction()
+
+  expect(getBlockchainTransaction).toHaveBeenCalledWith(
+    mockUserTransaction.version.toString()
+  )
+})
 
 it('should display data in a table for user transactions', async function () {
   await renderWithTransaction()

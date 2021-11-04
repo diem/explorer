@@ -7,12 +7,14 @@ import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDeta
 import { mockMintEventsPageText } from './Pages/MintEventsPage/__mocks__/MintEventsPage'
 import { mockBurnEventsPageText } from './Pages/BurnEventsPage/__mocks__/BurnEventsPage'
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
+import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
 jest.mock('./Pages/MintEventsPage/MintEventsPage')
 jest.mock('./Pages/BurnEventsPage/BurnEventsPage')
 jest.mock('./Pages/DiemInCirculationPage/DiemInCirculationPage')
+jest.mock('./Pages/AccountPage/AccountPage')
 
 function renderWithRouter(path: string) {
   const history = createMemoryHistory()
@@ -54,6 +56,12 @@ describe('ExplorerRouter', () => {
     expect(screen.getByRole('main').textContent).toContain(
       mockDiemInCirculationPageText
     )
+  })
+  it('should render Account page when path is /address/{?}', async function () {
+    const fakeId = 'some_id'
+    renderWithRouter(`/address/${fakeId}`)
+    expect(screen.getByRole('main').textContent).toContain(mockAccountPageText)
+    expect(screen.getByRole('main').textContent).toContain(fakeId)
   })
   it('should render 404 page when path is unknown', async function () {
     renderWithRouter('/not_a_real_url')

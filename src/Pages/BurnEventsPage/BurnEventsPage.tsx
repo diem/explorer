@@ -1,6 +1,6 @@
 import ApiRequestPage from '../../ApiRequestPage'
 import { BurnEvent } from '../../api_models/BurnEvent'
-import { postQueryToAnalyticsApi } from '../../AnalyticsClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
 import React from 'react'

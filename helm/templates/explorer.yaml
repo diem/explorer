@@ -33,7 +33,7 @@ spec:
           value: {{ required "base_url required" .base_url }}
         - name: DIEMX_GRAPHQL_URL
           value: "{{ .graphql_url }}"
-        - name: DIEMX_BLOCKCHAIN_URL
+        - name: DIEMX_BLOCKCHAIN_JSON_RPC_URL
           value: {{ required "blockchain_jsonrpc_url required" .blockchain_jsonrpc_url }}
         - name: DIEMX_BLOCKCHAIN_API_URL
           value: {{ required "blockchain_restapi_url required" .blockchain_restapi_url }}

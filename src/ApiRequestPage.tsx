@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
-import { DataOrErrors, FetchError } from './FetchType'
 import MainWrapper from './MainWrapper'
+import { DataOrErrors, FetchError } from './api_clients/FetchTypes'
 
 interface ApiRequestPageProps<T> {
   children: ReactElement

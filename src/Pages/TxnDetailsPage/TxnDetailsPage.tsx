@@ -1,5 +1,4 @@
 import ApiRequestPage from '../../ApiRequestPage'
-import { getTransaction } from '../../TransactionClient'
 import React from 'react'
 import {
   BlockchainTransaction,
@@ -8,33 +7,10 @@ import {
 } from '../../api_models/BlockchainTransaction'
 import { RouteComponentProps } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
-import BTable from 'react-bootstrap/Table'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
-
-function ObjectPropertiesTable({ object }: { object: Object }) {
-  return (
-    <BTable
-      responsive
-      bordered
-      hover
-      className="border"
-      id="objectPropertiesTable"
-    >
-      <tbody>
-        {Object.keys(object).map(function (property) {
-          return (
-            <tr key={property}>
-              <td>{property}</td>
-              {/* @ts-ignore (TS doesn't like property accessor syntax) */}
-              <td>{object[property]}</td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </BTable>
-  )
-}
+import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
+import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -143,8 +119,9 @@ interface TxnDetailsPageProps
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
     <ApiRequestPage
-      request={getTransaction}
-      args={[props.match.params.version]}
+      request={() => {
+        return getBlockchainTransaction(props.match.params.version)
+      }}
     >
       <TxnDetailsPageWithResponse data={undefined} />
     </ApiRequestPage>
