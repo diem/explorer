@@ -119,9 +119,10 @@ async function getAccountData(
   const resourcesResponse = await getAccountResources(address)
   const modulesResponse = await getAccountModules(address)
   if (resourcesResponse.errors || modulesResponse.errors) {
-    // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
     const allErrors = []
+      // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
       .concat(resourcesResponse.errors)
+      // @ts-ignore 👆
       .concat(modulesResponse.errors)
       .filter((error) => error !== null)
     return {
