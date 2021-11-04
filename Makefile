@@ -4,7 +4,7 @@ wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 .PHONY: no_targets__ list
 .PHONY: lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e
 .PHONY: stop acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
-.PHONY: start_ui_for_e2e start_ui await_e2e_deps
+.PHONY: start_ui_for_e2e start_ui await_e2e_deps ensure_logs_dir
 
 no_targets__:
 list:
@@ -55,7 +55,7 @@ fmt:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
-start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e await_e2e_deps
+start_for_e2e: ensure_logs_dir start_ui_for_e2e wiremock_start_for_e2e await_e2e_deps
 	@echo "✅  UI -- started in test mode\n✅  Wiremock -- started in background\nLogs can be found in end2end/logs\nThe app is running at http://localhost:3000"
 
 lint:
@@ -87,3 +87,6 @@ integration_test:
 
 build:
 	@yarn run tsc && yarn run vite build
+
+ensure_logs_dir:
+	mkdir -p end2end/logs

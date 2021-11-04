@@ -35,3 +35,5 @@ jobs:
         run: make build
       - name: Run integration_test
         run: make integration_test
+      - name: Run acceptance_test
+        run: make acceptance_test
