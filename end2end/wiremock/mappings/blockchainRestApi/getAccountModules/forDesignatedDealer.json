@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blockchainRestApi/accounts/1081322fef2da29d62fe4e131ef4c859/modules"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "[{\"emoji\": \"\uD83E\uDD8D, Gorilla is intentionally silly data to signal that smart contracts are rendered on page.\"}]"
+  }
+}

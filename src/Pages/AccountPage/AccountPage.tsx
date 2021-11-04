@@ -7,7 +7,7 @@ import {
   BlockchainAccountResourceType, BlockchainAccountResourceValue
 } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
-import { DataOrErrors} from '../../api_clients/FetchTypes'
+import { DataOrErrors } from '../../api_clients/FetchTypes'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
 import React from 'react'
@@ -39,7 +39,7 @@ interface BlockchainAccountBalanceResource extends BlockchainAccountResource{
 
 function parseBalancesFromResources(resources: BlockchainAccountResource[]) {
   const balanceResources = resources.filter((resource) => {
-    return resource.type.name === 'Balance'
+    return resource.type && resource.type.name && resource.type.name === 'Balance'
   }) as BlockchainAccountBalanceResource[]
 
   const balances = Object.assign(

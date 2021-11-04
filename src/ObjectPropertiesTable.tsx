@@ -7,7 +7,7 @@ export default function ObjectPropertiesTable ({ object }: { object: Object }) {
       responsive
       bordered
       hover
-      className="border"
+      className="border objectPropertiesTable"
       id="objectPropertiesTable"
     >
       <tbody>
