@@ -70,11 +70,13 @@ function TxnDetailsTable({
       <h2 className="mb-5" role="note">
         Transaction Details
       </h2>
-      {transactionIsSupported(data) ? (
-        <UserTxnDetailsTable data={data} />
-      ) : (
-        <UnsupportedTxnDetailsTable />
-      )}
+      {transactionIsSupported(data)
+        ? (
+          <UserTxnDetailsTable data={data} />
+        )
+        : (
+          <UnsupportedTxnDetailsTable />
+        )}
     </>
   )
 }

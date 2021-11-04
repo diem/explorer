@@ -71,19 +71,19 @@ run_acceptance_test_ui:
 	@yarn codecept-ui --config codecept.conf.js --app
 
 acceptance_test: start_for_e2e run_acceptance_test cleanup_acceptance_test
-	@echo "👍"
+	@echo "acceptance test complete 👍"
 
 acceptance_test_ui : start_for_e2e run_acceptance_test_ui cleanup_acceptance_test
-	@echo "👍"
+	@echo "acceptance test complete 👍"
 
 ship: lint integration_test acceptance_test
-	@git push
+	@git push && docker run -it --rm jmhobbs/terminal-parrot:latest -loops 12 -delay 25 && echo "ship complete 👍"
 
 test: integration_test acceptance_test
-	@echo "👍"
+	@echo "integration test and acceptance test complete 👍"
 
 integration_test:
-	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose
+	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration test complete 👍"
 
 build:
 	@yarn run tsc && yarn run vite build

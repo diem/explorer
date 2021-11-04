@@ -91,11 +91,13 @@ function AccountPageWithResponse({
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        {Object.keys(balances).length > 0 ? (
-          <BalancesTable balances={balances} />
-        ) : (
-          <UnsupportedAccountCard />
-        )}
+        {Object.keys(balances).length > 0
+          ? (
+            <BalancesTable balances={balances} />
+          )
+          : (
+            <UnsupportedAccountCard />
+          )}
         <h2>Raw Resources</h2>
         <JSONPretty data={data.resources} id="rawResources" />
         <h2>Raw Smart Contracts</h2>
