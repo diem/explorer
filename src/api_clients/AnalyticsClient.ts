@@ -12,7 +12,10 @@ export type AnalyticsError = {
   message: string
 }
 
-function transformAnalyticsResponse<T>(response: AnalyticsResponse<T>, dataKey?: string): DataOrErrors<T> {
+function transformAnalyticsResponse<T>(
+  response: AnalyticsResponse<T>,
+  dataKey?: string
+): DataOrErrors<T> {
   if (response.errors) {
     return {
       errors: [...response.errors],
@@ -43,9 +46,12 @@ export const postQueryToAnalyticsApi = async <T>(
   const headers = {
     'Content-type': 'application/json; charset=UTF-8',
     Accept: '*/*',
-  },
-  return postWithFetch<AnalyticsResponse<T>>(Config.DIEMX_GRAPHQL_URL + '/v1/graphql', body, headers)
-    })
+  }
+  return postWithFetch<AnalyticsResponse<T>>(
+    Config.DIEMX_GRAPHQL_URL + '/v1/graphql',
+    body,
+    headers
+  )
     .then((response: AnalyticsResponse<T>) => {
       return transformAnalyticsResponse<T>(response, dataKey)
     })

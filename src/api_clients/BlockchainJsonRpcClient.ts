@@ -4,28 +4,41 @@ import { BlockchainTransaction } from '../api_models/BlockchainTransaction'
 import { DataOrErrors, FetchError } from './FetchTypes'
 import { postWithFetch } from './FetchBroker'
 
-function transformBlockchainResponse (response: JsonRpcResponse<BlockchainTransaction>) : DataOrErrors<BlockchainTransaction> {
+function transformBlockchainResponse(
+  response: JsonRpcResponse<BlockchainTransaction>
+): DataOrErrors<BlockchainTransaction> {
   if (response.error) {
     return {
       data: null,
-      errors: [{ message: response.error.message }]
+      errors: [{ message: response.error.message }],
     }
   } else {
     return {
       // @ts-ignore (Tolerate a deficiency in library type)
       data: response.result[0],
-      errors: null
+      errors: null,
     }
   }
 }
 
-export async function getBlockchainTransaction (version: string): Promise<DataOrErrors<BlockchainTransaction>> {
-  const body = JSON.stringify({ jsonrpc: '2.0', method: 'get_transactions', params: [parseInt(version), 1, false], id: 1 })
+export async function getBlockchainTransaction(
+  version: string
+): Promise<DataOrErrors<BlockchainTransaction>> {
+  const body = JSON.stringify({
+    jsonrpc: '2.0',
+    method: 'get_transactions',
+    params: [parseInt(version), 1, false],
+    id: 1,
+  })
   const headers = {
     'Content-type': 'application/json',
-    Accept: '*/*'
+    Accept: '*/*',
   }
-  return await postWithFetch<JsonRpcResponse<BlockchainTransaction>>(Config.DIEMX_BLOCKCHAIN_JSON_RPC_URL, body, headers)
+  return await postWithFetch<JsonRpcResponse<BlockchainTransaction>>(
+    Config.DIEMX_BLOCKCHAIN_JSON_RPC_URL,
+    body,
+    headers
+  )
     .then((response: JsonRpcResponse<BlockchainTransaction>) => {
       return transformBlockchainResponse(response)
     })

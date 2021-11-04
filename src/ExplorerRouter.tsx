@@ -16,7 +16,7 @@ export default function ExplorerRouter() {
       <Route path="/events/burn" component={BurnEventsPage} />
       <Route path="/diemincirculation" component={DiemIncirculationPage} />
       <Route path="/address/:address" component={AccountPage} />
-        <Route component={NotFoundPage} />
+      <Route component={NotFoundPage} />
     </Switch>
   )
 }

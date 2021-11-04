@@ -9,16 +9,16 @@ interface LinkProps {
 export const Link =
   ({ className, linkPrefix = '/' }: LinkProps) =>
   // eslint-disable-next-line react/display-name
-    ({ value }: { value: string }) => {
-      return (
-        <RouterLink
-          className={`dx-link ${className}`}
-          to={`${linkPrefix}${value}`}
-        >
-          {value}
-        </RouterLink>
-      )
-    }
+  ({ value }: { value: string }) => {
+    return (
+      <RouterLink
+        className={`dx-link ${className}`}
+        to={`${linkPrefix}${value}`}
+      >
+        {value}
+      </RouterLink>
+    )
+  }
 Link.displayName = 'DiemExplorerLink'
 
 export function TransactionVersion(props: { value: string }) {

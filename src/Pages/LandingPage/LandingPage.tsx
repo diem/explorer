@@ -10,7 +10,7 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import {
   AnalyticsTransaction,
-  transformAnalyticsTransactionIntoTransaction
+  transformAnalyticsTransactionIntoTransaction,
 } from '../../api_models/AnalyticsTransaction'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 
@@ -69,37 +69,40 @@ function LandingPageWithResponse(props: { data: LandingPageTransaction[] }) {
   )
 }
 
-function transformAnalyticsTransactionsOrErrors (
+function transformAnalyticsTransactionsOrErrors(
   response: DataOrErrors<AnalyticsTransaction[]>
 ): DataOrErrors<LandingPageTransaction[]> {
   if (response.data) {
     return {
       errors: null,
-      data: response.data.map(transformAnalyticsTransactionIntoTransaction)
+      data: response.data.map(transformAnalyticsTransactionIntoTransaction),
     }
   } else {
     return {
       errors: response.errors,
-      data: null
+      data: null,
     }
   }
 }
 
 export default function LandingPage() {
   return (
-    <ApiRequestPage request={() => {
-      return postQueryToAnalyticsApi<AnalyticsTransaction[]>(
-        'query getTransactions {' +
-        '\n  transactions(limit: 10, where: {txn_type: {_eq: 3}}, order_by: {version: desc}) {' +
-        '\n    version' +
-        '\n    txn_type' +
-        '\n    expiration_timestamp' +
-        '\n    commit_timestamp' +
-        '\n    status' +
-        '\n    sender' +
-        '\n}\n}\n', 'transactions'
-      ).then(transformAnalyticsTransactionsOrErrors)
-    }}>
+    <ApiRequestPage
+      request={() => {
+        return postQueryToAnalyticsApi<AnalyticsTransaction[]>(
+          'query getTransactions {' +
+            '\n  transactions(limit: 10, where: {txn_type: {_eq: 3}}, order_by: {version: desc}) {' +
+            '\n    version' +
+            '\n    txn_type' +
+            '\n    expiration_timestamp' +
+            '\n    commit_timestamp' +
+            '\n    status' +
+            '\n    sender' +
+            '\n}\n}\n',
+          'transactions'
+        ).then(transformAnalyticsTransactionsOrErrors)
+      }}
+    >
       <LandingPageWithResponse data={[]} />
     </ApiRequestPage>
   )

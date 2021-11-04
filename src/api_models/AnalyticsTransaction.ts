@@ -9,7 +9,7 @@ export interface AnalyticsTransaction {
   status: number
 }
 
-function getTransactionTypeFromEnum (txnType: number) {
+function getTransactionTypeFromEnum(txnType: number) {
   switch (txnType) {
     case 1:
       return 'BlockMetadata'
@@ -22,7 +22,7 @@ function getTransactionTypeFromEnum (txnType: number) {
   }
 }
 
-function getStatusFromEnum (status: number) {
+function getStatusFromEnum(status: number) {
   switch (status) {
     case 1:
       return 'Executed'
@@ -43,7 +43,7 @@ function getStatusFromEnum (status: number) {
   }
 }
 
-export function transformAnalyticsTransactionIntoTransaction (
+export function transformAnalyticsTransactionIntoTransaction(
   transaction: AnalyticsTransaction
 ): LandingPageTransaction {
   return {
@@ -52,6 +52,6 @@ export function transformAnalyticsTransactionIntoTransaction (
     commitTimestamp: transaction.commit_timestamp,
     sender: transaction.sender,
     txnType: getTransactionTypeFromEnum(transaction.txn_type),
-    status: getStatusFromEnum(transaction.status)
+    status: getStatusFromEnum(transaction.status),
   }
 }

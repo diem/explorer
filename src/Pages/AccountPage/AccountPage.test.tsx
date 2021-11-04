@@ -1,18 +1,25 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
-import { render, screen, waitForElementToBeRemoved, within } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+  within,
+} from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import {
   BlockchainAccountModule,
   BlockchainAccountResource,
   getAccountResources,
-  getAccountModules
+  getAccountModules,
 } from '../../api_clients/BlockchainRestClient'
 import AccountPage from './AccountPage'
 import {
-  freezingBitResource, hasAccountLimitsSmartContract,
-  rolesResource, toBytesSmartContract,
+  freezingBitResource,
+  hasAccountLimitsSmartContract,
+  rolesResource,
+  toBytesSmartContract,
   xdxBalanceResource,
-  xusBalanceResource
+  xusBalanceResource,
 } from '../../../test_utils/MockBlockchainAccountResources'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
@@ -29,12 +36,12 @@ const renderSubject = async (
   // @ts-ignore TS is bad at mocking
   getAccountResources.mockResolvedValue({
     errors: null,
-    data: resources
+    data: resources,
   })
   // @ts-ignore TS is bad at mocking
   getAccountModules.mockResolvedValue({
     errors: null,
-    data: modules
+    data: modules,
   })
   const mockHistory = {
     history: {} as any,
@@ -44,11 +51,15 @@ const renderSubject = async (
       url: '/address/' + mockAddress,
       isExact: true,
       params: {
-        address: '1fc5dd16a92e82a281a063e308ebcca9'
-      }
-    }
+        address: '1fc5dd16a92e82a281a063e308ebcca9',
+      },
+    },
   }
-  render(<BrowserRouter><AccountPage {...mockHistory}/></BrowserRouter>)
+  render(
+    <BrowserRouter>
+      <AccountPage {...mockHistory} />
+    </BrowserRouter>
+  )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
 
@@ -64,9 +75,17 @@ describe('AccountPage', function () {
     expect(document.getElementById('objectPropertiesTable')).not.toEqual(null)
     const balancesTable = document.getElementById('objectPropertiesTable')!
     expect(screen.queryByText('Balances')).toBeInTheDocument()
-    expect(within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)).toBeInTheDocument()
-    expect(within(balancesTable).queryByText(xusBalanceResource.type.generic_type_params[0].name)).toBeInTheDocument()
-    expect(within(balancesTable).queryByText(xusBalanceResource.value.coin.value)).toBeInTheDocument()
+    expect(
+      within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)
+    ).toBeInTheDocument()
+    expect(
+      within(balancesTable).queryByText(
+        xusBalanceResource.type.generic_type_params[0].name
+      )
+    ).toBeInTheDocument()
+    expect(
+      within(balancesTable).queryByText(xusBalanceResource.value.coin.value)
+    ).toBeInTheDocument()
   })
   it('should display unsupported account when balance object is not found', async function () {
     await renderSubject([freezingBitResource])
@@ -78,13 +97,17 @@ describe('AccountPage', function () {
     expect(document.getElementById('rawResources')).not.toEqual(null)
     const rawResources = document.getElementById('rawResources')!
 
-    expect(rawResources.textContent?.replace(/\s/g, '')).toEqual(JSON.stringify([freezingBitResource]))
+    expect(rawResources.textContent?.replace(/\s/g, '')).toEqual(
+      JSON.stringify([freezingBitResource])
+    )
   })
   it('should display raw modules in a pretty printed format', async () => {
     await renderSubject(undefined, [hasAccountLimitsSmartContract])
     expect(document.getElementById('rawModules')).not.toEqual(null)
     const rawModules = document.getElementById('rawModules')!
 
-    expect(rawModules.textContent?.replace(/\s/g, '')).toEqual(JSON.stringify([hasAccountLimitsSmartContract]))
+    expect(rawModules.textContent?.replace(/\s/g, '')).toEqual(
+      JSON.stringify([hasAccountLimitsSmartContract])
+    )
   })
 })

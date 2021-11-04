@@ -10,7 +10,7 @@ import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
-import ObjectPropertiesTablefrom '../../ObjectPropertiesTable'
+import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -70,13 +70,11 @@ function TxnDetailsTable({
       <h2 className="mb-5" role="note">
         Transaction Details
       </h2>
-      {transactionIsSupported(data)
-        ? (
-          <UserTxnDetailsTable data={data} />
-        )
-        : (
-          <UnsupportedTxnDetailsTable />
-        )}
+      {transactionIsSupported(data) ? (
+        <UserTxnDetailsTable data={data} />
+      ) : (
+        <UnsupportedTxnDetailsTable />
+      )}
     </>
   )
 }
@@ -120,8 +118,8 @@ export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
     <ApiRequestPage
       request={() => {
-          return getBlockchainTransaction(props.match.params.version)
-        }}
+        return getBlockchainTransaction(props.match.params.version)
+      }}
     >
       <TxnDetailsPageWithResponse data={undefined} />
     </ApiRequestPage>

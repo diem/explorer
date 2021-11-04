@@ -4,8 +4,8 @@ export type FetchResponse<T> = {
   ok: boolean
 }
 export type FetchError = {
-    message: string,
-    type?: string
+  message: string
+  type?: string
 }
 
 export type DataOrErrors<T, R = FetchError[]> = {

@@ -3,8 +3,8 @@ wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 
 .PHONY: no_targets__ list
 .PHONY: lint lintfix start wiremock_start wiremock_stop wiremock_start_for_e2e hasura_start hasura_stop start_for_e2e
-.PHONY: stop sleep1 acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
-.PHONY: start_ui_for_e2e start_ui
+.PHONY: stop acceptance_test acceptance_test_ui ship test run_acceptance_test run_acceptance_test_ui
+.PHONY: start_ui_for_e2e start_ui await_e2e_deps
 
 no_targets__:
 list:
@@ -43,6 +43,9 @@ else
 	@echo "Explorer is either not running, or isn't using port 3000" | true
 endif
 
+await_e2e_deps:
+	@sh scripts/wait_for_port.sh 3000 && sh scripts/wait_for_port.sh 8888 && sleep 1
+
 start_ui_for_e2e: stop
 	@screen -m -d -S ui yarn run dev --mode="test" &
 
@@ -52,14 +55,11 @@ fmt:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
-start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e sleep1
+start_for_e2e: start_ui_for_e2e wiremock_start_for_e2e await_e2e_deps
 	@echo "✅  UI -- started in test mode\n✅  Wiremock -- started in background\nLogs can be found in end2end/logs\nThe app is running at http://localhost:3000"
 
 lint:
 	@yarn run eslint 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
-
-sleep1:
-	@sleep 5
 
 cleanup_acceptance_test:
 	@screen -X -S ui quit && screen -X -S wiremock quit
@@ -76,7 +76,7 @@ acceptance_test: start_for_e2e run_acceptance_test cleanup_acceptance_test
 acceptance_test_ui : start_for_e2e run_acceptance_test_ui cleanup_acceptance_test
 	@echo "👍"
 
-ship: lint integration_test sleep1 acceptance_test
+ship: lint integration_test acceptance_test
 	@git push
 
 test: integration_test acceptance_test
