@@ -7,12 +7,13 @@ import Table from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
-import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+
 import {
   AnalyticsTransaction,
   transformAnalyticsTransactionIntoTransaction,
 } from '../../api_models/AnalyticsTransaction'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 
 function Wrapper(props: { children: ReactNode }) {
   return (

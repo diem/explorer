@@ -42,6 +42,14 @@ function seeUnsupportedTransactionCard(I) {
   I.see('Unsupported Transaction')
 }
 
+function navigateToAddressPage(I) {
+  I.click('e4d382572c1286984aecfae682db0370')
+  I.seeInCurrentUrl('/address/e4d382572c1286984aecfae682db0370')
+  I.goBack()
+  I.click('ed53d2c05bc4ff33d15a744f35010026')
+  I.seeInCurrentUrl('/address/ed53d2c05bc4ff33d15a744f35010026')
+}
+
 Scenario('user transaction', ({ I }) => {
   I.amOnPage('/txn/64117651')
   I.seeMainWrapper()
@@ -50,6 +58,8 @@ Scenario('user transaction', ({ I }) => {
   I.see('Transaction Details')
   seeUserTxnRowHeaders(I)
   seeUserTxnRowData(I)
+
+  navigateToAddressPage(I)
 })
 
 Scenario('metadata transaction', ({ I }) => {

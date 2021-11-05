@@ -11,6 +11,7 @@ import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
+import { AccountAddress } from '../../TableComponents/Link'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -38,8 +39,8 @@ function UserTxnDetailsTable({
     'Version ID': data?.version,
     Status: data?.vm_status?.type,
     'Transaction Type': data?.transaction?.type,
-    From: userTxnData.sender,
-    To: txnScript.receiver,
+    To: AccountAddress({ value: txnScript.receiver }),
+    From: AccountAddress({ value: userTxnData.sender }),
     Amount: txnScript.amount,
     Expiration: userTxnData.expiration_timestamp_secs,
     Currency: userTxnData.gas_currency,

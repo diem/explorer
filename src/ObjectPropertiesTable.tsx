@@ -1,7 +1,12 @@
 import BTable from 'react-bootstrap/Table'
-import React from 'react'
+import React, { ReactChild } from 'react'
 
-export default function ObjectPropertiesTable({ object }: { object: Object }) {
+interface ObjectPropertiesTableProps {
+  object: {
+    [key: string]: string | number | undefined | ReactChild
+  }
+}
+export default function ObjectPropertiesTable({ object }: ObjectPropertiesTableProps) {
   return (
     <BTable
       responsive

@@ -22,5 +22,9 @@ module.exports = function () {
       this.see(pageName, 'a')
       this.click(pageName)
     },
+
+    goBack() {
+      this.executeScript('window.history.back();')
+    },
   })
 }
