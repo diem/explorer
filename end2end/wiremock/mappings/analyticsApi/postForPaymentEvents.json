@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query getPaymentEvents"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "{\"data\":{\"sentpayment_events\":[{\"amount\":12,\"currency\":\"XUS\",\"key\":\"04000000000000005d908a4bfcff104f62adbd423e449504\",\"metadata\":\"050001203635656134626338633263373466313261386366306134666432626434333437\",\"receiver\":\"6C746B429FBC7F6D4B4CE1AD940D356D\",\"sender\":\"5D908A4BFCFF104F62ADBD423E449504\",\"sequence_number\":11772,\"transaction_version\":340078450}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"010000000000000091c152b42fa56f5da4f27f5a4fa403e1\",\"metadata\":\"\",\"receiver\":\"9F86D78901BD2A04A1AA679D63E8B1F7\",\"sender\":\"91C152B42FA56F5DA4F27F5A4FA403E1\",\"sequence_number\":39378,\"transaction_version\":340078080}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"0100000000000000c230a41fdf9b5399f01f91f6fa50c350\",\"metadata\":\"\",\"receiver\":\"84EF3345D5D1DD8CAE8A0CA207F20B68\",\"sender\":\"C230A41FDF9B5399F01F91F6FA50C350\",\"sequence_number\":39378,\"transaction_version\":340078079}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"0100000000000000ac40c4364949659cbcca9cda2f6c1c0e\",\"metadata\":\"\",\"receiver\":\"48DDFF7DF39F167F9D939D8E0624FF50\",\"sender\":\"AC40C4364949659CBCCA9CDA2F6C1C0E\",\"sequence_number\":39378,\"transaction_version\":340078078}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"0100000000000000fdb254b130985a3ee6ea85dce9da2578\",\"metadata\":\"\",\"receiver\":\"A9446708AA8B28EF6F05D4E9CF6AE6CB\",\"sender\":\"FDB254B130985A3EE6EA85DCE9DA2578\",\"sequence_number\":39378,\"transaction_version\":340078077}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"0100000000000000e1282d3fbc416ce3b47f7644cc7add7a\",\"metadata\":\"\",\"receiver\":\"F26DFE792D1B867033C677892CD6EED6\",\"sender\":\"E1282D3FBC416CE3B47F7644CC7ADD7A\",\"sequence_number\":39378,\"transaction_version\":340078076}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"01000000000000009ae1a0df8d1a2c775ca2d72014113bb1\",\"metadata\":\"\",\"receiver\":\"F062BDB6FD2D3F98F341FCF02016ECE8\",\"sender\":\"9AE1A0DF8D1A2C775CA2D72014113BB1\",\"sequence_number\":39378,\"transaction_version\":340078075}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"0100000000000000cd5be04786f5f59d373018f0f052a545\",\"metadata\":\"\",\"receiver\":\"1C91CC9E0D5639F766D9B2FAE6AE8C41\",\"sender\":\"CD5BE04786F5F59D373018F0F052A545\",\"sequence_number\":39378,\"transaction_version\":340078074}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"010000000000000089bef4a35a3613aa62620af617d33463\",\"metadata\":\"\",\"receiver\":\"1F44585005607A8FAAD0FA2B9BA737AE\",\"sender\":\"89BEF4A35A3613AA62620AF617D33463\",\"sequence_number\":39378,\"transaction_version\":340078072}, {\"amount\":1,\"currency\":\"XUS\",\"key\":\"01000000000000001c91cc9e0d5639f766d9b2fae6ae8c41\",\"metadata\":\"\",\"receiver\":\"687105715092B6AB8FB88752F6095711\",\"sender\":\"1C91CC9E0D5639F766D9B2FAE6AE8C41\",\"sequence_number\":39378,\"transaction_version\":340078071}]}}"
+  }
+}

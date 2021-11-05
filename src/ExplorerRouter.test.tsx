@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { mockLandingPageText } from './Pages/LandingPage/__mocks__/LandingPage'
 import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDetailsPage'
-import { mockMintEventsPageText, mockBurnEventsPageText } from './Pages/EventPages/__mocks__/EventPages'
+import { mockMintEventsPageText, mockBurnEventsPageText, mockPaymentEventsPageText } from './Pages/EventPages/__mocks__/EventPages'
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 
@@ -47,6 +47,12 @@ describe('ExplorerRouter', () => {
     renderWithRouter('/events/burn')
     expect(screen.getByRole('main').textContent).toContain(
       mockBurnEventsPageText
+    )
+  })
+  it('should render Payment Events page when path is /events/payment', async function () {
+    renderWithRouter('/events/payment')
+    expect(screen.getByRole('main').textContent).toContain(
+      mockPaymentEventsPageText
     )
   })
   it('should render Diem In Circulation page when path is /dieminciculation', async function () {

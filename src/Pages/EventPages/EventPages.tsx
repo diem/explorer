@@ -90,6 +90,31 @@ const BurnEventsPageProps = {
   tableName: 'burn_events',
   eventType: 'Burn'
 }
+const PaymentEventsPageProps = {
+  query: 'query getPaymentEvents {\n' +
+    '  sentpayment_events(order_by: {transaction_version: desc}, limit: 10) {\n' +
+    '    amount\n' +
+    '    currency\n' +
+    '    key\n' +
+    '    metadata\n' +
+    '    receiver\n' +
+    '    sender\n' +
+    '    sequence_number\n' +
+    '    transaction_version\n' +
+    '  }\n' +
+    '}',
+  columns: [
+    { Header: 'Transaction Version', accessor: 'transaction_version', Cell: TransactionVersion },
+    { Header: 'Amount', accessor: 'amount' },
+    { Header: 'Currency', accessor: 'currency' },
+    { Header: 'Key', accessor: 'key', Cell: TruncatedCell },
+    { Header: 'Receiver', accessor: 'receiver', Cell: TruncatedCell },
+    { Header: 'Sender', accessor: 'sender', Cell: TruncatedCell },
+    { Header: 'Sequence Number', accessor: 'sequence_number' },
+  ],
+  tableName: 'sentpayment_events',
+  eventType: 'Payment'
+}
 
 const BurnEventsPage = () => {
   return (
@@ -100,9 +125,13 @@ const MintEventsPage = () => {
   return (<EventPage { ...MintEventsPageProps } />)
 }
 
+const PaymentEventsPage = () => {
+  return (<EventPage { ...PaymentEventsPageProps } />)
+}
 const eventPages = {
   BurnEventsPage: BurnEventsPage,
-  MintEventsPage: MintEventsPage
+  MintEventsPage: MintEventsPage,
+  PaymentEventsPage: PaymentEventsPage
 }
 
 export default eventPages

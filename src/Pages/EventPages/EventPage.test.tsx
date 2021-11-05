@@ -7,7 +7,6 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { TransactionVersion } from '../../TableComponents/Link'
 import { TruncatedCell } from '../../TableComponents/TruncatedCell'
 import EventPage from './EventPage'
 
