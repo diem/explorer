@@ -24,3 +24,6 @@ Link.displayName = 'DiemExplorerLink'
 export function TransactionVersion(props: { value: string }) {
   return Link({ className: 'transaction-link', linkPrefix: '/txn/' })(props)
 }
+export function AccountAddress(props: { value: string }) {
+  return Link({ className: 'address-link', linkPrefix: '/address/' })(props)
+}
