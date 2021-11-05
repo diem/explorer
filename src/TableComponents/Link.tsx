@@ -21,7 +21,7 @@ export const Link =
     }
 Link.displayName = 'DiemExplorerLink'
 
-export function TransactionVersion(props: { value: string }) {
+export const TransactionVersion: React.FC<{value:string}> = (props: { value: string }) => {
   return Link({ className: 'transaction-link', linkPrefix: '/txn/' })(props)
 }
 export function AccountAddress(props: { value: string }) {

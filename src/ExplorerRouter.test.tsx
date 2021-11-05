@@ -4,15 +4,13 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { mockLandingPageText } from './Pages/LandingPage/__mocks__/LandingPage'
 import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDetailsPage'
-import { mockMintEventsPageText } from './Pages/MintEventsPage/__mocks__/MintEventsPage'
-import { mockBurnEventsPageText } from './Pages/BurnEventsPage/__mocks__/BurnEventsPage'
+import { mockMintEventsPageText, mockBurnEventsPageText } from './Pages/EventPages/__mocks__/EventPages'
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
-jest.mock('./Pages/MintEventsPage/MintEventsPage')
-jest.mock('./Pages/BurnEventsPage/BurnEventsPage')
+jest.mock('./Pages/EventPages/EventPages')
 jest.mock('./Pages/DiemInCirculationPage/DiemInCirculationPage')
 jest.mock('./Pages/AccountPage/AccountPage')
 

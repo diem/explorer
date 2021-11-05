@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 
-export function TruncatedCell({ value }: { value: string }) {
+export const TruncatedCell: React.FC<{value:string}> = ({ value }: { value: string }) => {
   if (!value) {
     return <></>
   }

@@ -14,7 +14,7 @@ export type AnalyticsError = {
 
 function transformAnalyticsResponse<T>(
   response: AnalyticsResponse<T>,
-  dataKey?: string
+  tableName?: string
 ): DataOrErrors<T> {
   if (response.errors) {
     return {
@@ -25,7 +25,7 @@ function transformAnalyticsResponse<T>(
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here
-      data: dataKey ? response.data[dataKey] : response.data,
+      data: tableName ? response.data[tableName] : response.data,
     }
   } else {
     return {
@@ -37,7 +37,7 @@ function transformAnalyticsResponse<T>(
 
 export const postQueryToAnalyticsApi = async <T>(
   query: string,
-  dataKey?: string
+  tableName?: string
 ): Promise<DataOrErrors<T>> => {
   const body = JSON.stringify({
     query,
@@ -53,7 +53,7 @@ export const postQueryToAnalyticsApi = async <T>(
     headers
   )
     .then((response: AnalyticsResponse<T>) => {
-      return transformAnalyticsResponse<T>(response, dataKey)
+      return transformAnalyticsResponse<T>(response, tableName)
     })
     .catch((error: FetchError) => {
       return { data: null, errors: [{ message: error.message }] }
