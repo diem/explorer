@@ -4,7 +4,7 @@ wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 
 
 # Start / Stop Command Aliases
-.PHONY: start start_ui hasura_stop hasura_start wiremock_start stop wiremock_stop stop_ui
+.PHONY: start start_ui hasura_stop hasura_start wiremock_start stop wiremock_stop stop_ui generate_diem_client
 
 start: hasura_start start_ui
 	@echo "✅  UI -- started in dev mode" && echo "✅  Hasura -- started in background" && echo "The app is running at http://localhost:3000"
@@ -41,6 +41,9 @@ else
 	@echo "Explorer is either not running, or isn't using port 3000" | true
 endif
 
+# Generates typescript client code for diem rest api
+generate_diem_client:
+	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
 
 
 # General Utility Command Aliases

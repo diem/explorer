@@ -6,7 +6,9 @@ interface ObjectPropertiesTableProps {
     [key: string]: string | number | undefined | ReactChild
   }
 }
-export default function ObjectPropertiesTable({ object }: ObjectPropertiesTableProps) {
+export default function ObjectPropertiesTable({
+  object,
+}: ObjectPropertiesTableProps) {
   return (
     <BTable
       responsive
