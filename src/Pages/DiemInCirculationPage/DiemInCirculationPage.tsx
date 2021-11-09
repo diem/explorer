@@ -1,10 +1,10 @@
 import ApiRequestPage from '../../ApiRequestPage'
-import { newPostQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
 import React from 'react'
 import { DiemCurrencies } from '../../api_models/DiemInCirculation'
-import { order_by } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { currencyInCirculationPageQuery } from '../../api_clients/AnalyticsQueries'
 
 function DiemInCirculationPageWithResponse(props: { data: DiemCurrencies }) {
   const columns = [
@@ -26,40 +26,25 @@ function DiemInCirculationPageWithResponse(props: { data: DiemCurrencies }) {
   )
 }
 
-function getCurrency(currency: string) {
-  return newPostQueryToAnalyticsApi<DiemCurrencies>({
-    diem_in_circulation_realtime_aggregates: [
-      {
-        limit: 1,
-        where: { currency: { _eq: currency } },
-        order_by: [{ timestamp: order_by.desc }]
-      },
-      {
-        currency: true,
-        total_net_value: true,
-        timestamp: true
-      },
-    ],
-  })
-}
+// eslint-disable-next-line camelcase
+export type AnalyticsCurrencyInCirculationResponse = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
 
 export default function DiemInCirculationPage() {
   return (
     <ApiRequestPage
       request={async () => {
-        const xusOrErrors = await getCurrency('XUS')
-        const xdxOrErrors = await getCurrency('XDX')
+        const xusOrErrors = await postQueryToAnalyticsApi<AnalyticsCurrencyInCirculationResponse>(currencyInCirculationPageQuery('XUS'))
+        const xdxOrErrors = await postQueryToAnalyticsApi<AnalyticsCurrencyInCirculationResponse>(currencyInCirculationPageQuery('XDX'))
         if (xusOrErrors.errors || xdxOrErrors.errors) {
           return {
             // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
             data: null, errors: [].concat(xusOrErrors.errors).concat(xdxOrErrors.errors).filter((error) => error !== null)
           }
         } else {
-          console.log(xdxOrErrors)
           return {
             data: {
-              xdx: xdxOrErrors.data.diem_in_circulation_realtime_aggregates ? xdxOrErrors.data.diem_in_circulation_realtime_aggregates[0] : [],
-              xus: xusOrErrors.data.diem_in_circulation_realtime_aggregates[0]
+              xdx: xdxOrErrors.data!.diem_in_circulation_realtime_aggregates ? xdxOrErrors.data!.diem_in_circulation_realtime_aggregates[0] : [],
+              xus: xusOrErrors.data!.diem_in_circulation_realtime_aggregates[0]
             },
             errors: null
           }

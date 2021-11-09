@@ -4,7 +4,7 @@ wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 
 
 # Start / Stop Command Aliases
-.PHONY: start start_ui hasura_stop hasura_start wiremock_start stop wiremock_stop stop_ui generate_diem_client
+.PHONY: start start_ui hasura_stop hasura_start wiremock_start stop wiremock_stop stop_ui
 
 start: hasura_start start_ui
 	@echo "✅  UI -- started in dev mode" && echo "✅  Hasura -- started in background" && echo "The app is running at http://localhost:3000"
@@ -41,13 +41,8 @@ else
 	@echo "Explorer is either not running, or isn't using port 3000" | true
 endif
 
-# Generates typescript client code for diem rest api
-generate_diem_client:
-	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
-
-
 # General Utility Command Aliases
-.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build
+.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build generate_diem_client generate_gql_client
 
 no_targets__:
 list:
@@ -62,7 +57,7 @@ lint:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
-integration_test:
+integration_test: generate_gql_client
 	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration test complete 👍"
 
 test: integration_test acceptance_test
@@ -71,8 +66,15 @@ test: integration_test acceptance_test
 ship: lint integration_test acceptance_test
 	@git push && docker run -it --rm jmhobbs/terminal-parrot:latest -loops 12 -delay 25 && echo "ship complete 👍"
 
-build:
+build: generate_gql_client
 	@yarn run tsc && yarn run vite build
+
+# Generates typescript client code for diem rest api
+generate_diem_client:
+	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
+
+generate_gql_client:
+	@yarn generate-gql-client
 
 
 
@@ -81,10 +83,10 @@ build:
 .PHONY: _run_acceptance_test _run_acceptance_test_ui _ensure_logs_dir _wiremock_start_for_e2e _start_ui_for_e2e
 .PHONY: _await_e2e_deps _cleanup_acceptance_test
 
-acceptance_test: start_for_e2e _run_acceptance_test _cleanup_acceptance_test
+acceptance_test: generate_gql_client start_for_e2e _run_acceptance_test _cleanup_acceptance_test
 	@echo "acceptance test complete 👍"
 
-acceptance_test_ui: start_for_e2e _run_acceptance_test_ui _cleanup_acceptance_test
+acceptance_test_ui: generate_gql_client start_for_e2e _run_acceptance_test_ui _cleanup_acceptance_test
 	@echo "acceptance test complete 👍"
 
 _start_ui_for_e2e:

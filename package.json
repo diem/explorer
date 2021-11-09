@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite preview",
-    "generate-gql-client": "zeus http://localhost:8888/v1/graphql ./utils/generated --ts"
+    "generate-gql-client": "zeus http://localhost:8888/v1/graphql ./utils/Analytics_Hasura_Api_Zeus_Client --ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",

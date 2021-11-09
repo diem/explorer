@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import DiemInCirculationPage from './DiemInCirculationPage'
+import { currencyInCirculationPageQuery } from '../../api_clients/AnalyticsQueries'
 
 jest.mock('../../api_clients/AnalyticsClient', () => ({
   ...jest.requireActual('../../api_clients/AnalyticsClient'),
@@ -14,18 +15,22 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
 }))
 const mockXusInCirculation = {
   currency: 'XUS',
-  total_net_value: 1013830869710000,
-  timestamp: '2021-10-29T19:22:26.568447+00:00',
+  total_net_value: 1040002525680000,
+  timestamp: '2021-10-30T01:22:18.660956+00:00',
 }
 
 beforeEach(async () => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
     errors: null,
     data: {
-      xus: [{ ...mockXusInCirculation }],
-      xdx: [],
-    },
+      diem_in_circulation_realtime_aggregates: [mockXusInCirculation]
+    }
+  }).mockResolvedValueOnce({
+    errors: null,
+    data: {
+      diem_in_circulation_realtime_aggregates: []
+    }
   })
   render(
     <BrowserRouter>
@@ -37,21 +42,9 @@ beforeEach(async () => {
 
 describe('DiemInCirculationPage', () => {
   it('should call the analytics client with a query', async () => {
-    expect(postQueryToAnalyticsApi).toHaveBeenCalled()
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
-      'query getDiemInCirculation {\n' +
-        'xus: diem_in_circulation_realtime_aggregates(limit: 1, order_by: {timestamp: desc}, where: {currency: {_eq: "XUS"}}) {\n' +
-        '    currency\n' +
-        '    total_net_value\n' +
-        '    timestamp\n' +
-        '  }\n' +
-        'xdx: diem_in_circulation_realtime_aggregates(limit: 1, order_by: {timestamp: desc}, where: {currency: {_eq: "XDX"}}) {\n' +
-        '    currency\n' +
-        '    total_net_value\n' +
-        '    timestamp\n' +
-        '  }\n' +
-        '}'
-    )
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(2)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(currencyInCirculationPageQuery('XUS'))
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(currencyInCirculationPageQuery('XDX'))
   })
   it('should display event data in a table', async function () {
     expect(screen.queryByText('Total Diem In Circulation')).toBeInTheDocument()
@@ -59,14 +52,8 @@ describe('DiemInCirculationPage', () => {
     expect(screen.queryByText('Total Net Value')).toBeInTheDocument()
     expect(screen.queryByText('Timestamp')).toBeInTheDocument()
 
-    expect(
-      screen.queryByText(mockXusInCirculation.currency)
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByText(mockXusInCirculation.total_net_value)
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByText(mockXusInCirculation.timestamp)
-    ).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.currency)).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.total_net_value)).toBeInTheDocument()
+    expect(screen.queryByText(mockXusInCirculation.timestamp)).toBeInTheDocument()
   })
 })

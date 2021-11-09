@@ -5,7 +5,7 @@ import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
 
 interface EventPageProps {
-  query: string
+  query: Object
   columns: {
     Header: string,
     accessor: string,

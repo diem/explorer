@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "currency:{_eq:\"XUS\"}"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "{\"data\":{\"diem_in_circulation_realtime_aggregates\":[{\"currency\":\"XUS\",\"total_net_value\":1040002525680000,\"timestamp\":\"2021-10-30T01:22:18.660956+00:00\"}]}}"
+  }
+}

@@ -20,13 +20,13 @@ describe('Analytics Client', function () {
 
   it('should pass errors through', async function () {
     const badAnalyticsResponse = {
-      errors: [{ message: 'not a valid graphql query' }],
+      errors: [{ message: 'This is a good error !!' }],
     }
     const expected = {
       data: null,
       errors: [{ message: badAnalyticsResponse.errors[0].message }],
     }
-    setAnalyticsApiResponse(server, expected)
+    setAnalyticsApiResponse(server, badAnalyticsResponse)
     const result = await postQueryToAnalyticsApi(
       "the query doesn't matter since we're mocking the service workers (msw)",
       '_'

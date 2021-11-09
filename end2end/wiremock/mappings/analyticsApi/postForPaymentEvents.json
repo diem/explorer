@@ -5,7 +5,7 @@
     "bodyPatterns" : [ {
       "matchesJsonPath" : {
         "expression": "$.query",
-        "contains": "query getPaymentEvents"
+        "contains": "query{sentpayment_events(limit:"
       }
     } ]
   },

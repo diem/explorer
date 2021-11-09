@@ -5,7 +5,7 @@
     "bodyPatterns" : [ {
       "matchesJsonPath" : {
       "expression": "$.query",
-      "contains": "query getTransactions"
+      "contains": "query{transactions(limit:"
     }
     } ]
   },

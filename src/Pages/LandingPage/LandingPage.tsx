@@ -7,14 +7,13 @@ import Table from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
-import { newPostQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import {
   AnalyticsTransaction,
   transformAnalyticsTransactionIntoTransaction,
 } from '../../api_models/AnalyticsTransaction'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
-// eslint-disable-next-line camelcase
-import { order_by } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { landingPageQuery } from '../../api_clients/AnalyticsQueries'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -91,23 +90,7 @@ export default function LandingPage() {
   return (
     <ApiRequestPage
       request={() => {
-        return newPostQueryToAnalyticsApi<AnalyticsTransaction[]>({
-          transactions: [
-            {
-              limit: 10,
-              where: { txn_type: { _eq: 3 } },
-              order_by: [{ version: order_by.desc }]
-            },
-            {
-              version: true,
-              txn_type: true,
-              expiration_timestamp: true,
-              commit_timestamp: true,
-              status: true,
-              sender: true,
-            }
-          ]
-        }, 'transactions').then(transformAnalyticsTransactionsOrErrors)
+        return postQueryToAnalyticsApi<AnalyticsTransaction[]>(landingPageQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
       }}
     >
       <LandingPageWithResponse data={[]} />
