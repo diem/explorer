@@ -1,6 +1,7 @@
 import Config from '../config.json'
 import { postWithFetch } from './FetchBroker'
 import { DataOrErrors, FetchError } from './FetchTypes'
+import { Gql, order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 
 export type AnalyticsResponse<T> = {
   data: T | undefined
@@ -31,6 +32,30 @@ function transformAnalyticsResponse<T>(
     return {
       errors: null,
       data: null,
+    }
+  }
+}
+
+interface ZeusGqlResponse<T> {
+  errors?: {message: string}[]
+  [key: string]: T[] | {message: string}[] | undefined
+}
+
+export const newPostQueryToAnalyticsApi = async <T>(
+  query: Object,
+  tableName?: string
+): Promise<DataOrErrors<T>> => {
+  const gqlResponse: ZeusGqlResponse<T> = await Gql.query(query)
+  if (gqlResponse.errors) {
+    return {
+      errors: [...gqlResponse.errors],
+      data: null,
+    }
+  } else {
+    return {
+      errors: null,
+      // @ts-ignore property accessor syntax breaks the code here
+      data: tableName ? gqlResponse[tableName] : gqlResponse,
     }
   }
 }
