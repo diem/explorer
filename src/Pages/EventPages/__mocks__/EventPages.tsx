@@ -1,3 +1,6 @@
+export const mockGasEventsPageText = 'This is gas events page'
+const mockGasEventsPage = () => <div role="main">{mockGasEventsPageText}</div>
+
 export const mockPaymentEventsPageText = 'This is payment events page'
 const mockPaymentEventsPage = () => <div role="main">{mockPaymentEventsPageText}</div>
 
@@ -10,7 +13,8 @@ const mockMintEventsPage = () => <div role="main">{mockMintEventsPageText}</div>
 const mockEventPages = {
   BurnEventsPage: mockBurnEventsPage,
   MintEventsPage: mockMintEventsPage,
-  PaymentEventsPage: mockPaymentEventsPage
+  PaymentEventsPage: mockPaymentEventsPage,
+  GasEventsPage: mockGasEventsPage
 }
 
 export default mockEventPages

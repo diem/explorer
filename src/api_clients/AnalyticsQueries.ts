@@ -60,6 +60,25 @@ export function paymentEventsQuery() {
   }
 }
 
+export function gasEventsQuery() {
+  return {
+    gas_payments: [
+      {
+        limit: 10,
+        order_by: [{ version: order_by.desc }]
+      },
+      {
+        commit_timestamp: true,
+        currency: true,
+        gas_paid: true,
+        receiver: true,
+        sender: true,
+        version: true
+      }
+    ]
+  }
+}
+
 export function landingPageQuery() {
   return {
     transactions: [

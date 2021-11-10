@@ -1,7 +1,7 @@
 import { DataOrErrors } from './FetchTypes'
 import { Gql } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import fetch from 'isomorphic-fetch'
-
+globalThis.fetch = fetch
 export type AnalyticsResponse<T> = DataOrErrors<T>
 
 interface ZeusGqlResponse<T> {

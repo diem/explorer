@@ -18,8 +18,8 @@ start_ui: stop
 hasura_stop:
 	@docker-compose -f docker-compose.yml down > /dev/null 2>&1 && echo "Hasura is down"
 
-hasura_start: wiremock_stop hasura_stop
-	@docker-compose -f docker-compose.yml up -d > /dev/null 2>&1 && echo "Hasura is up"
+hasura_start: wiremock_stop
+	@docker-compose -f docker-compose.yml down > /dev/null 2>&1 && docker-compose -f docker-compose.yml up -d > /dev/null 2>&1 && echo "Hasura is up"
 
 wiremock_start: wiremock_stop
 	@yarn run wiremock --port 8888 --root-dir end2end/wiremock > end2end/logs/wiremock.log
@@ -58,7 +58,7 @@ lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
 integration_test: generate_gql_client
-	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration test complete 👍"
+	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration tests complete 👍"
 
 test: integration_test acceptance_test
 	@echo "integration test and acceptance test complete 👍"
@@ -73,8 +73,8 @@ build: generate_gql_client
 generate_diem_client:
 	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
 
-generate_gql_client:
-	@yarn generate-gql-client
+generate_gql_client: hasura_start
+	@sh scripts/retry_until_success.sh 'yarn generate-gql-client'
 
 
 
@@ -84,7 +84,7 @@ generate_gql_client:
 .PHONY: _await_e2e_deps _cleanup_acceptance_test
 
 acceptance_test: generate_gql_client start_for_e2e _run_acceptance_test _cleanup_acceptance_test
-	@echo "acceptance test complete 👍"
+	@echo "acceptance tests complete 👍"
 
 acceptance_test_ui: generate_gql_client start_for_e2e _run_acceptance_test_ui _cleanup_acceptance_test
 	@echo "acceptance test complete 👍"
@@ -108,4 +108,4 @@ _ensure_logs_dir:
 	@mkdir -p end2end/logs
 
 _wiremock_start_for_e2e:
-	@screen -m -d -S wiremock make wiremock_start & > end2end/logs/ui.log
+	@screen -m -d -S wiremock make wiremock_start &  > end2end/logs/wiremock.log

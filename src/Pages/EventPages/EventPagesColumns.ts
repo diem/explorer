@@ -76,3 +76,14 @@ export function paymentsEventsColumn() {
     { Header: 'Sequence Number', accessor: 'sequence_number' },
   ]
 }
+
+export function gasEventsColumn() {
+  return [
+    { Header: 'Transaction Version', accessor: 'version', Cell: TransactionVersion },
+    { Header: 'Timestamp', accessor: 'commit_timestamp', Cell: TransactionVersion },
+    { Header: 'Currency', accessor: 'currency' },
+    { Header: 'Gas Paid', accessor: 'gas_paid' },
+    { Header: 'Receiver', accessor: 'receiver', Cell: TruncatedCell },
+    { Header: 'Sender', accessor: 'sender', Cell: TruncatedCell }
+  ]
+}

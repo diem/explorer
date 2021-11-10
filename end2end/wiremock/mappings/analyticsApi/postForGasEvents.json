@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query{gas_payments(limit:"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "{\"data\":{\"gas_payments\":[{\"commit_timestamp\":\"2021-05-31T19:00:35+00:00\",\"currency\":\"XUS\",\"gas_paid\":500,\"receiver\":\"0000000000000000000000000B1E55ED\",\"sender\":\"5D2DF1D33912E06BE9D041A8AEE913DF\",\"version\":142254414}]}}"  }
+}

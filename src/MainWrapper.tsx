@@ -56,7 +56,9 @@ function MainWrapper(props: MainWrapperProps) {
                   <Link className="dropdown-item" to="/events/payment">
                     Payment Events
                   </Link>
-                  <NavDropdown.Item href="#">Gas Events</NavDropdown.Item>
+                  <Link className="dropdown-item" to="/events/gas">
+                    Gas Events
+                  </Link>
                   <NavDropdown.Item href="#">Preburn Events</NavDropdown.Item>
                   <NavDropdown.Item href="#">
                     Account Creation Events

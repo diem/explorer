@@ -14,6 +14,7 @@ export default function ExplorerRouter() {
       <Route path="/events/mint" component={eventPages.MintEventsPage} />
       <Route path="/events/burn" component={eventPages.BurnEventsPage} />
       <Route path="/events/payment" component={eventPages.PaymentEventsPage} />
+      <Route path="/events/gas" component={eventPages.GasEventsPage} />
       <Route path="/diemincirculation" component={DiemIncirculationPage} />
       <Route path="/address/:address" component={AccountPage} />
       <Route component={NotFoundPage} />

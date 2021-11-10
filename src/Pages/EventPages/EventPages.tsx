@@ -1,11 +1,11 @@
 import React from 'react'
 import EventPage from './EventPage'
 import {
-  burnEventsQuery,
+  burnEventsQuery, gasEventsQuery,
   mintEventsQuery,
   paymentEventsQuery
 } from '../../api_clients/AnalyticsQueries'
-import { burnEventsColumn, mintEventsColumn, paymentsEventsColumn } from './EventPagesColumns'
+import { burnEventsColumn, gasEventsColumn, mintEventsColumn, paymentsEventsColumn } from './EventPagesColumns'
 
 const MintEventsPageProps = {
   query: mintEventsQuery(),
@@ -20,11 +20,19 @@ const BurnEventsPageProps = {
   tableName: 'burn_events',
   eventType: 'Burn'
 }
+
 const PaymentEventsPageProps = {
   query: paymentEventsQuery(),
   columns: paymentsEventsColumn(),
   tableName: 'sentpayment_events',
   eventType: 'Payment'
+}
+
+const GasEventsPageProps = {
+  query: gasEventsQuery(),
+  columns: gasEventsColumn(),
+  tableName: 'gas_payments',
+  eventType: 'Gas'
 }
 
 const BurnEventsPage = () => {
@@ -39,10 +47,16 @@ const MintEventsPage = () => {
 const PaymentEventsPage = () => {
   return (<EventPage { ...PaymentEventsPageProps } />)
 }
+
+const GasEventsPage = () => {
+  return (<EventPage { ...GasEventsPageProps } />)
+}
+
 const eventPages = {
   BurnEventsPage: BurnEventsPage,
   MintEventsPage: MintEventsPage,
-  PaymentEventsPage: PaymentEventsPage
+  PaymentEventsPage: PaymentEventsPage,
+  GasEventsPage: GasEventsPage
 }
 
 export default eventPages
