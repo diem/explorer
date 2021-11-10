@@ -1,11 +1,19 @@
 import React from 'react'
 import EventPage from './EventPage'
 import {
+  accountcreationEventsQuery,
   burnEventsQuery, gasEventsQuery,
   mintEventsQuery,
-  paymentEventsQuery
+  paymentEventsQuery, preburnEventsQuery
 } from '../../api_clients/AnalyticsQueries'
-import { burnEventsColumn, gasEventsColumn, mintEventsColumn, paymentsEventsColumn } from './EventPagesColumns'
+import {
+  accountcreationEventsColumn,
+  burnEventsColumn,
+  gasEventsColumn,
+  mintEventsColumn,
+  paymentsEventsColumn,
+  preburnEventsColumn
+} from './EventPagesColumns'
 
 const MintEventsPageProps = {
   query: mintEventsQuery(),
@@ -35,6 +43,20 @@ const GasEventsPageProps = {
   eventType: 'Gas'
 }
 
+const PreburnEventsPageProps = {
+  query: preburnEventsQuery(),
+  columns: preburnEventsColumn(),
+  tableName: 'preburns',
+  eventType: 'Preburn'
+}
+
+const AccountCreationEventsPageProps = {
+  query: accountcreationEventsQuery(),
+  columns: accountcreationEventsColumn(),
+  tableName: 'accounts',
+  eventType: 'Account Creation'
+}
+
 const BurnEventsPage = () => {
   return (
     <EventPage { ...BurnEventsPageProps } />
@@ -52,11 +74,21 @@ const GasEventsPage = () => {
   return (<EventPage { ...GasEventsPageProps } />)
 }
 
+const PreburnEventsPage = () => {
+  return (<EventPage { ...PreburnEventsPageProps } />)
+}
+
+const AccountCreationEventsPage = () => {
+  return (<EventPage { ...AccountCreationEventsPageProps } />)
+}
+
 const eventPages = {
   BurnEventsPage: BurnEventsPage,
   MintEventsPage: MintEventsPage,
   PaymentEventsPage: PaymentEventsPage,
-  GasEventsPage: GasEventsPage
+  GasEventsPage: GasEventsPage,
+  PreburnEventsPage: PreburnEventsPage,
+  AccountCreationEventsPage: AccountCreationEventsPage
 }
 
 export default eventPages

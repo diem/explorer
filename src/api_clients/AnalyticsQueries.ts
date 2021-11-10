@@ -79,6 +79,59 @@ export function gasEventsQuery() {
   }
 }
 
+export function preburnEventsQuery() {
+  return {
+    preburns: [
+      {
+        limit: 10,
+        order_by: [{ version: order_by.desc }]
+      },
+      {
+        version: true,
+        commit_timestamp: true,
+        amount: true,
+        status: true,
+        sender: true,
+        receiver: true,
+        currency: true
+      }
+    ]
+  }
+}
+
+export function accountcreationEventsQuery() {
+  return {
+    accounts: [
+      {
+        limit: 10,
+        order_by: [{ transaction_version: order_by.desc }]
+      },
+      {
+        transaction_version: true,
+        sent_events_key: true,
+        role: true,
+        received_mint_events_key: true,
+        received_events_key: true,
+        parent_vasp_address: true,
+        is_frozen: true,
+        indexed_at: true,
+        diem_id_domain_events_key: true,
+        expiration_time: true,
+        delegated_withdrawal_capability: true,
+        delegated_key_rotation_capability: true,
+        create_account_event_stream_sequence_number: true,
+        compliance_key: true,
+        address: true,
+        base_url: true,
+        base_url_rotation_events_key: true,
+        authentication_key: true,
+        human_name: true,
+        compliance_key_rotation_events_key: true
+      }
+    ]
+  }
+}
+
 export function landingPageQuery() {
   return {
     transactions: [
