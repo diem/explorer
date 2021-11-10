@@ -74,7 +74,7 @@ generate_diem_client:
 	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
 
 generate_gql_client: hasura_start
-	@sh scripts/retry_until_success.sh 'yarn generate-gql-client'
+	@bash scripts/retry_until_success.sh 'yarn generate-gql-client'
 
 
 
@@ -93,7 +93,7 @@ _start_ui_for_e2e:
 	@screen -m -d -S ui yarn run dev --mode="test" &
 
 _await_e2e_deps:
-	@sh scripts/wait_for_port.sh 3000 && sh scripts/wait_for_port.sh 8888 && sleep 1
+	@bash scripts/wait_for_port.sh 3000 && bash scripts/wait_for_port.sh 8888 && sleep 1
 
 _cleanup_acceptance_test:
 	@screen -X -S ui quit && screen -X -S wiremock quit

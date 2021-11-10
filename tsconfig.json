@@ -20,5 +20,8 @@
   "include": [
     "./src",
     "node_modules/@types/jest/index.d.ts"
+  ],
+  "exclude": [
+    "utils/Analytics_Hasura_Api_Zeus_Client"
   ]
 }

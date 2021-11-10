@@ -4,18 +4,12 @@ import fetch from 'isomorphic-fetch'
 globalThis.fetch = fetch
 export type AnalyticsResponse<T> = DataOrErrors<T>
 
-interface ZeusGqlResponse<T> {
-  errors?: {message: string}[]
-  [key: string]: T[] | {message: string}[] | undefined
-}
-
 export const postQueryToAnalyticsApi = async <T>(
-  query: Object,
+  query: any,
   tableName?: string
 ): Promise<AnalyticsResponse<T>> => {
-  let gqlResponse : ZeusGqlResponse<T>
   try {
-    gqlResponse = await Gql.query(query)
+    const gqlResponse = await Gql.query(query)
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here

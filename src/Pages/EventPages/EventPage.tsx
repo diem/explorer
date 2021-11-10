@@ -9,7 +9,7 @@ interface EventPageProps {
   columns: {
     Header: string,
     accessor: string,
-    Cell?: React.FC<{value:string}>
+    Cell?: React.FC<{value:any}>
   }[]
   tableName: string
   eventType: string
