@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{preburns(limit:"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "body": "{\"data\":{\"preburns\":[{\"version\":312039453,\"commit_timestamp\":\"2021-10-15T01:07:26+00:00\",\"amount\":950000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":310352666,\"commit_timestamp\":\"2021-10-13T17:26:12+00:00\",\"amount\":1010000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":309521880,\"commit_timestamp\":\"2021-10-13T01:49:04+00:00\",\"amount\":1740000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":294527641,\"commit_timestamp\":\"2021-10-01T17:34:37+00:00\",\"amount\":40000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":289417738,\"commit_timestamp\":\"2021-09-27T17:18:44+00:00\",\"amount\":30000,\"status\":1,\"sender\":\"44932CDBBE47D3333382A59B25C566BF\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":289417613,\"commit_timestamp\":\"2021-09-27T17:18:32+00:00\",\"amount\":40000,\"status\":1,\"sender\":\"44932CDBBE47D3333382A59B25C566BF\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":285506083,\"commit_timestamp\":\"2021-09-24T17:37:07+00:00\",\"amount\":1850000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":275755616,\"commit_timestamp\":\"2021-09-17T04:50:29+00:00\",\"amount\":40000,\"status\":1,\"sender\":\"CF9405939FD0262B8BB8F2D513F63E11\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":273561664,\"commit_timestamp\":\"2021-09-15T15:33:00+00:00\",\"amount\":1650000,\"status\":1,\"sender\":\"C408CB86863376934BD1019402EEFDB2\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}, {\"version\":272553192,\"commit_timestamp\":\"2021-09-14T21:21:12+00:00\",\"amount\":1650000,\"status\":1,\"sender\":\"C408CB86863376934BD1019402EEFDB2\",\"receiver\":\"0000000000000000000000000B1E55ED\",\"currency\":\"XUS\"}]}}"
+  }
+}

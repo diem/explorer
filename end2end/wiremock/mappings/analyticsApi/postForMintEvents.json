@@ -5,7 +5,7 @@
     "bodyPatterns" : [ {
       "matchesJsonPath" : {
         "expression": "$.query",
-        "contains": "query getMintEvents"
+        "contains": "query{receivedmint_events(limit:"
       }
     } ]
   },

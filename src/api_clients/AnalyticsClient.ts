@@ -1,61 +1,31 @@
-import Config from '../config.json'
-import { postWithFetch } from './FetchBroker'
-import { DataOrErrors, FetchError } from './FetchTypes'
+import { DataOrErrors } from './FetchTypes'
+import { Gql } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import fetch from 'isomorphic-fetch'
+globalThis.fetch = fetch
+export type AnalyticsResponse<T> = DataOrErrors<T>
 
-export type AnalyticsResponse<T> = {
-  data: T | undefined
-  errors: AnalyticsError[] | undefined
-}
-
-export type AnalyticsError = {
-  extensions: { path: string; code: string }
-  message: string
-}
-
-function transformAnalyticsResponse<T>(
-  response: AnalyticsResponse<T>,
-  dataKey?: string
-): DataOrErrors<T> {
-  if (response.errors) {
-    return {
-      errors: [...response.errors],
-      data: null,
-    }
-  } else if (response.data) {
+export const postQueryToAnalyticsApi = async <T>(
+  query: any,
+  tableName?: string
+): Promise<AnalyticsResponse<T>> => {
+  try {
+    const gqlResponse = await Gql.query(query)
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here
-      data: dataKey ? response.data[dataKey] : response.data,
+      data: tableName ? gqlResponse[tableName] : gqlResponse
     }
-  } else {
-    return {
-      errors: null,
-      data: null,
+  } catch (err: any) {
+    if ('response' in err) {
+      return {
+        errors: [...err.response.errors],
+        data: null,
+      }
+    } else {
+      return {
+        errors: [{ message: err.message }],
+        data: null,
+      }
     }
   }
-}
-
-export const postQueryToAnalyticsApi = async <T>(
-  query: string,
-  dataKey?: string
-): Promise<DataOrErrors<T>> => {
-  const body = JSON.stringify({
-    query,
-    variables: null,
-  })
-  const headers = {
-    'Content-type': 'application/json; charset=UTF-8',
-    Accept: '*/*',
-  }
-  return postWithFetch<AnalyticsResponse<T>>(
-    Config.DIEMX_GRAPHQL_URL + '/v1/graphql',
-    body,
-    headers
-  )
-    .then((response: AnalyticsResponse<T>) => {
-      return transformAnalyticsResponse<T>(response, dataKey)
-    })
-    .catch((error: FetchError) => {
-      return { data: null, errors: [{ message: error.message }] }
-    })
 }

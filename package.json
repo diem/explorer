@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "generate-gql-client": "zeus http://localhost:8888/v1/graphql ./utils/Analytics_Hasura_Api_Zeus_Client --ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
@@ -12,6 +13,7 @@
     "@libra-opensource/client-sdk-typescript": "^1.0.8",
     "bootstrap": "5.1.3",
     "framer-motion": "^4.1.17",
+    "graphql-zeus": "^3.3.2",
     "isomorphic-fetch": "^3.0.0",
     "react": "^17.0.0",
     "react-bootstrap": "^2.0.0-rc.1",

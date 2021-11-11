@@ -5,7 +5,7 @@
     "bodyPatterns" : [ {
       "matchesJsonPath" : {
         "expression": "$.query",
-        "contains": "query getBurnEvents"
+        "contains": "query{burn_events(limit:"
       }
     } ]
   },

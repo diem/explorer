@@ -1,5 +1,5 @@
 exports.config = {
-  tests: 'end2end/*_test.js',
+  tests: ['end2end/*_test.js', 'end2end/eventPages/*_test.js'],
   output: 'output',
   helpers: {
     Playwright: {

@@ -7,13 +7,13 @@ import Table from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
-
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import {
   AnalyticsTransaction,
   transformAnalyticsTransactionIntoTransaction,
 } from '../../api_models/AnalyticsTransaction'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
-import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+import { landingPageQuery } from '../../api_clients/AnalyticsQueries'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -90,18 +90,7 @@ export default function LandingPage() {
   return (
     <ApiRequestPage
       request={() => {
-        return postQueryToAnalyticsApi<AnalyticsTransaction[]>(
-          'query getTransactions {' +
-            '\n  transactions(limit: 10, where: {txn_type: {_eq: 3}}, order_by: {version: desc}) {' +
-            '\n    version' +
-            '\n    txn_type' +
-            '\n    expiration_timestamp' +
-            '\n    commit_timestamp' +
-            '\n    status' +
-            '\n    sender' +
-            '\n}\n}\n',
-          'transactions'
-        ).then(transformAnalyticsTransactionsOrErrors)
+        return postQueryToAnalyticsApi<AnalyticsTransaction[]>(landingPageQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
       }}
     >
       <LandingPageWithResponse data={[]} />

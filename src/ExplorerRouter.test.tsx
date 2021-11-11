@@ -4,15 +4,13 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { mockLandingPageText } from './Pages/LandingPage/__mocks__/LandingPage'
 import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDetailsPage'
-import { mockMintEventsPageText } from './Pages/MintEventsPage/__mocks__/MintEventsPage'
-import { mockBurnEventsPageText } from './Pages/BurnEventsPage/__mocks__/BurnEventsPage'
+import { mockMintEventsPageText, mockBurnEventsPageText, mockPaymentEventsPageText, mockGasEventsPageText, mockPreburnEventsPageText, mockAccountCreationEventsPageText } from './Pages/EventPages/__mocks__/EventPages'
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
-jest.mock('./Pages/MintEventsPage/MintEventsPage')
-jest.mock('./Pages/BurnEventsPage/BurnEventsPage')
+jest.mock('./Pages/EventPages/EventPages')
 jest.mock('./Pages/DiemInCirculationPage/DiemInCirculationPage')
 jest.mock('./Pages/AccountPage/AccountPage')
 
@@ -49,6 +47,30 @@ describe('ExplorerRouter', () => {
     renderWithRouter('/events/burn')
     expect(screen.getByRole('main').textContent).toContain(
       mockBurnEventsPageText
+    )
+  })
+  it('should render Payment Events page when path is /events/payment', async function () {
+    renderWithRouter('/events/payment')
+    expect(screen.getByRole('main').textContent).toContain(
+      mockPaymentEventsPageText
+    )
+  })
+  it('should render Gas Events page when path is /events/gas', async function () {
+    renderWithRouter('/events/gas')
+    expect(screen.getByRole('main').textContent).toContain(
+      mockGasEventsPageText
+    )
+  })
+  it('should render Preburn Events page when path is /events/preburn', async function () {
+    renderWithRouter('/events/preburn')
+    expect(screen.getByRole('main').textContent).toContain(
+      mockPreburnEventsPageText
+    )
+  })
+  it('should render Account Events Events page when path is /events/accountcreation', async function () {
+    renderWithRouter('/events/accountcreation')
+    expect(screen.getByRole('main').textContent).toContain(
+      mockAccountCreationEventsPageText
     )
   })
   it('should render Diem In Circulation page when path is /dieminciculation', async function () {
