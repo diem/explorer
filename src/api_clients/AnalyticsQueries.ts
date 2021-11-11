@@ -158,7 +158,7 @@ export function currencyInCirculationPageQuery(currency : string) {
       {
         limit: 1,
         where: { currency: { _eq: currency } },
-        order_by: [{ timestamp: order_by.desc }]
+        order_by: [{ timestamp: 'desc' }]
       },
       {
         currency: true,

@@ -42,7 +42,7 @@ else
 endif
 
 # General Utility Command Aliases
-.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build generate_diem_client generate_gql_client
+.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build generate_diem_client generate_gql_client contract_test
 
 no_targets__:
 list:
@@ -57,21 +57,24 @@ lint:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
-integration_test: generate_gql_client
+integration_test:
 	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration tests complete 👍"
 
-test: integration_test acceptance_test
-	@echo "integration test and acceptance test complete 👍"
+test: integration_test contract_test acceptance_test
+	@echo "integration tests, contract tests and acceptance tests complete 👍"
 
-ship: lint integration_test acceptance_test
+ship: lint integration_test contract_test acceptance_test
 	@git push && docker run -it --rm jmhobbs/terminal-parrot:latest -loops 12 -delay 25 && echo "ship complete 👍"
 
-build: generate_gql_client
+build:
 	@yarn run tsc && yarn run vite build
 
 # Generates typescript client code for diem rest api
 generate_diem_client:
 	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
+
+contract_test : generate_gql_client
+	@yarn run tsc && echo "contract tests complete 👍"
 
 generate_gql_client: hasura_start
 	@bash scripts/retry_until_success.sh 'yarn generate-gql-client'
@@ -83,7 +86,7 @@ generate_gql_client: hasura_start
 .PHONY: _run_acceptance_test _run_acceptance_test_ui _ensure_logs_dir _wiremock_start_for_e2e _start_ui_for_e2e
 .PHONY: _await_e2e_deps _cleanup_acceptance_test
 
-acceptance_test: generate_gql_client start_for_e2e _run_acceptance_test _cleanup_acceptance_test
+acceptance_test: start_for_e2e _run_acceptance_test _cleanup_acceptance_test
 	@echo "acceptance tests complete 👍"
 
 acceptance_test_ui: generate_gql_client start_for_e2e _run_acceptance_test_ui _cleanup_acceptance_test

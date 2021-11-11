@@ -25,4 +25,3 @@ yarn-debug.log*
 yarn-error.log*
 .idea/
 end2end/logs
-utils/
