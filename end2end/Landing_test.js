@@ -20,6 +20,11 @@ function seeLandingPageTableValues (I) {
   I.see('Executed')
 }
 
+function seeTpsCard(I) {
+  I.see('Current Transactions Per Second')
+  I.see('42 tps')
+}
+
 Scenario('test after data has loaded', ({ I }) => {
   I.amOnPage('/')
   seeLandingPageHardCodedStrings(I)
@@ -27,4 +32,6 @@ Scenario('test after data has loaded', ({ I }) => {
   I.waitForElement('table', 10)
   seeLandingPageTableHeaders(I)
   seeLandingPageTableValues(I)
+
+  seeTpsCard(I)
 })

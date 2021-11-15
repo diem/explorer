@@ -1,6 +1,7 @@
 // eslint-disable-next-line camelcase
-import { order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { GraphQLTypes, order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 
+export type mintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -20,6 +21,7 @@ export function mintEventsQuery() {
   }
 }
 
+export type burnEventsQueryType = GraphQLTypes['query_root']['burn_events']
 export function burnEventsQuery() {
   return {
     burn_events: [
@@ -39,6 +41,7 @@ export function burnEventsQuery() {
   }
 }
 
+export type paymentEventsQueryType = GraphQLTypes['query_root']['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -60,6 +63,7 @@ export function paymentEventsQuery() {
   }
 }
 
+export type gasEventsQueryType = GraphQLTypes['query_root']['gas_payments']
 export function gasEventsQuery() {
   return {
     gas_payments: [
@@ -79,6 +83,7 @@ export function gasEventsQuery() {
   }
 }
 
+export type preburnEventsQueryType = GraphQLTypes['query_root']['preburns']
 export function preburnEventsQuery() {
   return {
     preburns: [
@@ -99,6 +104,7 @@ export function preburnEventsQuery() {
   }
 }
 
+export type accountcreationEventsQueryType = GraphQLTypes['query_root']['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [
@@ -132,6 +138,7 @@ export function accountcreationEventsQuery() {
   }
 }
 
+export type landingPageQueryType = GraphQLTypes['query_root']['transactions']
 export function landingPageQuery() {
   return {
     transactions: [
@@ -152,6 +159,7 @@ export function landingPageQuery() {
   }
 }
 
+export type currencyInCirculationPageQueryType = GraphQLTypes['query_root']['diem_in_circulation_realtime_aggregates']
 export function currencyInCirculationPageQuery(currency : string) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -167,4 +175,9 @@ export function currencyInCirculationPageQuery(currency : string) {
       },
     ],
   }
+}
+
+export type countTransactionsInLast10MinutesType = number
+export function countTransactionsInLast10Minutes() {
+  return {}
 }

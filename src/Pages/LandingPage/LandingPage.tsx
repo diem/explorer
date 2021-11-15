@@ -2,18 +2,14 @@ import { FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
 import ApiRequestPage from '../../ApiRequestPage'
 import MainWrapper from '../../MainWrapper'
-import { LandingPageTransaction } from './LandingPageTransactionModel'
+import { LandingPageTransaction, transformAnalyticsTransactionIntoTransaction } from './LandingPageTransactionModel'
 import Table from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import {
-  AnalyticsTransaction,
-  transformAnalyticsTransactionIntoTransaction,
-} from '../../api_models/AnalyticsTransaction'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
-import { landingPageQuery } from '../../api_clients/AnalyticsQueries'
+import { landingPageQuery, landingPageQueryType } from '../../api_clients/AnalyticsQueries'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -37,9 +33,8 @@ function TransactionTable(props: { transactions: LandingPageTransaction[] }) {
     { Header: 'Status', accessor: 'status' },
   ]
 
-  return <Table columns={columns} data={props.transactions} />
+  return <Table columns={columns} data={props.transactions} id='landingPageTransactions'/>
 }
-
 function LandingPageWithResponse(props: { data: LandingPageTransaction[] }) {
   const history = useHistory()
   function handleSearch(event: any) {
@@ -71,7 +66,7 @@ function LandingPageWithResponse(props: { data: LandingPageTransaction[] }) {
 }
 
 function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<AnalyticsTransaction[]>
+  response: DataOrErrors<landingPageQueryType>
 ): DataOrErrors<LandingPageTransaction[]> {
   if (response.data) {
     return {
@@ -90,7 +85,7 @@ export default function LandingPage() {
   return (
     <ApiRequestPage
       request={() => {
-        return postQueryToAnalyticsApi<AnalyticsTransaction[]>(landingPageQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
+        return postQueryToAnalyticsApi<landingPageQueryType>(landingPageQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
       }}
     >
       <LandingPageWithResponse data={[]} />
