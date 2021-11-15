@@ -26,5 +26,11 @@ module.exports = function () {
     goBack() {
       this.executeScript('window.history.back();')
     },
+
+    navigateToAddressPage(address) {
+      this.click(address)
+      this.seeInCurrentUrl(`/address/${address}`)
+      this.goBack()
+    }
   })
 }
