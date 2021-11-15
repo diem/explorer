@@ -159,7 +159,8 @@ export function landingPageQuery() {
   }
 }
 
-export type currencyInCirculationPageQueryType = GraphQLTypes['query_root']['diem_in_circulation_realtime_aggregates']
+// eslint-disable-next-line camelcase
+export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
 export function currencyInCirculationPageQuery(currency : string) {
   return {
     diem_in_circulation_realtime_aggregates: [

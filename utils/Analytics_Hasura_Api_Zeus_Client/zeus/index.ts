@@ -61,6 +61,136 @@ export type ValueTypes = {
 	/** does the column match the given SQL regular expression */
 	_similar?:string | null
 };
+	/** columns and relationships of "account_roles" */
+["account_roles"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["account_roles_aggregate_fields"],
+	nodes?:ValueTypes["account_roles"],
+		__typename?: true
+}>;
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["account_roles_avg_fields"],
+count?: [{	columns?:ValueTypes["account_roles_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["account_roles_max_fields"],
+	min?:ValueTypes["account_roles_min_fields"],
+	stddev?:ValueTypes["account_roles_stddev_fields"],
+	stddev_pop?:ValueTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["account_roles_stddev_samp_fields"],
+	sum?:ValueTypes["account_roles_sum_fields"],
+	var_pop?:ValueTypes["account_roles_var_pop_fields"],
+	var_samp?:ValueTypes["account_roles_var_samp_fields"],
+	variance?:ValueTypes["account_roles_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: {
+	_and?:ValueTypes["account_roles_bool_exp"][],
+	_not?:ValueTypes["account_roles_bool_exp"] | null,
+	_or?:ValueTypes["account_roles_bool_exp"][],
+	id?:ValueTypes["Int_comparison_exp"] | null,
+	name?:ValueTypes["String_comparison_exp"] | null
+};
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]:account_roles_constraint;
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: {
+	id?:number | null
+};
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: {
+	id?:number | null,
+	name?:string | null
+};
+	/** aggregate max on columns */
+["account_roles_max_fields"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["account_roles_min_fields"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["account_roles"],
+		__typename?: true
+}>;
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: {
+	constraint:ValueTypes["account_roles_constraint"],
+	update_columns:ValueTypes["account_roles_update_column"][],
+	where?:ValueTypes["account_roles_bool_exp"] | null
+};
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: {
+	id?:ValueTypes["order_by"] | null,
+	name?:ValueTypes["order_by"] | null
+};
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]:account_roles_select_column;
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: {
+	id?:number | null,
+	name?:string | null
+};
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]:account_roles_update_column;
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "accounts" */
 ["accounts"]: AliasType<{
 	address?:true,
@@ -111,168 +241,6 @@ count?: [{	columns?:ValueTypes["accounts_select_column"][],	distinct?:boolean | 
 	create_account_event_stream_sequence_number?:true,
 	role?:true,
 	transaction_version?:true,
-		__typename?: true
-}>;
-	/** columns and relationships of "accounts_balances" */
-["accounts_balances"]: AliasType<{
-	address?:true,
-	balance?:true,
-	currency?:true,
-	timestamp?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregated selection of "accounts_balances" */
-["accounts_balances_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["accounts_balances_aggregate_fields"],
-	nodes?:ValueTypes["accounts_balances"],
-		__typename?: true
-}>;
-	/** aggregate fields of "accounts_balances" */
-["accounts_balances_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["accounts_balances_avg_fields"],
-count?: [{	columns?:ValueTypes["accounts_balances_select_column"][],	distinct?:boolean | null},true],
-	max?:ValueTypes["accounts_balances_max_fields"],
-	min?:ValueTypes["accounts_balances_min_fields"],
-	stddev?:ValueTypes["accounts_balances_stddev_fields"],
-	stddev_pop?:ValueTypes["accounts_balances_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["accounts_balances_stddev_samp_fields"],
-	sum?:ValueTypes["accounts_balances_sum_fields"],
-	var_pop?:ValueTypes["accounts_balances_var_pop_fields"],
-	var_samp?:ValueTypes["accounts_balances_var_samp_fields"],
-	variance?:ValueTypes["accounts_balances_variance_fields"],
-		__typename?: true
-}>;
-	/** aggregate avg on columns */
-["accounts_balances_avg_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** Boolean expression to filter rows from the table "accounts_balances". All fields are combined with a logical 'AND'. */
-["accounts_balances_bool_exp"]: {
-	_and?:ValueTypes["accounts_balances_bool_exp"][],
-	_not?:ValueTypes["accounts_balances_bool_exp"] | null,
-	_or?:ValueTypes["accounts_balances_bool_exp"][],
-	address?:ValueTypes["bpchar_comparison_exp"] | null,
-	balance?:ValueTypes["bigint_comparison_exp"] | null,
-	currency?:ValueTypes["bpchar_comparison_exp"] | null,
-	timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
-	version?:ValueTypes["bigint_comparison_exp"] | null
-};
-	/** unique or primary key constraints on table "accounts_balances" */
-["accounts_balances_constraint"]:accounts_balances_constraint;
-	/** input type for incrementing numeric columns in table "accounts_balances" */
-["accounts_balances_inc_input"]: {
-	balance?:ValueTypes["bigint"] | null,
-	version?:ValueTypes["bigint"] | null
-};
-	/** input type for inserting data into table "accounts_balances" */
-["accounts_balances_insert_input"]: {
-	address?:ValueTypes["bpchar"] | null,
-	balance?:ValueTypes["bigint"] | null,
-	currency?:ValueTypes["bpchar"] | null,
-	timestamp?:ValueTypes["timestamptz"] | null,
-	version?:ValueTypes["bigint"] | null
-};
-	/** aggregate max on columns */
-["accounts_balances_max_fields"]: AliasType<{
-	address?:true,
-	balance?:true,
-	currency?:true,
-	timestamp?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate min on columns */
-["accounts_balances_min_fields"]: AliasType<{
-	address?:true,
-	balance?:true,
-	currency?:true,
-	timestamp?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "accounts_balances" */
-["accounts_balances_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["accounts_balances"],
-		__typename?: true
-}>;
-	/** on conflict condition type for table "accounts_balances" */
-["accounts_balances_on_conflict"]: {
-	constraint:ValueTypes["accounts_balances_constraint"],
-	update_columns:ValueTypes["accounts_balances_update_column"][],
-	where?:ValueTypes["accounts_balances_bool_exp"] | null
-};
-	/** Ordering options when selecting data from "accounts_balances". */
-["accounts_balances_order_by"]: {
-	address?:ValueTypes["order_by"] | null,
-	balance?:ValueTypes["order_by"] | null,
-	currency?:ValueTypes["order_by"] | null,
-	timestamp?:ValueTypes["order_by"] | null,
-	version?:ValueTypes["order_by"] | null
-};
-	/** primary key columns input for table: accounts_balances */
-["accounts_balances_pk_columns_input"]: {
-	address:ValueTypes["bpchar"],
-	currency:ValueTypes["bpchar"],
-	version:ValueTypes["bigint"]
-};
-	/** select columns of table "accounts_balances" */
-["accounts_balances_select_column"]:accounts_balances_select_column;
-	/** input type for updating data in table "accounts_balances" */
-["accounts_balances_set_input"]: {
-	address?:ValueTypes["bpchar"] | null,
-	balance?:ValueTypes["bigint"] | null,
-	currency?:ValueTypes["bpchar"] | null,
-	timestamp?:ValueTypes["timestamptz"] | null,
-	version?:ValueTypes["bigint"] | null
-};
-	/** aggregate stddev on columns */
-["accounts_balances_stddev_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_pop on columns */
-["accounts_balances_stddev_pop_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate stddev_samp on columns */
-["accounts_balances_stddev_samp_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate sum on columns */
-["accounts_balances_sum_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** update columns of table "accounts_balances" */
-["accounts_balances_update_column"]:accounts_balances_update_column;
-	/** aggregate var_pop on columns */
-["accounts_balances_var_pop_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate var_samp on columns */
-["accounts_balances_var_samp_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
-		__typename?: true
-}>;
-	/** aggregate variance on columns */
-["accounts_balances_variance_fields"]: AliasType<{
-	balance?:true,
-	version?:true,
 		__typename?: true
 }>;
 	/** Boolean expression to filter rows from the table "accounts". All fields are combined with a logical 'AND'. */
@@ -1069,11 +1037,11 @@ count?: [{	columns?:ValueTypes["gas_payments_select_column"][],	distinct?:boolea
 }>;
 	/** mutation root */
 ["mutation_root"]: AliasType<{
+delete_account_roles?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["account_roles_bool_exp"]},ValueTypes["account_roles_mutation_response"]],
+delete_account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 delete_accounts?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["accounts_bool_exp"]},ValueTypes["accounts_mutation_response"]],
-delete_accounts_balances?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["accounts_balances_bool_exp"]},ValueTypes["accounts_balances_mutation_response"]],
-delete_accounts_balances_by_pk?: [{	address:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["accounts_balances"]],
 delete_accounts_by_pk?: [{	address:ValueTypes["bpchar"]},ValueTypes["accounts"]],
 delete_burn_events?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["burn_events_bool_exp"]},ValueTypes["burn_events_mutation_response"]],
@@ -1093,15 +1061,15 @@ delete_sentpayment_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["big
 delete_transactions?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["transactions_bool_exp"]},ValueTypes["transactions_mutation_response"]],
 delete_transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+insert_account_roles?: [{	/** the rows to be inserted */
+	objects:ValueTypes["account_roles_insert_input"][],	/** on conflict condition */
+	on_conflict?:ValueTypes["account_roles_on_conflict"] | null},ValueTypes["account_roles_mutation_response"]],
+insert_account_roles_one?: [{	/** the row to be inserted */
+	object:ValueTypes["account_roles_insert_input"],	/** on conflict condition */
+	on_conflict?:ValueTypes["account_roles_on_conflict"] | null},ValueTypes["account_roles"]],
 insert_accounts?: [{	/** the rows to be inserted */
 	objects:ValueTypes["accounts_insert_input"][],	/** on conflict condition */
 	on_conflict?:ValueTypes["accounts_on_conflict"] | null},ValueTypes["accounts_mutation_response"]],
-insert_accounts_balances?: [{	/** the rows to be inserted */
-	objects:ValueTypes["accounts_balances_insert_input"][],	/** on conflict condition */
-	on_conflict?:ValueTypes["accounts_balances_on_conflict"] | null},ValueTypes["accounts_balances_mutation_response"]],
-insert_accounts_balances_one?: [{	/** the row to be inserted */
-	object:ValueTypes["accounts_balances_insert_input"],	/** on conflict condition */
-	on_conflict?:ValueTypes["accounts_balances_on_conflict"] | null},ValueTypes["accounts_balances"]],
 insert_accounts_one?: [{	/** the row to be inserted */
 	object:ValueTypes["accounts_insert_input"],	/** on conflict condition */
 	on_conflict?:ValueTypes["accounts_on_conflict"] | null},ValueTypes["accounts"]],
@@ -1141,17 +1109,17 @@ insert_transactions?: [{	/** the rows to be inserted */
 insert_transactions_one?: [{	/** the row to be inserted */
 	object:ValueTypes["transactions_insert_input"],	/** on conflict condition */
 	on_conflict?:ValueTypes["transactions_on_conflict"] | null},ValueTypes["transactions"]],
+update_account_roles?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["account_roles_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["account_roles_set_input"] | null,	/** filter the rows which have to be updated */
+	where:ValueTypes["account_roles_bool_exp"]},ValueTypes["account_roles_mutation_response"]],
+update_account_roles_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["account_roles_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["account_roles_set_input"] | null,	pk_columns:ValueTypes["account_roles_pk_columns_input"]},ValueTypes["account_roles"]],
 update_accounts?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["accounts_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["accounts_set_input"] | null,	/** filter the rows which have to be updated */
 	where:ValueTypes["accounts_bool_exp"]},ValueTypes["accounts_mutation_response"]],
-update_accounts_balances?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["accounts_balances_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["accounts_balances_set_input"] | null,	/** filter the rows which have to be updated */
-	where:ValueTypes["accounts_balances_bool_exp"]},ValueTypes["accounts_balances_mutation_response"]],
-update_accounts_balances_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["accounts_balances_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["accounts_balances_set_input"] | null,	pk_columns:ValueTypes["accounts_balances_pk_columns_input"]},ValueTypes["accounts_balances"]],
 update_accounts_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["accounts_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["accounts_set_input"] | null,	pk_columns:ValueTypes["accounts_pk_columns_input"]},ValueTypes["accounts"]],
@@ -1201,6 +1169,141 @@ update_transactions_by_pk?: [{	/** increments the numeric columns with given val
 }>;
 	/** column ordering options */
 ["order_by"]:order_by;
+	/** columns and relationships of "payments" */
+["payments"]: AliasType<{
+	amount?:true,
+	commit_timestamp?:true,
+	currency?:true,
+	receiver?:true,
+	sender?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "payments" */
+["payments_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["payments_aggregate_fields"],
+	nodes?:ValueTypes["payments"],
+		__typename?: true
+}>;
+	/** aggregate fields of "payments" */
+["payments_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["payments_avg_fields"],
+count?: [{	columns?:ValueTypes["payments_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["payments_max_fields"],
+	min?:ValueTypes["payments_min_fields"],
+	stddev?:ValueTypes["payments_stddev_fields"],
+	stddev_pop?:ValueTypes["payments_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["payments_stddev_samp_fields"],
+	sum?:ValueTypes["payments_sum_fields"],
+	var_pop?:ValueTypes["payments_var_pop_fields"],
+	var_samp?:ValueTypes["payments_var_samp_fields"],
+	variance?:ValueTypes["payments_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["payments_avg_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "payments". All fields are combined with a logical 'AND'. */
+["payments_bool_exp"]: {
+	_and?:ValueTypes["payments_bool_exp"][],
+	_not?:ValueTypes["payments_bool_exp"] | null,
+	_or?:ValueTypes["payments_bool_exp"][],
+	amount?:ValueTypes["bigint_comparison_exp"] | null,
+	commit_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
+	currency?:ValueTypes["bpchar_comparison_exp"] | null,
+	receiver?:ValueTypes["bpchar_comparison_exp"] | null,
+	sender?:ValueTypes["bpchar_comparison_exp"] | null,
+	status?:ValueTypes["Int_comparison_exp"] | null,
+	version?:ValueTypes["bigint_comparison_exp"] | null
+};
+	/** aggregate max on columns */
+["payments_max_fields"]: AliasType<{
+	amount?:true,
+	commit_timestamp?:true,
+	currency?:true,
+	receiver?:true,
+	sender?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["payments_min_fields"]: AliasType<{
+	amount?:true,
+	commit_timestamp?:true,
+	currency?:true,
+	receiver?:true,
+	sender?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** Ordering options when selecting data from "payments". */
+["payments_order_by"]: {
+	amount?:ValueTypes["order_by"] | null,
+	commit_timestamp?:ValueTypes["order_by"] | null,
+	currency?:ValueTypes["order_by"] | null,
+	receiver?:ValueTypes["order_by"] | null,
+	sender?:ValueTypes["order_by"] | null,
+	status?:ValueTypes["order_by"] | null,
+	version?:ValueTypes["order_by"] | null
+};
+	/** select columns of table "payments" */
+["payments_select_column"]:payments_select_column;
+	/** aggregate stddev on columns */
+["payments_stddev_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["payments_stddev_pop_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["payments_stddev_samp_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["payments_sum_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate var_pop on columns */
+["payments_var_pop_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["payments_var_samp_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["payments_variance_fields"]: AliasType<{
+	amount?:true,
+	status?:true,
+	version?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "preburns" */
 ["preburns"]: AliasType<{
 	amount?:true,
@@ -1337,6 +1440,19 @@ count?: [{	columns?:ValueTypes["preburns_select_column"][],	distinct?:boolean | 
 		__typename?: true
 }>;
 	["query_root"]: AliasType<{
+account_roles?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles"]],
+account_roles_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles_aggregate"]],
+account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 accounts?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["accounts_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -1349,19 +1465,6 @@ accounts_aggregate?: [{	/** distinct select on columns */
 	offset?:number | null,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["accounts_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["accounts_bool_exp"] | null},ValueTypes["accounts_aggregate"]],
-accounts_balances?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["accounts_balances_select_column"][],	/** limit the number of rows returned */
-	limit?:number | null,	/** skip the first n rows. Use only with order_by */
-	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["accounts_balances_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["accounts_balances_bool_exp"] | null},ValueTypes["accounts_balances"]],
-accounts_balances_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["accounts_balances_select_column"][],	/** limit the number of rows returned */
-	limit?:number | null,	/** skip the first n rows. Use only with order_by */
-	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["accounts_balances_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["accounts_balances_bool_exp"] | null},ValueTypes["accounts_balances_aggregate"]],
-accounts_balances_by_pk?: [{	address:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["accounts_balances"]],
 accounts_by_pk?: [{	address:ValueTypes["bpchar"]},ValueTypes["accounts"]],
 burn_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["burn_events_select_column"][],	/** limit the number of rows returned */
@@ -1402,6 +1505,18 @@ gas_payments_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["gas_payments_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["gas_payments_bool_exp"] | null},ValueTypes["gas_payments_aggregate"]],
 gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_payments"]],
+payments?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["payments_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["payments_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["payments_bool_exp"] | null},ValueTypes["payments"]],
+payments_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["payments_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["payments_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["payments_bool_exp"] | null},ValueTypes["payments_aggregate"]],
 preburns?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -1837,6 +1952,19 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 	_nin?:ValueTypes["smallint"][]
 };
 	["subscription_root"]: AliasType<{
+account_roles?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles"]],
+account_roles_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles_aggregate"]],
+account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 accounts?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["accounts_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -1849,19 +1977,6 @@ accounts_aggregate?: [{	/** distinct select on columns */
 	offset?:number | null,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["accounts_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["accounts_bool_exp"] | null},ValueTypes["accounts_aggregate"]],
-accounts_balances?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["accounts_balances_select_column"][],	/** limit the number of rows returned */
-	limit?:number | null,	/** skip the first n rows. Use only with order_by */
-	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["accounts_balances_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["accounts_balances_bool_exp"] | null},ValueTypes["accounts_balances"]],
-accounts_balances_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["accounts_balances_select_column"][],	/** limit the number of rows returned */
-	limit?:number | null,	/** skip the first n rows. Use only with order_by */
-	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["accounts_balances_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["accounts_balances_bool_exp"] | null},ValueTypes["accounts_balances_aggregate"]],
-accounts_balances_by_pk?: [{	address:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["accounts_balances"]],
 accounts_by_pk?: [{	address:ValueTypes["bpchar"]},ValueTypes["accounts"]],
 burn_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["burn_events_select_column"][],	/** limit the number of rows returned */
@@ -1902,6 +2017,18 @@ gas_payments_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["gas_payments_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["gas_payments_bool_exp"] | null},ValueTypes["gas_payments_aggregate"]],
 gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_payments"]],
+payments?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["payments_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["payments_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["payments_bool_exp"] | null},ValueTypes["payments"]],
+payments_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["payments_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["payments_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["payments_bool_exp"] | null},ValueTypes["payments_aggregate"]],
 preburns?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2247,6 +2374,99 @@ export type ModelTypes = {
 ["Int_comparison_exp"]: GraphQLTypes["Int_comparison_exp"];
 	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 ["String_comparison_exp"]: GraphQLTypes["String_comparison_exp"];
+	/** columns and relationships of "account_roles" */
+["account_roles"]: {
+		id:number,
+	name:string
+};
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: {
+		aggregate?:ModelTypes["account_roles_aggregate_fields"],
+	nodes:ModelTypes["account_roles"][]
+};
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: {
+		avg?:ModelTypes["account_roles_avg_fields"],
+	count:number,
+	max?:ModelTypes["account_roles_max_fields"],
+	min?:ModelTypes["account_roles_min_fields"],
+	stddev?:ModelTypes["account_roles_stddev_fields"],
+	stddev_pop?:ModelTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["account_roles_stddev_samp_fields"],
+	sum?:ModelTypes["account_roles_sum_fields"],
+	var_pop?:ModelTypes["account_roles_var_pop_fields"],
+	var_samp?:ModelTypes["account_roles_var_samp_fields"],
+	variance?:ModelTypes["account_roles_variance_fields"]
+};
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: {
+		id?:number
+};
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: GraphQLTypes["account_roles_bool_exp"];
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]: GraphQLTypes["account_roles_constraint"];
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: GraphQLTypes["account_roles_inc_input"];
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: GraphQLTypes["account_roles_insert_input"];
+	/** aggregate max on columns */
+["account_roles_max_fields"]: {
+		id?:number,
+	name?:string
+};
+	/** aggregate min on columns */
+["account_roles_min_fields"]: {
+		id?:number,
+	name?:string
+};
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: {
+		/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:ModelTypes["account_roles"][]
+};
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: GraphQLTypes["account_roles_on_conflict"];
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: GraphQLTypes["account_roles_order_by"];
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: GraphQLTypes["account_roles_pk_columns_input"];
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]: GraphQLTypes["account_roles_select_column"];
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: GraphQLTypes["account_roles_set_input"];
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: {
+		id?:number
+};
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: {
+		id?:number
+};
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: {
+		id?:number
+};
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: {
+		id?:number
+};
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]: GraphQLTypes["account_roles_update_column"];
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: {
+		id?:number
+};
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: {
+		id?:number
+};
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: {
+		id?:number
+};
 	/** columns and relationships of "accounts" */
 ["accounts"]: {
 		address:ModelTypes["bpchar"],
@@ -2294,116 +2514,6 @@ export type ModelTypes = {
 		create_account_event_stream_sequence_number?:number,
 	role?:number,
 	transaction_version?:number
-};
-	/** columns and relationships of "accounts_balances" */
-["accounts_balances"]: {
-		address:ModelTypes["bpchar"],
-	balance:ModelTypes["bigint"],
-	currency:ModelTypes["bpchar"],
-	timestamp:ModelTypes["timestamptz"],
-	version:ModelTypes["bigint"]
-};
-	/** aggregated selection of "accounts_balances" */
-["accounts_balances_aggregate"]: {
-		aggregate?:ModelTypes["accounts_balances_aggregate_fields"],
-	nodes:ModelTypes["accounts_balances"][]
-};
-	/** aggregate fields of "accounts_balances" */
-["accounts_balances_aggregate_fields"]: {
-		avg?:ModelTypes["accounts_balances_avg_fields"],
-	count:number,
-	max?:ModelTypes["accounts_balances_max_fields"],
-	min?:ModelTypes["accounts_balances_min_fields"],
-	stddev?:ModelTypes["accounts_balances_stddev_fields"],
-	stddev_pop?:ModelTypes["accounts_balances_stddev_pop_fields"],
-	stddev_samp?:ModelTypes["accounts_balances_stddev_samp_fields"],
-	sum?:ModelTypes["accounts_balances_sum_fields"],
-	var_pop?:ModelTypes["accounts_balances_var_pop_fields"],
-	var_samp?:ModelTypes["accounts_balances_var_samp_fields"],
-	variance?:ModelTypes["accounts_balances_variance_fields"]
-};
-	/** aggregate avg on columns */
-["accounts_balances_avg_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** Boolean expression to filter rows from the table "accounts_balances". All fields are combined with a logical 'AND'. */
-["accounts_balances_bool_exp"]: GraphQLTypes["accounts_balances_bool_exp"];
-	/** unique or primary key constraints on table "accounts_balances" */
-["accounts_balances_constraint"]: GraphQLTypes["accounts_balances_constraint"];
-	/** input type for incrementing numeric columns in table "accounts_balances" */
-["accounts_balances_inc_input"]: GraphQLTypes["accounts_balances_inc_input"];
-	/** input type for inserting data into table "accounts_balances" */
-["accounts_balances_insert_input"]: GraphQLTypes["accounts_balances_insert_input"];
-	/** aggregate max on columns */
-["accounts_balances_max_fields"]: {
-		address?:ModelTypes["bpchar"],
-	balance?:ModelTypes["bigint"],
-	currency?:ModelTypes["bpchar"],
-	timestamp?:ModelTypes["timestamptz"],
-	version?:ModelTypes["bigint"]
-};
-	/** aggregate min on columns */
-["accounts_balances_min_fields"]: {
-		address?:ModelTypes["bpchar"],
-	balance?:ModelTypes["bigint"],
-	currency?:ModelTypes["bpchar"],
-	timestamp?:ModelTypes["timestamptz"],
-	version?:ModelTypes["bigint"]
-};
-	/** response of any mutation on the table "accounts_balances" */
-["accounts_balances_mutation_response"]: {
-		/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:ModelTypes["accounts_balances"][]
-};
-	/** on conflict condition type for table "accounts_balances" */
-["accounts_balances_on_conflict"]: GraphQLTypes["accounts_balances_on_conflict"];
-	/** Ordering options when selecting data from "accounts_balances". */
-["accounts_balances_order_by"]: GraphQLTypes["accounts_balances_order_by"];
-	/** primary key columns input for table: accounts_balances */
-["accounts_balances_pk_columns_input"]: GraphQLTypes["accounts_balances_pk_columns_input"];
-	/** select columns of table "accounts_balances" */
-["accounts_balances_select_column"]: GraphQLTypes["accounts_balances_select_column"];
-	/** input type for updating data in table "accounts_balances" */
-["accounts_balances_set_input"]: GraphQLTypes["accounts_balances_set_input"];
-	/** aggregate stddev on columns */
-["accounts_balances_stddev_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** aggregate stddev_pop on columns */
-["accounts_balances_stddev_pop_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** aggregate stddev_samp on columns */
-["accounts_balances_stddev_samp_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** aggregate sum on columns */
-["accounts_balances_sum_fields"]: {
-		balance?:ModelTypes["bigint"],
-	version?:ModelTypes["bigint"]
-};
-	/** update columns of table "accounts_balances" */
-["accounts_balances_update_column"]: GraphQLTypes["accounts_balances_update_column"];
-	/** aggregate var_pop on columns */
-["accounts_balances_var_pop_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** aggregate var_samp on columns */
-["accounts_balances_var_samp_fields"]: {
-		balance?:number,
-	version?:number
-};
-	/** aggregate variance on columns */
-["accounts_balances_variance_fields"]: {
-		balance?:number,
-	version?:number
 };
 	/** Boolean expression to filter rows from the table "accounts". All fields are combined with a logical 'AND'. */
 ["accounts_bool_exp"]: GraphQLTypes["accounts_bool_exp"];
@@ -2885,12 +2995,12 @@ export type ModelTypes = {
 };
 	/** mutation root */
 ["mutation_root"]: {
-		/** delete data from the table: "accounts" */
+		/** delete data from the table: "account_roles" */
+	delete_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** delete single row from the table: "account_roles" */
+	delete_account_roles_by_pk?:ModelTypes["account_roles"],
+	/** delete data from the table: "accounts" */
 	delete_accounts?:ModelTypes["accounts_mutation_response"],
-	/** delete data from the table: "accounts_balances" */
-	delete_accounts_balances?:ModelTypes["accounts_balances_mutation_response"],
-	/** delete single row from the table: "accounts_balances" */
-	delete_accounts_balances_by_pk?:ModelTypes["accounts_balances"],
 	/** delete single row from the table: "accounts" */
 	delete_accounts_by_pk?:ModelTypes["accounts"],
 	/** delete data from the table: "burn_events" */
@@ -2917,12 +3027,12 @@ export type ModelTypes = {
 	delete_transactions?:ModelTypes["transactions_mutation_response"],
 	/** delete single row from the table: "transactions" */
 	delete_transactions_by_pk?:ModelTypes["transactions"],
+	/** insert data into the table: "account_roles" */
+	insert_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** insert a single row into the table: "account_roles" */
+	insert_account_roles_one?:ModelTypes["account_roles"],
 	/** insert data into the table: "accounts" */
 	insert_accounts?:ModelTypes["accounts_mutation_response"],
-	/** insert data into the table: "accounts_balances" */
-	insert_accounts_balances?:ModelTypes["accounts_balances_mutation_response"],
-	/** insert a single row into the table: "accounts_balances" */
-	insert_accounts_balances_one?:ModelTypes["accounts_balances"],
 	/** insert a single row into the table: "accounts" */
 	insert_accounts_one?:ModelTypes["accounts"],
 	/** insert data into the table: "burn_events" */
@@ -2949,12 +3059,12 @@ export type ModelTypes = {
 	insert_transactions?:ModelTypes["transactions_mutation_response"],
 	/** insert a single row into the table: "transactions" */
 	insert_transactions_one?:ModelTypes["transactions"],
+	/** update data of the table: "account_roles" */
+	update_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** update single row of the table: "account_roles" */
+	update_account_roles_by_pk?:ModelTypes["account_roles"],
 	/** update data of the table: "accounts" */
 	update_accounts?:ModelTypes["accounts_mutation_response"],
-	/** update data of the table: "accounts_balances" */
-	update_accounts_balances?:ModelTypes["accounts_balances_mutation_response"],
-	/** update single row of the table: "accounts_balances" */
-	update_accounts_balances_by_pk?:ModelTypes["accounts_balances"],
 	/** update single row of the table: "accounts" */
 	update_accounts_by_pk?:ModelTypes["accounts"],
 	/** update data of the table: "burn_events" */
@@ -2984,6 +3094,109 @@ export type ModelTypes = {
 };
 	/** column ordering options */
 ["order_by"]: GraphQLTypes["order_by"];
+	/** columns and relationships of "payments" */
+["payments"]: {
+		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
+	currency?:ModelTypes["bpchar"],
+	receiver?:ModelTypes["bpchar"],
+	sender?:ModelTypes["bpchar"],
+	status?:number,
+	version?:ModelTypes["bigint"]
+};
+	/** aggregated selection of "payments" */
+["payments_aggregate"]: {
+		aggregate?:ModelTypes["payments_aggregate_fields"],
+	nodes:ModelTypes["payments"][]
+};
+	/** aggregate fields of "payments" */
+["payments_aggregate_fields"]: {
+		avg?:ModelTypes["payments_avg_fields"],
+	count:number,
+	max?:ModelTypes["payments_max_fields"],
+	min?:ModelTypes["payments_min_fields"],
+	stddev?:ModelTypes["payments_stddev_fields"],
+	stddev_pop?:ModelTypes["payments_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["payments_stddev_samp_fields"],
+	sum?:ModelTypes["payments_sum_fields"],
+	var_pop?:ModelTypes["payments_var_pop_fields"],
+	var_samp?:ModelTypes["payments_var_samp_fields"],
+	variance?:ModelTypes["payments_variance_fields"]
+};
+	/** aggregate avg on columns */
+["payments_avg_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** Boolean expression to filter rows from the table "payments". All fields are combined with a logical 'AND'. */
+["payments_bool_exp"]: GraphQLTypes["payments_bool_exp"];
+	/** aggregate max on columns */
+["payments_max_fields"]: {
+		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
+	currency?:ModelTypes["bpchar"],
+	receiver?:ModelTypes["bpchar"],
+	sender?:ModelTypes["bpchar"],
+	status?:number,
+	version?:ModelTypes["bigint"]
+};
+	/** aggregate min on columns */
+["payments_min_fields"]: {
+		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
+	currency?:ModelTypes["bpchar"],
+	receiver?:ModelTypes["bpchar"],
+	sender?:ModelTypes["bpchar"],
+	status?:number,
+	version?:ModelTypes["bigint"]
+};
+	/** Ordering options when selecting data from "payments". */
+["payments_order_by"]: GraphQLTypes["payments_order_by"];
+	/** select columns of table "payments" */
+["payments_select_column"]: GraphQLTypes["payments_select_column"];
+	/** aggregate stddev on columns */
+["payments_stddev_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** aggregate stddev_pop on columns */
+["payments_stddev_pop_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** aggregate stddev_samp on columns */
+["payments_stddev_samp_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** aggregate sum on columns */
+["payments_sum_fields"]: {
+		amount?:ModelTypes["bigint"],
+	status?:number,
+	version?:ModelTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["payments_var_pop_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** aggregate var_samp on columns */
+["payments_var_samp_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
+	/** aggregate variance on columns */
+["payments_variance_fields"]: {
+		amount?:number,
+	status?:number,
+	version?:number
+};
 	/** columns and relationships of "preburns" */
 ["preburns"]: {
 		amount?:ModelTypes["bigint"],
@@ -3088,16 +3301,16 @@ export type ModelTypes = {
 	version?:number
 };
 	["query_root"]: {
-		/** fetch data from the table: "accounts" */
+		/** fetch data from the table: "account_roles" */
+	account_roles:ModelTypes["account_roles"][],
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate:ModelTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?:ModelTypes["account_roles"],
+	/** fetch data from the table: "accounts" */
 	accounts:ModelTypes["accounts"][],
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate:ModelTypes["accounts_aggregate"],
-	/** fetch data from the table: "accounts_balances" */
-	accounts_balances:ModelTypes["accounts_balances"][],
-	/** fetch aggregated fields from the table: "accounts_balances" */
-	accounts_balances_aggregate:ModelTypes["accounts_balances_aggregate"],
-	/** fetch data from the table: "accounts_balances" using primary key columns */
-	accounts_balances_by_pk?:ModelTypes["accounts_balances"],
 	/** fetch data from the table: "accounts" using primary key columns */
 	accounts_by_pk?:ModelTypes["accounts"],
 	/** fetch data from the table: "burn_events" */
@@ -3118,6 +3331,10 @@ export type ModelTypes = {
 	gas_payments_aggregate:ModelTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?:ModelTypes["gas_payments"],
+	/** fetch data from the table: "payments" */
+	payments:ModelTypes["payments"][],
+	/** fetch aggregated fields from the table: "payments" */
+	payments_aggregate:ModelTypes["payments_aggregate"],
 	/** fetch data from the table: "preburns" */
 	preburns:ModelTypes["preburns"][],
 	/** fetch aggregated fields from the table: "preburns" */
@@ -3393,16 +3610,16 @@ export type ModelTypes = {
 	/** Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'. */
 ["smallint_comparison_exp"]: GraphQLTypes["smallint_comparison_exp"];
 	["subscription_root"]: {
-		/** fetch data from the table: "accounts" */
+		/** fetch data from the table: "account_roles" */
+	account_roles:ModelTypes["account_roles"][],
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate:ModelTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?:ModelTypes["account_roles"],
+	/** fetch data from the table: "accounts" */
 	accounts:ModelTypes["accounts"][],
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate:ModelTypes["accounts_aggregate"],
-	/** fetch data from the table: "accounts_balances" */
-	accounts_balances:ModelTypes["accounts_balances"][],
-	/** fetch aggregated fields from the table: "accounts_balances" */
-	accounts_balances_aggregate:ModelTypes["accounts_balances_aggregate"],
-	/** fetch data from the table: "accounts_balances" using primary key columns */
-	accounts_balances_by_pk?:ModelTypes["accounts_balances"],
 	/** fetch data from the table: "accounts" using primary key columns */
 	accounts_by_pk?:ModelTypes["accounts"],
 	/** fetch data from the table: "burn_events" */
@@ -3423,6 +3640,10 @@ export type ModelTypes = {
 	gas_payments_aggregate:ModelTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?:ModelTypes["gas_payments"],
+	/** fetch data from the table: "payments" */
+	payments:ModelTypes["payments"][],
+	/** fetch aggregated fields from the table: "payments" */
+	payments_aggregate:ModelTypes["payments_aggregate"],
 	/** fetch data from the table: "preburns" */
 	preburns:ModelTypes["preburns"][],
 	/** fetch aggregated fields from the table: "preburns" */
@@ -3690,6 +3911,136 @@ export type GraphQLTypes = {
 	/** does the column match the given SQL regular expression */
 	_similar?: string
 };
+	/** columns and relationships of "account_roles" */
+["account_roles"]: {
+	__typename: "account_roles",
+	id: number,
+	name: string
+};
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: {
+	__typename: "account_roles_aggregate",
+	aggregate?: GraphQLTypes["account_roles_aggregate_fields"],
+	nodes: Array<GraphQLTypes["account_roles"]>
+};
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: {
+	__typename: "account_roles_aggregate_fields",
+	avg?: GraphQLTypes["account_roles_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["account_roles_max_fields"],
+	min?: GraphQLTypes["account_roles_min_fields"],
+	stddev?: GraphQLTypes["account_roles_stddev_fields"],
+	stddev_pop?: GraphQLTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["account_roles_stddev_samp_fields"],
+	sum?: GraphQLTypes["account_roles_sum_fields"],
+	var_pop?: GraphQLTypes["account_roles_var_pop_fields"],
+	var_samp?: GraphQLTypes["account_roles_var_samp_fields"],
+	variance?: GraphQLTypes["account_roles_variance_fields"]
+};
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: {
+	__typename: "account_roles_avg_fields",
+	id?: number
+};
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: {
+		_and?: Array<GraphQLTypes["account_roles_bool_exp"]>,
+	_not?: GraphQLTypes["account_roles_bool_exp"],
+	_or?: Array<GraphQLTypes["account_roles_bool_exp"]>,
+	id?: GraphQLTypes["Int_comparison_exp"],
+	name?: GraphQLTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]: account_roles_constraint;
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: {
+		id?: number
+};
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: {
+		id?: number,
+	name?: string
+};
+	/** aggregate max on columns */
+["account_roles_max_fields"]: {
+	__typename: "account_roles_max_fields",
+	id?: number,
+	name?: string
+};
+	/** aggregate min on columns */
+["account_roles_min_fields"]: {
+	__typename: "account_roles_min_fields",
+	id?: number,
+	name?: string
+};
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: {
+	__typename: "account_roles_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows: number,
+	/** data from the rows affected by the mutation */
+	returning: Array<GraphQLTypes["account_roles"]>
+};
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: {
+		constraint: GraphQLTypes["account_roles_constraint"],
+	update_columns: Array<GraphQLTypes["account_roles_update_column"]>,
+	where?: GraphQLTypes["account_roles_bool_exp"]
+};
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: {
+		id?: GraphQLTypes["order_by"],
+	name?: GraphQLTypes["order_by"]
+};
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: {
+		id: number
+};
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]: account_roles_select_column;
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: {
+		id?: number,
+	name?: string
+};
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: {
+	__typename: "account_roles_stddev_fields",
+	id?: number
+};
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: {
+	__typename: "account_roles_stddev_pop_fields",
+	id?: number
+};
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: {
+	__typename: "account_roles_stddev_samp_fields",
+	id?: number
+};
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: {
+	__typename: "account_roles_sum_fields",
+	id?: number
+};
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]: account_roles_update_column;
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: {
+	__typename: "account_roles_var_pop_fields",
+	id?: number
+};
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: {
+	__typename: "account_roles_var_samp_fields",
+	id?: number
+};
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: {
+	__typename: "account_roles_variance_fields",
+	id?: number
+};
 	/** columns and relationships of "accounts" */
 ["accounts"]: {
 	__typename: "accounts",
@@ -3741,168 +4092,6 @@ export type GraphQLTypes = {
 	create_account_event_stream_sequence_number?: number,
 	role?: number,
 	transaction_version?: number
-};
-	/** columns and relationships of "accounts_balances" */
-["accounts_balances"]: {
-	__typename: "accounts_balances",
-	address: GraphQLTypes["bpchar"],
-	balance: GraphQLTypes["bigint"],
-	currency: GraphQLTypes["bpchar"],
-	timestamp: GraphQLTypes["timestamptz"],
-	version: GraphQLTypes["bigint"]
-};
-	/** aggregated selection of "accounts_balances" */
-["accounts_balances_aggregate"]: {
-	__typename: "accounts_balances_aggregate",
-	aggregate?: GraphQLTypes["accounts_balances_aggregate_fields"],
-	nodes: Array<GraphQLTypes["accounts_balances"]>
-};
-	/** aggregate fields of "accounts_balances" */
-["accounts_balances_aggregate_fields"]: {
-	__typename: "accounts_balances_aggregate_fields",
-	avg?: GraphQLTypes["accounts_balances_avg_fields"],
-	count: number,
-	max?: GraphQLTypes["accounts_balances_max_fields"],
-	min?: GraphQLTypes["accounts_balances_min_fields"],
-	stddev?: GraphQLTypes["accounts_balances_stddev_fields"],
-	stddev_pop?: GraphQLTypes["accounts_balances_stddev_pop_fields"],
-	stddev_samp?: GraphQLTypes["accounts_balances_stddev_samp_fields"],
-	sum?: GraphQLTypes["accounts_balances_sum_fields"],
-	var_pop?: GraphQLTypes["accounts_balances_var_pop_fields"],
-	var_samp?: GraphQLTypes["accounts_balances_var_samp_fields"],
-	variance?: GraphQLTypes["accounts_balances_variance_fields"]
-};
-	/** aggregate avg on columns */
-["accounts_balances_avg_fields"]: {
-	__typename: "accounts_balances_avg_fields",
-	balance?: number,
-	version?: number
-};
-	/** Boolean expression to filter rows from the table "accounts_balances". All fields are combined with a logical 'AND'. */
-["accounts_balances_bool_exp"]: {
-		_and?: Array<GraphQLTypes["accounts_balances_bool_exp"]>,
-	_not?: GraphQLTypes["accounts_balances_bool_exp"],
-	_or?: Array<GraphQLTypes["accounts_balances_bool_exp"]>,
-	address?: GraphQLTypes["bpchar_comparison_exp"],
-	balance?: GraphQLTypes["bigint_comparison_exp"],
-	currency?: GraphQLTypes["bpchar_comparison_exp"],
-	timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
-	version?: GraphQLTypes["bigint_comparison_exp"]
-};
-	/** unique or primary key constraints on table "accounts_balances" */
-["accounts_balances_constraint"]: accounts_balances_constraint;
-	/** input type for incrementing numeric columns in table "accounts_balances" */
-["accounts_balances_inc_input"]: {
-		balance?: GraphQLTypes["bigint"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** input type for inserting data into table "accounts_balances" */
-["accounts_balances_insert_input"]: {
-		address?: GraphQLTypes["bpchar"],
-	balance?: GraphQLTypes["bigint"],
-	currency?: GraphQLTypes["bpchar"],
-	timestamp?: GraphQLTypes["timestamptz"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** aggregate max on columns */
-["accounts_balances_max_fields"]: {
-	__typename: "accounts_balances_max_fields",
-	address?: GraphQLTypes["bpchar"],
-	balance?: GraphQLTypes["bigint"],
-	currency?: GraphQLTypes["bpchar"],
-	timestamp?: GraphQLTypes["timestamptz"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** aggregate min on columns */
-["accounts_balances_min_fields"]: {
-	__typename: "accounts_balances_min_fields",
-	address?: GraphQLTypes["bpchar"],
-	balance?: GraphQLTypes["bigint"],
-	currency?: GraphQLTypes["bpchar"],
-	timestamp?: GraphQLTypes["timestamptz"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** response of any mutation on the table "accounts_balances" */
-["accounts_balances_mutation_response"]: {
-	__typename: "accounts_balances_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows: number,
-	/** data from the rows affected by the mutation */
-	returning: Array<GraphQLTypes["accounts_balances"]>
-};
-	/** on conflict condition type for table "accounts_balances" */
-["accounts_balances_on_conflict"]: {
-		constraint: GraphQLTypes["accounts_balances_constraint"],
-	update_columns: Array<GraphQLTypes["accounts_balances_update_column"]>,
-	where?: GraphQLTypes["accounts_balances_bool_exp"]
-};
-	/** Ordering options when selecting data from "accounts_balances". */
-["accounts_balances_order_by"]: {
-		address?: GraphQLTypes["order_by"],
-	balance?: GraphQLTypes["order_by"],
-	currency?: GraphQLTypes["order_by"],
-	timestamp?: GraphQLTypes["order_by"],
-	version?: GraphQLTypes["order_by"]
-};
-	/** primary key columns input for table: accounts_balances */
-["accounts_balances_pk_columns_input"]: {
-		address: GraphQLTypes["bpchar"],
-	currency: GraphQLTypes["bpchar"],
-	version: GraphQLTypes["bigint"]
-};
-	/** select columns of table "accounts_balances" */
-["accounts_balances_select_column"]: accounts_balances_select_column;
-	/** input type for updating data in table "accounts_balances" */
-["accounts_balances_set_input"]: {
-		address?: GraphQLTypes["bpchar"],
-	balance?: GraphQLTypes["bigint"],
-	currency?: GraphQLTypes["bpchar"],
-	timestamp?: GraphQLTypes["timestamptz"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** aggregate stddev on columns */
-["accounts_balances_stddev_fields"]: {
-	__typename: "accounts_balances_stddev_fields",
-	balance?: number,
-	version?: number
-};
-	/** aggregate stddev_pop on columns */
-["accounts_balances_stddev_pop_fields"]: {
-	__typename: "accounts_balances_stddev_pop_fields",
-	balance?: number,
-	version?: number
-};
-	/** aggregate stddev_samp on columns */
-["accounts_balances_stddev_samp_fields"]: {
-	__typename: "accounts_balances_stddev_samp_fields",
-	balance?: number,
-	version?: number
-};
-	/** aggregate sum on columns */
-["accounts_balances_sum_fields"]: {
-	__typename: "accounts_balances_sum_fields",
-	balance?: GraphQLTypes["bigint"],
-	version?: GraphQLTypes["bigint"]
-};
-	/** update columns of table "accounts_balances" */
-["accounts_balances_update_column"]: accounts_balances_update_column;
-	/** aggregate var_pop on columns */
-["accounts_balances_var_pop_fields"]: {
-	__typename: "accounts_balances_var_pop_fields",
-	balance?: number,
-	version?: number
-};
-	/** aggregate var_samp on columns */
-["accounts_balances_var_samp_fields"]: {
-	__typename: "accounts_balances_var_samp_fields",
-	balance?: number,
-	version?: number
-};
-	/** aggregate variance on columns */
-["accounts_balances_variance_fields"]: {
-	__typename: "accounts_balances_variance_fields",
-	balance?: number,
-	version?: number
 };
 	/** Boolean expression to filter rows from the table "accounts". All fields are combined with a logical 'AND'. */
 ["accounts_bool_exp"]: {
@@ -4699,12 +4888,12 @@ export type GraphQLTypes = {
 	/** mutation root */
 ["mutation_root"]: {
 	__typename: "mutation_root",
+	/** delete data from the table: "account_roles" */
+	delete_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** delete single row from the table: "account_roles" */
+	delete_account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** delete data from the table: "accounts" */
 	delete_accounts?: GraphQLTypes["accounts_mutation_response"],
-	/** delete data from the table: "accounts_balances" */
-	delete_accounts_balances?: GraphQLTypes["accounts_balances_mutation_response"],
-	/** delete single row from the table: "accounts_balances" */
-	delete_accounts_balances_by_pk?: GraphQLTypes["accounts_balances"],
 	/** delete single row from the table: "accounts" */
 	delete_accounts_by_pk?: GraphQLTypes["accounts"],
 	/** delete data from the table: "burn_events" */
@@ -4731,12 +4920,12 @@ export type GraphQLTypes = {
 	delete_transactions?: GraphQLTypes["transactions_mutation_response"],
 	/** delete single row from the table: "transactions" */
 	delete_transactions_by_pk?: GraphQLTypes["transactions"],
+	/** insert data into the table: "account_roles" */
+	insert_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** insert a single row into the table: "account_roles" */
+	insert_account_roles_one?: GraphQLTypes["account_roles"],
 	/** insert data into the table: "accounts" */
 	insert_accounts?: GraphQLTypes["accounts_mutation_response"],
-	/** insert data into the table: "accounts_balances" */
-	insert_accounts_balances?: GraphQLTypes["accounts_balances_mutation_response"],
-	/** insert a single row into the table: "accounts_balances" */
-	insert_accounts_balances_one?: GraphQLTypes["accounts_balances"],
 	/** insert a single row into the table: "accounts" */
 	insert_accounts_one?: GraphQLTypes["accounts"],
 	/** insert data into the table: "burn_events" */
@@ -4763,12 +4952,12 @@ export type GraphQLTypes = {
 	insert_transactions?: GraphQLTypes["transactions_mutation_response"],
 	/** insert a single row into the table: "transactions" */
 	insert_transactions_one?: GraphQLTypes["transactions"],
+	/** update data of the table: "account_roles" */
+	update_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** update single row of the table: "account_roles" */
+	update_account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** update data of the table: "accounts" */
 	update_accounts?: GraphQLTypes["accounts_mutation_response"],
-	/** update data of the table: "accounts_balances" */
-	update_accounts_balances?: GraphQLTypes["accounts_balances_mutation_response"],
-	/** update single row of the table: "accounts_balances" */
-	update_accounts_balances_by_pk?: GraphQLTypes["accounts_balances"],
 	/** update single row of the table: "accounts" */
 	update_accounts_by_pk?: GraphQLTypes["accounts"],
 	/** update data of the table: "burn_events" */
@@ -4798,6 +4987,141 @@ export type GraphQLTypes = {
 };
 	/** column ordering options */
 ["order_by"]: order_by;
+	/** columns and relationships of "payments" */
+["payments"]: {
+	__typename: "payments",
+	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	receiver?: GraphQLTypes["bpchar"],
+	sender?: GraphQLTypes["bpchar"],
+	status?: number,
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregated selection of "payments" */
+["payments_aggregate"]: {
+	__typename: "payments_aggregate",
+	aggregate?: GraphQLTypes["payments_aggregate_fields"],
+	nodes: Array<GraphQLTypes["payments"]>
+};
+	/** aggregate fields of "payments" */
+["payments_aggregate_fields"]: {
+	__typename: "payments_aggregate_fields",
+	avg?: GraphQLTypes["payments_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["payments_max_fields"],
+	min?: GraphQLTypes["payments_min_fields"],
+	stddev?: GraphQLTypes["payments_stddev_fields"],
+	stddev_pop?: GraphQLTypes["payments_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["payments_stddev_samp_fields"],
+	sum?: GraphQLTypes["payments_sum_fields"],
+	var_pop?: GraphQLTypes["payments_var_pop_fields"],
+	var_samp?: GraphQLTypes["payments_var_samp_fields"],
+	variance?: GraphQLTypes["payments_variance_fields"]
+};
+	/** aggregate avg on columns */
+["payments_avg_fields"]: {
+	__typename: "payments_avg_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** Boolean expression to filter rows from the table "payments". All fields are combined with a logical 'AND'. */
+["payments_bool_exp"]: {
+		_and?: Array<GraphQLTypes["payments_bool_exp"]>,
+	_not?: GraphQLTypes["payments_bool_exp"],
+	_or?: Array<GraphQLTypes["payments_bool_exp"]>,
+	amount?: GraphQLTypes["bigint_comparison_exp"],
+	commit_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
+	currency?: GraphQLTypes["bpchar_comparison_exp"],
+	receiver?: GraphQLTypes["bpchar_comparison_exp"],
+	sender?: GraphQLTypes["bpchar_comparison_exp"],
+	status?: GraphQLTypes["Int_comparison_exp"],
+	version?: GraphQLTypes["bigint_comparison_exp"]
+};
+	/** aggregate max on columns */
+["payments_max_fields"]: {
+	__typename: "payments_max_fields",
+	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	receiver?: GraphQLTypes["bpchar"],
+	sender?: GraphQLTypes["bpchar"],
+	status?: number,
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregate min on columns */
+["payments_min_fields"]: {
+	__typename: "payments_min_fields",
+	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	receiver?: GraphQLTypes["bpchar"],
+	sender?: GraphQLTypes["bpchar"],
+	status?: number,
+	version?: GraphQLTypes["bigint"]
+};
+	/** Ordering options when selecting data from "payments". */
+["payments_order_by"]: {
+		amount?: GraphQLTypes["order_by"],
+	commit_timestamp?: GraphQLTypes["order_by"],
+	currency?: GraphQLTypes["order_by"],
+	receiver?: GraphQLTypes["order_by"],
+	sender?: GraphQLTypes["order_by"],
+	status?: GraphQLTypes["order_by"],
+	version?: GraphQLTypes["order_by"]
+};
+	/** select columns of table "payments" */
+["payments_select_column"]: payments_select_column;
+	/** aggregate stddev on columns */
+["payments_stddev_fields"]: {
+	__typename: "payments_stddev_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** aggregate stddev_pop on columns */
+["payments_stddev_pop_fields"]: {
+	__typename: "payments_stddev_pop_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** aggregate stddev_samp on columns */
+["payments_stddev_samp_fields"]: {
+	__typename: "payments_stddev_samp_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** aggregate sum on columns */
+["payments_sum_fields"]: {
+	__typename: "payments_sum_fields",
+	amount?: GraphQLTypes["bigint"],
+	status?: number,
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["payments_var_pop_fields"]: {
+	__typename: "payments_var_pop_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** aggregate var_samp on columns */
+["payments_var_samp_fields"]: {
+	__typename: "payments_var_samp_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
+	/** aggregate variance on columns */
+["payments_variance_fields"]: {
+	__typename: "payments_variance_fields",
+	amount?: number,
+	status?: number,
+	version?: number
+};
 	/** columns and relationships of "preburns" */
 ["preburns"]: {
 	__typename: "preburns",
@@ -4935,16 +5259,16 @@ export type GraphQLTypes = {
 };
 	["query_root"]: {
 	__typename: "query_root",
+	/** fetch data from the table: "account_roles" */
+	account_roles: Array<GraphQLTypes["account_roles"]>,
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate: GraphQLTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** fetch data from the table: "accounts" */
 	accounts: Array<GraphQLTypes["accounts"]>,
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate: GraphQLTypes["accounts_aggregate"],
-	/** fetch data from the table: "accounts_balances" */
-	accounts_balances: Array<GraphQLTypes["accounts_balances"]>,
-	/** fetch aggregated fields from the table: "accounts_balances" */
-	accounts_balances_aggregate: GraphQLTypes["accounts_balances_aggregate"],
-	/** fetch data from the table: "accounts_balances" using primary key columns */
-	accounts_balances_by_pk?: GraphQLTypes["accounts_balances"],
 	/** fetch data from the table: "accounts" using primary key columns */
 	accounts_by_pk?: GraphQLTypes["accounts"],
 	/** fetch data from the table: "burn_events" */
@@ -4965,6 +5289,10 @@ export type GraphQLTypes = {
 	gas_payments_aggregate: GraphQLTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?: GraphQLTypes["gas_payments"],
+	/** fetch data from the table: "payments" */
+	payments: Array<GraphQLTypes["payments"]>,
+	/** fetch aggregated fields from the table: "payments" */
+	payments_aggregate: GraphQLTypes["payments_aggregate"],
 	/** fetch data from the table: "preburns" */
 	preburns: Array<GraphQLTypes["preburns"]>,
 	/** fetch aggregated fields from the table: "preburns" */
@@ -5371,16 +5699,16 @@ export type GraphQLTypes = {
 };
 	["subscription_root"]: {
 	__typename: "subscription_root",
+	/** fetch data from the table: "account_roles" */
+	account_roles: Array<GraphQLTypes["account_roles"]>,
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate: GraphQLTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** fetch data from the table: "accounts" */
 	accounts: Array<GraphQLTypes["accounts"]>,
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate: GraphQLTypes["accounts_aggregate"],
-	/** fetch data from the table: "accounts_balances" */
-	accounts_balances: Array<GraphQLTypes["accounts_balances"]>,
-	/** fetch aggregated fields from the table: "accounts_balances" */
-	accounts_balances_aggregate: GraphQLTypes["accounts_balances_aggregate"],
-	/** fetch data from the table: "accounts_balances" using primary key columns */
-	accounts_balances_by_pk?: GraphQLTypes["accounts_balances"],
 	/** fetch data from the table: "accounts" using primary key columns */
 	accounts_by_pk?: GraphQLTypes["accounts"],
 	/** fetch data from the table: "burn_events" */
@@ -5401,6 +5729,10 @@ export type GraphQLTypes = {
 	gas_payments_aggregate: GraphQLTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?: GraphQLTypes["gas_payments"],
+	/** fetch data from the table: "payments" */
+	payments: Array<GraphQLTypes["payments"]>,
+	/** fetch aggregated fields from the table: "payments" */
+	payments_aggregate: GraphQLTypes["payments_aggregate"],
 	/** fetch data from the table: "preburns" */
 	preburns: Array<GraphQLTypes["preburns"]>,
 	/** fetch aggregated fields from the table: "preburns" */
@@ -5708,25 +6040,19 @@ export type GraphQLTypes = {
 	version?: number
 }
     }
-/** unique or primary key constraints on table "accounts_balances" */
-export const enum accounts_balances_constraint {
-	accounts_balances_pkey = "accounts_balances_pkey"
+/** unique or primary key constraints on table "account_roles" */
+export const enum account_roles_constraint {
+	account_roles_pkey = "account_roles_pkey"
 }
-/** select columns of table "accounts_balances" */
-export const enum accounts_balances_select_column {
-	address = "address",
-	balance = "balance",
-	currency = "currency",
-	timestamp = "timestamp",
-	version = "version"
+/** select columns of table "account_roles" */
+export const enum account_roles_select_column {
+	id = "id",
+	name = "name"
 }
-/** update columns of table "accounts_balances" */
-export const enum accounts_balances_update_column {
-	address = "address",
-	balance = "balance",
-	currency = "currency",
-	timestamp = "timestamp",
-	version = "version"
+/** update columns of table "account_roles" */
+export const enum account_roles_update_column {
+	id = "id",
+	name = "name"
 }
 /** unique or primary key constraints on table "accounts" */
 export const enum accounts_constraint {
@@ -5852,6 +6178,16 @@ export const enum order_by {
 	desc = "desc",
 	desc_nulls_first = "desc_nulls_first",
 	desc_nulls_last = "desc_nulls_last"
+}
+/** select columns of table "payments" */
+export const enum payments_select_column {
+	amount = "amount",
+	commit_timestamp = "commit_timestamp",
+	currency = "currency",
+	receiver = "receiver",
+	sender = "sender",
+	status = "status",
+	version = "version"
 }
 /** select columns of table "preburns" */
 export const enum preburns_select_column {
