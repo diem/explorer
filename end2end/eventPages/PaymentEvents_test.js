@@ -14,8 +14,8 @@ function seeRowData(I) {
   I.see('12')
   I.see('XUS')
   I.see('04000...49504')
-  I.see('6C746...D356D')
-  I.see('5D908...49504')
+  I.see('6C746B429FBC7F6D4B4CE1AD940D356D')
+  I.see('5D908A4BFCFF104F62ADBD423E449504')
   I.see('11772')
 }
 
@@ -28,4 +28,6 @@ Scenario('navigating to payment event from landing page', ({ I }) => {
   I.see('Payment Events')
   seeRowHeaders(I)
   seeRowData(I)
+  I.navigateToAddressPage('6C746B429FBC7F6D4B4CE1AD940D356D')
+  I.navigateToAddressPage('5D908A4BFCFF104F62ADBD423E449504')
 })

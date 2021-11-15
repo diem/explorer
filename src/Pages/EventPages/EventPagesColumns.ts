@@ -1,4 +1,4 @@
-import { TransactionVersion } from '../../TableComponents/Link'
+import { AccountAddress, TransactionVersion } from '../../TableComponents/Link'
 import { TruncatedCell } from '../../TableComponents/TruncatedCell'
 import { BooleanCell } from '../../TableComponents/BooleanCell'
 
@@ -25,7 +25,7 @@ export function mintEventsColumn() {
     {
       Header: 'Receiver',
       accessor: 'receiver',
-      Cell: TruncatedCell
+      Cell: AccountAddress
     },
     {
       Header: 'Sequence Number',
@@ -57,7 +57,7 @@ export function burnEventsColumn() {
     {
       Header: 'Address',
       accessor: 'address',
-      Cell: TruncatedCell
+      Cell: AccountAddress
     },
     {
       Header: 'Sequence Number',
@@ -72,8 +72,8 @@ export function paymentsEventsColumn() {
     { Header: 'Amount', accessor: 'amount' },
     { Header: 'Currency', accessor: 'currency' },
     { Header: 'Key', accessor: 'key', Cell: TruncatedCell },
-    { Header: 'Receiver', accessor: 'receiver', Cell: TruncatedCell },
-    { Header: 'Sender', accessor: 'sender', Cell: TruncatedCell },
+    { Header: 'Receiver', accessor: 'receiver', Cell: AccountAddress },
+    { Header: 'Sender', accessor: 'sender', Cell: AccountAddress },
     { Header: 'Sequence Number', accessor: 'sequence_number' },
   ]
 }
@@ -84,8 +84,8 @@ export function gasEventsColumn() {
     { Header: 'Timestamp', accessor: 'commit_timestamp', Cell: TransactionVersion },
     { Header: 'Currency', accessor: 'currency' },
     { Header: 'Gas Paid', accessor: 'gas_paid' },
-    { Header: 'Receiver', accessor: 'receiver', Cell: TruncatedCell },
-    { Header: 'Sender', accessor: 'sender', Cell: TruncatedCell }
+    { Header: 'Receiver', accessor: 'receiver', Cell: AccountAddress },
+    { Header: 'Sender', accessor: 'sender', Cell: AccountAddress }
   ]
 }
 
@@ -96,8 +96,8 @@ export function preburnEventsColumn() {
     { Header: 'Amount', accessor: 'amount' },
     { Header: 'Currency', accessor: 'currency' },
     { Header: 'Status', accessor: 'status' },
-    { Header: 'Receiver', accessor: 'receiver', Cell: TruncatedCell },
-    { Header: 'Sender', accessor: 'sender', Cell: TruncatedCell },
+    { Header: 'Receiver', accessor: 'receiver', Cell: AccountAddress },
+    { Header: 'Sender', accessor: 'sender', Cell: AccountAddress },
   ]
 }
 
@@ -108,7 +108,7 @@ export function accountcreationEventsColumn() {
     { Header: 'Role', accessor: 'role' },
     { Header: 'Received Mint Events Key', accessor: 'received_mint_events_key', Cell: TruncatedCell },
     { Header: 'Received Events Key', accessor: 'received_events_key', Cell: TruncatedCell },
-    { Header: 'Parent VASP Address', accessor: 'parent_vasp_address' },
+    { Header: 'Parent VASP Address', accessor: 'parent_vasp_address', Cell: AccountAddress },
     { Header: 'Is Frozen', accessor: 'is_frozen', Cell: BooleanCell },
     { Header: 'Indexed At', accessor: 'indexed_at' },
     { Header: 'Diem Id Domain Events Key', accessor: 'diem_id_domain_events_key' },
@@ -117,7 +117,7 @@ export function accountcreationEventsColumn() {
     { Header: 'Delegated Key Rotation Capability', accessor: 'delegated_key_rotation_capability', Cell: BooleanCell },
     { Header: 'Create Account Event Stream Sequence Number', accessor: 'create_account_event_stream_sequence_number' },
     { Header: 'Compliance Key', accessor: 'compliance_key' },
-    { Header: 'Address', accessor: 'address', Cell: TruncatedCell },
+    { Header: 'Address', accessor: 'address', Cell: AccountAddress },
     { Header: 'Base Url', accessor: 'base_url' },
     { Header: 'Base Url Rotation Events Key', accessor: 'base_url_rotation_events_key', Cell: TruncatedCell },
     { Header: 'Authentication Key', accessor: 'authentication_key', Cell: TruncatedCell },

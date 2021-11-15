@@ -9,7 +9,7 @@ function seeRowHeaders(I) {
   I.see('Sequence Number')
 }
 function seeRowData(I) {
-  I.see('F940...63E11')
+  I.see('CF9405939FD0262B8BB8F2D513F63E11')
   I.see('6000...50c18')
   I.see('312039858')
   I.see('950000')
@@ -26,4 +26,5 @@ Scenario('navigating to burn event from landing page', ({ I }) => {
   I.see('Burn Events')
   seeRowHeaders(I)
   seeRowData(I)
+  I.navigateToAddressPage('CF9405939FD0262B8BB8F2D513F63E11')
 })
