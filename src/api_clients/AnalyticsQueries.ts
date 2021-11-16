@@ -1,6 +1,8 @@
 // eslint-disable-next-line camelcase
-import { order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { GraphQLTypes, order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import moment from 'moment'
 
+export type mintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -20,6 +22,7 @@ export function mintEventsQuery() {
   }
 }
 
+export type burnEventsQueryType = GraphQLTypes['query_root']['burn_events']
 export function burnEventsQuery() {
   return {
     burn_events: [
@@ -39,6 +42,7 @@ export function burnEventsQuery() {
   }
 }
 
+export type paymentEventsQueryType = GraphQLTypes['query_root']['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -60,6 +64,7 @@ export function paymentEventsQuery() {
   }
 }
 
+export type gasEventsQueryType = GraphQLTypes['query_root']['gas_payments']
 export function gasEventsQuery() {
   return {
     gas_payments: [
@@ -79,9 +84,10 @@ export function gasEventsQuery() {
   }
 }
 
+export type preburnEventsQueryType = GraphQLTypes['query_root']['preburn_events']
 export function preburnEventsQuery() {
   return {
-    preburns: [
+    preburn_events: [
       {
         limit: 10,
         order_by: [{ version: order_by.desc }]
@@ -99,6 +105,7 @@ export function preburnEventsQuery() {
   }
 }
 
+export type accountcreationEventsQueryType = GraphQLTypes['query_root']['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [
@@ -132,6 +139,7 @@ export function accountcreationEventsQuery() {
   }
 }
 
+export type landingPageQueryType = GraphQLTypes['query_root']['transactions']
 export function landingPageQuery() {
   return {
     transactions: [
@@ -152,6 +160,8 @@ export function landingPageQuery() {
   }
 }
 
+// eslint-disable-next-line camelcase
+export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
 export function currencyInCirculationPageQuery(currency : string) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -166,5 +176,23 @@ export function currencyInCirculationPageQuery(currency : string) {
         timestamp: true
       },
     ],
+  }
+}
+
+export type countTransactionsInLast10MinutesType = { aggregate: { count: number } }
+export function countTransactionsInLast10Minutes() {
+  const TEN_MINUTES_AGO = moment.utc().subtract(10, 'minutes').format()
+  return {
+    transactions_aggregate: [
+      {
+        order_by: [{ commit_timestamp: order_by.desc }],
+        where: { commit_timestamp: { _gt: TEN_MINUTES_AGO } }
+      },
+      {
+        aggregate: {
+          count: [{}, true]
+        }
+      }
+    ]
   }
 }

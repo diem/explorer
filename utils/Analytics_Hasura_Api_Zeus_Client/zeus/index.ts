@@ -541,9 +541,11 @@ count?: [{	columns?:ValueTypes["accounts_balances_select_column"][],	distinct?:b
 ["burn_events"]: AliasType<{
 	address?:true,
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -572,6 +574,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_avg_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -582,9 +585,11 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 	_or?:ValueTypes["burn_events_bool_exp"][],
 	address?:ValueTypes["bpchar_comparison_exp"] | null,
 	amount?:ValueTypes["bigint_comparison_exp"] | null,
+	commit_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
 	currency?:ValueTypes["bpchar_comparison_exp"] | null,
 	key?:ValueTypes["String_comparison_exp"] | null,
 	sequence_number?:ValueTypes["bigint_comparison_exp"] | null,
+	status?:ValueTypes["Int_comparison_exp"] | null,
 	transaction_version?:ValueTypes["bigint_comparison_exp"] | null
 };
 	/** unique or primary key constraints on table "burn_events" */
@@ -593,24 +598,29 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_inc_input"]: {
 	amount?:ValueTypes["bigint"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** input type for inserting data into table "burn_events" */
 ["burn_events_insert_input"]: {
 	address?:ValueTypes["bpchar"] | null,
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate max on columns */
 ["burn_events_max_fields"]: AliasType<{
 	address?:true,
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -618,9 +628,11 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_min_fields"]: AliasType<{
 	address?:true,
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -642,9 +654,11 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_order_by"]: {
 	address?:ValueTypes["order_by"] | null,
 	amount?:ValueTypes["order_by"] | null,
+	commit_timestamp?:ValueTypes["order_by"] | null,
 	currency?:ValueTypes["order_by"] | null,
 	key?:ValueTypes["order_by"] | null,
 	sequence_number?:ValueTypes["order_by"] | null,
+	status?:ValueTypes["order_by"] | null,
 	transaction_version?:ValueTypes["order_by"] | null
 };
 	/** primary key columns input for table: burn_events */
@@ -658,15 +672,18 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_set_input"]: {
 	address?:ValueTypes["bpchar"] | null,
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate stddev on columns */
 ["burn_events_stddev_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -674,6 +691,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_stddev_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -681,6 +699,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_stddev_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -688,6 +707,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_sum_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -697,6 +717,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_var_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -704,6 +725,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_var_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -711,6 +733,7 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 ["burn_events_variance_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1084,6 +1107,9 @@ delete_diem_in_circulation_realtime_aggregates_by_pk?: [{	currency:ValueTypes["b
 delete_gas_payments?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["gas_payments_bool_exp"]},ValueTypes["gas_payments_mutation_response"]],
 delete_gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_payments"]],
+delete_preburn_events?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["preburn_events_bool_exp"]},ValueTypes["preburn_events_mutation_response"]],
+delete_preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
 delete_receivedmint_events?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["receivedmint_events_bool_exp"]},ValueTypes["receivedmint_events_mutation_response"]],
 delete_receivedmint_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["receivedmint_events"]],
@@ -1123,6 +1149,12 @@ insert_gas_payments?: [{	/** the rows to be inserted */
 insert_gas_payments_one?: [{	/** the row to be inserted */
 	object:ValueTypes["gas_payments_insert_input"],	/** on conflict condition */
 	on_conflict?:ValueTypes["gas_payments_on_conflict"] | null},ValueTypes["gas_payments"]],
+insert_preburn_events?: [{	/** the rows to be inserted */
+	objects:ValueTypes["preburn_events_insert_input"][],	/** on conflict condition */
+	on_conflict?:ValueTypes["preburn_events_on_conflict"] | null},ValueTypes["preburn_events_mutation_response"]],
+insert_preburn_events_one?: [{	/** the row to be inserted */
+	object:ValueTypes["preburn_events_insert_input"],	/** on conflict condition */
+	on_conflict?:ValueTypes["preburn_events_on_conflict"] | null},ValueTypes["preburn_events"]],
 insert_receivedmint_events?: [{	/** the rows to be inserted */
 	objects:ValueTypes["receivedmint_events_insert_input"][],	/** on conflict condition */
 	on_conflict?:ValueTypes["receivedmint_events_on_conflict"] | null},ValueTypes["receivedmint_events_mutation_response"]],
@@ -1176,6 +1208,13 @@ update_gas_payments?: [{	/** increments the numeric columns with given value of 
 update_gas_payments_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["gas_payments_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["gas_payments_set_input"] | null,	pk_columns:ValueTypes["gas_payments_pk_columns_input"]},ValueTypes["gas_payments"]],
+update_preburn_events?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["preburn_events_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["preburn_events_set_input"] | null,	/** filter the rows which have to be updated */
+	where:ValueTypes["preburn_events_bool_exp"]},ValueTypes["preburn_events_mutation_response"]],
+update_preburn_events_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["preburn_events_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["preburn_events_set_input"] | null,	pk_columns:ValueTypes["preburn_events_pk_columns_input"]},ValueTypes["preburn_events"]],
 update_receivedmint_events?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["receivedmint_events_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["receivedmint_events_set_input"] | null,	/** filter the rows which have to be updated */
@@ -1201,139 +1240,204 @@ update_transactions_by_pk?: [{	/** increments the numeric columns with given val
 }>;
 	/** column ordering options */
 ["order_by"]:order_by;
-	/** columns and relationships of "preburns" */
-["preburns"]: AliasType<{
+	/** columns and relationships of "preburn_events" */
+["preburn_events"]: AliasType<{
+	address?:true,
 	amount?:true,
 	commit_timestamp?:true,
 	currency?:true,
-	receiver?:true,
-	sender?:true,
+	key?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
-	/** aggregated selection of "preburns" */
-["preburns_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["preburns_aggregate_fields"],
-	nodes?:ValueTypes["preburns"],
+	/** aggregated selection of "preburn_events" */
+["preburn_events_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["preburn_events_aggregate_fields"],
+	nodes?:ValueTypes["preburn_events"],
 		__typename?: true
 }>;
-	/** aggregate fields of "preburns" */
-["preburns_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["preburns_avg_fields"],
-count?: [{	columns?:ValueTypes["preburns_select_column"][],	distinct?:boolean | null},true],
-	max?:ValueTypes["preburns_max_fields"],
-	min?:ValueTypes["preburns_min_fields"],
-	stddev?:ValueTypes["preburns_stddev_fields"],
-	stddev_pop?:ValueTypes["preburns_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["preburns_stddev_samp_fields"],
-	sum?:ValueTypes["preburns_sum_fields"],
-	var_pop?:ValueTypes["preburns_var_pop_fields"],
-	var_samp?:ValueTypes["preburns_var_samp_fields"],
-	variance?:ValueTypes["preburns_variance_fields"],
+	/** aggregate fields of "preburn_events" */
+["preburn_events_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["preburn_events_avg_fields"],
+count?: [{	columns?:ValueTypes["preburn_events_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["preburn_events_max_fields"],
+	min?:ValueTypes["preburn_events_min_fields"],
+	stddev?:ValueTypes["preburn_events_stddev_fields"],
+	stddev_pop?:ValueTypes["preburn_events_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["preburn_events_stddev_samp_fields"],
+	sum?:ValueTypes["preburn_events_sum_fields"],
+	var_pop?:ValueTypes["preburn_events_var_pop_fields"],
+	var_samp?:ValueTypes["preburn_events_var_samp_fields"],
+	variance?:ValueTypes["preburn_events_variance_fields"],
 		__typename?: true
 }>;
 	/** aggregate avg on columns */
-["preburns_avg_fields"]: AliasType<{
+["preburn_events_avg_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
-	/** Boolean expression to filter rows from the table "preburns". All fields are combined with a logical 'AND'. */
-["preburns_bool_exp"]: {
-	_and?:ValueTypes["preburns_bool_exp"][],
-	_not?:ValueTypes["preburns_bool_exp"] | null,
-	_or?:ValueTypes["preburns_bool_exp"][],
+	/** Boolean expression to filter rows from the table "preburn_events". All fields are combined with a logical 'AND'. */
+["preburn_events_bool_exp"]: {
+	_and?:ValueTypes["preburn_events_bool_exp"][],
+	_not?:ValueTypes["preburn_events_bool_exp"] | null,
+	_or?:ValueTypes["preburn_events_bool_exp"][],
+	address?:ValueTypes["bpchar_comparison_exp"] | null,
 	amount?:ValueTypes["bigint_comparison_exp"] | null,
 	commit_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
 	currency?:ValueTypes["bpchar_comparison_exp"] | null,
-	receiver?:ValueTypes["bpchar_comparison_exp"] | null,
-	sender?:ValueTypes["bpchar_comparison_exp"] | null,
+	key?:ValueTypes["String_comparison_exp"] | null,
+	sequence_number?:ValueTypes["bigint_comparison_exp"] | null,
 	status?:ValueTypes["Int_comparison_exp"] | null,
-	version?:ValueTypes["bigint_comparison_exp"] | null
+	transaction_version?:ValueTypes["bigint_comparison_exp"] | null
+};
+	/** unique or primary key constraints on table "preburn_events" */
+["preburn_events_constraint"]:preburn_events_constraint;
+	/** input type for incrementing numeric columns in table "preburn_events" */
+["preburn_events_inc_input"]: {
+	amount?:ValueTypes["bigint"] | null,
+	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
+	transaction_version?:ValueTypes["bigint"] | null
+};
+	/** input type for inserting data into table "preburn_events" */
+["preburn_events_insert_input"]: {
+	address?:ValueTypes["bpchar"] | null,
+	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
+	currency?:ValueTypes["bpchar"] | null,
+	key?:string | null,
+	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
+	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate max on columns */
-["preburns_max_fields"]: AliasType<{
+["preburn_events_max_fields"]: AliasType<{
+	address?:true,
 	amount?:true,
 	commit_timestamp?:true,
 	currency?:true,
-	receiver?:true,
-	sender?:true,
+	key?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
-["preburns_min_fields"]: AliasType<{
+["preburn_events_min_fields"]: AliasType<{
+	address?:true,
 	amount?:true,
 	commit_timestamp?:true,
 	currency?:true,
-	receiver?:true,
-	sender?:true,
+	key?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
-	/** Ordering options when selecting data from "preburns". */
-["preburns_order_by"]: {
+	/** response of any mutation on the table "preburn_events" */
+["preburn_events_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["preburn_events"],
+		__typename?: true
+}>;
+	/** on conflict condition type for table "preburn_events" */
+["preburn_events_on_conflict"]: {
+	constraint:ValueTypes["preburn_events_constraint"],
+	update_columns:ValueTypes["preburn_events_update_column"][],
+	where?:ValueTypes["preburn_events_bool_exp"] | null
+};
+	/** Ordering options when selecting data from "preburn_events". */
+["preburn_events_order_by"]: {
+	address?:ValueTypes["order_by"] | null,
 	amount?:ValueTypes["order_by"] | null,
 	commit_timestamp?:ValueTypes["order_by"] | null,
 	currency?:ValueTypes["order_by"] | null,
-	receiver?:ValueTypes["order_by"] | null,
-	sender?:ValueTypes["order_by"] | null,
+	key?:ValueTypes["order_by"] | null,
+	sequence_number?:ValueTypes["order_by"] | null,
 	status?:ValueTypes["order_by"] | null,
-	version?:ValueTypes["order_by"] | null
+	transaction_version?:ValueTypes["order_by"] | null
 };
-	/** select columns of table "preburns" */
-["preburns_select_column"]:preburns_select_column;
+	/** primary key columns input for table: preburn_events */
+["preburn_events_pk_columns_input"]: {
+	key:string,
+	sequence_number:ValueTypes["bigint"]
+};
+	/** select columns of table "preburn_events" */
+["preburn_events_select_column"]:preburn_events_select_column;
+	/** input type for updating data in table "preburn_events" */
+["preburn_events_set_input"]: {
+	address?:ValueTypes["bpchar"] | null,
+	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
+	currency?:ValueTypes["bpchar"] | null,
+	key?:string | null,
+	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
+	transaction_version?:ValueTypes["bigint"] | null
+};
 	/** aggregate stddev on columns */
-["preburns_stddev_fields"]: AliasType<{
+["preburn_events_stddev_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
-["preburns_stddev_pop_fields"]: AliasType<{
+["preburn_events_stddev_pop_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
-["preburns_stddev_samp_fields"]: AliasType<{
+["preburn_events_stddev_samp_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate sum on columns */
-["preburns_sum_fields"]: AliasType<{
+["preburn_events_sum_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
+	/** update columns of table "preburn_events" */
+["preburn_events_update_column"]:preburn_events_update_column;
 	/** aggregate var_pop on columns */
-["preburns_var_pop_fields"]: AliasType<{
+["preburn_events_var_pop_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
-["preburns_var_samp_fields"]: AliasType<{
+["preburn_events_var_samp_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
-["preburns_variance_fields"]: AliasType<{
+["preburn_events_variance_fields"]: AliasType<{
 	amount?:true,
+	sequence_number?:true,
 	status?:true,
-	version?:true,
+	transaction_version?:true,
 		__typename?: true
 }>;
 	["query_root"]: AliasType<{
@@ -1402,18 +1506,19 @@ gas_payments_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["gas_payments_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["gas_payments_bool_exp"] | null},ValueTypes["gas_payments_aggregate"]],
 gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_payments"]],
-preburns?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
+preburn_events?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["preburn_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
 	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["preburns_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["preburns_bool_exp"] | null},ValueTypes["preburns"]],
-preburns_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events"]],
+preburn_events_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["preburn_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
 	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["preburns_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["preburns_bool_exp"] | null},ValueTypes["preburns_aggregate"]],
+	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events_aggregate"]],
+preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
 receivedmint_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["receivedmint_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -1458,10 +1563,12 @@ transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]
 	/** columns and relationships of "receivedmint_events" */
 ["receivedmint_events"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	receiver?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1490,6 +1597,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_avg_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1499,10 +1607,12 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 	_not?:ValueTypes["receivedmint_events_bool_exp"] | null,
 	_or?:ValueTypes["receivedmint_events_bool_exp"][],
 	amount?:ValueTypes["bigint_comparison_exp"] | null,
+	commit_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
 	currency?:ValueTypes["bpchar_comparison_exp"] | null,
 	key?:ValueTypes["String_comparison_exp"] | null,
 	receiver?:ValueTypes["bpchar_comparison_exp"] | null,
 	sequence_number?:ValueTypes["bigint_comparison_exp"] | null,
+	status?:ValueTypes["Int_comparison_exp"] | null,
 	transaction_version?:ValueTypes["bigint_comparison_exp"] | null
 };
 	/** unique or primary key constraints on table "receivedmint_events" */
@@ -1511,34 +1621,41 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_inc_input"]: {
 	amount?:ValueTypes["bigint"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** input type for inserting data into table "receivedmint_events" */
 ["receivedmint_events_insert_input"]: {
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	receiver?:ValueTypes["bpchar"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate max on columns */
 ["receivedmint_events_max_fields"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	receiver?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["receivedmint_events_min_fields"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	receiver?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1559,10 +1676,12 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 	/** Ordering options when selecting data from "receivedmint_events". */
 ["receivedmint_events_order_by"]: {
 	amount?:ValueTypes["order_by"] | null,
+	commit_timestamp?:ValueTypes["order_by"] | null,
 	currency?:ValueTypes["order_by"] | null,
 	key?:ValueTypes["order_by"] | null,
 	receiver?:ValueTypes["order_by"] | null,
 	sequence_number?:ValueTypes["order_by"] | null,
+	status?:ValueTypes["order_by"] | null,
 	transaction_version?:ValueTypes["order_by"] | null
 };
 	/** primary key columns input for table: receivedmint_events */
@@ -1575,16 +1694,19 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 	/** input type for updating data in table "receivedmint_events" */
 ["receivedmint_events_set_input"]: {
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	receiver?:ValueTypes["bpchar"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate stddev on columns */
 ["receivedmint_events_stddev_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1592,6 +1714,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_stddev_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1599,6 +1722,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_stddev_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1606,6 +1730,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_sum_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1615,6 +1740,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_var_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1622,6 +1748,7 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_var_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1629,18 +1756,21 @@ count?: [{	columns?:ValueTypes["receivedmint_events_select_column"][],	distinct?
 ["receivedmint_events_variance_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
 	/** columns and relationships of "sentpayment_events" */
 ["sentpayment_events"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	metadata?:true,
 	receiver?:true,
 	sender?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1669,6 +1799,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_avg_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1678,12 +1809,14 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 	_not?:ValueTypes["sentpayment_events_bool_exp"] | null,
 	_or?:ValueTypes["sentpayment_events_bool_exp"][],
 	amount?:ValueTypes["bigint_comparison_exp"] | null,
+	commit_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
 	currency?:ValueTypes["bpchar_comparison_exp"] | null,
 	key?:ValueTypes["String_comparison_exp"] | null,
 	metadata?:ValueTypes["String_comparison_exp"] | null,
 	receiver?:ValueTypes["bpchar_comparison_exp"] | null,
 	sender?:ValueTypes["bpchar_comparison_exp"] | null,
 	sequence_number?:ValueTypes["bigint_comparison_exp"] | null,
+	status?:ValueTypes["Int_comparison_exp"] | null,
 	transaction_version?:ValueTypes["bigint_comparison_exp"] | null
 };
 	/** unique or primary key constraints on table "sentpayment_events" */
@@ -1692,40 +1825,47 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_inc_input"]: {
 	amount?:ValueTypes["bigint"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** input type for inserting data into table "sentpayment_events" */
 ["sentpayment_events_insert_input"]: {
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	metadata?:string | null,
 	receiver?:ValueTypes["bpchar"] | null,
 	sender?:ValueTypes["bpchar"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate max on columns */
 ["sentpayment_events_max_fields"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	metadata?:true,
 	receiver?:true,
 	sender?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["sentpayment_events_min_fields"]: AliasType<{
 	amount?:true,
+	commit_timestamp?:true,
 	currency?:true,
 	key?:true,
 	metadata?:true,
 	receiver?:true,
 	sender?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1746,12 +1886,14 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 	/** Ordering options when selecting data from "sentpayment_events". */
 ["sentpayment_events_order_by"]: {
 	amount?:ValueTypes["order_by"] | null,
+	commit_timestamp?:ValueTypes["order_by"] | null,
 	currency?:ValueTypes["order_by"] | null,
 	key?:ValueTypes["order_by"] | null,
 	metadata?:ValueTypes["order_by"] | null,
 	receiver?:ValueTypes["order_by"] | null,
 	sender?:ValueTypes["order_by"] | null,
 	sequence_number?:ValueTypes["order_by"] | null,
+	status?:ValueTypes["order_by"] | null,
 	transaction_version?:ValueTypes["order_by"] | null
 };
 	/** primary key columns input for table: sentpayment_events */
@@ -1764,18 +1906,21 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 	/** input type for updating data in table "sentpayment_events" */
 ["sentpayment_events_set_input"]: {
 	amount?:ValueTypes["bigint"] | null,
+	commit_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	key?:string | null,
 	metadata?:string | null,
 	receiver?:ValueTypes["bpchar"] | null,
 	sender?:ValueTypes["bpchar"] | null,
 	sequence_number?:ValueTypes["bigint"] | null,
+	status?:number | null,
 	transaction_version?:ValueTypes["bigint"] | null
 };
 	/** aggregate stddev on columns */
 ["sentpayment_events_stddev_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1783,6 +1928,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_stddev_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1790,6 +1936,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_stddev_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1797,6 +1944,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_sum_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1806,6 +1954,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_var_pop_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1813,6 +1962,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_var_samp_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1820,6 +1970,7 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 ["sentpayment_events_variance_fields"]: AliasType<{
 	amount?:true,
 	sequence_number?:true,
+	status?:true,
 	transaction_version?:true,
 		__typename?: true
 }>;
@@ -1902,18 +2053,19 @@ gas_payments_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["gas_payments_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["gas_payments_bool_exp"] | null},ValueTypes["gas_payments_aggregate"]],
 gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_payments"]],
-preburns?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
+preburn_events?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["preburn_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
 	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["preburns_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["preburns_bool_exp"] | null},ValueTypes["preburns"]],
-preburns_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["preburns_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events"]],
+preburn_events_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["preburn_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
 	offset?:number | null,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["preburns_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["preburns_bool_exp"] | null},ValueTypes["preburns_aggregate"]],
+	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events_aggregate"]],
+preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
 receivedmint_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["receivedmint_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2524,9 +2676,11 @@ export type ModelTypes = {
 ["burn_events"]: {
 		address:ModelTypes["bpchar"],
 	amount:ModelTypes["bigint"],
+	commit_timestamp:ModelTypes["timestamptz"],
 	currency:ModelTypes["bpchar"],
 	key:string,
 	sequence_number:ModelTypes["bigint"],
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "burn_events" */
@@ -2552,6 +2706,7 @@ export type ModelTypes = {
 ["burn_events_avg_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** Boolean expression to filter rows from the table "burn_events". All fields are combined with a logical 'AND'. */
@@ -2566,18 +2721,22 @@ export type ModelTypes = {
 ["burn_events_max_fields"]: {
 		address?:ModelTypes["bpchar"],
 	amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** aggregate min on columns */
 ["burn_events_min_fields"]: {
 		address?:ModelTypes["bpchar"],
 	amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** response of any mutation on the table "burn_events" */
@@ -2601,24 +2760,28 @@ export type ModelTypes = {
 ["burn_events_stddev_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_pop on columns */
 ["burn_events_stddev_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_samp on columns */
 ["burn_events_stddev_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate sum on columns */
 ["burn_events_sum_fields"]: {
 		amount?:ModelTypes["bigint"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** update columns of table "burn_events" */
@@ -2627,18 +2790,21 @@ export type ModelTypes = {
 ["burn_events_var_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate var_samp on columns */
 ["burn_events_var_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate variance on columns */
 ["burn_events_variance_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** columns and relationships of "diem_in_circulation_realtime_aggregates" */
@@ -2905,6 +3071,10 @@ export type ModelTypes = {
 	delete_gas_payments?:ModelTypes["gas_payments_mutation_response"],
 	/** delete single row from the table: "gas_payments" */
 	delete_gas_payments_by_pk?:ModelTypes["gas_payments"],
+	/** delete data from the table: "preburn_events" */
+	delete_preburn_events?:ModelTypes["preburn_events_mutation_response"],
+	/** delete single row from the table: "preburn_events" */
+	delete_preburn_events_by_pk?:ModelTypes["preburn_events"],
 	/** delete data from the table: "receivedmint_events" */
 	delete_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** delete single row from the table: "receivedmint_events" */
@@ -2937,6 +3107,10 @@ export type ModelTypes = {
 	insert_gas_payments?:ModelTypes["gas_payments_mutation_response"],
 	/** insert a single row into the table: "gas_payments" */
 	insert_gas_payments_one?:ModelTypes["gas_payments"],
+	/** insert data into the table: "preburn_events" */
+	insert_preburn_events?:ModelTypes["preburn_events_mutation_response"],
+	/** insert a single row into the table: "preburn_events" */
+	insert_preburn_events_one?:ModelTypes["preburn_events"],
 	/** insert data into the table: "receivedmint_events" */
 	insert_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** insert a single row into the table: "receivedmint_events" */
@@ -2969,6 +3143,10 @@ export type ModelTypes = {
 	update_gas_payments?:ModelTypes["gas_payments_mutation_response"],
 	/** update single row of the table: "gas_payments" */
 	update_gas_payments_by_pk?:ModelTypes["gas_payments"],
+	/** update data of the table: "preburn_events" */
+	update_preburn_events?:ModelTypes["preburn_events_mutation_response"],
+	/** update single row of the table: "preburn_events" */
+	update_preburn_events_by_pk?:ModelTypes["preburn_events"],
 	/** update data of the table: "receivedmint_events" */
 	update_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** update single row of the table: "receivedmint_events" */
@@ -2984,108 +3162,140 @@ export type ModelTypes = {
 };
 	/** column ordering options */
 ["order_by"]: GraphQLTypes["order_by"];
-	/** columns and relationships of "preburns" */
-["preburns"]: {
-		amount?:ModelTypes["bigint"],
-	commit_timestamp?:ModelTypes["timestamptz"],
-	currency?:ModelTypes["bpchar"],
-	receiver?:ModelTypes["bpchar"],
-	sender?:ModelTypes["bpchar"],
+	/** columns and relationships of "preburn_events" */
+["preburn_events"]: {
+		address:ModelTypes["bpchar"],
+	amount:ModelTypes["bigint"],
+	commit_timestamp:ModelTypes["timestamptz"],
+	currency:ModelTypes["bpchar"],
+	key:string,
+	sequence_number:ModelTypes["bigint"],
 	status?:number,
-	version?:ModelTypes["bigint"]
+	transaction_version:ModelTypes["bigint"]
 };
-	/** aggregated selection of "preburns" */
-["preburns_aggregate"]: {
-		aggregate?:ModelTypes["preburns_aggregate_fields"],
-	nodes:ModelTypes["preburns"][]
+	/** aggregated selection of "preburn_events" */
+["preburn_events_aggregate"]: {
+		aggregate?:ModelTypes["preburn_events_aggregate_fields"],
+	nodes:ModelTypes["preburn_events"][]
 };
-	/** aggregate fields of "preburns" */
-["preburns_aggregate_fields"]: {
-		avg?:ModelTypes["preburns_avg_fields"],
+	/** aggregate fields of "preburn_events" */
+["preburn_events_aggregate_fields"]: {
+		avg?:ModelTypes["preburn_events_avg_fields"],
 	count:number,
-	max?:ModelTypes["preburns_max_fields"],
-	min?:ModelTypes["preburns_min_fields"],
-	stddev?:ModelTypes["preburns_stddev_fields"],
-	stddev_pop?:ModelTypes["preburns_stddev_pop_fields"],
-	stddev_samp?:ModelTypes["preburns_stddev_samp_fields"],
-	sum?:ModelTypes["preburns_sum_fields"],
-	var_pop?:ModelTypes["preburns_var_pop_fields"],
-	var_samp?:ModelTypes["preburns_var_samp_fields"],
-	variance?:ModelTypes["preburns_variance_fields"]
+	max?:ModelTypes["preburn_events_max_fields"],
+	min?:ModelTypes["preburn_events_min_fields"],
+	stddev?:ModelTypes["preburn_events_stddev_fields"],
+	stddev_pop?:ModelTypes["preburn_events_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["preburn_events_stddev_samp_fields"],
+	sum?:ModelTypes["preburn_events_sum_fields"],
+	var_pop?:ModelTypes["preburn_events_var_pop_fields"],
+	var_samp?:ModelTypes["preburn_events_var_samp_fields"],
+	variance?:ModelTypes["preburn_events_variance_fields"]
 };
 	/** aggregate avg on columns */
-["preburns_avg_fields"]: {
+["preburn_events_avg_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
-	/** Boolean expression to filter rows from the table "preburns". All fields are combined with a logical 'AND'. */
-["preburns_bool_exp"]: GraphQLTypes["preburns_bool_exp"];
+	/** Boolean expression to filter rows from the table "preburn_events". All fields are combined with a logical 'AND'. */
+["preburn_events_bool_exp"]: GraphQLTypes["preburn_events_bool_exp"];
+	/** unique or primary key constraints on table "preburn_events" */
+["preburn_events_constraint"]: GraphQLTypes["preburn_events_constraint"];
+	/** input type for incrementing numeric columns in table "preburn_events" */
+["preburn_events_inc_input"]: GraphQLTypes["preburn_events_inc_input"];
+	/** input type for inserting data into table "preburn_events" */
+["preburn_events_insert_input"]: GraphQLTypes["preburn_events_insert_input"];
 	/** aggregate max on columns */
-["preburns_max_fields"]: {
-		amount?:ModelTypes["bigint"],
+["preburn_events_max_fields"]: {
+		address?:ModelTypes["bpchar"],
+	amount?:ModelTypes["bigint"],
 	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
-	receiver?:ModelTypes["bpchar"],
-	sender?:ModelTypes["bpchar"],
+	key?:string,
+	sequence_number?:ModelTypes["bigint"],
 	status?:number,
-	version?:ModelTypes["bigint"]
+	transaction_version?:ModelTypes["bigint"]
 };
 	/** aggregate min on columns */
-["preburns_min_fields"]: {
-		amount?:ModelTypes["bigint"],
+["preburn_events_min_fields"]: {
+		address?:ModelTypes["bpchar"],
+	amount?:ModelTypes["bigint"],
 	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
-	receiver?:ModelTypes["bpchar"],
-	sender?:ModelTypes["bpchar"],
+	key?:string,
+	sequence_number?:ModelTypes["bigint"],
 	status?:number,
-	version?:ModelTypes["bigint"]
+	transaction_version?:ModelTypes["bigint"]
 };
-	/** Ordering options when selecting data from "preburns". */
-["preburns_order_by"]: GraphQLTypes["preburns_order_by"];
-	/** select columns of table "preburns" */
-["preburns_select_column"]: GraphQLTypes["preburns_select_column"];
+	/** response of any mutation on the table "preburn_events" */
+["preburn_events_mutation_response"]: {
+		/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:ModelTypes["preburn_events"][]
+};
+	/** on conflict condition type for table "preburn_events" */
+["preburn_events_on_conflict"]: GraphQLTypes["preburn_events_on_conflict"];
+	/** Ordering options when selecting data from "preburn_events". */
+["preburn_events_order_by"]: GraphQLTypes["preburn_events_order_by"];
+	/** primary key columns input for table: preburn_events */
+["preburn_events_pk_columns_input"]: GraphQLTypes["preburn_events_pk_columns_input"];
+	/** select columns of table "preburn_events" */
+["preburn_events_select_column"]: GraphQLTypes["preburn_events_select_column"];
+	/** input type for updating data in table "preburn_events" */
+["preburn_events_set_input"]: GraphQLTypes["preburn_events_set_input"];
 	/** aggregate stddev on columns */
-["preburns_stddev_fields"]: {
+["preburn_events_stddev_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	/** aggregate stddev_pop on columns */
-["preburns_stddev_pop_fields"]: {
+["preburn_events_stddev_pop_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	/** aggregate stddev_samp on columns */
-["preburns_stddev_samp_fields"]: {
+["preburn_events_stddev_samp_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	/** aggregate sum on columns */
-["preburns_sum_fields"]: {
+["preburn_events_sum_fields"]: {
 		amount?:ModelTypes["bigint"],
+	sequence_number?:ModelTypes["bigint"],
 	status?:number,
-	version?:ModelTypes["bigint"]
+	transaction_version?:ModelTypes["bigint"]
 };
+	/** update columns of table "preburn_events" */
+["preburn_events_update_column"]: GraphQLTypes["preburn_events_update_column"];
 	/** aggregate var_pop on columns */
-["preburns_var_pop_fields"]: {
+["preburn_events_var_pop_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	/** aggregate var_samp on columns */
-["preburns_var_samp_fields"]: {
+["preburn_events_var_samp_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	/** aggregate variance on columns */
-["preburns_variance_fields"]: {
+["preburn_events_variance_fields"]: {
 		amount?:number,
+	sequence_number?:number,
 	status?:number,
-	version?:number
+	transaction_version?:number
 };
 	["query_root"]: {
 		/** fetch data from the table: "accounts" */
@@ -3118,10 +3328,12 @@ export type ModelTypes = {
 	gas_payments_aggregate:ModelTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?:ModelTypes["gas_payments"],
-	/** fetch data from the table: "preburns" */
-	preburns:ModelTypes["preburns"][],
-	/** fetch aggregated fields from the table: "preburns" */
-	preburns_aggregate:ModelTypes["preburns_aggregate"],
+	/** fetch data from the table: "preburn_events" */
+	preburn_events:ModelTypes["preburn_events"][],
+	/** fetch aggregated fields from the table: "preburn_events" */
+	preburn_events_aggregate:ModelTypes["preburn_events_aggregate"],
+	/** fetch data from the table: "preburn_events" using primary key columns */
+	preburn_events_by_pk?:ModelTypes["preburn_events"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events:ModelTypes["receivedmint_events"][],
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -3144,10 +3356,12 @@ export type ModelTypes = {
 	/** columns and relationships of "receivedmint_events" */
 ["receivedmint_events"]: {
 		amount:ModelTypes["bigint"],
+	commit_timestamp:ModelTypes["timestamptz"],
 	currency:ModelTypes["bpchar"],
 	key:string,
 	receiver:ModelTypes["bpchar"],
 	sequence_number:ModelTypes["bigint"],
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "receivedmint_events" */
@@ -3173,6 +3387,7 @@ export type ModelTypes = {
 ["receivedmint_events_avg_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** Boolean expression to filter rows from the table "receivedmint_events". All fields are combined with a logical 'AND'. */
@@ -3186,19 +3401,23 @@ export type ModelTypes = {
 	/** aggregate max on columns */
 ["receivedmint_events_max_fields"]: {
 		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	receiver?:ModelTypes["bpchar"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** aggregate min on columns */
 ["receivedmint_events_min_fields"]: {
 		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	receiver?:ModelTypes["bpchar"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** response of any mutation on the table "receivedmint_events" */
@@ -3222,24 +3441,28 @@ export type ModelTypes = {
 ["receivedmint_events_stddev_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_pop on columns */
 ["receivedmint_events_stddev_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_samp on columns */
 ["receivedmint_events_stddev_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate sum on columns */
 ["receivedmint_events_sum_fields"]: {
 		amount?:ModelTypes["bigint"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** update columns of table "receivedmint_events" */
@@ -3248,29 +3471,34 @@ export type ModelTypes = {
 ["receivedmint_events_var_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate var_samp on columns */
 ["receivedmint_events_var_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate variance on columns */
 ["receivedmint_events_variance_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** columns and relationships of "sentpayment_events" */
 ["sentpayment_events"]: {
 		amount:ModelTypes["bigint"],
+	commit_timestamp:ModelTypes["timestamptz"],
 	currency:ModelTypes["bpchar"],
 	key:string,
 	metadata:string,
 	receiver:ModelTypes["bpchar"],
 	sender:ModelTypes["bpchar"],
 	sequence_number:ModelTypes["bigint"],
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "sentpayment_events" */
@@ -3296,6 +3524,7 @@ export type ModelTypes = {
 ["sentpayment_events_avg_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** Boolean expression to filter rows from the table "sentpayment_events". All fields are combined with a logical 'AND'. */
@@ -3309,23 +3538,27 @@ export type ModelTypes = {
 	/** aggregate max on columns */
 ["sentpayment_events_max_fields"]: {
 		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	metadata?:string,
 	receiver?:ModelTypes["bpchar"],
 	sender?:ModelTypes["bpchar"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** aggregate min on columns */
 ["sentpayment_events_min_fields"]: {
 		amount?:ModelTypes["bigint"],
+	commit_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	key?:string,
 	metadata?:string,
 	receiver?:ModelTypes["bpchar"],
 	sender?:ModelTypes["bpchar"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** response of any mutation on the table "sentpayment_events" */
@@ -3349,24 +3582,28 @@ export type ModelTypes = {
 ["sentpayment_events_stddev_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_pop on columns */
 ["sentpayment_events_stddev_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate stddev_samp on columns */
 ["sentpayment_events_stddev_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate sum on columns */
 ["sentpayment_events_sum_fields"]: {
 		amount?:ModelTypes["bigint"],
 	sequence_number?:ModelTypes["bigint"],
+	status?:number,
 	transaction_version?:ModelTypes["bigint"]
 };
 	/** update columns of table "sentpayment_events" */
@@ -3375,18 +3612,21 @@ export type ModelTypes = {
 ["sentpayment_events_var_pop_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate var_samp on columns */
 ["sentpayment_events_var_samp_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	/** aggregate variance on columns */
 ["sentpayment_events_variance_fields"]: {
 		amount?:number,
 	sequence_number?:number,
+	status?:number,
 	transaction_version?:number
 };
 	["smallint"]:any;
@@ -3423,10 +3663,12 @@ export type ModelTypes = {
 	gas_payments_aggregate:ModelTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?:ModelTypes["gas_payments"],
-	/** fetch data from the table: "preburns" */
-	preburns:ModelTypes["preburns"][],
-	/** fetch aggregated fields from the table: "preburns" */
-	preburns_aggregate:ModelTypes["preburns_aggregate"],
+	/** fetch data from the table: "preburn_events" */
+	preburn_events:ModelTypes["preburn_events"][],
+	/** fetch aggregated fields from the table: "preburn_events" */
+	preburn_events_aggregate:ModelTypes["preburn_events_aggregate"],
+	/** fetch data from the table: "preburn_events" using primary key columns */
+	preburn_events_by_pk?:ModelTypes["preburn_events"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events:ModelTypes["receivedmint_events"][],
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -4171,9 +4413,11 @@ export type GraphQLTypes = {
 	__typename: "burn_events",
 	address: GraphQLTypes["bpchar"],
 	amount: GraphQLTypes["bigint"],
+	commit_timestamp: GraphQLTypes["timestamptz"],
 	currency: GraphQLTypes["bpchar"],
 	key: string,
 	sequence_number: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "burn_events" */
@@ -4202,6 +4446,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_avg_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** Boolean expression to filter rows from the table "burn_events". All fields are combined with a logical 'AND'. */
@@ -4211,9 +4456,11 @@ export type GraphQLTypes = {
 	_or?: Array<GraphQLTypes["burn_events_bool_exp"]>,
 	address?: GraphQLTypes["bpchar_comparison_exp"],
 	amount?: GraphQLTypes["bigint_comparison_exp"],
+	commit_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
 	currency?: GraphQLTypes["bpchar_comparison_exp"],
 	key?: GraphQLTypes["String_comparison_exp"],
 	sequence_number?: GraphQLTypes["bigint_comparison_exp"],
+	status?: GraphQLTypes["Int_comparison_exp"],
 	transaction_version?: GraphQLTypes["bigint_comparison_exp"]
 };
 	/** unique or primary key constraints on table "burn_events" */
@@ -4222,15 +4469,18 @@ export type GraphQLTypes = {
 ["burn_events_inc_input"]: {
 		amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** input type for inserting data into table "burn_events" */
 ["burn_events_insert_input"]: {
 		address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate max on columns */
@@ -4238,9 +4488,11 @@ export type GraphQLTypes = {
 	__typename: "burn_events_max_fields",
 	address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate min on columns */
@@ -4248,9 +4500,11 @@ export type GraphQLTypes = {
 	__typename: "burn_events_min_fields",
 	address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** response of any mutation on the table "burn_events" */
@@ -4271,9 +4525,11 @@ export type GraphQLTypes = {
 ["burn_events_order_by"]: {
 		address?: GraphQLTypes["order_by"],
 	amount?: GraphQLTypes["order_by"],
+	commit_timestamp?: GraphQLTypes["order_by"],
 	currency?: GraphQLTypes["order_by"],
 	key?: GraphQLTypes["order_by"],
 	sequence_number?: GraphQLTypes["order_by"],
+	status?: GraphQLTypes["order_by"],
 	transaction_version?: GraphQLTypes["order_by"]
 };
 	/** primary key columns input for table: burn_events */
@@ -4287,9 +4543,11 @@ export type GraphQLTypes = {
 ["burn_events_set_input"]: {
 		address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate stddev on columns */
@@ -4297,6 +4555,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_stddev_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_pop on columns */
@@ -4304,6 +4563,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_stddev_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_samp on columns */
@@ -4311,6 +4571,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_stddev_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate sum on columns */
@@ -4318,6 +4579,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_sum_fields",
 	amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** update columns of table "burn_events" */
@@ -4327,6 +4589,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_var_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate var_samp on columns */
@@ -4334,6 +4597,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_var_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate variance on columns */
@@ -4341,6 +4605,7 @@ export type GraphQLTypes = {
 	__typename: "burn_events_variance_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** columns and relationships of "diem_in_circulation_realtime_aggregates" */
@@ -4719,6 +4984,10 @@ export type GraphQLTypes = {
 	delete_gas_payments?: GraphQLTypes["gas_payments_mutation_response"],
 	/** delete single row from the table: "gas_payments" */
 	delete_gas_payments_by_pk?: GraphQLTypes["gas_payments"],
+	/** delete data from the table: "preburn_events" */
+	delete_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
+	/** delete single row from the table: "preburn_events" */
+	delete_preburn_events_by_pk?: GraphQLTypes["preburn_events"],
 	/** delete data from the table: "receivedmint_events" */
 	delete_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** delete single row from the table: "receivedmint_events" */
@@ -4751,6 +5020,10 @@ export type GraphQLTypes = {
 	insert_gas_payments?: GraphQLTypes["gas_payments_mutation_response"],
 	/** insert a single row into the table: "gas_payments" */
 	insert_gas_payments_one?: GraphQLTypes["gas_payments"],
+	/** insert data into the table: "preburn_events" */
+	insert_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
+	/** insert a single row into the table: "preburn_events" */
+	insert_preburn_events_one?: GraphQLTypes["preburn_events"],
 	/** insert data into the table: "receivedmint_events" */
 	insert_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** insert a single row into the table: "receivedmint_events" */
@@ -4783,6 +5056,10 @@ export type GraphQLTypes = {
 	update_gas_payments?: GraphQLTypes["gas_payments_mutation_response"],
 	/** update single row of the table: "gas_payments" */
 	update_gas_payments_by_pk?: GraphQLTypes["gas_payments"],
+	/** update data of the table: "preburn_events" */
+	update_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
+	/** update single row of the table: "preburn_events" */
+	update_preburn_events_by_pk?: GraphQLTypes["preburn_events"],
 	/** update data of the table: "receivedmint_events" */
 	update_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** update single row of the table: "receivedmint_events" */
@@ -4798,140 +5075,205 @@ export type GraphQLTypes = {
 };
 	/** column ordering options */
 ["order_by"]: order_by;
-	/** columns and relationships of "preburns" */
-["preburns"]: {
-	__typename: "preburns",
-	amount?: GraphQLTypes["bigint"],
-	commit_timestamp?: GraphQLTypes["timestamptz"],
-	currency?: GraphQLTypes["bpchar"],
-	receiver?: GraphQLTypes["bpchar"],
-	sender?: GraphQLTypes["bpchar"],
+	/** columns and relationships of "preburn_events" */
+["preburn_events"]: {
+	__typename: "preburn_events",
+	address: GraphQLTypes["bpchar"],
+	amount: GraphQLTypes["bigint"],
+	commit_timestamp: GraphQLTypes["timestamptz"],
+	currency: GraphQLTypes["bpchar"],
+	key: string,
+	sequence_number: GraphQLTypes["bigint"],
 	status?: number,
-	version?: GraphQLTypes["bigint"]
+	transaction_version: GraphQLTypes["bigint"]
 };
-	/** aggregated selection of "preburns" */
-["preburns_aggregate"]: {
-	__typename: "preburns_aggregate",
-	aggregate?: GraphQLTypes["preburns_aggregate_fields"],
-	nodes: Array<GraphQLTypes["preburns"]>
+	/** aggregated selection of "preburn_events" */
+["preburn_events_aggregate"]: {
+	__typename: "preburn_events_aggregate",
+	aggregate?: GraphQLTypes["preburn_events_aggregate_fields"],
+	nodes: Array<GraphQLTypes["preburn_events"]>
 };
-	/** aggregate fields of "preburns" */
-["preburns_aggregate_fields"]: {
-	__typename: "preburns_aggregate_fields",
-	avg?: GraphQLTypes["preburns_avg_fields"],
+	/** aggregate fields of "preburn_events" */
+["preburn_events_aggregate_fields"]: {
+	__typename: "preburn_events_aggregate_fields",
+	avg?: GraphQLTypes["preburn_events_avg_fields"],
 	count: number,
-	max?: GraphQLTypes["preburns_max_fields"],
-	min?: GraphQLTypes["preburns_min_fields"],
-	stddev?: GraphQLTypes["preburns_stddev_fields"],
-	stddev_pop?: GraphQLTypes["preburns_stddev_pop_fields"],
-	stddev_samp?: GraphQLTypes["preburns_stddev_samp_fields"],
-	sum?: GraphQLTypes["preburns_sum_fields"],
-	var_pop?: GraphQLTypes["preburns_var_pop_fields"],
-	var_samp?: GraphQLTypes["preburns_var_samp_fields"],
-	variance?: GraphQLTypes["preburns_variance_fields"]
+	max?: GraphQLTypes["preburn_events_max_fields"],
+	min?: GraphQLTypes["preburn_events_min_fields"],
+	stddev?: GraphQLTypes["preburn_events_stddev_fields"],
+	stddev_pop?: GraphQLTypes["preburn_events_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["preburn_events_stddev_samp_fields"],
+	sum?: GraphQLTypes["preburn_events_sum_fields"],
+	var_pop?: GraphQLTypes["preburn_events_var_pop_fields"],
+	var_samp?: GraphQLTypes["preburn_events_var_samp_fields"],
+	variance?: GraphQLTypes["preburn_events_variance_fields"]
 };
 	/** aggregate avg on columns */
-["preburns_avg_fields"]: {
-	__typename: "preburns_avg_fields",
+["preburn_events_avg_fields"]: {
+	__typename: "preburn_events_avg_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
-	/** Boolean expression to filter rows from the table "preburns". All fields are combined with a logical 'AND'. */
-["preburns_bool_exp"]: {
-		_and?: Array<GraphQLTypes["preburns_bool_exp"]>,
-	_not?: GraphQLTypes["preburns_bool_exp"],
-	_or?: Array<GraphQLTypes["preburns_bool_exp"]>,
+	/** Boolean expression to filter rows from the table "preburn_events". All fields are combined with a logical 'AND'. */
+["preburn_events_bool_exp"]: {
+		_and?: Array<GraphQLTypes["preburn_events_bool_exp"]>,
+	_not?: GraphQLTypes["preburn_events_bool_exp"],
+	_or?: Array<GraphQLTypes["preburn_events_bool_exp"]>,
+	address?: GraphQLTypes["bpchar_comparison_exp"],
 	amount?: GraphQLTypes["bigint_comparison_exp"],
 	commit_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
 	currency?: GraphQLTypes["bpchar_comparison_exp"],
-	receiver?: GraphQLTypes["bpchar_comparison_exp"],
-	sender?: GraphQLTypes["bpchar_comparison_exp"],
+	key?: GraphQLTypes["String_comparison_exp"],
+	sequence_number?: GraphQLTypes["bigint_comparison_exp"],
 	status?: GraphQLTypes["Int_comparison_exp"],
-	version?: GraphQLTypes["bigint_comparison_exp"]
+	transaction_version?: GraphQLTypes["bigint_comparison_exp"]
+};
+	/** unique or primary key constraints on table "preburn_events" */
+["preburn_events_constraint"]: preburn_events_constraint;
+	/** input type for incrementing numeric columns in table "preburn_events" */
+["preburn_events_inc_input"]: {
+		amount?: GraphQLTypes["bigint"],
+	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
+	transaction_version?: GraphQLTypes["bigint"]
+};
+	/** input type for inserting data into table "preburn_events" */
+["preburn_events_insert_input"]: {
+		address?: GraphQLTypes["bpchar"],
+	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	key?: string,
+	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
+	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate max on columns */
-["preburns_max_fields"]: {
-	__typename: "preburns_max_fields",
+["preburn_events_max_fields"]: {
+	__typename: "preburn_events_max_fields",
+	address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
 	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
-	receiver?: GraphQLTypes["bpchar"],
-	sender?: GraphQLTypes["bpchar"],
+	key?: string,
+	sequence_number?: GraphQLTypes["bigint"],
 	status?: number,
-	version?: GraphQLTypes["bigint"]
+	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate min on columns */
-["preburns_min_fields"]: {
-	__typename: "preburns_min_fields",
+["preburn_events_min_fields"]: {
+	__typename: "preburn_events_min_fields",
+	address?: GraphQLTypes["bpchar"],
 	amount?: GraphQLTypes["bigint"],
 	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
-	receiver?: GraphQLTypes["bpchar"],
-	sender?: GraphQLTypes["bpchar"],
+	key?: string,
+	sequence_number?: GraphQLTypes["bigint"],
 	status?: number,
-	version?: GraphQLTypes["bigint"]
+	transaction_version?: GraphQLTypes["bigint"]
 };
-	/** Ordering options when selecting data from "preburns". */
-["preburns_order_by"]: {
-		amount?: GraphQLTypes["order_by"],
+	/** response of any mutation on the table "preburn_events" */
+["preburn_events_mutation_response"]: {
+	__typename: "preburn_events_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows: number,
+	/** data from the rows affected by the mutation */
+	returning: Array<GraphQLTypes["preburn_events"]>
+};
+	/** on conflict condition type for table "preburn_events" */
+["preburn_events_on_conflict"]: {
+		constraint: GraphQLTypes["preburn_events_constraint"],
+	update_columns: Array<GraphQLTypes["preburn_events_update_column"]>,
+	where?: GraphQLTypes["preburn_events_bool_exp"]
+};
+	/** Ordering options when selecting data from "preburn_events". */
+["preburn_events_order_by"]: {
+		address?: GraphQLTypes["order_by"],
+	amount?: GraphQLTypes["order_by"],
 	commit_timestamp?: GraphQLTypes["order_by"],
 	currency?: GraphQLTypes["order_by"],
-	receiver?: GraphQLTypes["order_by"],
-	sender?: GraphQLTypes["order_by"],
+	key?: GraphQLTypes["order_by"],
+	sequence_number?: GraphQLTypes["order_by"],
 	status?: GraphQLTypes["order_by"],
-	version?: GraphQLTypes["order_by"]
+	transaction_version?: GraphQLTypes["order_by"]
 };
-	/** select columns of table "preburns" */
-["preburns_select_column"]: preburns_select_column;
-	/** aggregate stddev on columns */
-["preburns_stddev_fields"]: {
-	__typename: "preburns_stddev_fields",
-	amount?: number,
+	/** primary key columns input for table: preburn_events */
+["preburn_events_pk_columns_input"]: {
+		key: string,
+	sequence_number: GraphQLTypes["bigint"]
+};
+	/** select columns of table "preburn_events" */
+["preburn_events_select_column"]: preburn_events_select_column;
+	/** input type for updating data in table "preburn_events" */
+["preburn_events_set_input"]: {
+		address?: GraphQLTypes["bpchar"],
+	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	key?: string,
+	sequence_number?: GraphQLTypes["bigint"],
 	status?: number,
-	version?: number
+	transaction_version?: GraphQLTypes["bigint"]
+};
+	/** aggregate stddev on columns */
+["preburn_events_stddev_fields"]: {
+	__typename: "preburn_events_stddev_fields",
+	amount?: number,
+	sequence_number?: number,
+	status?: number,
+	transaction_version?: number
 };
 	/** aggregate stddev_pop on columns */
-["preburns_stddev_pop_fields"]: {
-	__typename: "preburns_stddev_pop_fields",
+["preburn_events_stddev_pop_fields"]: {
+	__typename: "preburn_events_stddev_pop_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
 	/** aggregate stddev_samp on columns */
-["preburns_stddev_samp_fields"]: {
-	__typename: "preburns_stddev_samp_fields",
+["preburn_events_stddev_samp_fields"]: {
+	__typename: "preburn_events_stddev_samp_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
 	/** aggregate sum on columns */
-["preburns_sum_fields"]: {
-	__typename: "preburns_sum_fields",
+["preburn_events_sum_fields"]: {
+	__typename: "preburn_events_sum_fields",
 	amount?: GraphQLTypes["bigint"],
+	sequence_number?: GraphQLTypes["bigint"],
 	status?: number,
-	version?: GraphQLTypes["bigint"]
+	transaction_version?: GraphQLTypes["bigint"]
 };
+	/** update columns of table "preburn_events" */
+["preburn_events_update_column"]: preburn_events_update_column;
 	/** aggregate var_pop on columns */
-["preburns_var_pop_fields"]: {
-	__typename: "preburns_var_pop_fields",
+["preburn_events_var_pop_fields"]: {
+	__typename: "preburn_events_var_pop_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
 	/** aggregate var_samp on columns */
-["preburns_var_samp_fields"]: {
-	__typename: "preburns_var_samp_fields",
+["preburn_events_var_samp_fields"]: {
+	__typename: "preburn_events_var_samp_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
 	/** aggregate variance on columns */
-["preburns_variance_fields"]: {
-	__typename: "preburns_variance_fields",
+["preburn_events_variance_fields"]: {
+	__typename: "preburn_events_variance_fields",
 	amount?: number,
+	sequence_number?: number,
 	status?: number,
-	version?: number
+	transaction_version?: number
 };
 	["query_root"]: {
 	__typename: "query_root",
@@ -4965,10 +5307,12 @@ export type GraphQLTypes = {
 	gas_payments_aggregate: GraphQLTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?: GraphQLTypes["gas_payments"],
-	/** fetch data from the table: "preburns" */
-	preburns: Array<GraphQLTypes["preburns"]>,
-	/** fetch aggregated fields from the table: "preburns" */
-	preburns_aggregate: GraphQLTypes["preburns_aggregate"],
+	/** fetch data from the table: "preburn_events" */
+	preburn_events: Array<GraphQLTypes["preburn_events"]>,
+	/** fetch aggregated fields from the table: "preburn_events" */
+	preburn_events_aggregate: GraphQLTypes["preburn_events_aggregate"],
+	/** fetch data from the table: "preburn_events" using primary key columns */
+	preburn_events_by_pk?: GraphQLTypes["preburn_events"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events: Array<GraphQLTypes["receivedmint_events"]>,
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -4992,10 +5336,12 @@ export type GraphQLTypes = {
 ["receivedmint_events"]: {
 	__typename: "receivedmint_events",
 	amount: GraphQLTypes["bigint"],
+	commit_timestamp: GraphQLTypes["timestamptz"],
 	currency: GraphQLTypes["bpchar"],
 	key: string,
 	receiver: GraphQLTypes["bpchar"],
 	sequence_number: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "receivedmint_events" */
@@ -5024,6 +5370,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_avg_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** Boolean expression to filter rows from the table "receivedmint_events". All fields are combined with a logical 'AND'. */
@@ -5032,10 +5379,12 @@ export type GraphQLTypes = {
 	_not?: GraphQLTypes["receivedmint_events_bool_exp"],
 	_or?: Array<GraphQLTypes["receivedmint_events_bool_exp"]>,
 	amount?: GraphQLTypes["bigint_comparison_exp"],
+	commit_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
 	currency?: GraphQLTypes["bpchar_comparison_exp"],
 	key?: GraphQLTypes["String_comparison_exp"],
 	receiver?: GraphQLTypes["bpchar_comparison_exp"],
 	sequence_number?: GraphQLTypes["bigint_comparison_exp"],
+	status?: GraphQLTypes["Int_comparison_exp"],
 	transaction_version?: GraphQLTypes["bigint_comparison_exp"]
 };
 	/** unique or primary key constraints on table "receivedmint_events" */
@@ -5044,35 +5393,42 @@ export type GraphQLTypes = {
 ["receivedmint_events_inc_input"]: {
 		amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** input type for inserting data into table "receivedmint_events" */
 ["receivedmint_events_insert_input"]: {
 		amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate max on columns */
 ["receivedmint_events_max_fields"]: {
 	__typename: "receivedmint_events_max_fields",
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate min on columns */
 ["receivedmint_events_min_fields"]: {
 	__typename: "receivedmint_events_min_fields",
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** response of any mutation on the table "receivedmint_events" */
@@ -5092,10 +5448,12 @@ export type GraphQLTypes = {
 	/** Ordering options when selecting data from "receivedmint_events". */
 ["receivedmint_events_order_by"]: {
 		amount?: GraphQLTypes["order_by"],
+	commit_timestamp?: GraphQLTypes["order_by"],
 	currency?: GraphQLTypes["order_by"],
 	key?: GraphQLTypes["order_by"],
 	receiver?: GraphQLTypes["order_by"],
 	sequence_number?: GraphQLTypes["order_by"],
+	status?: GraphQLTypes["order_by"],
 	transaction_version?: GraphQLTypes["order_by"]
 };
 	/** primary key columns input for table: receivedmint_events */
@@ -5108,10 +5466,12 @@ export type GraphQLTypes = {
 	/** input type for updating data in table "receivedmint_events" */
 ["receivedmint_events_set_input"]: {
 		amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate stddev on columns */
@@ -5119,6 +5479,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_stddev_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_pop on columns */
@@ -5126,6 +5487,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_stddev_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_samp on columns */
@@ -5133,6 +5495,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_stddev_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate sum on columns */
@@ -5140,6 +5503,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_sum_fields",
 	amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** update columns of table "receivedmint_events" */
@@ -5149,6 +5513,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_var_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate var_samp on columns */
@@ -5156,6 +5521,7 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_var_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate variance on columns */
@@ -5163,18 +5529,21 @@ export type GraphQLTypes = {
 	__typename: "receivedmint_events_variance_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** columns and relationships of "sentpayment_events" */
 ["sentpayment_events"]: {
 	__typename: "sentpayment_events",
 	amount: GraphQLTypes["bigint"],
+	commit_timestamp: GraphQLTypes["timestamptz"],
 	currency: GraphQLTypes["bpchar"],
 	key: string,
 	metadata: string,
 	receiver: GraphQLTypes["bpchar"],
 	sender: GraphQLTypes["bpchar"],
 	sequence_number: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "sentpayment_events" */
@@ -5203,6 +5572,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_avg_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** Boolean expression to filter rows from the table "sentpayment_events". All fields are combined with a logical 'AND'. */
@@ -5211,12 +5581,14 @@ export type GraphQLTypes = {
 	_not?: GraphQLTypes["sentpayment_events_bool_exp"],
 	_or?: Array<GraphQLTypes["sentpayment_events_bool_exp"]>,
 	amount?: GraphQLTypes["bigint_comparison_exp"],
+	commit_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
 	currency?: GraphQLTypes["bpchar_comparison_exp"],
 	key?: GraphQLTypes["String_comparison_exp"],
 	metadata?: GraphQLTypes["String_comparison_exp"],
 	receiver?: GraphQLTypes["bpchar_comparison_exp"],
 	sender?: GraphQLTypes["bpchar_comparison_exp"],
 	sequence_number?: GraphQLTypes["bigint_comparison_exp"],
+	status?: GraphQLTypes["Int_comparison_exp"],
 	transaction_version?: GraphQLTypes["bigint_comparison_exp"]
 };
 	/** unique or primary key constraints on table "sentpayment_events" */
@@ -5225,41 +5597,48 @@ export type GraphQLTypes = {
 ["sentpayment_events_inc_input"]: {
 		amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** input type for inserting data into table "sentpayment_events" */
 ["sentpayment_events_insert_input"]: {
 		amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	metadata?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sender?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate max on columns */
 ["sentpayment_events_max_fields"]: {
 	__typename: "sentpayment_events_max_fields",
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	metadata?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sender?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate min on columns */
 ["sentpayment_events_min_fields"]: {
 	__typename: "sentpayment_events_min_fields",
 	amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	metadata?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sender?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** response of any mutation on the table "sentpayment_events" */
@@ -5279,12 +5658,14 @@ export type GraphQLTypes = {
 	/** Ordering options when selecting data from "sentpayment_events". */
 ["sentpayment_events_order_by"]: {
 		amount?: GraphQLTypes["order_by"],
+	commit_timestamp?: GraphQLTypes["order_by"],
 	currency?: GraphQLTypes["order_by"],
 	key?: GraphQLTypes["order_by"],
 	metadata?: GraphQLTypes["order_by"],
 	receiver?: GraphQLTypes["order_by"],
 	sender?: GraphQLTypes["order_by"],
 	sequence_number?: GraphQLTypes["order_by"],
+	status?: GraphQLTypes["order_by"],
 	transaction_version?: GraphQLTypes["order_by"]
 };
 	/** primary key columns input for table: sentpayment_events */
@@ -5297,12 +5678,14 @@ export type GraphQLTypes = {
 	/** input type for updating data in table "sentpayment_events" */
 ["sentpayment_events_set_input"]: {
 		amount?: GraphQLTypes["bigint"],
+	commit_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	key?: string,
 	metadata?: string,
 	receiver?: GraphQLTypes["bpchar"],
 	sender?: GraphQLTypes["bpchar"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** aggregate stddev on columns */
@@ -5310,6 +5693,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_stddev_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_pop on columns */
@@ -5317,6 +5701,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_stddev_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate stddev_samp on columns */
@@ -5324,6 +5709,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_stddev_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate sum on columns */
@@ -5331,6 +5717,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_sum_fields",
 	amount?: GraphQLTypes["bigint"],
 	sequence_number?: GraphQLTypes["bigint"],
+	status?: number,
 	transaction_version?: GraphQLTypes["bigint"]
 };
 	/** update columns of table "sentpayment_events" */
@@ -5340,6 +5727,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_var_pop_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate var_samp on columns */
@@ -5347,6 +5735,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_var_samp_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	/** aggregate variance on columns */
@@ -5354,6 +5743,7 @@ export type GraphQLTypes = {
 	__typename: "sentpayment_events_variance_fields",
 	amount?: number,
 	sequence_number?: number,
+	status?: number,
 	transaction_version?: number
 };
 	["smallint"]:any;
@@ -5401,10 +5791,12 @@ export type GraphQLTypes = {
 	gas_payments_aggregate: GraphQLTypes["gas_payments_aggregate"],
 	/** fetch data from the table: "gas_payments" using primary key columns */
 	gas_payments_by_pk?: GraphQLTypes["gas_payments"],
-	/** fetch data from the table: "preburns" */
-	preburns: Array<GraphQLTypes["preburns"]>,
-	/** fetch aggregated fields from the table: "preburns" */
-	preburns_aggregate: GraphQLTypes["preburns_aggregate"],
+	/** fetch data from the table: "preburn_events" */
+	preburn_events: Array<GraphQLTypes["preburn_events"]>,
+	/** fetch aggregated fields from the table: "preburn_events" */
+	preburn_events_aggregate: GraphQLTypes["preburn_events_aggregate"],
+	/** fetch data from the table: "preburn_events" using primary key columns */
+	preburn_events_by_pk?: GraphQLTypes["preburn_events"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events: Array<GraphQLTypes["receivedmint_events"]>,
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -5786,18 +6178,22 @@ export const enum burn_events_constraint {
 export const enum burn_events_select_column {
 	address = "address",
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** update columns of table "burn_events" */
 export const enum burn_events_update_column {
 	address = "address",
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** unique or primary key constraints on table "diem_in_circulation_realtime_aggregates" */
@@ -5853,15 +6249,31 @@ export const enum order_by {
 	desc_nulls_first = "desc_nulls_first",
 	desc_nulls_last = "desc_nulls_last"
 }
-/** select columns of table "preburns" */
-export const enum preburns_select_column {
+/** unique or primary key constraints on table "preburn_events" */
+export const enum preburn_events_constraint {
+	preburn_events_pkey = "preburn_events_pkey"
+}
+/** select columns of table "preburn_events" */
+export const enum preburn_events_select_column {
+	address = "address",
 	amount = "amount",
 	commit_timestamp = "commit_timestamp",
 	currency = "currency",
-	receiver = "receiver",
-	sender = "sender",
+	key = "key",
+	sequence_number = "sequence_number",
 	status = "status",
-	version = "version"
+	transaction_version = "transaction_version"
+}
+/** update columns of table "preburn_events" */
+export const enum preburn_events_update_column {
+	address = "address",
+	amount = "amount",
+	commit_timestamp = "commit_timestamp",
+	currency = "currency",
+	key = "key",
+	sequence_number = "sequence_number",
+	status = "status",
+	transaction_version = "transaction_version"
 }
 /** unique or primary key constraints on table "receivedmint_events" */
 export const enum receivedmint_events_constraint {
@@ -5870,19 +6282,23 @@ export const enum receivedmint_events_constraint {
 /** select columns of table "receivedmint_events" */
 export const enum receivedmint_events_select_column {
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	receiver = "receiver",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** update columns of table "receivedmint_events" */
 export const enum receivedmint_events_update_column {
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	receiver = "receiver",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** unique or primary key constraints on table "sentpayment_events" */
@@ -5892,23 +6308,27 @@ export const enum sentpayment_events_constraint {
 /** select columns of table "sentpayment_events" */
 export const enum sentpayment_events_select_column {
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	metadata = "metadata",
 	receiver = "receiver",
 	sender = "sender",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** update columns of table "sentpayment_events" */
 export const enum sentpayment_events_update_column {
 	amount = "amount",
+	commit_timestamp = "commit_timestamp",
 	currency = "currency",
 	key = "key",
 	metadata = "metadata",
 	receiver = "receiver",
 	sender = "sender",
 	sequence_number = "sequence_number",
+	status = "status",
 	transaction_version = "transaction_version"
 }
 /** unique or primary key constraints on table "transactions" */

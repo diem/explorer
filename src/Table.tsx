@@ -10,23 +10,28 @@ interface TableProps {
   columns: Array<ColumnWithAccessorDescriptor>
   data: any[]
   className?: string
+  id?: string
 }
 
 export default function Table(props: TableProps) {
-  const { columns, data, className = '' } = props
+  const { columns, data, className = '', id = '' } = props
 
   // @ts-ignore (Tolerate a deficiency in library type)
   const useTableOptions: TableOptions = { columns, data }
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(useTableOptions, useFilters, useSortBy)
 
+  const btableProps = {
+    responsive: true,
+    bordered: true,
+    hover: true,
+    ...getTableProps(),
+    className: `border ${className}`,
+    id: id || undefined
+  }
   return (
     <BTable
-      responsive
-      bordered
-      hover
-      {...getTableProps()}
-      className={`border ${className}`}
+      {...btableProps}
     >
       <thead>
         {headerGroups.map((headerGroup, hgIndex: number) => (

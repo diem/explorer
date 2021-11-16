@@ -1242,6 +1242,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -1256,6 +1262,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -1281,6 +1293,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -1301,6 +1319,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -1315,6 +1339,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -1359,6 +1389,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -1372,6 +1408,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -1412,6 +1454,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -1426,6 +1474,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -2023,6 +2077,28 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_preburn_events:{
+			where:{
+				type:"preburn_events_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_receivedmint_events:{
 			where:{
 				type:"receivedmint_events_bool_exp",
@@ -2218,6 +2294,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"gas_payments_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_preburn_events:{
+			objects:{
+				type:"preburn_events_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"preburn_events_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_preburn_events_one:{
+			object:{
+				type:"preburn_events_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"preburn_events_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -2507,6 +2611,46 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_preburn_events:{
+			_inc:{
+				type:"preburn_events_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"preburn_events_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"preburn_events_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_preburn_events_by_pk:{
+			_inc:{
+				type:"preburn_events_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"preburn_events_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"preburn_events_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		update_receivedmint_events:{
 			_inc:{
 				type:"receivedmint_events_inc_input",
@@ -2629,10 +2773,10 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	order_by: "enum",
-	preburns_aggregate_fields:{
+	preburn_events_aggregate_fields:{
 		count:{
 			columns:{
-				type:"preburns_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -2645,24 +2789,30 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
-	preburns_bool_exp:{
+	preburn_events_bool_exp:{
 		_and:{
-			type:"preburns_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
 		},
 		_not:{
-			type:"preburns_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_or:{
-			type:"preburns_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
+		},
+		address:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		},
 		amount:{
 			type:"bigint_comparison_exp",
@@ -2682,14 +2832,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		receiver:{
-			type:"bpchar_comparison_exp",
+		key:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		sender:{
-			type:"bpchar_comparison_exp",
+		sequence_number:{
+			type:"bigint_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -2700,14 +2850,117 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		version:{
+		transaction_version:{
 			type:"bigint_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	preburns_order_by:{
+	preburn_events_constraint: "enum",
+	preburn_events_inc_input:{
+		amount:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_insert_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		amount:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		key:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_on_conflict:{
+		constraint:{
+			type:"preburn_events_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"preburn_events_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"preburn_events_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_order_by:{
+		address:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		amount:{
 			type:"order_by",
 			array:false,
@@ -2726,13 +2979,13 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		receiver:{
+		key:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		sender:{
+		sequence_number:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -2744,14 +2997,79 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		version:{
+		transaction_version:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	preburns_select_column: "enum",
+	preburn_events_pk_columns_input:{
+		key:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	preburn_events_select_column: "enum",
+	preburn_events_set_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		amount:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		key:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_update_column: "enum",
 	query_root:{
 		accounts:{
 			distinct_on:{
@@ -3137,9 +3455,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		preburns:{
+		preburn_events:{
 			distinct_on:{
-				type:"preburns_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -3157,21 +3475,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"preburns_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"preburns_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		preburns_aggregate:{
+		preburn_events_aggregate:{
 			distinct_on:{
-				type:"preburns_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -3189,16 +3507,30 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"preburns_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"preburns_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
+			}
+		},
+		preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		receivedmint_events:{
@@ -3471,6 +3803,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -3491,6 +3829,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3516,6 +3860,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -3526,6 +3876,12 @@ export const AllTypesProps: Record<string,any> = {
 	receivedmint_events_insert_input:{
 		amount:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3550,6 +3906,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3588,6 +3950,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -3607,6 +3975,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -3641,6 +4015,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -3661,6 +4041,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3714,6 +4100,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -3746,6 +4138,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3771,6 +4169,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -3781,6 +4185,12 @@ export const AllTypesProps: Record<string,any> = {
 	sentpayment_events_insert_input:{
 		amount:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3817,6 +4227,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3855,6 +4271,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -3886,6 +4308,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -3920,6 +4348,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -3952,6 +4386,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -4406,9 +4846,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		preburns:{
+		preburn_events:{
 			distinct_on:{
-				type:"preburns_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -4426,21 +4866,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"preburns_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"preburns_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		preburns_aggregate:{
+		preburn_events_aggregate:{
 			distinct_on:{
-				type:"preburns_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -4458,16 +4898,30 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"preburns_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"preburns_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
+			}
+		},
+		preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		receivedmint_events:{
@@ -5396,9 +5850,11 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_aggregate:{
@@ -5421,22 +5877,27 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_max_fields:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_min_fields:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_mutation_response:{
@@ -5446,36 +5907,43 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	diem_in_circulation_realtime_aggregates:{
@@ -5659,6 +6127,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
 		delete_gas_payments:"gas_payments_mutation_response",
 		delete_gas_payments_by_pk:"gas_payments",
+		delete_preburn_events:"preburn_events_mutation_response",
+		delete_preburn_events_by_pk:"preburn_events",
 		delete_receivedmint_events:"receivedmint_events_mutation_response",
 		delete_receivedmint_events_by_pk:"receivedmint_events",
 		delete_sentpayment_events:"sentpayment_events_mutation_response",
@@ -5675,6 +6145,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_diem_in_circulation_realtime_aggregates_one:"diem_in_circulation_realtime_aggregates",
 		insert_gas_payments:"gas_payments_mutation_response",
 		insert_gas_payments_one:"gas_payments",
+		insert_preburn_events:"preburn_events_mutation_response",
+		insert_preburn_events_one:"preburn_events",
 		insert_receivedmint_events:"receivedmint_events_mutation_response",
 		insert_receivedmint_events_one:"receivedmint_events",
 		insert_sentpayment_events:"sentpayment_events_mutation_response",
@@ -5691,6 +6163,8 @@ export const ReturnTypes: Record<string,any> = {
 		update_diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
 		update_gas_payments:"gas_payments_mutation_response",
 		update_gas_payments_by_pk:"gas_payments",
+		update_preburn_events:"preburn_events_mutation_response",
+		update_preburn_events_by_pk:"preburn_events",
 		update_receivedmint_events:"receivedmint_events_mutation_response",
 		update_receivedmint_events_by_pk:"receivedmint_events",
 		update_sentpayment_events:"sentpayment_events_mutation_response",
@@ -5698,89 +6172,104 @@ export const ReturnTypes: Record<string,any> = {
 		update_transactions:"transactions_mutation_response",
 		update_transactions_by_pk:"transactions"
 	},
-	preburns:{
+	preburn_events:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	preburns_aggregate:{
-		aggregate:"preburns_aggregate_fields",
-		nodes:"preburns"
+	preburn_events_aggregate:{
+		aggregate:"preburn_events_aggregate_fields",
+		nodes:"preburn_events"
 	},
-	preburns_aggregate_fields:{
-		avg:"preburns_avg_fields",
+	preburn_events_aggregate_fields:{
+		avg:"preburn_events_avg_fields",
 		count:"Int",
-		max:"preburns_max_fields",
-		min:"preburns_min_fields",
-		stddev:"preburns_stddev_fields",
-		stddev_pop:"preburns_stddev_pop_fields",
-		stddev_samp:"preburns_stddev_samp_fields",
-		sum:"preburns_sum_fields",
-		var_pop:"preburns_var_pop_fields",
-		var_samp:"preburns_var_samp_fields",
-		variance:"preburns_variance_fields"
+		max:"preburn_events_max_fields",
+		min:"preburn_events_min_fields",
+		stddev:"preburn_events_stddev_fields",
+		stddev_pop:"preburn_events_stddev_pop_fields",
+		stddev_samp:"preburn_events_stddev_samp_fields",
+		sum:"preburn_events_sum_fields",
+		var_pop:"preburn_events_var_pop_fields",
+		var_samp:"preburn_events_var_samp_fields",
+		variance:"preburn_events_variance_fields"
 	},
-	preburns_avg_fields:{
+	preburn_events_avg_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_max_fields:{
+	preburn_events_max_fields:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	preburns_min_fields:{
+	preburn_events_min_fields:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	preburns_stddev_fields:{
+	preburn_events_mutation_response:{
+		affected_rows:"Int",
+		returning:"preburn_events"
+	},
+	preburn_events_stddev_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_stddev_pop_fields:{
+	preburn_events_stddev_pop_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_stddev_samp_fields:{
+	preburn_events_stddev_samp_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_sum_fields:{
+	preburn_events_sum_fields:{
 		amount:"bigint",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	preburns_var_pop_fields:{
+	preburn_events_var_pop_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_var_samp_fields:{
+	preburn_events_var_samp_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	preburns_variance_fields:{
+	preburn_events_variance_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
 	query_root:{
 		accounts:"accounts",
@@ -5798,8 +6287,9 @@ export const ReturnTypes: Record<string,any> = {
 		gas_payments:"gas_payments",
 		gas_payments_aggregate:"gas_payments_aggregate",
 		gas_payments_by_pk:"gas_payments",
-		preburns:"preburns",
-		preburns_aggregate:"preburns_aggregate",
+		preburn_events:"preburn_events",
+		preburn_events_aggregate:"preburn_events_aggregate",
+		preburn_events_by_pk:"preburn_events",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",
@@ -5812,10 +6302,12 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	receivedmint_events:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_aggregate:{
@@ -5838,22 +6330,27 @@ export const ReturnTypes: Record<string,any> = {
 	receivedmint_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_max_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_min_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_mutation_response:{
@@ -5863,46 +6360,55 @@ export const ReturnTypes: Record<string,any> = {
 	receivedmint_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_aggregate:{
@@ -5925,26 +6431,31 @@ export const ReturnTypes: Record<string,any> = {
 	sentpayment_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_max_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_min_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_mutation_response:{
@@ -5954,36 +6465,43 @@ export const ReturnTypes: Record<string,any> = {
 	sentpayment_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	subscription_root:{
@@ -6002,8 +6520,9 @@ export const ReturnTypes: Record<string,any> = {
 		gas_payments:"gas_payments",
 		gas_payments_aggregate:"gas_payments_aggregate",
 		gas_payments_by_pk:"gas_payments",
-		preburns:"preburns",
-		preburns_aggregate:"preburns_aggregate",
+		preburn_events:"preburn_events",
+		preburn_events_aggregate:"preburn_events_aggregate",
+		preburn_events_by_pk:"preburn_events",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",
