@@ -229,135 +229,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	account_roles_aggregate_fields:{
-		count:{
-			columns:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	account_roles_bool_exp:{
-		_and:{
-			type:"account_roles_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"account_roles_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"account_roles_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_constraint: "enum",
-	account_roles_inc_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_insert_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_on_conflict:{
-		constraint:{
-			type:"account_roles_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"account_roles_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"account_roles_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_order_by:{
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_pk_columns_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	account_roles_select_column: "enum",
-	account_roles_set_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_update_column: "enum",
 	accounts_aggregate_fields:{
 		count:{
 			columns:{
@@ -374,6 +245,225 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	accounts_balances_aggregate_fields:{
+		count:{
+			columns:{
+				type:"accounts_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	accounts_balances_bool_exp:{
+		_and:{
+			type:"accounts_balances_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"accounts_balances_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"accounts_balances_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		address:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_constraint: "enum",
+	accounts_balances_inc_input:{
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_insert_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_on_conflict:{
+		constraint:{
+			type:"accounts_balances_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"accounts_balances_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"accounts_balances_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_order_by:{
+		address:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_pk_columns_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	accounts_balances_select_column: "enum",
+	accounts_balances_set_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	accounts_balances_update_column: "enum",
 	accounts_bool_exp:{
 		_and:{
 			type:"accounts_bool_exp",
@@ -1152,6 +1242,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -1166,6 +1262,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -1191,6 +1293,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -1211,6 +1319,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -1225,6 +1339,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -1269,6 +1389,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -1282,6 +1408,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -1322,6 +1454,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -1336,6 +1474,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -1829,25 +1973,37 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	gas_payments_update_column: "enum",
 	mutation_root:{
-		delete_account_roles:{
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		delete_accounts:{
 			where:{
 				type:"accounts_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_accounts_balances:{
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_accounts_balances_by_pk:{
+			address:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
+				type:"bigint",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -1921,6 +2077,28 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_preburn_events:{
+			where:{
+				type:"preburn_events_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_receivedmint_events:{
 			where:{
 				type:"receivedmint_events_bool_exp",
@@ -1981,34 +2159,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		insert_account_roles:{
-			objects:{
-				type:"account_roles_insert_input",
-				array:true,
-				arrayRequired:true,
-				required:true
-			},
-			on_conflict:{
-				type:"account_roles_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_account_roles_one:{
-			object:{
-				type:"account_roles_insert_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			on_conflict:{
-				type:"account_roles_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		insert_accounts:{
 			objects:{
 				type:"accounts_insert_input",
@@ -2018,6 +2168,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"accounts_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_accounts_balances:{
+			objects:{
+				type:"accounts_balances_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"accounts_balances_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_accounts_balances_one:{
+			object:{
+				type:"accounts_balances_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"accounts_balances_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -2121,6 +2299,34 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		insert_preburn_events:{
+			objects:{
+				type:"preburn_events_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"preburn_events_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_preburn_events_one:{
+			object:{
+				type:"preburn_events_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"preburn_events_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		insert_receivedmint_events:{
 			objects:{
 				type:"receivedmint_events_insert_input",
@@ -2205,46 +2411,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		update_account_roles:{
-			_inc:{
-				type:"account_roles_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"account_roles_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_account_roles_by_pk:{
-			_inc:{
-				type:"account_roles_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"account_roles_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			pk_columns:{
-				type:"account_roles_pk_columns_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		update_accounts:{
 			_inc:{
 				type:"accounts_inc_input",
@@ -2260,6 +2426,46 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"accounts_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_accounts_balances:{
+			_inc:{
+				type:"accounts_balances_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"accounts_balances_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_accounts_balances_by_pk:{
+			_inc:{
+				type:"accounts_balances_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"accounts_balances_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"accounts_balances_pk_columns_input",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -2405,6 +2611,46 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_preburn_events:{
+			_inc:{
+				type:"preburn_events_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"preburn_events_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"preburn_events_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_preburn_events_by_pk:{
+			_inc:{
+				type:"preburn_events_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"preburn_events_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"preburn_events_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		update_receivedmint_events:{
 			_inc:{
 				type:"receivedmint_events_inc_input",
@@ -2527,10 +2773,10 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	order_by: "enum",
-	payments_aggregate_fields:{
+	preburn_events_aggregate_fields:{
 		count:{
 			columns:{
-				type:"payments_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -2543,24 +2789,30 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
-	payments_bool_exp:{
+	preburn_events_bool_exp:{
 		_and:{
-			type:"payments_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
 		},
 		_not:{
-			type:"payments_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_or:{
-			type:"payments_bool_exp",
+			type:"preburn_events_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
+		},
+		address:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		},
 		amount:{
 			type:"bigint_comparison_exp",
@@ -2580,14 +2832,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		receiver:{
-			type:"bpchar_comparison_exp",
+		key:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		sender:{
-			type:"bpchar_comparison_exp",
+		sequence_number:{
+			type:"bigint_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -2598,254 +2850,227 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		version:{
+		transaction_version:{
 			type:"bigint_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	payments_order_by:{
+	preburn_events_constraint: "enum",
+	preburn_events_inc_input:{
 		amount:{
-			type:"order_by",
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		commit_timestamp:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		currency:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		receiver:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sender:{
-			type:"order_by",
+		sequence_number:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		status:{
-			type:"order_by",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		version:{
-			type:"order_by",
+		transaction_version:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	payments_select_column: "enum",
-	preburns_aggregate_fields:{
-		count:{
-			columns:{
-				type:"preburns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
+	preburn_events_insert_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		amount:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		key:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
-	preburns_bool_exp:{
-		_and:{
-			type:"preburns_bool_exp",
-			array:true,
+	preburn_events_on_conflict:{
+		constraint:{
+			type:"preburn_events_constraint",
+			array:false,
 			arrayRequired:false,
 			required:true
 		},
-		_not:{
-			type:"preburns_bool_exp",
+		update_columns:{
+			type:"preburn_events_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"preburn_events_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_order_by:{
+		address:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		_or:{
-			type:"preburns_bool_exp",
-			array:true,
+		amount:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		key:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	preburn_events_pk_columns_input:{
+		key:{
+			type:"String",
+			array:false,
 			arrayRequired:false,
 			required:true
 		},
+		sequence_number:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	preburn_events_select_column: "enum",
+	preburn_events_set_input:{
+		address:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		amount:{
-			type:"bigint_comparison_exp",
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		commit_timestamp:{
-			type:"timestamptz_comparison_exp",
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		currency:{
-			type:"bpchar_comparison_exp",
+			type:"bpchar",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		receiver:{
-			type:"bpchar_comparison_exp",
+		key:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		sender:{
-			type:"bpchar_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		status:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		version:{
-			type:"bigint_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	preburns_order_by:{
-		amount:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		commit_timestamp:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		currency:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		receiver:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sender:{
-			type:"order_by",
+		sequence_number:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		status:{
-			type:"order_by",
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
-		version:{
-			type:"order_by",
+		transaction_version:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	preburns_select_column: "enum",
+	preburn_events_update_column: "enum",
 	query_root:{
-		account_roles:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_aggregate:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		accounts:{
 			distinct_on:{
 				type:"accounts_select_column",
@@ -2908,6 +3133,90 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:false
+			}
+		},
+		accounts_balances:{
+			distinct_on:{
+				type:"accounts_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"accounts_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		accounts_balances_aggregate:{
+			distinct_on:{
+				type:"accounts_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"accounts_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		accounts_balances_by_pk:{
+			address:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		accounts_by_pk:{
@@ -3146,9 +3455,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		payments:{
+		preburn_events:{
 			distinct_on:{
-				type:"payments_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -3166,21 +3475,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"payments_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"payments_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		payments_aggregate:{
+		preburn_events_aggregate:{
 			distinct_on:{
-				type:"payments_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -3198,80 +3507,30 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"payments_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"payments_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		preburns:{
-			distinct_on:{
-				type:"preburns_select_column",
-				array:true,
+		preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
 				arrayRequired:false,
 				required:true
 			},
-			limit:{
-				type:"Int",
+			sequence_number:{
+				type:"bigint",
 				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"preburns_order_by",
-				array:true,
 				arrayRequired:false,
 				required:true
-			},
-			where:{
-				type:"preburns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		preburns_aggregate:{
-			distinct_on:{
-				type:"preburns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"preburns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"preburns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
 			}
 		},
 		receivedmint_events:{
@@ -3544,6 +3803,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -3564,6 +3829,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3589,6 +3860,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -3599,6 +3876,12 @@ export const AllTypesProps: Record<string,any> = {
 	receivedmint_events_insert_input:{
 		amount:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3623,6 +3906,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3661,6 +3950,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -3680,6 +3975,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -3714,6 +4015,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -3734,6 +4041,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3787,6 +4100,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar_comparison_exp",
 			array:false,
@@ -3819,6 +4138,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3844,6 +4169,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		status:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		transaction_version:{
 			type:"bigint",
 			array:false,
@@ -3854,6 +4185,12 @@ export const AllTypesProps: Record<string,any> = {
 	sentpayment_events_insert_input:{
 		amount:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		commit_timestamp:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3890,6 +4227,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -3928,6 +4271,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"order_by",
 			array:false,
@@ -3959,6 +4308,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		sequence_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -3993,6 +4348,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		commit_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		currency:{
 			type:"bpchar",
 			array:false,
@@ -4025,6 +4386,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		sequence_number:{
 			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -4095,78 +4462,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	subscription_root:{
-		account_roles:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_aggregate:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		accounts:{
 			distinct_on:{
 				type:"accounts_select_column",
@@ -4229,6 +4524,90 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:false
+			}
+		},
+		accounts_balances:{
+			distinct_on:{
+				type:"accounts_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"accounts_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		accounts_balances_aggregate:{
+			distinct_on:{
+				type:"accounts_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"accounts_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"accounts_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		accounts_balances_by_pk:{
+			address:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		accounts_by_pk:{
@@ -4467,9 +4846,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		payments:{
+		preburn_events:{
 			distinct_on:{
-				type:"payments_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -4487,21 +4866,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"payments_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"payments_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		payments_aggregate:{
+		preburn_events_aggregate:{
 			distinct_on:{
-				type:"payments_select_column",
+				type:"preburn_events_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -4519,80 +4898,30 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"payments_order_by",
+				type:"preburn_events_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"payments_bool_exp",
+				type:"preburn_events_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		preburns:{
-			distinct_on:{
-				type:"preburns_select_column",
-				array:true,
+		preburn_events_by_pk:{
+			key:{
+				type:"String",
+				array:false,
 				arrayRequired:false,
 				required:true
 			},
-			limit:{
-				type:"Int",
+			sequence_number:{
+				type:"bigint",
 				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"preburns_order_by",
-				array:true,
 				arrayRequired:false,
 				required:true
-			},
-			where:{
-				type:"preburns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		preburns_aggregate:{
-			distinct_on:{
-				type:"preburns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"preburns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"preburns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
 			}
 		},
 		receivedmint_events:{
@@ -5323,63 +5652,6 @@ export const ReturnTypes: Record<string,any> = {
 		ttl:"Int",
 		refresh:"Boolean"
 	},
-	account_roles:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_aggregate:{
-		aggregate:"account_roles_aggregate_fields",
-		nodes:"account_roles"
-	},
-	account_roles_aggregate_fields:{
-		avg:"account_roles_avg_fields",
-		count:"Int",
-		max:"account_roles_max_fields",
-		min:"account_roles_min_fields",
-		stddev:"account_roles_stddev_fields",
-		stddev_pop:"account_roles_stddev_pop_fields",
-		stddev_samp:"account_roles_stddev_samp_fields",
-		sum:"account_roles_sum_fields",
-		var_pop:"account_roles_var_pop_fields",
-		var_samp:"account_roles_var_samp_fields",
-		variance:"account_roles_variance_fields"
-	},
-	account_roles_avg_fields:{
-		id:"Float"
-	},
-	account_roles_max_fields:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_min_fields:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_mutation_response:{
-		affected_rows:"Int",
-		returning:"account_roles"
-	},
-	account_roles_stddev_fields:{
-		id:"Float"
-	},
-	account_roles_stddev_pop_fields:{
-		id:"Float"
-	},
-	account_roles_stddev_samp_fields:{
-		id:"Float"
-	},
-	account_roles_sum_fields:{
-		id:"Int"
-	},
-	account_roles_var_pop_fields:{
-		id:"Float"
-	},
-	account_roles_var_samp_fields:{
-		id:"Float"
-	},
-	account_roles_variance_fields:{
-		id:"Float"
-	},
 	accounts:{
 		address:"bpchar",
 		authentication_key:"String",
@@ -5423,6 +5695,80 @@ export const ReturnTypes: Record<string,any> = {
 		create_account_event_stream_sequence_number:"Float",
 		role:"Float",
 		transaction_version:"Float"
+	},
+	accounts_balances:{
+		address:"bpchar",
+		balance:"bigint",
+		currency:"bpchar",
+		timestamp:"timestamptz",
+		version:"bigint"
+	},
+	accounts_balances_aggregate:{
+		aggregate:"accounts_balances_aggregate_fields",
+		nodes:"accounts_balances"
+	},
+	accounts_balances_aggregate_fields:{
+		avg:"accounts_balances_avg_fields",
+		count:"Int",
+		max:"accounts_balances_max_fields",
+		min:"accounts_balances_min_fields",
+		stddev:"accounts_balances_stddev_fields",
+		stddev_pop:"accounts_balances_stddev_pop_fields",
+		stddev_samp:"accounts_balances_stddev_samp_fields",
+		sum:"accounts_balances_sum_fields",
+		var_pop:"accounts_balances_var_pop_fields",
+		var_samp:"accounts_balances_var_samp_fields",
+		variance:"accounts_balances_variance_fields"
+	},
+	accounts_balances_avg_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_max_fields:{
+		address:"bpchar",
+		balance:"bigint",
+		currency:"bpchar",
+		timestamp:"timestamptz",
+		version:"bigint"
+	},
+	accounts_balances_min_fields:{
+		address:"bpchar",
+		balance:"bigint",
+		currency:"bpchar",
+		timestamp:"timestamptz",
+		version:"bigint"
+	},
+	accounts_balances_mutation_response:{
+		affected_rows:"Int",
+		returning:"accounts_balances"
+	},
+	accounts_balances_stddev_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_stddev_pop_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_stddev_samp_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_sum_fields:{
+		balance:"bigint",
+		version:"bigint"
+	},
+	accounts_balances_var_pop_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_var_samp_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	accounts_balances_variance_fields:{
+		balance:"Float",
+		version:"Float"
 	},
 	accounts_max_fields:{
 		address:"bpchar",
@@ -5504,9 +5850,11 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_aggregate:{
@@ -5529,22 +5877,27 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_max_fields:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_min_fields:{
 		address:"bpchar",
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_mutation_response:{
@@ -5554,36 +5907,43 @@ export const ReturnTypes: Record<string,any> = {
 	burn_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	burn_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	burn_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	diem_in_circulation_realtime_aggregates:{
@@ -5757,9 +6117,9 @@ export const ReturnTypes: Record<string,any> = {
 		version:"Float"
 	},
 	mutation_root:{
-		delete_account_roles:"account_roles_mutation_response",
-		delete_account_roles_by_pk:"account_roles",
 		delete_accounts:"accounts_mutation_response",
+		delete_accounts_balances:"accounts_balances_mutation_response",
+		delete_accounts_balances_by_pk:"accounts_balances",
 		delete_accounts_by_pk:"accounts",
 		delete_burn_events:"burn_events_mutation_response",
 		delete_burn_events_by_pk:"burn_events",
@@ -5767,15 +6127,17 @@ export const ReturnTypes: Record<string,any> = {
 		delete_diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
 		delete_gas_payments:"gas_payments_mutation_response",
 		delete_gas_payments_by_pk:"gas_payments",
+		delete_preburn_events:"preburn_events_mutation_response",
+		delete_preburn_events_by_pk:"preburn_events",
 		delete_receivedmint_events:"receivedmint_events_mutation_response",
 		delete_receivedmint_events_by_pk:"receivedmint_events",
 		delete_sentpayment_events:"sentpayment_events_mutation_response",
 		delete_sentpayment_events_by_pk:"sentpayment_events",
 		delete_transactions:"transactions_mutation_response",
 		delete_transactions_by_pk:"transactions",
-		insert_account_roles:"account_roles_mutation_response",
-		insert_account_roles_one:"account_roles",
 		insert_accounts:"accounts_mutation_response",
+		insert_accounts_balances:"accounts_balances_mutation_response",
+		insert_accounts_balances_one:"accounts_balances",
 		insert_accounts_one:"accounts",
 		insert_burn_events:"burn_events_mutation_response",
 		insert_burn_events_one:"burn_events",
@@ -5783,15 +6145,17 @@ export const ReturnTypes: Record<string,any> = {
 		insert_diem_in_circulation_realtime_aggregates_one:"diem_in_circulation_realtime_aggregates",
 		insert_gas_payments:"gas_payments_mutation_response",
 		insert_gas_payments_one:"gas_payments",
+		insert_preburn_events:"preburn_events_mutation_response",
+		insert_preburn_events_one:"preburn_events",
 		insert_receivedmint_events:"receivedmint_events_mutation_response",
 		insert_receivedmint_events_one:"receivedmint_events",
 		insert_sentpayment_events:"sentpayment_events_mutation_response",
 		insert_sentpayment_events_one:"sentpayment_events",
 		insert_transactions:"transactions_mutation_response",
 		insert_transactions_one:"transactions",
-		update_account_roles:"account_roles_mutation_response",
-		update_account_roles_by_pk:"account_roles",
 		update_accounts:"accounts_mutation_response",
+		update_accounts_balances:"accounts_balances_mutation_response",
+		update_accounts_balances_by_pk:"accounts_balances",
 		update_accounts_by_pk:"accounts",
 		update_burn_events:"burn_events_mutation_response",
 		update_burn_events_by_pk:"burn_events",
@@ -5799,6 +6163,8 @@ export const ReturnTypes: Record<string,any> = {
 		update_diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
 		update_gas_payments:"gas_payments_mutation_response",
 		update_gas_payments_by_pk:"gas_payments",
+		update_preburn_events:"preburn_events_mutation_response",
+		update_preburn_events_by_pk:"preburn_events",
 		update_receivedmint_events:"receivedmint_events_mutation_response",
 		update_receivedmint_events_by_pk:"receivedmint_events",
 		update_sentpayment_events:"sentpayment_events_mutation_response",
@@ -5806,180 +6172,111 @@ export const ReturnTypes: Record<string,any> = {
 		update_transactions:"transactions_mutation_response",
 		update_transactions_by_pk:"transactions"
 	},
-	payments:{
+	preburn_events:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	payments_aggregate:{
-		aggregate:"payments_aggregate_fields",
-		nodes:"payments"
+	preburn_events_aggregate:{
+		aggregate:"preburn_events_aggregate_fields",
+		nodes:"preburn_events"
 	},
-	payments_aggregate_fields:{
-		avg:"payments_avg_fields",
+	preburn_events_aggregate_fields:{
+		avg:"preburn_events_avg_fields",
 		count:"Int",
-		max:"payments_max_fields",
-		min:"payments_min_fields",
-		stddev:"payments_stddev_fields",
-		stddev_pop:"payments_stddev_pop_fields",
-		stddev_samp:"payments_stddev_samp_fields",
-		sum:"payments_sum_fields",
-		var_pop:"payments_var_pop_fields",
-		var_samp:"payments_var_samp_fields",
-		variance:"payments_variance_fields"
+		max:"preburn_events_max_fields",
+		min:"preburn_events_min_fields",
+		stddev:"preburn_events_stddev_fields",
+		stddev_pop:"preburn_events_stddev_pop_fields",
+		stddev_samp:"preburn_events_stddev_samp_fields",
+		sum:"preburn_events_sum_fields",
+		var_pop:"preburn_events_var_pop_fields",
+		var_samp:"preburn_events_var_samp_fields",
+		variance:"preburn_events_variance_fields"
 	},
-	payments_avg_fields:{
+	preburn_events_avg_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_max_fields:{
+	preburn_events_max_fields:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	payments_min_fields:{
+	preburn_events_min_fields:{
+		address:"bpchar",
 		amount:"bigint",
 		commit_timestamp:"timestamptz",
 		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
+		key:"String",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	payments_stddev_fields:{
+	preburn_events_mutation_response:{
+		affected_rows:"Int",
+		returning:"preburn_events"
+	},
+	preburn_events_stddev_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_stddev_pop_fields:{
+	preburn_events_stddev_pop_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_stddev_samp_fields:{
+	preburn_events_stddev_samp_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_sum_fields:{
+	preburn_events_sum_fields:{
 		amount:"bigint",
+		sequence_number:"bigint",
 		status:"Int",
-		version:"bigint"
+		transaction_version:"bigint"
 	},
-	payments_var_pop_fields:{
+	preburn_events_var_pop_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_var_samp_fields:{
+	preburn_events_var_samp_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
-	payments_variance_fields:{
+	preburn_events_variance_fields:{
 		amount:"Float",
+		sequence_number:"Float",
 		status:"Float",
-		version:"Float"
-	},
-	preburns:{
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	preburns_aggregate:{
-		aggregate:"preburns_aggregate_fields",
-		nodes:"preburns"
-	},
-	preburns_aggregate_fields:{
-		avg:"preburns_avg_fields",
-		count:"Int",
-		max:"preburns_max_fields",
-		min:"preburns_min_fields",
-		stddev:"preburns_stddev_fields",
-		stddev_pop:"preburns_stddev_pop_fields",
-		stddev_samp:"preburns_stddev_samp_fields",
-		sum:"preburns_sum_fields",
-		var_pop:"preburns_var_pop_fields",
-		var_samp:"preburns_var_samp_fields",
-		variance:"preburns_variance_fields"
-	},
-	preburns_avg_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_max_fields:{
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	preburns_min_fields:{
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		receiver:"bpchar",
-		sender:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	preburns_stddev_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_stddev_pop_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_stddev_samp_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_sum_fields:{
-		amount:"bigint",
-		status:"Int",
-		version:"bigint"
-	},
-	preburns_var_pop_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_var_samp_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	preburns_variance_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
+		transaction_version:"Float"
 	},
 	query_root:{
-		account_roles:"account_roles",
-		account_roles_aggregate:"account_roles_aggregate",
-		account_roles_by_pk:"account_roles",
 		accounts:"accounts",
 		accounts_aggregate:"accounts_aggregate",
+		accounts_balances:"accounts_balances",
+		accounts_balances_aggregate:"accounts_balances_aggregate",
+		accounts_balances_by_pk:"accounts_balances",
 		accounts_by_pk:"accounts",
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
@@ -5990,10 +6287,9 @@ export const ReturnTypes: Record<string,any> = {
 		gas_payments:"gas_payments",
 		gas_payments_aggregate:"gas_payments_aggregate",
 		gas_payments_by_pk:"gas_payments",
-		payments:"payments",
-		payments_aggregate:"payments_aggregate",
-		preburns:"preburns",
-		preburns_aggregate:"preburns_aggregate",
+		preburn_events:"preburn_events",
+		preburn_events_aggregate:"preburn_events_aggregate",
+		preburn_events_by_pk:"preburn_events",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",
@@ -6006,10 +6302,12 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	receivedmint_events:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_aggregate:{
@@ -6032,22 +6330,27 @@ export const ReturnTypes: Record<string,any> = {
 	receivedmint_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_max_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_min_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		receiver:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_mutation_response:{
@@ -6057,46 +6360,55 @@ export const ReturnTypes: Record<string,any> = {
 	receivedmint_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	receivedmint_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	receivedmint_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_aggregate:{
@@ -6119,26 +6431,31 @@ export const ReturnTypes: Record<string,any> = {
 	sentpayment_events_avg_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_max_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_min_fields:{
 		amount:"bigint",
+		commit_timestamp:"timestamptz",
 		currency:"bpchar",
 		key:"String",
 		metadata:"String",
 		receiver:"bpchar",
 		sender:"bpchar",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_mutation_response:{
@@ -6148,44 +6465,51 @@ export const ReturnTypes: Record<string,any> = {
 	sentpayment_events_stddev_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_stddev_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_stddev_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_sum_fields:{
 		amount:"bigint",
 		sequence_number:"bigint",
+		status:"Int",
 		transaction_version:"bigint"
 	},
 	sentpayment_events_var_pop_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_var_samp_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	sentpayment_events_variance_fields:{
 		amount:"Float",
 		sequence_number:"Float",
+		status:"Float",
 		transaction_version:"Float"
 	},
 	subscription_root:{
-		account_roles:"account_roles",
-		account_roles_aggregate:"account_roles_aggregate",
-		account_roles_by_pk:"account_roles",
 		accounts:"accounts",
 		accounts_aggregate:"accounts_aggregate",
+		accounts_balances:"accounts_balances",
+		accounts_balances_aggregate:"accounts_balances_aggregate",
+		accounts_balances_by_pk:"accounts_balances",
 		accounts_by_pk:"accounts",
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
@@ -6196,10 +6520,9 @@ export const ReturnTypes: Record<string,any> = {
 		gas_payments:"gas_payments",
 		gas_payments_aggregate:"gas_payments_aggregate",
 		gas_payments_by_pk:"gas_payments",
-		payments:"payments",
-		payments_aggregate:"payments_aggregate",
-		preburns:"preburns",
-		preburns_aggregate:"preburns_aggregate",
+		preburn_events:"preburn_events",
+		preburn_events_aggregate:"preburn_events_aggregate",
+		preburn_events_by_pk:"preburn_events",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",

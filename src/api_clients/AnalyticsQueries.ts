@@ -84,10 +84,10 @@ export function gasEventsQuery() {
   }
 }
 
-export type preburnEventsQueryType = GraphQLTypes['query_root']['preburns']
+export type preburnEventsQueryType = GraphQLTypes['query_root']['preburn_events']
 export function preburnEventsQuery() {
   return {
-    preburns: [
+    preburn_events: [
       {
         limit: 10,
         order_by: [{ version: order_by.desc }]

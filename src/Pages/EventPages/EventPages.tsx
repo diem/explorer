@@ -46,7 +46,7 @@ const GasEventsPageProps = {
 const PreburnEventsPageProps = {
   query: preburnEventsQuery(),
   columns: preburnEventsColumn(),
-  tableName: 'preburns',
+  tableName: 'preburn_events',
   eventType: 'Preburn'
 }
 
