@@ -22,7 +22,7 @@ function seeLandingPageTableValues (I) {
 
 function seeTpsCard(I) {
   I.see('Current Transactions Per Second')
-  I.see('42 tps')
+  I.see('42 TPS')
 }
 
 Scenario('test after data has loaded', ({ I }) => {

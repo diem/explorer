@@ -1,5 +1,6 @@
 // eslint-disable-next-line camelcase
 import { GraphQLTypes, order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import moment from 'moment'
 
 export type mintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
@@ -178,7 +179,20 @@ export function currencyInCirculationPageQuery(currency : string) {
   }
 }
 
-export type countTransactionsInLast10MinutesType = number
+export type countTransactionsInLast10MinutesType = { aggregate: { count: number } }
 export function countTransactionsInLast10Minutes() {
-  return {}
+  const TEN_MINUTES_AGO = moment.utc().subtract(10, 'minutes').format()
+  return {
+    transactions_aggregate: [
+      {
+        order_by: [{ commit_timestamp: order_by.desc }],
+        where: { commit_timestamp: { _gt: TEN_MINUTES_AGO } }
+      },
+      {
+        aggregate: {
+          count: [{}, true]
+        }
+      }
+    ]
+  }
 }

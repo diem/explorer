@@ -3,7 +3,11 @@ import { render, screen, waitForElementToBeRemoved, within, } from '@testing-lib
 import { BrowserRouter } from 'react-router-dom'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import LandingPage from './LandingPage'
-import { landingPageQuery, landingPageQueryType } from '../../api_clients/AnalyticsQueries'
+import {
+  countTransactionsInLast10Minutes,
+  landingPageQuery,
+  landingPageQueryType
+} from '../../api_clients/AnalyticsQueries'
 import userEvent from '@testing-library/user-event'
 
 const mockHistory = {
@@ -40,9 +44,15 @@ const fakeTransaction = {
 }
 const renderSubject = async (
   transactions: landingPageQueryType = [fakeTransaction],
+  countTxnsInLast10m: number = 42 * 600,
 ) => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
+    errors: null,
+    data: { aggregate: { count: countTxnsInLast10m } },
+  })
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
     errors: null,
     data: transactions,
   })
@@ -59,6 +69,7 @@ describe('LandingPage', function () {
   it('should get data from the AnalyticsClient', async function () {
     await renderSubject()
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(landingPageQuery(), 'transactions')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(countTransactionsInLast10Minutes(), 'transactions_aggregate')
   })
 
   it('should display most recent transactions in a table', async function () {
@@ -70,6 +81,14 @@ describe('LandingPage', function () {
     expect(within(transactionsTable).queryByText(fakeTransaction.commit_timestamp)).toBeInTheDocument()
     expect(within(transactionsTable).queryByText('UserTransaction')).toBeInTheDocument() // txn_type 3 === UserTransaction
     expect(within(transactionsTable).queryByText('Executed')).toBeInTheDocument() // status 1 === Executed
+  })
+
+  it('should display avg transactions per second in last 10m in a card', async () => {
+    await renderSubject()
+    expect(document.getElementById('averageTransactionsPerSecond')).not.toEqual(null)
+    const tpsCard = document.getElementById('averageTransactionsPerSecond')!
+    expect(screen.queryByText('Current Transactions Per Second')).toBeInTheDocument()
+    expect(within(tpsCard).queryByText('42 TPS')).toBeInTheDocument()
   })
 
   describe('Search Box', function () {
