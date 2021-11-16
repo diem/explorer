@@ -31,12 +31,15 @@ function Wrapper(props: { children: ReactNode }) {
 
 function AverageTransactionsPerSecondCard({ averageTps }: { averageTps: number}) {
   return (
-    <Card id='averageTransactionsPerSecond'>
-      <Card.Header>Current Transactions Per Second</Card.Header>
+    <Card className='mb-5'>
+      <Card.Header>Current Statistics</Card.Header>
       <Card.Body>
-        <Card.Text>
-          {averageTps} TPS
-        </Card.Text>
+        <dl className='mb-0'>
+          <div id='averageTransactionsPerSecond'>
+            <dt><abbr title='Transactions Per Second'>TPS</abbr></dt>
+            <dd className='mb-0'>{new Intl.NumberFormat().format(averageTps)}</dd>
+          </div>
+        </dl>
       </Card.Body>
     </Card>
   )

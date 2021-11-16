@@ -87,8 +87,9 @@ describe('LandingPage', function () {
     await renderSubject()
     expect(document.getElementById('averageTransactionsPerSecond')).not.toEqual(null)
     const tpsCard = document.getElementById('averageTransactionsPerSecond')!
-    expect(screen.queryByText('Current Transactions Per Second')).toBeInTheDocument()
-    expect(within(tpsCard).queryByText('42 TPS')).toBeInTheDocument()
+    expect(screen.queryByText('Current Statistics')).toBeInTheDocument()
+    expect(within(tpsCard).queryByText('TPS')).toBeInTheDocument()
+    expect(within(tpsCard).queryByText('42')).toBeInTheDocument()
   })
 
   describe('Search Box', function () {
