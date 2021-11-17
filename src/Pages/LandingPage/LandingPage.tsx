@@ -14,6 +14,7 @@ import {
   landingPageQuery,
   landingPageQueryType
 } from '../../api_clients/AnalyticsQueries'
+import ReactTooltip from 'react-tooltip'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -34,12 +35,18 @@ function AverageTransactionsPerSecondCard({ averageTps }: { averageTps: number})
     <Card className='mb-5'>
       <Card.Header>Current Statistics</Card.Header>
       <Card.Body>
-        <dl className='mb-0'>
-          <div id='averageTransactionsPerSecond'>
-            <dt><abbr title='Transactions Per Second'>TPS</abbr></dt>
-            <dd className='mb-0'>{new Intl.NumberFormat().format(averageTps)}</dd>
+        <span style={{ float: 'left', display: 'inlineBlock' }} >
+          <div data-tip data-for={'Transactions Per Second'} >
+            <span style={{ fontWeight: 'bold', textDecoration: 'underline', textDecorationStyle: 'dotted' }}>
+              TPS
+            </span>
+            <br/>
+            {new Intl.NumberFormat().format(averageTps)}
           </div>
-        </dl>
+          <ReactTooltip id='Transactions Per Second' effect="solid">
+            Transactions Per Second
+          </ReactTooltip>
+        </span>
       </Card.Body>
     </Card>
   )

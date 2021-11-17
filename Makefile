@@ -6,13 +6,13 @@ wrmock_pid						:= $(shell lsof -i :8888 | grep java | awk '{print $$2}')
 # Start / Stop Command Aliases
 .PHONY: start start_ui hasura_stop hasura_start wiremock_start stop wiremock_stop stop_ui
 
-start: hasura_start start_ui
+start: stop hasura_start start_ui
 	@echo "✅  UI -- started in dev mode" && echo "✅  Hasura -- started in background" && echo "The app is running at http://localhost:3000"
 
 start_for_e2e: _ensure_logs_dir stop _start_ui_for_e2e _wiremock_start_for_e2e _await_e2e_deps
 	@echo "✅  UI -- started in test mode\n✅  Wiremock -- started in background\nLogs can be found in end2end/logs\nThe app is running at http://localhost:3000"
 
-start_ui: stop
+start_ui:
 	@yarn run dev
 
 hasura_stop:
