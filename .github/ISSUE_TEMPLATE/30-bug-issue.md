@@ -1,6 +1,6 @@
 ---
 name: 🐛 Bug Report
-about: 
+about: An issue that breaks the intended functionality of the app.
 ---
 
 **Currently:**
