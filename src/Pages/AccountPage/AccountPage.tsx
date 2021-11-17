@@ -4,65 +4,32 @@ import {
   BlockchainAccountResource,
   getAccountResources,
   getAccountModules,
-  BlockchainAccountResourceType,
-  BlockchainAccountResourceValue,
 } from '../../api_clients/BlockchainRestClient'
-import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
 import React from 'react'
+import Balances from './Balances'
+import SmartContractMethods from './SmartContractMethods'
+import SmartContractStructs from './SmartContractStructs'
 import { Alert } from 'react-bootstrap'
 
-interface BlockchainAccountModule {
-  any: any
-}
+type BlockchainAccountModule = any
 
 interface AccountPageWithResponseProps {
   resources: BlockchainAccountResource[]
   modules: BlockchainAccountModule[]
 }
 
-interface BlockchainAccountBalanceResourceType
-  extends BlockchainAccountResourceType {
-  // eslint-disable-next-line camelcase
-  generic_type_params: { name: string }[]
-  name: 'Balance'
-}
+function accountIsSupported(data: AccountPageWithResponseProps) {
+  const hasStructs = data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
+  const hasMethods = data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
+  const hasBalance = data.resources.filter((resource) => (resource?.type?.name === 'Balance')).length > 0
 
-interface BlockchainAccountBalanceResourceValue
-  extends BlockchainAccountResourceValue {
-  coin: { value: number }
-}
-
-interface BlockchainAccountBalanceResource extends BlockchainAccountResource {
-  type: BlockchainAccountBalanceResourceType
-  value: BlockchainAccountBalanceResourceValue
-}
-
-function parseBalancesFromResources(resources: BlockchainAccountResource[]) {
-  const balanceResources = resources.filter((resource) => {
-    return (
-      resource.type && resource.type.name && resource.type.name === 'Balance'
-    )
-  }) as BlockchainAccountBalanceResource[]
-
-  const balances = Object.assign(
-    {},
-    ...balanceResources.map((balance) => ({
-      [balance.type.generic_type_params[0].name]: balance.value.coin.value,
-    }))
-  )
-  return balances
-}
-
-function BalancesTable({ balances }: { balances: any }) {
-  return (
-    <>
-      <h2>Balances</h2>
-      <ObjectPropertiesTable object={balances} />
-    </>
-  )
+  if (hasStructs || hasMethods || hasBalance) {
+    return true
+  }
+  return false
 }
 
 function UnsupportedAccountCard() {
@@ -85,33 +52,25 @@ function AccountPageWithResponse({
 }: {
   data: AccountPageWithResponseProps
 }) {
-  const balances = parseBalancesFromResources(data.resources)
-
   return (
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        {Object.keys(balances).length > 0
-          ? (
-            <BalancesTable balances={balances} />
-          )
-          : (
-            <UnsupportedAccountCard />
-          )}
+        { !accountIsSupported(data) && <UnsupportedAccountCard /> }
+        <Balances resources={data.resources} />
+
+        <SmartContractMethods modules={data.modules} />
+        <SmartContractStructs modules={data.modules} />
+
         <h2>Raw Resources</h2>
         <JSONPretty data={data.resources} id="rawResources" />
+
         <h2>Raw Smart Contracts</h2>
         <JSONPretty data={data.modules} id="rawModules" />
       </>
     </MainWrapper>
   )
 }
-
-interface AccountPageMatch {
-  address: string
-}
-
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
 
 async function getAccountData(
   address: string
@@ -139,6 +98,12 @@ async function getAccountData(
     }
   }
 }
+
+interface AccountPageMatch {
+  address: string
+}
+
+interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
 
 export default function AccountPage(props: AccountPageProps) {
   const nullData = {
