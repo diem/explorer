@@ -34,7 +34,7 @@ function AverageTransactionsPerSecondCard({ averageTps }: { averageTps: number})
   return (
     <Card className='mb-5'>
       <Card.Header>Current Statistics</Card.Header>
-      <Card.Body>
+      <Card.Body id='averageTransactionsPerSecond'>
         <span style={{ float: 'left', display: 'inlineBlock' }} >
           <div data-tip data-for={'Transactions Per Second'} >
             <span style={{ fontWeight: 'bold', textDecoration: 'underline', textDecorationStyle: 'dotted' }}>
