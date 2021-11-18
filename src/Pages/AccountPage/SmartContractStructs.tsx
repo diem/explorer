@@ -19,7 +19,7 @@ export default function SmartContractStructs({ modules }: { modules: BlockchainA
   return (<>
     <Card className='mb-5'>
       <Card.Header>Smart Contract Structs</Card.Header>
-      <Card.Body id='smart-contract-structs' style={{ fontStyle: 'italic' }}>
+      <Card.Body id='smart-contract-structs'>
         <pre>
           {structs}
         </pre>

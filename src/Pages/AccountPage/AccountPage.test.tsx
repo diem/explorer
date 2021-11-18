@@ -119,7 +119,7 @@ describe('AccountPage', function () {
       expect(document.getElementById('smart-contract-methods')).not.toEqual(null)
       const methodsCard = document.getElementById('smart-contract-methods')!
 
-      expect(methodsCard.textContent).toContain('fun exchangeXdxForXus(arg1: u64): (bool)')
+      expect(methodsCard.textContent).toContain('fun exchangeXdxForXus(arg1: u64): bool')
     })
 
     it('should display Smart Contract Structs in a card', async () => {

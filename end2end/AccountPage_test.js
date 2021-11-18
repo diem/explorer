@@ -68,7 +68,7 @@ Scenario('Displaying a Validator Operator account', ({ I }) => {
 
 function seeSmartContractMethods(I) {
   I.see('Smart Contract Methods')
-  I.see('fun exchangeXdxForXus(arg1: u64): (bool)')
+  I.see('fun exchangeXdxForXus(arg1: u64): bool')
 }
 
 function seeSmartContractStructs(I) {
