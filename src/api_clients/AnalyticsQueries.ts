@@ -90,15 +90,13 @@ export function preburnEventsQuery() {
     preburn_events: [
       {
         limit: 10,
-        order_by: [{ version: order_by.desc }]
+        order_by: [{ transaction_version: order_by.desc }]
       },
       {
-        version: true,
+        transaction_version: true,
         commit_timestamp: true,
+        address: true,
         amount: true,
-        status: true,
-        sender: true,
-        receiver: true,
         currency: true
       }
     ]

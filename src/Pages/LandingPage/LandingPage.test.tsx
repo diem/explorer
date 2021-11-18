@@ -26,6 +26,8 @@ jest.mock('react-router-dom', () => {
   })
 })
 
+jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
+
 const fakeTransaction = {
   __typename: 'transactions' as const,
   version: 502,

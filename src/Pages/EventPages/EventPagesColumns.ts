@@ -91,13 +91,11 @@ export function gasEventsColumn() {
 
 export function preburnEventsColumn() {
   return [
-    { Header: 'Transaction Version', accessor: 'version', Cell: TransactionVersion },
+    { Header: 'Transaction Version', accessor: 'transaction_version', Cell: TransactionVersion },
     { Header: 'Timestamp', accessor: 'commit_timestamp', Cell: TransactionVersion },
+    { Header: 'Address', accessor: 'address', Cell: AccountAddress },
     { Header: 'Amount', accessor: 'amount' },
-    { Header: 'Currency', accessor: 'currency' },
-    { Header: 'Status', accessor: 'status' },
-    { Header: 'Receiver', accessor: 'receiver', Cell: AccountAddress },
-    { Header: 'Sender', accessor: 'sender', Cell: AccountAddress },
+    { Header: 'Currency', accessor: 'currency' }
   ]
 }
 
