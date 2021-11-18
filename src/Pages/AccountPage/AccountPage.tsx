@@ -24,12 +24,9 @@ interface AccountPageWithResponseProps {
 function accountIsSupported(data: AccountPageWithResponseProps) {
   const hasStructs = data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
   const hasMethods = data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
-  const hasBalance = data.resources.filter((resource) => (resource?.type?.name === 'Balance')).length > 0
+  const hasBalance = data.resources.some((resource) => (resource?.type?.name === 'Balance'))
 
-  if (hasStructs || hasMethods || hasBalance) {
-    return true
-  }
-  return false
+  return hasStructs || hasMethods || hasBalance
 }
 
 function UnsupportedAccountCard() {
