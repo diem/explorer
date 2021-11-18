@@ -1,0 +1,9 @@
+.method-list {
+    padding-left: 0;
+    overflow-x: scroll;
+    list-style: none;
+}
+
+.method-signature {
+    display: inline-block;
+}

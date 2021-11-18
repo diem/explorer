@@ -66,6 +66,16 @@ Scenario('Displaying a Validator Operator account', ({ I }) => {
   seeRawResources(I)
 })
 
+function seeSmartContractMethods(I) {
+  I.see('Smart Contract Methods')
+  I.see('fun exchangeXdxForXus(arg1: u64): bool')
+}
+
+function seeSmartContractStructs(I) {
+  I.see('Smart Contract Structs')
+  I.see('struct AccountType {\n\taccount_type: u64\n}')
+}
+
 Scenario('Displaying a Parent VASP account', ({ I }) => {
   I.amOnPage(`/address/${parentVaspAddress}`)
 
@@ -74,6 +84,9 @@ Scenario('Displaying a Parent VASP account', ({ I }) => {
 
   seeRawSmartContracts(I)
   seeRawResources(I)
+
+  seeSmartContractMethods(I)
+  seeSmartContractStructs(I)
 })
 
 Scenario('Displaying a Child VASP account', ({ I }) => {
