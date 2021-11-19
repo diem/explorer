@@ -10,7 +10,26 @@ The Diem Explorer is an open-source web-based UI for Diem flavored blockchains w
 ## Getting Started
 
 * Install yarn, make
+* Run `yarn install` to install dependencies
 * Run `make start` to start the web app locally
+* Configure Hasura at [http://localhost:8888/console]
+
+### Configuring Hasura
+
+Hasura must be configured to connect to a database.
+
+TODO: describe what this database is and where to get the credentials.
+
+Track the following tables:
+- `accounts`
+- `accounts_balances`
+- `burn_events`
+- `diem_in_circulation_realtime_aggregates`
+- `gas_payments`
+- `preburn_events`
+- `receivedmint_events`
+- `sentpayment_events`
+- `transactions`
 
 ## Helm Chart
 
