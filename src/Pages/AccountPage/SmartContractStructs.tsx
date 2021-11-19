@@ -1,17 +1,22 @@
 import React from 'react'
-import { BlockchainAccountModule } from '../../api_clients/BlockchainRestClient'
 import { Card } from 'react-bootstrap'
+import { Module, Struct } from '../../api_clients/BlockchainRestTypes'
 
-function mapModuleIntoStructs(module: BlockchainAccountModule): string[] {
-  return module?.abi?.structs.map((struct: any) => {
-    const structFields = struct.fields.map((field: any) => {
-      return `\t${field.name}: ${field.type}`
+function mapModuleIntoStructs(module: Module): string[] {
+  // The ? operator is used below to ensure the page doesn't crash if unexpected data is retrieved.
+  // Maybe in the future we will prefer it to crash.
+  return module.abi?.structs.map((struct: Struct) => {
+    const structFields = struct.fields.map(({
+      name,
+      type,
+    }) => {
+      return `\t${name}: ${type}`
     })
     return `struct ${struct.name} {\n${structFields.join('\n')}\n}\n`
   })
 }
 
-export default function SmartContractStructs({ modules }: { modules: BlockchainAccountModule[] }) {
+export default function SmartContractStructs({ modules }: { modules: Module[] }) {
   const structs = modules.flatMap(mapModuleIntoStructs)
   if (structs.length === 0) {
     return null

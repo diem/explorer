@@ -1,45 +1,27 @@
-import {
-  BlockchainAccountResource,
-  BlockchainAccountResourceType,
-  BlockchainAccountResourceValue
-} from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import React from 'react'
+import {
+  BalanceResource,
+  getCurrency,
+  isBalanceResource,
+  KnownCurrency,
+  Resource,
+} from '../../api_clients/BlockchainRestTypes'
 
-interface BlockchainAccountBalanceResourceType
-  extends BlockchainAccountResourceType {
-  // eslint-disable-next-line camelcase
-  generic_type_params: { name: string }[]
-  name: 'Balance'
-}
+function parseBalancesFromResources(resources: Resource[]): Record<KnownCurrency, string> {
+  const balanceResources = resources.filter(isBalanceResource) as BalanceResource[]
 
-interface BlockchainAccountBalanceResourceValue
-  extends BlockchainAccountResourceValue {
-  coin: { value: number }
-}
-
-interface BlockchainAccountBalanceResource extends BlockchainAccountResource {
-  type: BlockchainAccountBalanceResourceType
-  value: BlockchainAccountBalanceResourceValue
-}
-
-function parseBalancesFromResources(resources: BlockchainAccountResource[]) {
-  const balanceResources = resources.filter((resource) => {
-    return (
-      resource.type && resource.type.name && resource.type.name === 'Balance'
-    )
-  }) as BlockchainAccountBalanceResource[]
-
-  const balances = Object.assign(
+  return Object.assign(
     {},
-    ...balanceResources.map((balance) => ({
-      [balance.type.generic_type_params[0].name]: balance.value.coin.value,
-    }))
+    ...balanceResources.map((balance) => {
+      const currency = getCurrency(balance)
+      const amount = parseInt(balance.value.coin.value)
+      return { [currency]: amount }
+    }),
   )
-  return balances
 }
 
-function BalancesTable({ balances }: { balances: any }) {
+function BalancesTable({ balances }: { balances: Record<KnownCurrency, string> }) {
   return (
     <>
       <h2>Balances</h2>
@@ -48,9 +30,9 @@ function BalancesTable({ balances }: { balances: any }) {
   )
 }
 
-export default function Balances({ resources }: {resources: BlockchainAccountResource[]}) {
+export default function Balances({ resources }: { resources: Resource[] }) {
   const balances = parseBalancesFromResources(resources)
   return (<>
-    { Object.keys(balances).length > 0 ? (<BalancesTable balances={balances} />) : null }
+    {Object.keys(balances).length > 0 ? (<BalancesTable balances={balances} />) : null}
   </>)
 }

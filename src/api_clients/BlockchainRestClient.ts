@@ -1,28 +1,16 @@
 import { DataOrErrors, FetchError } from './FetchTypes'
 import { getWithFetch } from './FetchBroker'
+import { Module, Resource } from './BlockchainRestTypes'
 
-export interface BlockchainAccountResourceType {
-  name: string
+export interface RestError {
+  code: number,
+  message: string,
 }
 
-export interface BlockchainAccountResourceValue {}
+type RestResponse = Resource[] | Module[] | RestError
 
-export interface BlockchainAccountResource {
-  type: BlockchainAccountResourceType
-  value: BlockchainAccountResourceValue
-}
-
-export interface BlockchainRestError {
-  code: number
-  message: string
-}
-
-type BlockchainRestResponse<T> = T | BlockchainRestError
-
-export type BlockchainAccountModule = any
-
-function transformBlockchainRestResponse<T>(
-  response: BlockchainRestResponse<T>
+function transformBlockchainRestResponse<T extends Module[] | Resource[]>(
+  response: RestResponse,
 ): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {
     return {
@@ -31,36 +19,39 @@ function transformBlockchainRestResponse<T>(
     }
   } else {
     return {
-      data: response,
+      data: response as T,
       errors: null,
     }
   }
 }
 
-async function getAccountAsset<T>(
+async function getAccountAsset<T extends Resource[] | Module[]>(
   address: string,
-  assetType: string
+  assetType: T extends Module[] ? 'modules' : T extends Resource [] ? 'resources' : never,
 ): Promise<DataOrErrors<T>> {
   const url = `${
     import.meta.env.VITE_BLOCKCHAIN_REST_URL
   }/accounts/${address}/${assetType}`
-  return getWithFetch<BlockchainRestResponse<T>>(url, {})
+  return getWithFetch<RestResponse>(url, {})
     .then((response) => {
       return transformBlockchainRestResponse<T>(response)
     })
     .catch((error: FetchError) => {
-      return { errors: [{ message: error.toString() }], data: null }
+      return {
+        errors: [{ message: error.toString() }],
+        data: null,
+      }
     })
 }
 
 export function getAccountModules(
-  address: string
-): Promise<DataOrErrors<BlockchainAccountModule[]>> {
-  return getAccountAsset<BlockchainAccountResource[]>(address, 'modules')
+  address: string,
+): Promise<DataOrErrors<Module[]>> {
+  return getAccountAsset<Module[]>(address, 'modules')
 }
 
 export function getAccountResources(
-  address: string
-): Promise<DataOrErrors<BlockchainAccountResource[]>> {
-  return getAccountAsset<BlockchainAccountResource[]>(address, 'resources')
+  address: string,
+): Promise<DataOrErrors<Resource[]>> {
+  return getAccountAsset<Resource[]>(address, 'resources')
 }

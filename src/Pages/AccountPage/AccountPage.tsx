@@ -1,10 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom'
 import ApiRequestPage from '../../ApiRequestPage'
-import {
-  BlockchainAccountResource,
-  getAccountResources,
-  getAccountModules,
-} from '../../api_clients/BlockchainRestClient'
+import { getAccountModules, getAccountResources } from '../../api_clients/BlockchainRestClient'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
@@ -12,19 +8,24 @@ import React from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
-import { Alert } from 'react-bootstrap'
-
-type BlockchainAccountModule = any
+import { Alert, Card } from 'react-bootstrap'
+import {
+  DiemAccountResource,
+  isBalanceResource,
+  isDiemAccountResource,
+  Module,
+  Resource,
+} from '../../api_clients/BlockchainRestTypes'
 
 interface AccountPageWithResponseProps {
-  resources: BlockchainAccountResource[]
-  modules: BlockchainAccountModule[]
+  resources: Resource[]
+  modules: Module[]
 }
 
 function accountIsSupported(data: AccountPageWithResponseProps) {
   const hasStructs = data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
   const hasMethods = data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
-  const hasBalance = data.resources.some((resource) => (resource?.type?.name === 'Balance'))
+  const hasBalance = data.resources.some(isBalanceResource)
 
   return hasStructs || hasMethods || hasBalance
 }
@@ -53,24 +54,31 @@ function AccountPageWithResponse({
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        { !accountIsSupported(data) && <UnsupportedAccountCard /> }
+        {!accountIsSupported(data) && <UnsupportedAccountCard />}
         <Balances resources={data.resources} />
 
         <SmartContractMethods modules={data.modules} />
         <SmartContractStructs modules={data.modules} />
 
+        <Card className='mb-5'>
+          <Card.Header>Sequence Number</Card.Header>
+          <Card.Body id='sequenceNumber'>
+            {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.sequence_number}
+          </Card.Body>
+        </Card>
+
         <h2>Raw Resources</h2>
-        <JSONPretty data={data.resources} id="rawResources" />
+        <JSONPretty data={data.resources} id='rawResources' />
 
         <h2>Raw Smart Contracts</h2>
-        <JSONPretty data={data.modules} id="rawModules" />
+        <JSONPretty data={data.modules} id='rawModules' />
       </>
     </MainWrapper>
   )
 }
 
 async function getAccountData(
-  address: string
+  address: string,
 ): Promise<DataOrErrors<AccountPageWithResponseProps>> {
   const resourcesResponse = await getAccountResources(address)
   const modulesResponse = await getAccountModules(address)
@@ -100,7 +108,8 @@ interface AccountPageMatch {
   address: string
 }
 
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
+interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {
+}
 
 export default function AccountPage(props: AccountPageProps) {
   const nullData = {

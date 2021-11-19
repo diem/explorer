@@ -22,6 +22,21 @@ function seeUnsupportedAccountCard(I) {
   I.see('Unsupported Account')
 }
 
+function seeSmartContractMethods(I) {
+  I.see('Smart Contract Methods')
+  I.see('fun exchangeXdxForXus(arg1: u64): bool')
+}
+
+function seeSmartContractStructs(I) {
+  I.see('Smart Contract Structs')
+  I.see('struct AccountType {\n\taccount_type: u64\n}')
+}
+
+function seeSequenceNumber(I, expectedSequenceNumber) {
+  I.see('Sequence Number')
+  I.see(expectedSequenceNumber)
+}
+
 const designatedDealerAddress = '1081322fef2da29d62fe4e131ef4c859'
 const validatorAddress = '88c5db7ad36f7a66a8fb2789fbdb30cc'
 const validatorOperatorAddress = '1fc5dd16a92e82a281a063e308ebcca9'
@@ -46,6 +61,8 @@ Scenario('Displaying a Designated Dealer account', ({ I }) => {
 
   seeRawResources(I)
   seeRawSmartContracts(I)
+
+  seeSequenceNumber(I, '43828')
 })
 
 Scenario('Displaying a Validator account', ({ I }) => {
@@ -55,6 +72,8 @@ Scenario('Displaying a Validator account', ({ I }) => {
 
   seeRawSmartContracts(I)
   seeRawResources(I)
+
+  seeSequenceNumber(I, '0')
 })
 
 Scenario('Displaying a Validator Operator account', ({ I }) => {
@@ -64,17 +83,9 @@ Scenario('Displaying a Validator Operator account', ({ I }) => {
 
   seeRawSmartContracts(I)
   seeRawResources(I)
+
+  seeSequenceNumber(I, '143')
 })
-
-function seeSmartContractMethods(I) {
-  I.see('Smart Contract Methods')
-  I.see('fun exchangeXdxForXus(arg1: u64): bool')
-}
-
-function seeSmartContractStructs(I) {
-  I.see('Smart Contract Structs')
-  I.see('struct AccountType {\n\taccount_type: u64\n}')
-}
 
 Scenario('Displaying a Parent VASP account', ({ I }) => {
   I.amOnPage(`/address/${parentVaspAddress}`)
@@ -87,6 +98,8 @@ Scenario('Displaying a Parent VASP account', ({ I }) => {
 
   seeSmartContractMethods(I)
   seeSmartContractStructs(I)
+
+  seeSequenceNumber(I, '4518')
 })
 
 Scenario('Displaying a Child VASP account', ({ I }) => {
@@ -97,4 +110,6 @@ Scenario('Displaying a Child VASP account', ({ I }) => {
 
   seeRawSmartContracts(I)
   seeRawResources(I)
+
+  seeSequenceNumber(I, '16')
 })
