@@ -42,6 +42,7 @@ namespace Resources {
       type: '0x1::DiemAccount::DiemAccount',
       value: {
         sequence_number: string,
+        authentication_key: string,
         [key: string]: string | {},
       },
     }

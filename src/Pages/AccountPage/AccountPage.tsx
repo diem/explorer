@@ -67,6 +67,13 @@ function AccountPageWithResponse({
           </Card.Body>
         </Card>
 
+        <Card className='mb-5'>
+          <Card.Header>Authentication Key</Card.Header>
+          <Card.Body id='authenticationKey'>
+            {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.authentication_key}
+          </Card.Body>
+        </Card>
+
         <h2>Raw Resources</h2>
         <JSONPretty data={data.resources} id='rawResources' />
 

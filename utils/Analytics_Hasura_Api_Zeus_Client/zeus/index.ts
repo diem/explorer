@@ -1110,6 +1110,9 @@ delete_gas_payments_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["gas_pay
 delete_preburn_events?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["preburn_events_bool_exp"]},ValueTypes["preburn_events_mutation_response"]],
 delete_preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
+delete_realtime_account_balances?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["realtime_account_balances_bool_exp"]},ValueTypes["realtime_account_balances_mutation_response"]],
+delete_realtime_account_balances_by_pk?: [{	account:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["realtime_account_balances"]],
 delete_receivedmint_events?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["receivedmint_events_bool_exp"]},ValueTypes["receivedmint_events_mutation_response"]],
 delete_receivedmint_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["receivedmint_events"]],
@@ -1155,6 +1158,12 @@ insert_preburn_events?: [{	/** the rows to be inserted */
 insert_preburn_events_one?: [{	/** the row to be inserted */
 	object:ValueTypes["preburn_events_insert_input"],	/** on conflict condition */
 	on_conflict?:ValueTypes["preburn_events_on_conflict"] | null},ValueTypes["preburn_events"]],
+insert_realtime_account_balances?: [{	/** the rows to be inserted */
+	objects:ValueTypes["realtime_account_balances_insert_input"][],	/** on conflict condition */
+	on_conflict?:ValueTypes["realtime_account_balances_on_conflict"] | null},ValueTypes["realtime_account_balances_mutation_response"]],
+insert_realtime_account_balances_one?: [{	/** the row to be inserted */
+	object:ValueTypes["realtime_account_balances_insert_input"],	/** on conflict condition */
+	on_conflict?:ValueTypes["realtime_account_balances_on_conflict"] | null},ValueTypes["realtime_account_balances"]],
 insert_receivedmint_events?: [{	/** the rows to be inserted */
 	objects:ValueTypes["receivedmint_events_insert_input"][],	/** on conflict condition */
 	on_conflict?:ValueTypes["receivedmint_events_on_conflict"] | null},ValueTypes["receivedmint_events_mutation_response"]],
@@ -1215,6 +1224,13 @@ update_preburn_events?: [{	/** increments the numeric columns with given value o
 update_preburn_events_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["preburn_events_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["preburn_events_set_input"] | null,	pk_columns:ValueTypes["preburn_events_pk_columns_input"]},ValueTypes["preburn_events"]],
+update_realtime_account_balances?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["realtime_account_balances_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["realtime_account_balances_set_input"] | null,	/** filter the rows which have to be updated */
+	where:ValueTypes["realtime_account_balances_bool_exp"]},ValueTypes["realtime_account_balances_mutation_response"]],
+update_realtime_account_balances_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["realtime_account_balances_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["realtime_account_balances_set_input"] | null,	pk_columns:ValueTypes["realtime_account_balances_pk_columns_input"]},ValueTypes["realtime_account_balances"]],
 update_receivedmint_events?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["receivedmint_events_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["receivedmint_events_set_input"] | null,	/** filter the rows which have to be updated */
@@ -1519,6 +1535,19 @@ preburn_events_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events_aggregate"]],
 preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
+realtime_account_balances?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["realtime_account_balances_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["realtime_account_balances_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["realtime_account_balances_bool_exp"] | null},ValueTypes["realtime_account_balances"]],
+realtime_account_balances_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["realtime_account_balances_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["realtime_account_balances_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["realtime_account_balances_bool_exp"] | null},ValueTypes["realtime_account_balances_aggregate"]],
+realtime_account_balances_by_pk?: [{	account:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["realtime_account_balances"]],
 receivedmint_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["receivedmint_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -1558,6 +1587,175 @@ transactions_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["transactions_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["transactions_bool_exp"] | null},ValueTypes["transactions_aggregate"]],
 transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+		__typename?: true
+}>;
+	/** columns and relationships of "realtime_account_balances" */
+["realtime_account_balances"]: AliasType<{
+	account?:true,
+	balance?:true,
+	blockchain_timestamp?:true,
+	currency?:true,
+	indexer_timestamp?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "realtime_account_balances" */
+["realtime_account_balances_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["realtime_account_balances_aggregate_fields"],
+	nodes?:ValueTypes["realtime_account_balances"],
+		__typename?: true
+}>;
+	/** aggregate fields of "realtime_account_balances" */
+["realtime_account_balances_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["realtime_account_balances_avg_fields"],
+count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["realtime_account_balances_max_fields"],
+	min?:ValueTypes["realtime_account_balances_min_fields"],
+	stddev?:ValueTypes["realtime_account_balances_stddev_fields"],
+	stddev_pop?:ValueTypes["realtime_account_balances_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["realtime_account_balances_stddev_samp_fields"],
+	sum?:ValueTypes["realtime_account_balances_sum_fields"],
+	var_pop?:ValueTypes["realtime_account_balances_var_pop_fields"],
+	var_samp?:ValueTypes["realtime_account_balances_var_samp_fields"],
+	variance?:ValueTypes["realtime_account_balances_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["realtime_account_balances_avg_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "realtime_account_balances". All fields are combined with a logical 'AND'. */
+["realtime_account_balances_bool_exp"]: {
+	_and?:ValueTypes["realtime_account_balances_bool_exp"][],
+	_not?:ValueTypes["realtime_account_balances_bool_exp"] | null,
+	_or?:ValueTypes["realtime_account_balances_bool_exp"][],
+	account?:ValueTypes["bpchar_comparison_exp"] | null,
+	balance?:ValueTypes["bigint_comparison_exp"] | null,
+	blockchain_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
+	currency?:ValueTypes["bpchar_comparison_exp"] | null,
+	indexer_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
+	version?:ValueTypes["bigint_comparison_exp"] | null
+};
+	/** unique or primary key constraints on table "realtime_account_balances" */
+["realtime_account_balances_constraint"]:realtime_account_balances_constraint;
+	/** input type for incrementing numeric columns in table "realtime_account_balances" */
+["realtime_account_balances_inc_input"]: {
+	balance?:ValueTypes["bigint"] | null,
+	version?:ValueTypes["bigint"] | null
+};
+	/** input type for inserting data into table "realtime_account_balances" */
+["realtime_account_balances_insert_input"]: {
+	account?:ValueTypes["bpchar"] | null,
+	balance?:ValueTypes["bigint"] | null,
+	blockchain_timestamp?:ValueTypes["timestamptz"] | null,
+	currency?:ValueTypes["bpchar"] | null,
+	indexer_timestamp?:ValueTypes["timestamptz"] | null,
+	version?:ValueTypes["bigint"] | null
+};
+	/** aggregate max on columns */
+["realtime_account_balances_max_fields"]: AliasType<{
+	account?:true,
+	balance?:true,
+	blockchain_timestamp?:true,
+	currency?:true,
+	indexer_timestamp?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["realtime_account_balances_min_fields"]: AliasType<{
+	account?:true,
+	balance?:true,
+	blockchain_timestamp?:true,
+	currency?:true,
+	indexer_timestamp?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "realtime_account_balances" */
+["realtime_account_balances_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["realtime_account_balances"],
+		__typename?: true
+}>;
+	/** on conflict condition type for table "realtime_account_balances" */
+["realtime_account_balances_on_conflict"]: {
+	constraint:ValueTypes["realtime_account_balances_constraint"],
+	update_columns:ValueTypes["realtime_account_balances_update_column"][],
+	where?:ValueTypes["realtime_account_balances_bool_exp"] | null
+};
+	/** Ordering options when selecting data from "realtime_account_balances". */
+["realtime_account_balances_order_by"]: {
+	account?:ValueTypes["order_by"] | null,
+	balance?:ValueTypes["order_by"] | null,
+	blockchain_timestamp?:ValueTypes["order_by"] | null,
+	currency?:ValueTypes["order_by"] | null,
+	indexer_timestamp?:ValueTypes["order_by"] | null,
+	version?:ValueTypes["order_by"] | null
+};
+	/** primary key columns input for table: realtime_account_balances */
+["realtime_account_balances_pk_columns_input"]: {
+	account:ValueTypes["bpchar"],
+	currency:ValueTypes["bpchar"],
+	version:ValueTypes["bigint"]
+};
+	/** select columns of table "realtime_account_balances" */
+["realtime_account_balances_select_column"]:realtime_account_balances_select_column;
+	/** input type for updating data in table "realtime_account_balances" */
+["realtime_account_balances_set_input"]: {
+	account?:ValueTypes["bpchar"] | null,
+	balance?:ValueTypes["bigint"] | null,
+	blockchain_timestamp?:ValueTypes["timestamptz"] | null,
+	currency?:ValueTypes["bpchar"] | null,
+	indexer_timestamp?:ValueTypes["timestamptz"] | null,
+	version?:ValueTypes["bigint"] | null
+};
+	/** aggregate stddev on columns */
+["realtime_account_balances_stddev_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["realtime_account_balances_stddev_pop_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["realtime_account_balances_stddev_samp_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["realtime_account_balances_sum_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** update columns of table "realtime_account_balances" */
+["realtime_account_balances_update_column"]:realtime_account_balances_update_column;
+	/** aggregate var_pop on columns */
+["realtime_account_balances_var_pop_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["realtime_account_balances_var_samp_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["realtime_account_balances_variance_fields"]: AliasType<{
+	balance?:true,
+	version?:true,
 		__typename?: true
 }>;
 	/** columns and relationships of "receivedmint_events" */
@@ -2066,6 +2264,19 @@ preburn_events_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["preburn_events_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["preburn_events_bool_exp"] | null},ValueTypes["preburn_events_aggregate"]],
 preburn_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["bigint"]},ValueTypes["preburn_events"]],
+realtime_account_balances?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["realtime_account_balances_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["realtime_account_balances_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["realtime_account_balances_bool_exp"] | null},ValueTypes["realtime_account_balances"]],
+realtime_account_balances_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["realtime_account_balances_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["realtime_account_balances_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["realtime_account_balances_bool_exp"] | null},ValueTypes["realtime_account_balances_aggregate"]],
+realtime_account_balances_by_pk?: [{	account:ValueTypes["bpchar"],	currency:ValueTypes["bpchar"],	version:ValueTypes["bigint"]},ValueTypes["realtime_account_balances"]],
 receivedmint_events?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["receivedmint_events_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -3075,6 +3286,10 @@ export type ModelTypes = {
 	delete_preburn_events?:ModelTypes["preburn_events_mutation_response"],
 	/** delete single row from the table: "preburn_events" */
 	delete_preburn_events_by_pk?:ModelTypes["preburn_events"],
+	/** delete data from the table: "realtime_account_balances" */
+	delete_realtime_account_balances?:ModelTypes["realtime_account_balances_mutation_response"],
+	/** delete single row from the table: "realtime_account_balances" */
+	delete_realtime_account_balances_by_pk?:ModelTypes["realtime_account_balances"],
 	/** delete data from the table: "receivedmint_events" */
 	delete_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** delete single row from the table: "receivedmint_events" */
@@ -3111,6 +3326,10 @@ export type ModelTypes = {
 	insert_preburn_events?:ModelTypes["preburn_events_mutation_response"],
 	/** insert a single row into the table: "preburn_events" */
 	insert_preburn_events_one?:ModelTypes["preburn_events"],
+	/** insert data into the table: "realtime_account_balances" */
+	insert_realtime_account_balances?:ModelTypes["realtime_account_balances_mutation_response"],
+	/** insert a single row into the table: "realtime_account_balances" */
+	insert_realtime_account_balances_one?:ModelTypes["realtime_account_balances"],
 	/** insert data into the table: "receivedmint_events" */
 	insert_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** insert a single row into the table: "receivedmint_events" */
@@ -3147,6 +3366,10 @@ export type ModelTypes = {
 	update_preburn_events?:ModelTypes["preburn_events_mutation_response"],
 	/** update single row of the table: "preburn_events" */
 	update_preburn_events_by_pk?:ModelTypes["preburn_events"],
+	/** update data of the table: "realtime_account_balances" */
+	update_realtime_account_balances?:ModelTypes["realtime_account_balances_mutation_response"],
+	/** update single row of the table: "realtime_account_balances" */
+	update_realtime_account_balances_by_pk?:ModelTypes["realtime_account_balances"],
 	/** update data of the table: "receivedmint_events" */
 	update_receivedmint_events?:ModelTypes["receivedmint_events_mutation_response"],
 	/** update single row of the table: "receivedmint_events" */
@@ -3334,6 +3557,12 @@ export type ModelTypes = {
 	preburn_events_aggregate:ModelTypes["preburn_events_aggregate"],
 	/** fetch data from the table: "preburn_events" using primary key columns */
 	preburn_events_by_pk?:ModelTypes["preburn_events"],
+	/** fetch data from the table: "realtime_account_balances" */
+	realtime_account_balances:ModelTypes["realtime_account_balances"][],
+	/** fetch aggregated fields from the table: "realtime_account_balances" */
+	realtime_account_balances_aggregate:ModelTypes["realtime_account_balances_aggregate"],
+	/** fetch data from the table: "realtime_account_balances" using primary key columns */
+	realtime_account_balances_by_pk?:ModelTypes["realtime_account_balances"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events:ModelTypes["receivedmint_events"][],
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -3352,6 +3581,119 @@ export type ModelTypes = {
 	transactions_aggregate:ModelTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?:ModelTypes["transactions"]
+};
+	/** columns and relationships of "realtime_account_balances" */
+["realtime_account_balances"]: {
+		account:ModelTypes["bpchar"],
+	balance:ModelTypes["bigint"],
+	blockchain_timestamp:ModelTypes["timestamptz"],
+	currency:ModelTypes["bpchar"],
+	indexer_timestamp:ModelTypes["timestamptz"],
+	version:ModelTypes["bigint"]
+};
+	/** aggregated selection of "realtime_account_balances" */
+["realtime_account_balances_aggregate"]: {
+		aggregate?:ModelTypes["realtime_account_balances_aggregate_fields"],
+	nodes:ModelTypes["realtime_account_balances"][]
+};
+	/** aggregate fields of "realtime_account_balances" */
+["realtime_account_balances_aggregate_fields"]: {
+		avg?:ModelTypes["realtime_account_balances_avg_fields"],
+	count:number,
+	max?:ModelTypes["realtime_account_balances_max_fields"],
+	min?:ModelTypes["realtime_account_balances_min_fields"],
+	stddev?:ModelTypes["realtime_account_balances_stddev_fields"],
+	stddev_pop?:ModelTypes["realtime_account_balances_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["realtime_account_balances_stddev_samp_fields"],
+	sum?:ModelTypes["realtime_account_balances_sum_fields"],
+	var_pop?:ModelTypes["realtime_account_balances_var_pop_fields"],
+	var_samp?:ModelTypes["realtime_account_balances_var_samp_fields"],
+	variance?:ModelTypes["realtime_account_balances_variance_fields"]
+};
+	/** aggregate avg on columns */
+["realtime_account_balances_avg_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** Boolean expression to filter rows from the table "realtime_account_balances". All fields are combined with a logical 'AND'. */
+["realtime_account_balances_bool_exp"]: GraphQLTypes["realtime_account_balances_bool_exp"];
+	/** unique or primary key constraints on table "realtime_account_balances" */
+["realtime_account_balances_constraint"]: GraphQLTypes["realtime_account_balances_constraint"];
+	/** input type for incrementing numeric columns in table "realtime_account_balances" */
+["realtime_account_balances_inc_input"]: GraphQLTypes["realtime_account_balances_inc_input"];
+	/** input type for inserting data into table "realtime_account_balances" */
+["realtime_account_balances_insert_input"]: GraphQLTypes["realtime_account_balances_insert_input"];
+	/** aggregate max on columns */
+["realtime_account_balances_max_fields"]: {
+		account?:ModelTypes["bpchar"],
+	balance?:ModelTypes["bigint"],
+	blockchain_timestamp?:ModelTypes["timestamptz"],
+	currency?:ModelTypes["bpchar"],
+	indexer_timestamp?:ModelTypes["timestamptz"],
+	version?:ModelTypes["bigint"]
+};
+	/** aggregate min on columns */
+["realtime_account_balances_min_fields"]: {
+		account?:ModelTypes["bpchar"],
+	balance?:ModelTypes["bigint"],
+	blockchain_timestamp?:ModelTypes["timestamptz"],
+	currency?:ModelTypes["bpchar"],
+	indexer_timestamp?:ModelTypes["timestamptz"],
+	version?:ModelTypes["bigint"]
+};
+	/** response of any mutation on the table "realtime_account_balances" */
+["realtime_account_balances_mutation_response"]: {
+		/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:ModelTypes["realtime_account_balances"][]
+};
+	/** on conflict condition type for table "realtime_account_balances" */
+["realtime_account_balances_on_conflict"]: GraphQLTypes["realtime_account_balances_on_conflict"];
+	/** Ordering options when selecting data from "realtime_account_balances". */
+["realtime_account_balances_order_by"]: GraphQLTypes["realtime_account_balances_order_by"];
+	/** primary key columns input for table: realtime_account_balances */
+["realtime_account_balances_pk_columns_input"]: GraphQLTypes["realtime_account_balances_pk_columns_input"];
+	/** select columns of table "realtime_account_balances" */
+["realtime_account_balances_select_column"]: GraphQLTypes["realtime_account_balances_select_column"];
+	/** input type for updating data in table "realtime_account_balances" */
+["realtime_account_balances_set_input"]: GraphQLTypes["realtime_account_balances_set_input"];
+	/** aggregate stddev on columns */
+["realtime_account_balances_stddev_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** aggregate stddev_pop on columns */
+["realtime_account_balances_stddev_pop_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** aggregate stddev_samp on columns */
+["realtime_account_balances_stddev_samp_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** aggregate sum on columns */
+["realtime_account_balances_sum_fields"]: {
+		balance?:ModelTypes["bigint"],
+	version?:ModelTypes["bigint"]
+};
+	/** update columns of table "realtime_account_balances" */
+["realtime_account_balances_update_column"]: GraphQLTypes["realtime_account_balances_update_column"];
+	/** aggregate var_pop on columns */
+["realtime_account_balances_var_pop_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** aggregate var_samp on columns */
+["realtime_account_balances_var_samp_fields"]: {
+		balance?:number,
+	version?:number
+};
+	/** aggregate variance on columns */
+["realtime_account_balances_variance_fields"]: {
+		balance?:number,
+	version?:number
 };
 	/** columns and relationships of "receivedmint_events" */
 ["receivedmint_events"]: {
@@ -3669,6 +4011,12 @@ export type ModelTypes = {
 	preburn_events_aggregate:ModelTypes["preburn_events_aggregate"],
 	/** fetch data from the table: "preburn_events" using primary key columns */
 	preburn_events_by_pk?:ModelTypes["preburn_events"],
+	/** fetch data from the table: "realtime_account_balances" */
+	realtime_account_balances:ModelTypes["realtime_account_balances"][],
+	/** fetch aggregated fields from the table: "realtime_account_balances" */
+	realtime_account_balances_aggregate:ModelTypes["realtime_account_balances_aggregate"],
+	/** fetch data from the table: "realtime_account_balances" using primary key columns */
+	realtime_account_balances_by_pk?:ModelTypes["realtime_account_balances"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events:ModelTypes["receivedmint_events"][],
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -4988,6 +5336,10 @@ export type GraphQLTypes = {
 	delete_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
 	/** delete single row from the table: "preburn_events" */
 	delete_preburn_events_by_pk?: GraphQLTypes["preburn_events"],
+	/** delete data from the table: "realtime_account_balances" */
+	delete_realtime_account_balances?: GraphQLTypes["realtime_account_balances_mutation_response"],
+	/** delete single row from the table: "realtime_account_balances" */
+	delete_realtime_account_balances_by_pk?: GraphQLTypes["realtime_account_balances"],
 	/** delete data from the table: "receivedmint_events" */
 	delete_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** delete single row from the table: "receivedmint_events" */
@@ -5024,6 +5376,10 @@ export type GraphQLTypes = {
 	insert_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
 	/** insert a single row into the table: "preburn_events" */
 	insert_preburn_events_one?: GraphQLTypes["preburn_events"],
+	/** insert data into the table: "realtime_account_balances" */
+	insert_realtime_account_balances?: GraphQLTypes["realtime_account_balances_mutation_response"],
+	/** insert a single row into the table: "realtime_account_balances" */
+	insert_realtime_account_balances_one?: GraphQLTypes["realtime_account_balances"],
 	/** insert data into the table: "receivedmint_events" */
 	insert_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** insert a single row into the table: "receivedmint_events" */
@@ -5060,6 +5416,10 @@ export type GraphQLTypes = {
 	update_preburn_events?: GraphQLTypes["preburn_events_mutation_response"],
 	/** update single row of the table: "preburn_events" */
 	update_preburn_events_by_pk?: GraphQLTypes["preburn_events"],
+	/** update data of the table: "realtime_account_balances" */
+	update_realtime_account_balances?: GraphQLTypes["realtime_account_balances_mutation_response"],
+	/** update single row of the table: "realtime_account_balances" */
+	update_realtime_account_balances_by_pk?: GraphQLTypes["realtime_account_balances"],
 	/** update data of the table: "receivedmint_events" */
 	update_receivedmint_events?: GraphQLTypes["receivedmint_events_mutation_response"],
 	/** update single row of the table: "receivedmint_events" */
@@ -5313,6 +5673,12 @@ export type GraphQLTypes = {
 	preburn_events_aggregate: GraphQLTypes["preburn_events_aggregate"],
 	/** fetch data from the table: "preburn_events" using primary key columns */
 	preburn_events_by_pk?: GraphQLTypes["preburn_events"],
+	/** fetch data from the table: "realtime_account_balances" */
+	realtime_account_balances: Array<GraphQLTypes["realtime_account_balances"]>,
+	/** fetch aggregated fields from the table: "realtime_account_balances" */
+	realtime_account_balances_aggregate: GraphQLTypes["realtime_account_balances_aggregate"],
+	/** fetch data from the table: "realtime_account_balances" using primary key columns */
+	realtime_account_balances_by_pk?: GraphQLTypes["realtime_account_balances"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events: Array<GraphQLTypes["receivedmint_events"]>,
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -5331,6 +5697,175 @@ export type GraphQLTypes = {
 	transactions_aggregate: GraphQLTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?: GraphQLTypes["transactions"]
+};
+	/** columns and relationships of "realtime_account_balances" */
+["realtime_account_balances"]: {
+	__typename: "realtime_account_balances",
+	account: GraphQLTypes["bpchar"],
+	balance: GraphQLTypes["bigint"],
+	blockchain_timestamp: GraphQLTypes["timestamptz"],
+	currency: GraphQLTypes["bpchar"],
+	indexer_timestamp: GraphQLTypes["timestamptz"],
+	version: GraphQLTypes["bigint"]
+};
+	/** aggregated selection of "realtime_account_balances" */
+["realtime_account_balances_aggregate"]: {
+	__typename: "realtime_account_balances_aggregate",
+	aggregate?: GraphQLTypes["realtime_account_balances_aggregate_fields"],
+	nodes: Array<GraphQLTypes["realtime_account_balances"]>
+};
+	/** aggregate fields of "realtime_account_balances" */
+["realtime_account_balances_aggregate_fields"]: {
+	__typename: "realtime_account_balances_aggregate_fields",
+	avg?: GraphQLTypes["realtime_account_balances_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["realtime_account_balances_max_fields"],
+	min?: GraphQLTypes["realtime_account_balances_min_fields"],
+	stddev?: GraphQLTypes["realtime_account_balances_stddev_fields"],
+	stddev_pop?: GraphQLTypes["realtime_account_balances_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["realtime_account_balances_stddev_samp_fields"],
+	sum?: GraphQLTypes["realtime_account_balances_sum_fields"],
+	var_pop?: GraphQLTypes["realtime_account_balances_var_pop_fields"],
+	var_samp?: GraphQLTypes["realtime_account_balances_var_samp_fields"],
+	variance?: GraphQLTypes["realtime_account_balances_variance_fields"]
+};
+	/** aggregate avg on columns */
+["realtime_account_balances_avg_fields"]: {
+	__typename: "realtime_account_balances_avg_fields",
+	balance?: number,
+	version?: number
+};
+	/** Boolean expression to filter rows from the table "realtime_account_balances". All fields are combined with a logical 'AND'. */
+["realtime_account_balances_bool_exp"]: {
+		_and?: Array<GraphQLTypes["realtime_account_balances_bool_exp"]>,
+	_not?: GraphQLTypes["realtime_account_balances_bool_exp"],
+	_or?: Array<GraphQLTypes["realtime_account_balances_bool_exp"]>,
+	account?: GraphQLTypes["bpchar_comparison_exp"],
+	balance?: GraphQLTypes["bigint_comparison_exp"],
+	blockchain_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
+	currency?: GraphQLTypes["bpchar_comparison_exp"],
+	indexer_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
+	version?: GraphQLTypes["bigint_comparison_exp"]
+};
+	/** unique or primary key constraints on table "realtime_account_balances" */
+["realtime_account_balances_constraint"]: realtime_account_balances_constraint;
+	/** input type for incrementing numeric columns in table "realtime_account_balances" */
+["realtime_account_balances_inc_input"]: {
+		balance?: GraphQLTypes["bigint"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** input type for inserting data into table "realtime_account_balances" */
+["realtime_account_balances_insert_input"]: {
+		account?: GraphQLTypes["bpchar"],
+	balance?: GraphQLTypes["bigint"],
+	blockchain_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregate max on columns */
+["realtime_account_balances_max_fields"]: {
+	__typename: "realtime_account_balances_max_fields",
+	account?: GraphQLTypes["bpchar"],
+	balance?: GraphQLTypes["bigint"],
+	blockchain_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregate min on columns */
+["realtime_account_balances_min_fields"]: {
+	__typename: "realtime_account_balances_min_fields",
+	account?: GraphQLTypes["bpchar"],
+	balance?: GraphQLTypes["bigint"],
+	blockchain_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** response of any mutation on the table "realtime_account_balances" */
+["realtime_account_balances_mutation_response"]: {
+	__typename: "realtime_account_balances_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows: number,
+	/** data from the rows affected by the mutation */
+	returning: Array<GraphQLTypes["realtime_account_balances"]>
+};
+	/** on conflict condition type for table "realtime_account_balances" */
+["realtime_account_balances_on_conflict"]: {
+		constraint: GraphQLTypes["realtime_account_balances_constraint"],
+	update_columns: Array<GraphQLTypes["realtime_account_balances_update_column"]>,
+	where?: GraphQLTypes["realtime_account_balances_bool_exp"]
+};
+	/** Ordering options when selecting data from "realtime_account_balances". */
+["realtime_account_balances_order_by"]: {
+		account?: GraphQLTypes["order_by"],
+	balance?: GraphQLTypes["order_by"],
+	blockchain_timestamp?: GraphQLTypes["order_by"],
+	currency?: GraphQLTypes["order_by"],
+	indexer_timestamp?: GraphQLTypes["order_by"],
+	version?: GraphQLTypes["order_by"]
+};
+	/** primary key columns input for table: realtime_account_balances */
+["realtime_account_balances_pk_columns_input"]: {
+		account: GraphQLTypes["bpchar"],
+	currency: GraphQLTypes["bpchar"],
+	version: GraphQLTypes["bigint"]
+};
+	/** select columns of table "realtime_account_balances" */
+["realtime_account_balances_select_column"]: realtime_account_balances_select_column;
+	/** input type for updating data in table "realtime_account_balances" */
+["realtime_account_balances_set_input"]: {
+		account?: GraphQLTypes["bpchar"],
+	balance?: GraphQLTypes["bigint"],
+	blockchain_timestamp?: GraphQLTypes["timestamptz"],
+	currency?: GraphQLTypes["bpchar"],
+	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** aggregate stddev on columns */
+["realtime_account_balances_stddev_fields"]: {
+	__typename: "realtime_account_balances_stddev_fields",
+	balance?: number,
+	version?: number
+};
+	/** aggregate stddev_pop on columns */
+["realtime_account_balances_stddev_pop_fields"]: {
+	__typename: "realtime_account_balances_stddev_pop_fields",
+	balance?: number,
+	version?: number
+};
+	/** aggregate stddev_samp on columns */
+["realtime_account_balances_stddev_samp_fields"]: {
+	__typename: "realtime_account_balances_stddev_samp_fields",
+	balance?: number,
+	version?: number
+};
+	/** aggregate sum on columns */
+["realtime_account_balances_sum_fields"]: {
+	__typename: "realtime_account_balances_sum_fields",
+	balance?: GraphQLTypes["bigint"],
+	version?: GraphQLTypes["bigint"]
+};
+	/** update columns of table "realtime_account_balances" */
+["realtime_account_balances_update_column"]: realtime_account_balances_update_column;
+	/** aggregate var_pop on columns */
+["realtime_account_balances_var_pop_fields"]: {
+	__typename: "realtime_account_balances_var_pop_fields",
+	balance?: number,
+	version?: number
+};
+	/** aggregate var_samp on columns */
+["realtime_account_balances_var_samp_fields"]: {
+	__typename: "realtime_account_balances_var_samp_fields",
+	balance?: number,
+	version?: number
+};
+	/** aggregate variance on columns */
+["realtime_account_balances_variance_fields"]: {
+	__typename: "realtime_account_balances_variance_fields",
+	balance?: number,
+	version?: number
 };
 	/** columns and relationships of "receivedmint_events" */
 ["receivedmint_events"]: {
@@ -5797,6 +6332,12 @@ export type GraphQLTypes = {
 	preburn_events_aggregate: GraphQLTypes["preburn_events_aggregate"],
 	/** fetch data from the table: "preburn_events" using primary key columns */
 	preburn_events_by_pk?: GraphQLTypes["preburn_events"],
+	/** fetch data from the table: "realtime_account_balances" */
+	realtime_account_balances: Array<GraphQLTypes["realtime_account_balances"]>,
+	/** fetch aggregated fields from the table: "realtime_account_balances" */
+	realtime_account_balances_aggregate: GraphQLTypes["realtime_account_balances_aggregate"],
+	/** fetch data from the table: "realtime_account_balances" using primary key columns */
+	realtime_account_balances_by_pk?: GraphQLTypes["realtime_account_balances"],
 	/** fetch data from the table: "receivedmint_events" */
 	receivedmint_events: Array<GraphQLTypes["receivedmint_events"]>,
 	/** fetch aggregated fields from the table: "receivedmint_events" */
@@ -6274,6 +6815,28 @@ export const enum preburn_events_update_column {
 	sequence_number = "sequence_number",
 	status = "status",
 	transaction_version = "transaction_version"
+}
+/** unique or primary key constraints on table "realtime_account_balances" */
+export const enum realtime_account_balances_constraint {
+	realtime_account_balances_pk = "realtime_account_balances_pk"
+}
+/** select columns of table "realtime_account_balances" */
+export const enum realtime_account_balances_select_column {
+	account = "account",
+	balance = "balance",
+	blockchain_timestamp = "blockchain_timestamp",
+	currency = "currency",
+	indexer_timestamp = "indexer_timestamp",
+	version = "version"
+}
+/** update columns of table "realtime_account_balances" */
+export const enum realtime_account_balances_update_column {
+	account = "account",
+	balance = "balance",
+	blockchain_timestamp = "blockchain_timestamp",
+	currency = "currency",
+	indexer_timestamp = "indexer_timestamp",
+	version = "version"
 }
 /** unique or primary key constraints on table "receivedmint_events" */
 export const enum receivedmint_events_constraint {
