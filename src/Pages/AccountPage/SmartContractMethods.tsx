@@ -1,11 +1,14 @@
 import React from 'react'
-import { BlockchainAccountModule } from '../../api_clients/BlockchainRestClient'
 import { Card } from 'react-bootstrap'
 import './SmartContractMethods.css'
+import { ExposedFunction, Module } from '../../api_clients/BlockchainRestTypes'
 
-function mapModuleIntoMethodSignatures(module: BlockchainAccountModule): string[] {
-  return module?.abi?.exposed_functions.map((fn: any, idx: number) => {
-    const params = fn.params.map((param: any, idx: number) => `arg${idx + 1}: ${param}`)
+function mapModuleIntoMethodSignatures(module: Module) {
+  // The ? operator is used below to ensure the page doesn't crash if unexpected data is retrieved.
+  // Maybe in the future we will prefer it to crash.
+  return module.abi?.exposed_functions.map((fn: ExposedFunction, idx: number) => {
+    const params = fn.params.map((param: string, idx: number) => `arg${idx + 1}: ${param}`)
+
     function formatReturnTypes(returnTypes: string[]): string {
       if (returnTypes.length === 0) {
         return '()'
@@ -15,6 +18,7 @@ function mapModuleIntoMethodSignatures(module: BlockchainAccountModule): string[
         return `(${returnTypes.join(', ')})`
       }
     }
+
     return (<li key={`method-${idx}`}>
       <pre className='mb-0 method-signature'>
         {`fun ${(fn.name)}(${params.join(', ')}): ${formatReturnTypes(fn.return)}`}
@@ -23,7 +27,7 @@ function mapModuleIntoMethodSignatures(module: BlockchainAccountModule): string[
   })
 }
 
-export default function SmartContractMethods({ modules }: { modules: BlockchainAccountModule[] }) {
+export default function SmartContractMethods({ modules }: { modules: Module[] }) {
   const methodSignatures = modules.flatMap(mapModuleIntoMethodSignatures)
   if (methodSignatures.length === 0) {
     return null
