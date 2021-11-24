@@ -37,6 +37,11 @@ function seeSequenceNumber(I, expectedSequenceNumber) {
   I.see(expectedSequenceNumber)
 }
 
+function seeAuthenticationKey(I, expectedAuthKey) {
+  I.see('Authentication Key')
+  I.see(expectedAuthKey)
+}
+
 const designatedDealerAddress = '1081322fef2da29d62fe4e131ef4c859'
 const validatorAddress = '88c5db7ad36f7a66a8fb2789fbdb30cc'
 const validatorOperatorAddress = '1fc5dd16a92e82a281a063e308ebcca9'
@@ -63,6 +68,7 @@ Scenario('Displaying a Designated Dealer account', ({ I }) => {
   seeRawSmartContracts(I)
 
   seeSequenceNumber(I, '43828')
+  seeAuthenticationKey(I, '0x2b33352cdbfa7d773a1e3788650257231081322fef2da29d62fe4e131ef4c859')
 })
 
 Scenario('Displaying a Validator account', ({ I }) => {
@@ -74,6 +80,7 @@ Scenario('Displaying a Validator account', ({ I }) => {
   seeRawResources(I)
 
   seeSequenceNumber(I, '0')
+  seeAuthenticationKey(I, '0x0000000000000000000000000000000000000000000000000000000000000000')
 })
 
 Scenario('Displaying a Validator Operator account', ({ I }) => {
@@ -85,6 +92,7 @@ Scenario('Displaying a Validator Operator account', ({ I }) => {
   seeRawResources(I)
 
   seeSequenceNumber(I, '143')
+  seeAuthenticationKey(I, '0xd8feed37ebabc4db0e9ca2601b288d451fc5dd16a92e82a281a063e308ebcca9')
 })
 
 Scenario('Displaying a Parent VASP account', ({ I }) => {
@@ -100,6 +108,7 @@ Scenario('Displaying a Parent VASP account', ({ I }) => {
   seeSmartContractStructs(I)
 
   seeSequenceNumber(I, '4518')
+  seeAuthenticationKey(I, '0xeca9a32d2f1e3309e6be33a6a4688d1be58479132486a97579eff0ec6ff1ef1f')
 })
 
 Scenario('Displaying a Child VASP account', ({ I }) => {
@@ -112,4 +121,5 @@ Scenario('Displaying a Child VASP account', ({ I }) => {
   seeRawResources(I)
 
   seeSequenceNumber(I, '16')
+  seeAuthenticationKey(I, '0x4c0844ff46ba622eaf89c9e8ac741394d54381f6f7e808f942309f885d1ce738')
 })

@@ -110,6 +110,13 @@ describe('AccountPage', function() {
 
       expect(sequenceNumberCard.textContent).toMatch(/89647663/)
     })
+
+    it('should display the authentication key in a card', async () => {
+      expect(document.getElementById('authenticationKey')).not.toBeNull()
+      const authenticationKeyCard = document.getElementById('authenticationKey')!
+
+      expect(authenticationKeyCard.textContent).toMatch('0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e')
+    })
   })
 
   describe('When there are Smart Contracts', function() {
