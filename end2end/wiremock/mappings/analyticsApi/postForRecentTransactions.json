@@ -1,0 +1,36 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{transactions(limit:10,where:{sender:"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+        "transactions": [
+          {
+            "version": 372413434,
+            "txn_type": 3,
+            "expiration_timestamp": null,
+            "commit_timestamp": "2021-11-29T19:57:52+00:00",
+            "status": 1,
+            "sender": null
+          }
+        ]
+      }
+    }
+  }
+}

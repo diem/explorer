@@ -10,6 +10,7 @@ import {
 } from '../../../test_utils/MockBlockchainAccountResources'
 import { testModules } from '../../../test_utils/MockBlockchainAccountModules'
 import { getCurrency, Module, Resource } from '../../api_clients/BlockchainRestTypes'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
   ...jest.requireActual('../../api_clients/BlockchainRestClient'),
@@ -17,21 +18,34 @@ jest.mock('../../api_clients/BlockchainRestClient', () => ({
   getAccountModules: jest.fn(),
 }))
 
-const mockAddress = '1fc5dd16a92e82a281a063e308ebcca9'
+jest.mock('../../api_clients/AnalyticsClient', () => ({
+  postQueryToAnalyticsApi: jest.fn()
+}))
+
+const mockAddress = '1FC5DD16A92E82A281A063E308EBCCA9'
 const renderSubject = async (
   resources: Resource[] = [],
   modules: Module[] = [],
+  transactions: any = []
 ) => {
   // @ts-ignore TS is bad at mocking
   getAccountResources.mockResolvedValue({
     errors: null,
     data: resources,
   })
+
   // @ts-ignore TS is bad at mocking
   getAccountModules.mockResolvedValue({
     errors: null,
     data: modules,
   })
+
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValue({
+    errors: null,
+    data: transactions
+  })
+
   const mockHistory = {
     history: {} as any,
     location: {} as any,
@@ -55,12 +69,14 @@ const renderSubject = async (
 describe('AccountPage', function() {
   it('should get data from the BlockchainRestClient', async function() {
     await renderSubject()
+
     expect(getAccountResources).toHaveBeenCalledWith(mockAddress)
     expect(getAccountModules).toHaveBeenCalledWith(mockAddress)
   })
 
   it('should display unsupported account when balance object, and Smart Contracts are not found', async function() {
     await renderSubject([], [])
+
     expect(screen.queryByText('Balances')).not.toBeInTheDocument()
     expect(screen.queryByText('Smart Contract Methods')).not.toBeInTheDocument()
     expect(screen.queryByText('Smart Contract Structs')).not.toBeInTheDocument()
@@ -80,16 +96,21 @@ describe('AccountPage', function() {
 
     it('should display Balance resource data in a table', async function() {
       expect(document.getElementById('objectPropertiesTable')).not.toBeNull()
+
       const balancesTable = document.getElementById('objectPropertiesTable')!
+
       expect(screen.queryByText('Balances')).toBeInTheDocument()
+
       expect(
         within(balancesTable).queryByText(xdxBalanceResource.value.coin.value),
       ).toBeInTheDocument()
+
       expect(
         within(balancesTable).queryByText(
           getCurrency(xdxBalanceResource),
         ),
       ).toBeInTheDocument()
+
       expect(
         within(balancesTable).queryByText(xusBalanceResource.value.coin.value),
       ).toBeInTheDocument()
@@ -119,7 +140,40 @@ describe('AccountPage', function() {
     })
   })
 
-  describe('When there are Smart Contracts', function() {
+  describe('when there are recent transactions', () => {
+    it('should display the recent transactions', async () => {
+      await renderSubject([], [], [
+        {
+          version: 372413434,
+          txn_type: 3,
+          expiration_timestamp: null,
+          commit_timestamp: '2021-11-29T19:57:52+00:00',
+          status: 1,
+          sender: null
+        }
+      ])
+
+      expect(document.getElementById('recentTransactions')).not.toEqual(null)
+
+      const transactionsTable = document.getElementById('recentTransactions')!
+
+      expect(screen.queryByText('Recent Transactions')).toBeInTheDocument()
+
+      expect(within(transactionsTable).queryByText('Version')).toBeInTheDocument()
+      expect(within(transactionsTable).queryByText('372413434')).toBeInTheDocument()
+
+      expect(within(transactionsTable).queryByText('Timestamp')).toBeInTheDocument()
+      expect(within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00')).toBeInTheDocument()
+
+      expect(within(transactionsTable).queryByText('Type')).toBeInTheDocument()
+      expect(within(transactionsTable).queryByText('UserTransaction')).toBeInTheDocument()
+
+      expect(within(transactionsTable).queryByText('Status')).toBeInTheDocument()
+      expect(within(transactionsTable).queryByText('Executed')).toBeInTheDocument()
+    })
+  })
+
+  describe('when there are Smart Contracts', function() {
     beforeEach(async () => await renderSubject([], testModules))
 
     it('should not display the Unsupported Account card', async () => {

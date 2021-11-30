@@ -5,8 +5,8 @@ import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import LandingPage from './LandingPage'
 import {
   countTransactionsInLast10Minutes,
-  landingPageQuery,
-  landingPageQueryType
+  transactionsQuery,
+  transactionsQueryType
 } from '../../api_clients/AnalyticsQueries'
 import userEvent from '@testing-library/user-event'
 
@@ -45,7 +45,7 @@ const fakeTransaction = {
   expiration_timestamp: '2021-04-19 00:30:00.000000 +00:00'
 }
 const renderSubject = async (
-  transactions: landingPageQueryType = [fakeTransaction],
+  transactions: transactionsQueryType = [fakeTransaction],
   countTxnsInLast10m: number = 42 * 600,
 ) => {
   // @ts-ignore TS is bad at mocking
@@ -70,7 +70,7 @@ const renderSubject = async (
 describe('LandingPage', function () {
   it('should get data from the AnalyticsClient', async function () {
     await renderSubject()
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(landingPageQuery(), 'transactions')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(transactionsQuery(), 'transactions')
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(countTransactionsInLast10Minutes(), 'transactions_aggregate')
   })
 
@@ -81,8 +81,8 @@ describe('LandingPage', function () {
     expect(screen.queryByText('Recent Transactions')).toBeInTheDocument()
     expect(within(transactionsTable).queryByText(fakeTransaction.version)).toBeInTheDocument()
     expect(within(transactionsTable).queryByText(fakeTransaction.commit_timestamp)).toBeInTheDocument()
-    expect(within(transactionsTable).queryByText('UserTransaction')).toBeInTheDocument() // txn_type 3 === UserTransaction
-    expect(within(transactionsTable).queryByText('Executed')).toBeInTheDocument() // status 1 === Executed
+    expect(within(transactionsTable).queryByText('UserTransaction')).toBeInTheDocument()
+    expect(within(transactionsTable).queryByText('Executed')).toBeInTheDocument()
   })
 
   it('should display avg transactions per second in last 10m in a card', async () => {
@@ -98,7 +98,7 @@ describe('LandingPage', function () {
     it('should route to an address page if the search string has alphabetical characters', async () => {
       await renderSubject()
       userEvent.type(
-        screen.getByLabelText('Search by Address / Txn Version'),
+        screen.getByLabelText('Search by Address or Transaction Version'),
         '1fc5dd16a92e82a281a063e308ebcca9{enter}'
       )
       expect(mockHistory.push).toHaveBeenCalledWith('/address/1fc5dd16a92e82a281a063e308ebcca9')
@@ -106,7 +106,7 @@ describe('LandingPage', function () {
     it('should route to an transaction page if the search string is all numeric characters', async () => {
       await renderSubject()
       userEvent.type(
-        screen.getByLabelText('Search by Address / Txn Version'),
+        screen.getByLabelText('Search by Address or Transaction Version'),
         '74767203{enter}'
       )
       expect(mockHistory.push).toHaveBeenCalledWith('/txn/74767203')
@@ -114,7 +114,7 @@ describe('LandingPage', function () {
     it('should route to an address page if any character of the search string is not a digit', async () => {
       await renderSubject()
       userEvent.type(
-        screen.getByLabelText('Search by Address / Txn Version'),
+        screen.getByLabelText('Search by Address or Transaction Version'),
         '74767203!{enter}'
       )
       expect(mockHistory.push).toHaveBeenCalledWith('/address/74767203!')

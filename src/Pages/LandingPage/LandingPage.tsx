@@ -2,7 +2,7 @@ import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
 import ApiRequestPage from '../../ApiRequestPage'
 import MainWrapper from '../../MainWrapper'
-import { LandingPageTransaction, transformAnalyticsTransactionIntoTransaction } from './LandingPageTransactionModel'
+import { TransactionRow, transformAnalyticsTransactionIntoTransaction } from '../Common/TransactionModel'
 import Table from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
@@ -11,8 +11,8 @@ import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import {
   countTransactionsInLast10Minutes, countTransactionsInLast10MinutesType,
-  landingPageQuery,
-  landingPageQueryType
+  transactionsQuery,
+  transactionsQueryType
 } from '../../api_clients/AnalyticsQueries'
 import ReactTooltip from 'react-tooltip'
 
@@ -52,7 +52,7 @@ function AverageTransactionsPerSecondCard({ averageTps }: { averageTps: number})
   )
 }
 
-function TransactionTable(props: { transactions: LandingPageTransaction[] }) {
+function TransactionTable(props: { transactions: TransactionRow[] }) {
   const columns = [
     { Header: 'Version', accessor: 'version', Cell: TransactionVersion },
     { Header: 'Timestamp', accessor: 'commitTimestamp' },
@@ -64,7 +64,7 @@ function TransactionTable(props: { transactions: LandingPageTransaction[] }) {
 }
 type LandingPageWithResponseProps = {
   data: {
-    recentTransactions: LandingPageTransaction[],
+    recentTransactions: TransactionRow[],
     averageTps: number
   }
 }
@@ -89,8 +89,8 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
     <Wrapper>
       <InputGroup className="mb-5">
         <FormControl
-          placeholder="Search by Address / Txn Version"
-          aria-label="Search by Address / Txn Version"
+          placeholder="Search by Address or Transaction Version"
+          aria-label="Search by Address or Transaction Version"
           onKeyPress={handleSearch}
         />
       </InputGroup>
@@ -101,8 +101,8 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
 }
 
 function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<landingPageQueryType>
-): DataOrErrors<LandingPageTransaction[]> {
+  response: DataOrErrors<transactionsQueryType>
+): DataOrErrors<TransactionRow[]> {
   if (response.data) {
     return {
       errors: null,
@@ -125,7 +125,7 @@ export default function LandingPage() {
     <ApiRequestPage
       request={async () => {
         const txnsInLast10m = await postQueryToAnalyticsApi<countTransactionsInLast10MinutesType>(countTransactionsInLast10Minutes(), 'transactions_aggregate')
-        const recentTxns = await postQueryToAnalyticsApi<landingPageQueryType>(landingPageQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
+        const recentTxns = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
 
         if (txnsInLast10m.errors || recentTxns.errors) {
           return {

@@ -1,7 +1,14 @@
 import { RouteComponentProps } from 'react-router-dom'
 import ApiRequestPage from '../../ApiRequestPage'
 import { getAccountModules, getAccountResources } from '../../api_clients/BlockchainRestClient'
+import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+import {
+  transactionsBySenderAddressQuery,
+  transactionsQueryType
+} from '../../api_clients/AnalyticsQueries'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
+import { TransactionVersion } from '../../TableComponents/Link'
+import Table from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
 import React from 'react'
@@ -16,10 +23,15 @@ import {
   Module,
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
+import {
+  TransactionRow,
+  transformAnalyticsTransactionIntoTransaction
+} from '../Common/TransactionModel'
 
 interface AccountPageWithResponseProps {
   resources: Resource[]
   modules: Module[]
+  transactions: TransactionRow[]
 }
 
 function accountIsSupported(data: AccountPageWithResponseProps) {
@@ -45,6 +57,30 @@ function UnsupportedAccountCard() {
   )
 }
 
+const RecentTransactionsTable: React.FC<{ transactions: TransactionRow[] }> = ({ transactions }) => {
+  const columns = [
+    {
+      Header: 'Version',
+      accessor: 'version',
+      Cell: TransactionVersion
+    },
+    {
+      Header: 'Timestamp',
+      accessor: 'commitTimestamp'
+    },
+    {
+      Header: 'Type',
+      accessor: 'txnType'
+    },
+    {
+      Header: 'Status',
+      accessor: 'status'
+    },
+  ]
+
+  return <Table columns={columns} data={transactions} id="recentTransactions"/>
+}
+
 function AccountPageWithResponse({
   data,
 }: {
@@ -54,31 +90,34 @@ function AccountPageWithResponse({
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        {!accountIsSupported(data) && <UnsupportedAccountCard />}
-        <Balances resources={data.resources} />
+        {!accountIsSupported(data) && <UnsupportedAccountCard/>}
+        <Balances resources={data.resources}/>
 
-        <SmartContractMethods modules={data.modules} />
-        <SmartContractStructs modules={data.modules} />
+        <h2>Recent Transactions</h2>
+        <RecentTransactionsTable transactions={data.transactions}/>
 
-        <Card className='mb-5'>
+        <SmartContractMethods modules={data.modules}/>
+        <SmartContractStructs modules={data.modules}/>
+
+        <Card className="mb-5">
           <Card.Header>Sequence Number</Card.Header>
-          <Card.Body id='sequenceNumber'>
+          <Card.Body id="sequenceNumber">
             {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.sequence_number}
           </Card.Body>
         </Card>
 
-        <Card className='mb-5'>
+        <Card className="mb-5">
           <Card.Header>Authentication Key</Card.Header>
-          <Card.Body id='authenticationKey'>
+          <Card.Body id="authenticationKey">
             {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.authentication_key}
           </Card.Body>
         </Card>
 
         <h2>Raw Resources</h2>
-        <JSONPretty data={data.resources} id='rawResources' />
+        <JSONPretty data={data.resources} id="rawResources"/>
 
         <h2>Raw Smart Contracts</h2>
-        <JSONPretty data={data.modules} id='rawModules' />
+        <JSONPretty data={data.modules} id="rawModules"/>
       </>
     </MainWrapper>
   )
@@ -89,12 +128,16 @@ async function getAccountData(
 ): Promise<DataOrErrors<AccountPageWithResponseProps>> {
   const resourcesResponse = await getAccountResources(address)
   const modulesResponse = await getAccountModules(address)
-  if (resourcesResponse.errors || modulesResponse.errors) {
+  const recentTransactions = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsBySenderAddressQuery(address), 'transactions')
+
+  if (resourcesResponse.errors || modulesResponse.errors || recentTransactions.errors) {
     const allErrors = []
       // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
       .concat(resourcesResponse.errors)
       // @ts-ignore 👆
       .concat(modulesResponse.errors)
+      // @ts-ignore 👆
+      .concat(recentTransactions.errors)
       .filter((error) => error !== null)
     return {
       data: null,
@@ -105,6 +148,7 @@ async function getAccountData(
       data: {
         resources: resourcesResponse.data!,
         modules: modulesResponse.data!,
+        transactions: recentTransactions.data!.map(transformAnalyticsTransactionIntoTransaction)
       },
       errors: null,
     }
@@ -115,20 +159,21 @@ interface AccountPageMatch {
   address: string
 }
 
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {
-}
+interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
 
 export default function AccountPage(props: AccountPageProps) {
   const nullData = {
     resources: [],
     modules: [],
+    transactions: []
   }
+
   return (
     <ApiRequestPage
       request={getAccountData}
-      args={[props.match.params.address]}
+      args={[props.match.params.address.toUpperCase()]}
     >
-      <AccountPageWithResponse data={nullData} />
+      <AccountPageWithResponse data={nullData}/>
     </ApiRequestPage>
   )
 }

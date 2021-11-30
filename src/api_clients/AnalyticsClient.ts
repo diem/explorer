@@ -1,6 +1,7 @@
 import { DataOrErrors } from './FetchTypes'
 import { Gql } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import fetch from 'isomorphic-fetch'
+
 globalThis.fetch = fetch
 
 export const postQueryToAnalyticsApi = async <T>(
@@ -9,6 +10,7 @@ export const postQueryToAnalyticsApi = async <T>(
 ): Promise<DataOrErrors<T>> => {
   try {
     const gqlResponse = await Gql.query(query)
+
     return {
       errors: null,
       // @ts-ignore property accessor syntax breaks the code here

@@ -1,6 +1,6 @@
 import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 
-export interface LandingPageTransaction {
+export interface TransactionRow {
   version: number
   expirationTimestamp: string | undefined
   commitTimestamp: string | undefined
@@ -45,7 +45,7 @@ function getStatusFromEnum(status: number) {
 
 export function transformAnalyticsTransactionIntoTransaction(
   transaction: GraphQLTypes['transactions']
-): LandingPageTransaction {
+): TransactionRow {
   return {
     version: transaction.version,
     expirationTimestamp: transaction.expiration_timestamp,
