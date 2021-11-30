@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/blockchainRestApi/accounts/d54381f6f7e808f942309f885d1ce738/resources"
+    "url": "/blockchainRestApi/accounts/D54381F6F7E808F942309F885D1CE738/resources"
   },
   "response": {
     "status": 200,

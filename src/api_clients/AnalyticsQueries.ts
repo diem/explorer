@@ -137,13 +137,33 @@ export function accountcreationEventsQuery() {
   }
 }
 
-export type landingPageQueryType = GraphQLTypes['query_root']['transactions']
-export function landingPageQuery() {
+export type transactionsQueryType = GraphQLTypes['query_root']['transactions']
+export function transactionsQuery() {
   return {
     transactions: [
       {
         limit: 10,
         where: { txn_type: { _eq: 3 } },
+        order_by: [{ version: order_by.desc }]
+      },
+      {
+        version: true,
+        txn_type: true,
+        expiration_timestamp: true,
+        commit_timestamp: true,
+        status: true,
+        sender: true,
+      }
+    ]
+  }
+}
+
+export function transactionsBySenderAddressQuery(senderAddress: string) {
+  return {
+    transactions: [
+      {
+        limit: 10,
+        where: { sender: { _eq: senderAddress } },
         order_by: [{ version: order_by.desc }]
       },
       {

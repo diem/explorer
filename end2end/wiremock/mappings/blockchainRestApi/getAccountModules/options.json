@@ -1,0 +1,14 @@
+{
+  "request" : {
+    "urlPattern" : "/blockchainRestApi/accounts/.*/modules",
+    "method" : "OPTIONS"
+  },
+  "response" : {
+    "status" : 200,
+    "headers" : {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "*"
+    }
+  }
+}
