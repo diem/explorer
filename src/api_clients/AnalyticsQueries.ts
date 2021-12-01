@@ -111,7 +111,7 @@ export function accountcreationEventsQuery() {
     accounts: [
       {
         limit: 10,
-        order_by: [{ transaction_version: order_by.desc }]
+        order_by: [{ transaction_version: order_by.desc }],
       },
       {
         transaction_version: true,
@@ -203,7 +203,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 
 // eslint-disable-next-line camelcase
 export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
-export function currencyInCirculationPageQuery(currency : string) {
+export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_realtime_aggregates: [
       {

@@ -1,5 +1,7 @@
 // Adapated from https://github.com/diem/diem/blob/master/json-rpc/docs/type_transaction.md#type-transactiondata
 
+import { KnownCurrency } from '../api_clients/BlockchainRestTypes'
+
 export interface TxnEvent {
   key: string
   sequence_number: number
@@ -26,7 +28,7 @@ export interface PeerToPeerWithMetadataBlockChainScript
   extends BlockchainScript {
   receiver: string
   amount: number
-  currency: string
+  currency: KnownCurrency
   metadata: string
   metadata_signature: string
 }
