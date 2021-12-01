@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{diem_in_circulation_realtime_aggregates(limit:1,where:{currency:{_eq:\"XUS\"}},order_by:[{timestamp:desc}]){total_burn_value total_mint_value total_net_value}}"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+        "diem_in_circulation_realtime_aggregates": [
+          {
+            "total_burn_value": 700,
+            "total_mint_value": 800,
+            "total_net_value": 100
+          }
+        ]
+      }
+    }
+  }
+}

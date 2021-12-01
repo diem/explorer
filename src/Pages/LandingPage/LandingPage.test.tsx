@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import LandingPage from './LandingPage'
 import {
-  countTransactionsInLast10Minutes,
+  countTransactionsInLast10Minutes, LatestMintBurnNetQuery,
   transactionsQuery,
   transactionsQueryType
 } from '../../api_clients/AnalyticsQueries'
@@ -58,6 +58,17 @@ const renderSubject = async (
     errors: null,
     data: transactions,
   })
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
+    errors: null,
+    data: [
+      {
+        total_burn_value: 700,
+        total_mint_value: 800,
+        total_net_value: 100
+      }
+    ],
+  })
 
   render(
     <BrowserRouter>
@@ -72,6 +83,7 @@ describe('LandingPage', function () {
     await renderSubject()
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(transactionsQuery(), 'transactions')
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(countTransactionsInLast10Minutes(), 'transactions_aggregate')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
   })
 
   it('should display most recent transactions in a table', async function () {
@@ -85,13 +97,18 @@ describe('LandingPage', function () {
     expect(within(transactionsTable).queryByText('Executed')).toBeInTheDocument()
   })
 
-  it('should display avg transactions per second in last 10m in a card', async () => {
+  it('should display current statistics in a card', async () => {
     await renderSubject()
-    expect(document.getElementById('averageTransactionsPerSecond')).not.toEqual(null)
-    const tpsCard = document.getElementById('averageTransactionsPerSecond')!
+    const statisticsCard = screen.getByTestId('statisticsCard')
     expect(screen.queryByText('Current Statistics')).toBeInTheDocument()
-    expect(within(tpsCard).queryByText('TPS')).toBeInTheDocument()
-    expect(within(tpsCard).queryByText('42')).toBeInTheDocument()
+    expect(within(statisticsCard).queryByText('TPS')).toBeInTheDocument()
+    expect(within(statisticsCard).queryByText('42')).toBeInTheDocument()
+    expect(within(statisticsCard).queryByText('Total Mint Value')).toBeInTheDocument()
+    expect(statisticsCard.textContent).toContain('800')
+    expect(within(statisticsCard).queryByText('Total Burn Value')).toBeInTheDocument()
+    expect(statisticsCard.textContent).toContain('700')
+    expect(within(statisticsCard).queryByText('Total Net Value')).toBeInTheDocument()
+    expect(statisticsCard.textContent).toContain('100')
   })
 
   describe('Search Box', function () {
