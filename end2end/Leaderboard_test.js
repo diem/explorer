@@ -7,7 +7,11 @@ function seeRowHeaders(I) {
 }
 
 function seeRowData(I) {
-  // TODO: use mock data
+  within('[data-testid="top-10-transactions"] tr:first-child', () => {
+    I.see('1')
+    I.see('2345')
+    I.see('5432')
+  })
 }
 
 Scenario('navigating to the leaderboard page', ({ I }) => {
