@@ -15,13 +15,11 @@ function transformBlockchainRestResponse<T extends Module[] | Resource[]>(
 ): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {
     return {
-      data: null,
       errors: [{ message: response.message }],
     }
   } else {
     return {
       data: response as T,
-      errors: null,
     }
   }
 }
@@ -48,7 +46,6 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
     .catch((error: FetchError) => {
       return {
         errors: [{ message: error.toString() }],
-        data: null,
       }
     })
 }

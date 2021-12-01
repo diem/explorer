@@ -86,7 +86,6 @@ const renderWithTransaction = async (
 ) => {
   // @ts-ignore TS is bad at mocking
   getBlockchainTransaction.mockResolvedValue({
-    errors: null,
     data: txn,
   })
   const mockHistory = {

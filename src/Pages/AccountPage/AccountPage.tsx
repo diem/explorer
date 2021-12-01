@@ -130,7 +130,7 @@ async function getAccountData(
   const modulesResponse = await getAccountModules(address)
   const recentTransactions = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsBySenderAddressQuery(address), 'transactions')
 
-  if (resourcesResponse.errors || modulesResponse.errors || recentTransactions.errors) {
+  if ('errors' in resourcesResponse || 'errors' in modulesResponse || 'errors' in recentTransactions) {
     const allErrors = []
       // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
       .concat(resourcesResponse.errors)
@@ -140,17 +140,15 @@ async function getAccountData(
       .concat(recentTransactions.errors)
       .filter((error) => error !== null)
     return {
-      data: null,
       errors: allErrors,
     }
   } else {
     return {
       data: {
-        resources: resourcesResponse.data!,
-        modules: modulesResponse.data!,
-        transactions: recentTransactions.data!.map(transformAnalyticsTransactionIntoTransaction)
+        resources: resourcesResponse.data,
+        modules: modulesResponse.data,
+        transactions: recentTransactions.data.map(transformAnalyticsTransactionIntoTransaction)
       },
-      errors: null,
     }
   }
 }

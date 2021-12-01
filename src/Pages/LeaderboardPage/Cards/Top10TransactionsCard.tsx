@@ -22,7 +22,6 @@ export default function Top10TransactionsCard() {
             transaction_version: 12345,
             amount: 54321,
           }],
-          errors: null,
         })}>
           <Top10TransactionsTableBody data={[]} />
         </ApiRequestComponent>

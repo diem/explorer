@@ -20,20 +20,16 @@ const mockXusInCirculation = {
 }
 
 beforeEach(async () => {
-  postQueryToAnalyticsApi
-    // @ts-ignore TS is bad at mocking
-    .mockResolvedValueOnce({
-      errors: null,
-      data: {
-        diem_in_circulation_realtime_aggregates: [mockXusInCirculation],
-      },
-    })
-    .mockResolvedValueOnce({
-      errors: null,
-      data: {
-        diem_in_circulation_realtime_aggregates: [],
-      },
-    })
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
+    data: {
+      diem_in_circulation_realtime_aggregates: [mockXusInCirculation]
+    }
+  }).mockResolvedValueOnce({
+    data: {
+      diem_in_circulation_realtime_aggregates: []
+    }
+  })
   render(
     <BrowserRouter>
       <DiemInCirculationPage />

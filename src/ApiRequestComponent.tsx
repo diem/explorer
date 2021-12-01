@@ -45,7 +45,7 @@ function ApiRequestComponent<T>({
   useEffect(() => {
     async function getResponse() {
       await request(...args).then((apiResponse) => {
-        if (apiResponse.data) {
+        if ('data' in apiResponse) {
           setResponse(apiResponse.data)
           setLoading(false)
         } else {

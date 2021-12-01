@@ -56,12 +56,10 @@ const renderSubject = async (
 ) => {
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValueOnce({
-    errors: null,
     data: { aggregate: { count: countTxnsInLast10m } },
   })
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValueOnce({
-    errors: null,
     data: transactions,
   })
   // @ts-ignore TS is bad at mocking

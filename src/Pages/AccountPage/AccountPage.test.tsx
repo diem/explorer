@@ -42,20 +42,17 @@ const renderSubject = async (
 ) => {
   // @ts-ignore TS is bad at mocking
   getAccountResources.mockResolvedValue({
-    errors: null,
     data: resources,
   })
 
   // @ts-ignore TS is bad at mocking
   getAccountModules.mockResolvedValue({
-    errors: null,
     data: modules,
   })
 
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValue({
-    errors: null,
-    data: transactions,
+    data: transactions
   })
 
   const mockHistory = {
