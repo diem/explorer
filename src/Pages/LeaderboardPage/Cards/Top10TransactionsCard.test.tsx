@@ -76,7 +76,4 @@ describe('Top10TransactionsCard', () => {
     const expectedQuery = top10Transactions('XUS')
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(expectedQuery, 'sentpayment_events')
   })
-  describe('when there is an error', () => {
-    // TODO
-  })
 })

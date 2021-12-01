@@ -46,7 +46,7 @@ async function getTopTransactions(currency: KnownCurrency): Promise<DataOrErrors
   if ('data' in result) {
     return { data: { topPayments: result.data } }
   } else {
-    throw new Error('Not implemented')
+    return result
   }
 }
 
