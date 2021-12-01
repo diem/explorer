@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
 import { act, render, screen, waitFor } from '@testing-library/react'
-import ApiRequestPage from './ApiRequestPage'
+import ApiRequestComponent from './ApiRequestComponent'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
@@ -36,7 +36,7 @@ const mockArgs = [{ arg: 'value' }]
 function renderSubject(args: any[] | undefined) {
   render(
     <BrowserRouter>
-      <ApiRequestPage
+      <ApiRequestComponent
         request={mockRequest}
         args={args}
         loadingComponent={
@@ -45,7 +45,7 @@ function renderSubject(args: any[] | undefined) {
         errorComponent={<ErrorComponent errors={[]} />}
       >
         <ChildComponent data={undefined} />
-      </ApiRequestPage>
+      </ApiRequestComponent>
     </BrowserRouter>
   )
 }
@@ -60,7 +60,7 @@ beforeEach(() => {
   mockRequest.mockImplementation(() => apiPromise)
 })
 
-describe('ApiRequestPage', () => {
+describe('ApiRequestComponent', () => {
   describe('Passing Arguments', function () {
     it('should pass each argument separately', function () {
       const myArgs = [1, 'bananas', { deeply: { nested: { object: true } } }]

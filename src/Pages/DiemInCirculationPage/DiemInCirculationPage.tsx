@@ -1,4 +1,4 @@
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
@@ -35,7 +35,7 @@ function DiemInCirculationPageWithResponse(props: { data: DiemCurrencies }) {
 
 export default function DiemInCirculationPage() {
   return (
-    <ApiRequestPage
+    <ApiRequestComponent
       request={async () => {
         const xusOrErrors =
           await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(
@@ -69,6 +69,6 @@ export default function DiemInCirculationPage() {
       }}
     >
       <DiemInCirculationPageWithResponse data={{ xus: [], xdx: [] }} />
-    </ApiRequestPage>
+    </ApiRequestComponent>
   )
 }

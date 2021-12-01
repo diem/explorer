@@ -1,6 +1,6 @@
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import MainWrapper from '../../MainWrapper'
 import {
   TransactionRow,
@@ -195,7 +195,7 @@ export default function LandingPage() {
     totalNetAmount: NaN,
   }
   return (
-    <ApiRequestPage
+    <ApiRequestComponent
       request={async () => {
         const txnsInLast10m =
           await postQueryToAnalyticsApi<countTransactionsInLast10MinutesType>(
@@ -244,6 +244,6 @@ export default function LandingPage() {
       }}
     >
       <LandingPageWithResponse data={nullData} />
-    </ApiRequestPage>
+    </ApiRequestComponent>
   )
 }

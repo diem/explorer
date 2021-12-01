@@ -31,7 +31,7 @@ function DefaultLoadingComponent() {
   )
 }
 
-function ApiRequestPage<T>({
+function ApiRequestComponent<T>({
   request,
   args = [],
   children,
@@ -62,7 +62,7 @@ function ApiRequestPage<T>({
     if (loading) {
       return <>{React.cloneElement(loadingComponent)}</>
     } else if (errors && errors.length) {
-      console.error('Error loading the ApiRequestPage: ', errors)
+      console.error('Error loading the ApiRequestComponent: ', errors)
       return <>{React.cloneElement(errorComponent, { errors })}</>
     } else {
       return <>{React.cloneElement(children, { data: response })}</>
@@ -72,4 +72,4 @@ function ApiRequestPage<T>({
   return renderContent()
 }
 
-export default ApiRequestPage
+export default ApiRequestComponent
