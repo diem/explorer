@@ -20,9 +20,12 @@ function seeLandingPageTableValues (I) {
   I.see('Executed')
 }
 
-function seeTpsCard(I) {
+function seeCurrentStatisticsCard(I) {
   I.see('Current Statistics')
   I.see('TPS\n42')
+  I.see('Total Mint Value\n800')
+  I.see('Total Burn Value\n700')
+  I.see('Total Net Value\n100')
 }
 
 Scenario('test after data has loaded', ({ I }) => {
@@ -33,5 +36,5 @@ Scenario('test after data has loaded', ({ I }) => {
   seeLandingPageTableHeaders(I)
   seeLandingPageTableValues(I)
 
-  seeTpsCard(I)
+  seeCurrentStatisticsCard(I)
 })

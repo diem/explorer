@@ -1492,117 +1492,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	burn_events_update_column: "enum",
-	burns_aggregate_fields:{
-		count:{
-			columns:{
-				type:"burns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	burns_bool_exp:{
-		_and:{
-			type:"burns_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"burns_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"burns_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		address:{
-			type:"bpchar_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		amount:{
-			type:"bigint_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		commit_timestamp:{
-			type:"timestamptz_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		currency:{
-			type:"bpchar_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		status:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		version:{
-			type:"bigint_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	burns_order_by:{
-		address:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		amount:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		commit_timestamp:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		currency:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		version:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	burns_select_column: "enum",
 	diem_in_circulation_realtime_aggregates_aggregate_fields:{
 		count:{
 			columns:{
@@ -2210,6 +2099,34 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_realtime_account_balances:{
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_realtime_account_balances_by_pk:{
+			account:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_receivedmint_events:{
 			where:{
 				type:"receivedmint_events_bool_exp",
@@ -2433,6 +2350,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"preburn_events_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_realtime_account_balances:{
+			objects:{
+				type:"realtime_account_balances_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"realtime_account_balances_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_realtime_account_balances_one:{
+			object:{
+				type:"realtime_account_balances_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"realtime_account_balances_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -2757,6 +2702,46 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			pk_columns:{
 				type:"preburn_events_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_realtime_account_balances:{
+			_inc:{
+				type:"realtime_account_balances_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"realtime_account_balances_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_realtime_account_balances_by_pk:{
+			_inc:{
+				type:"realtime_account_balances_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"realtime_account_balances_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"realtime_account_balances_pk_columns_input",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -3416,70 +3401,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		burns:{
-			distinct_on:{
-				type:"burns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"burns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"burns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		burns_aggregate:{
-			distinct_on:{
-				type:"burns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"burns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"burns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		diem_in_circulation_realtime_aggregates:{
 			distinct_on:{
 				type:"diem_in_circulation_realtime_aggregates_select_column",
@@ -3702,6 +3623,90 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			},
 			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		realtime_account_balances:{
+			distinct_on:{
+				type:"realtime_account_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"realtime_account_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		realtime_account_balances_aggregate:{
+			distinct_on:{
+				type:"realtime_account_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"realtime_account_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		realtime_account_balances_by_pk:{
+			account:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
 				type:"bigint",
 				array:false,
 				arrayRequired:false,
@@ -3937,6 +3942,249 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	realtime_account_balances_aggregate_fields:{
+		count:{
+			columns:{
+				type:"realtime_account_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	realtime_account_balances_bool_exp:{
+		_and:{
+			type:"realtime_account_balances_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"realtime_account_balances_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"realtime_account_balances_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		account:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		blockchain_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		indexer_timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_constraint: "enum",
+	realtime_account_balances_inc_input:{
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_insert_input:{
+		account:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		blockchain_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		indexer_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_on_conflict:{
+		constraint:{
+			type:"realtime_account_balances_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"realtime_account_balances_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"realtime_account_balances_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_order_by:{
+		account:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		blockchain_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		indexer_timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_pk_columns_input:{
+		account:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	realtime_account_balances_select_column: "enum",
+	realtime_account_balances_set_input:{
+		account:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		blockchain_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		indexer_timestamp:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	realtime_account_balances_update_column: "enum",
 	receivedmint_events_aggregate_fields:{
 		count:{
 			columns:{
@@ -4871,70 +5119,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		burns:{
-			distinct_on:{
-				type:"burns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"burns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"burns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		burns_aggregate:{
-			distinct_on:{
-				type:"burns_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"burns_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"burns_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		diem_in_circulation_realtime_aggregates:{
 			distinct_on:{
 				type:"diem_in_circulation_realtime_aggregates_select_column",
@@ -5157,6 +5341,90 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			},
 			sequence_number:{
+				type:"bigint",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		realtime_account_balances:{
+			distinct_on:{
+				type:"realtime_account_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"realtime_account_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		realtime_account_balances_aggregate:{
+			distinct_on:{
+				type:"realtime_account_balances_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"realtime_account_balances_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"realtime_account_balances_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		realtime_account_balances_by_pk:{
+			account:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			currency:{
+				type:"bpchar",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			version:{
 				type:"bigint",
 				array:false,
 				arrayRequired:false,
@@ -6185,87 +6453,6 @@ export const ReturnTypes: Record<string,any> = {
 		status:"Float",
 		transaction_version:"Float"
 	},
-	burns:{
-		address:"bpchar",
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	burns_aggregate:{
-		aggregate:"burns_aggregate_fields",
-		nodes:"burns"
-	},
-	burns_aggregate_fields:{
-		avg:"burns_avg_fields",
-		count:"Int",
-		max:"burns_max_fields",
-		min:"burns_min_fields",
-		stddev:"burns_stddev_fields",
-		stddev_pop:"burns_stddev_pop_fields",
-		stddev_samp:"burns_stddev_samp_fields",
-		sum:"burns_sum_fields",
-		var_pop:"burns_var_pop_fields",
-		var_samp:"burns_var_samp_fields",
-		variance:"burns_variance_fields"
-	},
-	burns_avg_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_max_fields:{
-		address:"bpchar",
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	burns_min_fields:{
-		address:"bpchar",
-		amount:"bigint",
-		commit_timestamp:"timestamptz",
-		currency:"bpchar",
-		status:"Int",
-		version:"bigint"
-	},
-	burns_stddev_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_stddev_pop_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_stddev_samp_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_sum_fields:{
-		amount:"bigint",
-		status:"Int",
-		version:"bigint"
-	},
-	burns_var_pop_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_var_samp_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
-	burns_variance_fields:{
-		amount:"Float",
-		status:"Float",
-		version:"Float"
-	},
 	diem_in_circulation_realtime_aggregates:{
 		currency:"bpchar",
 		timestamp:"timestamptz",
@@ -6449,6 +6636,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_gas_payments_by_pk:"gas_payments",
 		delete_preburn_events:"preburn_events_mutation_response",
 		delete_preburn_events_by_pk:"preburn_events",
+		delete_realtime_account_balances:"realtime_account_balances_mutation_response",
+		delete_realtime_account_balances_by_pk:"realtime_account_balances",
 		delete_receivedmint_events:"receivedmint_events_mutation_response",
 		delete_receivedmint_events_by_pk:"receivedmint_events",
 		delete_sentpayment_events:"sentpayment_events_mutation_response",
@@ -6467,6 +6656,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_gas_payments_one:"gas_payments",
 		insert_preburn_events:"preburn_events_mutation_response",
 		insert_preburn_events_one:"preburn_events",
+		insert_realtime_account_balances:"realtime_account_balances_mutation_response",
+		insert_realtime_account_balances_one:"realtime_account_balances",
 		insert_receivedmint_events:"receivedmint_events_mutation_response",
 		insert_receivedmint_events_one:"receivedmint_events",
 		insert_sentpayment_events:"sentpayment_events_mutation_response",
@@ -6485,6 +6676,8 @@ export const ReturnTypes: Record<string,any> = {
 		update_gas_payments_by_pk:"gas_payments",
 		update_preburn_events:"preburn_events_mutation_response",
 		update_preburn_events_by_pk:"preburn_events",
+		update_realtime_account_balances:"realtime_account_balances_mutation_response",
+		update_realtime_account_balances_by_pk:"realtime_account_balances",
 		update_receivedmint_events:"receivedmint_events_mutation_response",
 		update_receivedmint_events_by_pk:"receivedmint_events",
 		update_sentpayment_events:"sentpayment_events_mutation_response",
@@ -6601,8 +6794,6 @@ export const ReturnTypes: Record<string,any> = {
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
 		burn_events_by_pk:"burn_events",
-		burns:"burns",
-		burns_aggregate:"burns_aggregate",
 		diem_in_circulation_realtime_aggregates:"diem_in_circulation_realtime_aggregates",
 		diem_in_circulation_realtime_aggregates_aggregate:"diem_in_circulation_realtime_aggregates_aggregate",
 		diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
@@ -6612,6 +6803,9 @@ export const ReturnTypes: Record<string,any> = {
 		preburn_events:"preburn_events",
 		preburn_events_aggregate:"preburn_events_aggregate",
 		preburn_events_by_pk:"preburn_events",
+		realtime_account_balances:"realtime_account_balances",
+		realtime_account_balances_aggregate:"realtime_account_balances_aggregate",
+		realtime_account_balances_by_pk:"realtime_account_balances",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",
@@ -6621,6 +6815,83 @@ export const ReturnTypes: Record<string,any> = {
 		transactions:"transactions",
 		transactions_aggregate:"transactions_aggregate",
 		transactions_by_pk:"transactions"
+	},
+	realtime_account_balances:{
+		account:"bpchar",
+		balance:"bigint",
+		blockchain_timestamp:"timestamptz",
+		currency:"bpchar",
+		indexer_timestamp:"timestamptz",
+		version:"bigint"
+	},
+	realtime_account_balances_aggregate:{
+		aggregate:"realtime_account_balances_aggregate_fields",
+		nodes:"realtime_account_balances"
+	},
+	realtime_account_balances_aggregate_fields:{
+		avg:"realtime_account_balances_avg_fields",
+		count:"Int",
+		max:"realtime_account_balances_max_fields",
+		min:"realtime_account_balances_min_fields",
+		stddev:"realtime_account_balances_stddev_fields",
+		stddev_pop:"realtime_account_balances_stddev_pop_fields",
+		stddev_samp:"realtime_account_balances_stddev_samp_fields",
+		sum:"realtime_account_balances_sum_fields",
+		var_pop:"realtime_account_balances_var_pop_fields",
+		var_samp:"realtime_account_balances_var_samp_fields",
+		variance:"realtime_account_balances_variance_fields"
+	},
+	realtime_account_balances_avg_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_max_fields:{
+		account:"bpchar",
+		balance:"bigint",
+		blockchain_timestamp:"timestamptz",
+		currency:"bpchar",
+		indexer_timestamp:"timestamptz",
+		version:"bigint"
+	},
+	realtime_account_balances_min_fields:{
+		account:"bpchar",
+		balance:"bigint",
+		blockchain_timestamp:"timestamptz",
+		currency:"bpchar",
+		indexer_timestamp:"timestamptz",
+		version:"bigint"
+	},
+	realtime_account_balances_mutation_response:{
+		affected_rows:"Int",
+		returning:"realtime_account_balances"
+	},
+	realtime_account_balances_stddev_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_stddev_pop_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_stddev_samp_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_sum_fields:{
+		balance:"bigint",
+		version:"bigint"
+	},
+	realtime_account_balances_var_pop_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_var_samp_fields:{
+		balance:"Float",
+		version:"Float"
+	},
+	realtime_account_balances_variance_fields:{
+		balance:"Float",
+		version:"Float"
 	},
 	receivedmint_events:{
 		amount:"bigint",
@@ -6836,8 +7107,6 @@ export const ReturnTypes: Record<string,any> = {
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
 		burn_events_by_pk:"burn_events",
-		burns:"burns",
-		burns_aggregate:"burns_aggregate",
 		diem_in_circulation_realtime_aggregates:"diem_in_circulation_realtime_aggregates",
 		diem_in_circulation_realtime_aggregates_aggregate:"diem_in_circulation_realtime_aggregates_aggregate",
 		diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
@@ -6847,6 +7116,9 @@ export const ReturnTypes: Record<string,any> = {
 		preburn_events:"preburn_events",
 		preburn_events_aggregate:"preburn_events_aggregate",
 		preburn_events_by_pk:"preburn_events",
+		realtime_account_balances:"realtime_account_balances",
+		realtime_account_balances_aggregate:"realtime_account_balances_aggregate",
+		realtime_account_balances_by_pk:"realtime_account_balances",
 		receivedmint_events:"receivedmint_events",
 		receivedmint_events_aggregate:"receivedmint_events_aggregate",
 		receivedmint_events_by_pk:"receivedmint_events",

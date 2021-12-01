@@ -158,6 +158,23 @@ export function transactionsQuery() {
   }
 }
 
+export function LatestMintBurnNetQuery() {
+  return {
+    diem_in_circulation_realtime_aggregates: [
+      {
+        limit: 1,
+        where: { currency: { _eq: 'XUS' } },
+        order_by: [{ timestamp: order_by.desc }]
+      },
+      {
+        total_burn_value: true,
+        total_mint_value: true,
+        total_net_value: true
+      }
+    ]
+  }
+}
+
 export function transactionsBySenderAddressQuery(senderAddress: string) {
   return {
     transactions: [
