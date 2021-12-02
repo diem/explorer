@@ -8,7 +8,4 @@ export type FetchError = {
   type?: string
 }
 
-export type DataOrErrors<T, R = FetchError[]> = {
-  data: T | null
-  errors: R | null
-}
+export type DataOrErrors<T, R = FetchError[]> = { data: T } | { errors: R }

@@ -77,7 +77,6 @@ describe('Blockchain JSON RPC Client', function () {
   it('should pass data through', async function () {
     const expected = {
       data: { ...goodBlockchainResponse.result[0] },
-      errors: null,
     }
     setJsonRpcBlockchainApiResponse(server, goodBlockchainResponse)
     const result = await getBlockchainTransaction(
@@ -87,7 +86,6 @@ describe('Blockchain JSON RPC Client', function () {
   })
   it('should pass errors through', async function () {
     const expected = {
-      data: null,
       errors: [{ message: "Invalid params for method 'get_transactions'" }],
     }
     setJsonRpcBlockchainApiResponse(server, badBlockchainResponse)
@@ -100,7 +98,6 @@ describe('Blockchain JSON RPC Client', function () {
   it('should pass network errors through like any other error', async function () {
     const error = 'The internet went boom 💥'
     const expected = {
-      data: null,
       errors: [
         {
           message: `FetchError: request to https://fn0.premainnet.aosdev.diem.com/v1 failed, reason: ${error}`,

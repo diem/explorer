@@ -1,4 +1,4 @@
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import React from 'react'
 import MainWrapper from '../../MainWrapper'
@@ -7,23 +7,15 @@ import Table from '../../Table'
 interface EventPageProps {
   query: Object
   columns: {
-    Header: string
-    accessor: string
-    Cell?: React.FC<{ value: any }>
+    Header: string,
+    accessor: string,
+    Cell?: React.FC<{value:any}>
   }[]
   tableName: string
   eventType: string
 }
 
-function EventPageWithResponse({
-  data,
-  columns,
-  eventType,
-}: {
-  data: any[]
-  columns: EventPageProps['columns']
-  eventType: EventPageProps['eventType']
-}) {
+function EventPageWithResponse({ data, columns, eventType }: { data: any[], columns: EventPageProps['columns'], eventType: EventPageProps['eventType'] }) {
   return (
     <MainWrapper>
       <>
@@ -34,20 +26,15 @@ function EventPageWithResponse({
   )
 }
 
-const EventPage = ({
-  query,
-  columns,
-  tableName,
-  eventType,
-}: EventPageProps) => {
+const EventPage = ({ query, columns, tableName, eventType }: EventPageProps) => {
   return (
-    <ApiRequestPage request={() => postQueryToAnalyticsApi(query, tableName)}>
-      <EventPageWithResponse
-        data={[]}
-        columns={columns}
-        eventType={eventType}
-      />
-    </ApiRequestPage>
+    <ApiRequestComponent
+      request={() =>
+        postQueryToAnalyticsApi(query, tableName)
+      }
+    >
+      <EventPageWithResponse data={[]} columns={columns} eventType={eventType} />
+    </ApiRequestComponent>
   )
 }
 

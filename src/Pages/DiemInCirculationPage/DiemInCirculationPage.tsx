@@ -1,12 +1,9 @@
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
 import Table from '../../Table'
 import React from 'react'
-import {
-  currencyInCirculationPageQuery,
-  currencyInCirculationPageQueryType,
-} from '../../api_clients/AnalyticsQueries'
+import { currencyInCirculationPageQuery, currencyInCirculationPageQueryType } from '../../api_clients/AnalyticsQueries'
 import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 
 interface DiemCurrencies {
@@ -35,40 +32,26 @@ function DiemInCirculationPageWithResponse(props: { data: DiemCurrencies }) {
 
 export default function DiemInCirculationPage() {
   return (
-    <ApiRequestPage
+    <ApiRequestComponent
       request={async () => {
-        const xusOrErrors =
-          await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(
-            currencyInCirculationPageQuery('XUS')
-          )
-        const xdxOrErrors =
-          await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(
-            currencyInCirculationPageQuery('XDX')
-          )
-        if (xusOrErrors.errors || xdxOrErrors.errors) {
+        const xusOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XUS'))
+        const xdxOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XDX'))
+        if ('errors' in xusOrErrors || 'errors' in xdxOrErrors) {
           return {
-            data: null,
-            errors: []
-              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-              .concat(xusOrErrors.errors)
-              // @ts-ignore ☝️
-              .concat(xdxOrErrors.errors)
-              .filter((error) => error !== null),
+            // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+            errors: [].concat(xusOrErrors.errors).concat(xdxOrErrors.errors).filter((error) => error !== null)
           }
         } else {
           return {
             data: {
-              xdx: xdxOrErrors.data!.diem_in_circulation_realtime_aggregates
-                ? xdxOrErrors.data!.diem_in_circulation_realtime_aggregates[0]
-                : [],
-              xus: xusOrErrors.data!.diem_in_circulation_realtime_aggregates[0],
+              xdx: xdxOrErrors.data.diem_in_circulation_realtime_aggregates ? xdxOrErrors.data.diem_in_circulation_realtime_aggregates[0] : [],
+              xus: xusOrErrors.data.diem_in_circulation_realtime_aggregates[0]
             },
-            errors: null,
           }
         }
       }}
     >
       <DiemInCirculationPageWithResponse data={{ xus: [], xdx: [] }} />
-    </ApiRequestPage>
+    </ApiRequestComponent>
   )
 }

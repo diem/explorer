@@ -1,23 +1,39 @@
 import { useTable, useFilters, useSortBy, TableOptions } from 'react-table'
 import BTable from 'react-bootstrap/Table'
+import React from 'react'
 
-type ColumnWithAccessorDescriptor = {
+type ColumnWithAccessorDescriptor<T, K extends keyof T> = {
   Header: string
-  accessor: string
+  accessor: K
+  Cell?: React.FC<{ value: T[K] }>
 }
 
-interface TableProps {
-  columns: Array<ColumnWithAccessorDescriptor>
-  data: any[]
+export function column<C>(header: string, accessor: keyof C, cell?: React.FC<{ value: C[typeof accessor] }>) {
+  if (cell === undefined) {
+    return {
+      Header: header,
+      accessor,
+    }
+  } else {
+    return {
+      Header: header,
+      accessor,
+      Cell: cell,
+    }
+  }
+}
+
+type TableProps<T> = {
+  columns: ColumnWithAccessorDescriptor<T, keyof T>[]
+  data: T[]
   className?: string
   id?: string
 }
 
-export default function Table(props: TableProps) {
+export default function Table<T extends object>(props: TableProps<T>) {
   const { columns, data, className = '', id = '' } = props
 
-  // @ts-ignore (Tolerate a deficiency in library type)
-  const useTableOptions: TableOptions = { columns, data }
+  const useTableOptions: TableOptions<T> = { columns, data }
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(useTableOptions, useFilters, useSortBy)
 

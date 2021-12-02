@@ -5,6 +5,7 @@ import NotFoundPage from './Pages/NotFoundPage'
 import eventPages from './Pages/EventPages/EventPages'
 import DiemIncirculationPage from './Pages/DiemInCirculationPage/DiemInCirculationPage'
 import AccountPage from './Pages/AccountPage/AccountPage'
+import LeaderboardPage from './Pages/LeaderboardPage/LeaderboardPage'
 
 export default function ExplorerRouter() {
   return (
@@ -22,6 +23,7 @@ export default function ExplorerRouter() {
       />
       <Route path="/diemincirculation" component={DiemIncirculationPage} />
       <Route path="/address/:address" component={AccountPage} />
+      <Route path='/leaderboard' component={LeaderboardPage}/>
       <Route component={NotFoundPage} />
     </Switch>
   )

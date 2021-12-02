@@ -12,7 +12,6 @@ export const postQueryToAnalyticsApi = async <T>(
     const gqlResponse = await Gql.query(query)
 
     return {
-      errors: null,
       // @ts-ignore property accessor syntax breaks the code here
       data: tableName ? gqlResponse[tableName] : gqlResponse,
     }
@@ -20,12 +19,10 @@ export const postQueryToAnalyticsApi = async <T>(
     if ('response' in err) {
       return {
         errors: [...err.response.errors],
-        data: null,
       }
     } else {
       return {
         errors: [{ message: err.message }],
-        data: null,
       }
     }
   }

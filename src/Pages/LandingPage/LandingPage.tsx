@@ -1,12 +1,9 @@
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import MainWrapper from '../../MainWrapper'
-import {
-  TransactionRow,
-  transformAnalyticsTransactionIntoTransaction,
-} from '../Common/TransactionModel'
-import Table from '../../Table'
+import { TransactionRow, transformAnalyticsTransactionIntoTransaction } from '../Common/TransactionModel'
+import Table, { column } from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
@@ -27,7 +24,7 @@ function Wrapper(props: { children: ReactNode }) {
   return (
     <MainWrapper>
       <>
-        <h2 className="mb-5" role="note">
+        <h2 className='mb-5' role='note'>
           Welcome To Diem Explorer
         </h2>
         {props.children}
@@ -36,56 +33,47 @@ function Wrapper(props: { children: ReactNode }) {
   )
 }
 
-type CurrentStatisticsCardProps = {
-  averageTps: number
-  totalMintValue: number
-  totalBurnValue: number
-  totalNetValue: number
-}
+type CurrentStatisticsCardProps = { averageTps: number, totalMintValue: number, totalBurnValue: number, totalNetValue: number}
 
-function CurrentStatisticsCard({
-  averageTps,
-  totalMintValue,
-  totalBurnValue,
-  totalNetValue,
-}: CurrentStatisticsCardProps) {
+function CurrentStatisticsCard({ averageTps, totalMintValue, totalBurnValue, totalNetValue }: CurrentStatisticsCardProps) {
   return (
-    <Card className="mb-5" data-testid="statisticsCard">
+    <Card className='mb-5' data-testid='statisticsCard'>
       <Card.Header>Current Statistics</Card.Header>
-      <Card.Body style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Card.Body style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}>
         <section style={{}}>
           <div data-tip data-for={'Transactions Per Second'}>
-            <span
-              style={{
-                fontWeight: 'bold',
-                textDecoration: 'underline',
-                textDecorationStyle: 'dotted',
-              }}
-            >
+            <span style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              textDecorationStyle: 'dotted',
+            }}>
               TPS
             </span>
             <br />
             {new Intl.NumberFormat().format(averageTps)}
           </div>
-          <ReactTooltip id="Transactions Per Second" effect="solid">
+          <ReactTooltip id='Transactions Per Second' effect='solid'>
             Transactions Per Second
           </ReactTooltip>
         </section>
-        <section style={{}}>
+        <section>
           <div>
             <span style={{ fontWeight: 'bold' }}>Total Mint Value</span>
-            <br />
+            <br/>
             {new Intl.NumberFormat().format(totalMintValue)} XUS
           </div>
         </section>
-        <section style={{}}>
+        <section>
           <div>
             <span style={{ fontWeight: 'bold' }}>Total Burn Value</span>
             <br />
             {new Intl.NumberFormat().format(totalBurnValue)} XUS
           </div>
         </section>
-        <section style={{}}>
+        <section>
           <div>
             <span style={{ fontWeight: 'bold' }}>Total Net Value</span>
             <br />
@@ -98,24 +86,19 @@ function CurrentStatisticsCard({
 }
 
 function TransactionTable(props: { transactions: TransactionRow[] }) {
-  const columns = [
-    { Header: 'Version', accessor: 'version', Cell: TransactionVersion },
-    { Header: 'Timestamp', accessor: 'commitTimestamp' },
-    { Header: 'Type', accessor: 'txnType' },
-    { Header: 'Status', accessor: 'status' },
-  ]
-
   return (
     <>
       <h3 className="mb-2">Recent Transactions</h3>
-      <Table
-        columns={columns}
-        data={props.transactions}
-        id="landingPageTransactions"
-      />
+      <Table columns={[
+        column('Version', 'version', TransactionVersion),
+        column('Timestamp', 'commitTimestamp'),
+        column('Type', 'txnType'),
+        column('Status', 'status'),
+      ]} data={props.transactions} id='landingPageTransactions'/>
     </>
   )
 }
+
 type LandingPageWithResponseProps = {
   data: {
     recentTransactions: TransactionRow[]
@@ -125,9 +108,9 @@ type LandingPageWithResponseProps = {
     totalNetAmount: number
   }
 }
-
 function LandingPageWithResponse(props: LandingPageWithResponseProps) {
   const history = useHistory()
+
   function handleSearch(event: any) {
     // Enter Key
     if (event.key === 'Enter') {
@@ -152,36 +135,30 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
 
   return (
     <Wrapper>
-      <InputGroup className="mb-5">
+      <InputGroup className='mb-5'>
         <FormControl
-          placeholder="Search by Address or Transaction Version"
-          aria-label="Search by Address or Transaction Version"
+          placeholder='Search by Address or Transaction Version'
+          aria-label='Search by Address or Transaction Version'
           onKeyPress={handleSearch}
         />
       </InputGroup>
-      <CurrentStatisticsCard
-        averageTps={props.data.averageTps}
-        totalMintValue={props.data.totalMintAmount}
-        totalBurnValue={props.data.totalBurnAmount}
-        totalNetValue={props.data.totalNetAmount}
-      />
-      <TransactionTable transactions={props.data.recentTransactions} />
+      <CurrentStatisticsCard averageTps={props.data.averageTps} totalMintValue={props.data.totalMintAmount}
+        totalBurnValue={props.data.totalBurnAmount} totalNetValue={props.data.totalNetAmount}/>
+      <TransactionTable transactions={props.data.recentTransactions}/>
     </Wrapper>
   )
 }
 
 function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<transactionsQueryType>
+  response: DataOrErrors<transactionsQueryType>,
 ): DataOrErrors<TransactionRow[]> {
-  if (response.data) {
+  if ('data' in response) {
     return {
-      errors: null,
       data: response.data.map(transformAnalyticsTransactionIntoTransaction),
     }
   } else {
     return {
       errors: response.errors,
-      data: null,
     }
   }
 }
@@ -195,55 +172,31 @@ export default function LandingPage() {
     totalNetAmount: NaN,
   }
   return (
-    <ApiRequestPage
+    <ApiRequestComponent
       request={async () => {
-        const txnsInLast10m =
-          await postQueryToAnalyticsApi<countTransactionsInLast10MinutesType>(
-            countTransactionsInLast10Minutes(),
-            'transactions_aggregate'
-          )
-        const recentTxns = await postQueryToAnalyticsApi<transactionsQueryType>(
-          transactionsQuery(),
-          'transactions'
-        ).then(transformAnalyticsTransactionsOrErrors)
-        const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<
-          GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
-        >(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
+        const txnsInLast10m = await postQueryToAnalyticsApi<countTransactionsInLast10MinutesType>(countTransactionsInLast10Minutes(), 'transactions_aggregate')
+        const recentTxns = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
+        const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<GraphQLTypes['diem_in_circulation_realtime_aggregates'][]>(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
 
-        if (
-          txnsInLast10m.errors ||
-          recentTxns.errors ||
-          latestMintBurnNetAmounts.errors
-        ) {
+        if ('errors' in txnsInLast10m || 'errors' in recentTxns || 'errors' in latestMintBurnNetAmounts) {
           return {
-            data: null,
-            errors: []
-              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-              .concat(txnsInLast10m.errors)
-              // @ts-ignore ☝️
-              .concat(recentTxns.errors)
-              // @ts-ignore ☝️
-              .concat(latestMintBurnNetAmounts.errors)
-              .filter((error) => error !== null),
+            // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+            errors: [].concat(txnsInLast10m.errors).concat(recentTxns.errors).concat(latestMintBurnNetAmounts.errors).filter((error) => error !== null)
           }
         } else {
           return {
             data: {
               recentTransactions: recentTxns.data,
-              averageTps: txnsInLast10m.data!.aggregate.count / 600,
-              totalMintAmount:
-                latestMintBurnNetAmounts.data![0]?.total_mint_value,
-              totalBurnAmount:
-                latestMintBurnNetAmounts.data![0]?.total_burn_value,
-              totalNetAmount:
-                latestMintBurnNetAmounts.data![0]?.total_net_value,
+              averageTps: txnsInLast10m.data.aggregate.count / 600,
+              totalMintAmount: latestMintBurnNetAmounts.data[0]?.total_mint_value,
+              totalBurnAmount: latestMintBurnNetAmounts.data[0]?.total_burn_value,
+              totalNetAmount: latestMintBurnNetAmounts.data[0]?.total_net_value,
             },
-            errors: null,
           }
         }
       }}
     >
-      <LandingPageWithResponse data={nullData} />
-    </ApiRequestPage>
+      <LandingPageWithResponse data={nullData}/>
+    </ApiRequestComponent>
   )
 }

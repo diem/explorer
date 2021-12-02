@@ -1,0 +1,35 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query{sentpayment_events(limit:10,where:{commit_timestamp:"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+        "sentpayment_events": [
+          {
+            "transaction_version": 2345,
+            "amount": 5432
+          },
+          {
+            "transaction_version": 987,
+            "amount": 789
+          }
+        ]
+      }
+    }
+  }
+}

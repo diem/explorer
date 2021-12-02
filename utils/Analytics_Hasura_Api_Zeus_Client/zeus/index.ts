@@ -61,6 +61,136 @@ export type ValueTypes = {
 	/** does the column match the given SQL regular expression */
 	_similar?:string | null
 };
+	/** columns and relationships of "account_roles" */
+["account_roles"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["account_roles_aggregate_fields"],
+	nodes?:ValueTypes["account_roles"],
+		__typename?: true
+}>;
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["account_roles_avg_fields"],
+count?: [{	columns?:ValueTypes["account_roles_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["account_roles_max_fields"],
+	min?:ValueTypes["account_roles_min_fields"],
+	stddev?:ValueTypes["account_roles_stddev_fields"],
+	stddev_pop?:ValueTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["account_roles_stddev_samp_fields"],
+	sum?:ValueTypes["account_roles_sum_fields"],
+	var_pop?:ValueTypes["account_roles_var_pop_fields"],
+	var_samp?:ValueTypes["account_roles_var_samp_fields"],
+	variance?:ValueTypes["account_roles_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: {
+	_and?:ValueTypes["account_roles_bool_exp"][],
+	_not?:ValueTypes["account_roles_bool_exp"] | null,
+	_or?:ValueTypes["account_roles_bool_exp"][],
+	id?:ValueTypes["Int_comparison_exp"] | null,
+	name?:ValueTypes["String_comparison_exp"] | null
+};
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]:account_roles_constraint;
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: {
+	id?:number | null
+};
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: {
+	id?:number | null,
+	name?:string | null
+};
+	/** aggregate max on columns */
+["account_roles_max_fields"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["account_roles_min_fields"]: AliasType<{
+	id?:true,
+	name?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["account_roles"],
+		__typename?: true
+}>;
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: {
+	constraint:ValueTypes["account_roles_constraint"],
+	update_columns:ValueTypes["account_roles_update_column"][],
+	where?:ValueTypes["account_roles_bool_exp"] | null
+};
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: {
+	id?:ValueTypes["order_by"] | null,
+	name?:ValueTypes["order_by"] | null
+};
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]:account_roles_select_column;
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: {
+	id?:number | null,
+	name?:string | null
+};
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]:account_roles_update_column;
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "accounts" */
 ["accounts"]: AliasType<{
 	address?:true,
@@ -1092,6 +1222,9 @@ count?: [{	columns?:ValueTypes["gas_payments_select_column"][],	distinct?:boolea
 }>;
 	/** mutation root */
 ["mutation_root"]: AliasType<{
+delete_account_roles?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["account_roles_bool_exp"]},ValueTypes["account_roles_mutation_response"]],
+delete_account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 delete_accounts?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["accounts_bool_exp"]},ValueTypes["accounts_mutation_response"]],
 delete_accounts_balances?: [{	/** filter the rows which have to be deleted */
@@ -1122,6 +1255,12 @@ delete_sentpayment_events_by_pk?: [{	key:string,	sequence_number:ValueTypes["big
 delete_transactions?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["transactions_bool_exp"]},ValueTypes["transactions_mutation_response"]],
 delete_transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+insert_account_roles?: [{	/** the rows to be inserted */
+	objects:ValueTypes["account_roles_insert_input"][],	/** on conflict condition */
+	on_conflict?:ValueTypes["account_roles_on_conflict"] | null},ValueTypes["account_roles_mutation_response"]],
+insert_account_roles_one?: [{	/** the row to be inserted */
+	object:ValueTypes["account_roles_insert_input"],	/** on conflict condition */
+	on_conflict?:ValueTypes["account_roles_on_conflict"] | null},ValueTypes["account_roles"]],
 insert_accounts?: [{	/** the rows to be inserted */
 	objects:ValueTypes["accounts_insert_input"][],	/** on conflict condition */
 	on_conflict?:ValueTypes["accounts_on_conflict"] | null},ValueTypes["accounts_mutation_response"]],
@@ -1182,6 +1321,13 @@ insert_transactions?: [{	/** the rows to be inserted */
 insert_transactions_one?: [{	/** the row to be inserted */
 	object:ValueTypes["transactions_insert_input"],	/** on conflict condition */
 	on_conflict?:ValueTypes["transactions_on_conflict"] | null},ValueTypes["transactions"]],
+update_account_roles?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["account_roles_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["account_roles_set_input"] | null,	/** filter the rows which have to be updated */
+	where:ValueTypes["account_roles_bool_exp"]},ValueTypes["account_roles_mutation_response"]],
+update_account_roles_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["account_roles_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["account_roles_set_input"] | null,	pk_columns:ValueTypes["account_roles_pk_columns_input"]},ValueTypes["account_roles"]],
 update_accounts?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["accounts_inc_input"] | null,	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["accounts_set_input"] | null,	/** filter the rows which have to be updated */
@@ -1457,6 +1603,19 @@ count?: [{	columns?:ValueTypes["preburn_events_select_column"][],	distinct?:bool
 		__typename?: true
 }>;
 	["query_root"]: AliasType<{
+account_roles?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles"]],
+account_roles_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles_aggregate"]],
+account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 accounts?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["accounts_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2186,6 +2345,19 @@ count?: [{	columns?:ValueTypes["sentpayment_events_select_column"][],	distinct?:
 	_nin?:ValueTypes["smallint"][]
 };
 	["subscription_root"]: AliasType<{
+account_roles?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles"]],
+account_roles_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["account_roles_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["account_roles_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["account_roles_bool_exp"] | null},ValueTypes["account_roles_aggregate"]],
+account_roles_by_pk?: [{	id:number},ValueTypes["account_roles"]],
 accounts?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["accounts_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2610,6 +2782,99 @@ export type ModelTypes = {
 ["Int_comparison_exp"]: GraphQLTypes["Int_comparison_exp"];
 	/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 ["String_comparison_exp"]: GraphQLTypes["String_comparison_exp"];
+	/** columns and relationships of "account_roles" */
+["account_roles"]: {
+		id:number,
+	name:string
+};
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: {
+		aggregate?:ModelTypes["account_roles_aggregate_fields"],
+	nodes:ModelTypes["account_roles"][]
+};
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: {
+		avg?:ModelTypes["account_roles_avg_fields"],
+	count:number,
+	max?:ModelTypes["account_roles_max_fields"],
+	min?:ModelTypes["account_roles_min_fields"],
+	stddev?:ModelTypes["account_roles_stddev_fields"],
+	stddev_pop?:ModelTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["account_roles_stddev_samp_fields"],
+	sum?:ModelTypes["account_roles_sum_fields"],
+	var_pop?:ModelTypes["account_roles_var_pop_fields"],
+	var_samp?:ModelTypes["account_roles_var_samp_fields"],
+	variance?:ModelTypes["account_roles_variance_fields"]
+};
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: {
+		id?:number
+};
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: GraphQLTypes["account_roles_bool_exp"];
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]: GraphQLTypes["account_roles_constraint"];
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: GraphQLTypes["account_roles_inc_input"];
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: GraphQLTypes["account_roles_insert_input"];
+	/** aggregate max on columns */
+["account_roles_max_fields"]: {
+		id?:number,
+	name?:string
+};
+	/** aggregate min on columns */
+["account_roles_min_fields"]: {
+		id?:number,
+	name?:string
+};
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: {
+		/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:ModelTypes["account_roles"][]
+};
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: GraphQLTypes["account_roles_on_conflict"];
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: GraphQLTypes["account_roles_order_by"];
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: GraphQLTypes["account_roles_pk_columns_input"];
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]: GraphQLTypes["account_roles_select_column"];
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: GraphQLTypes["account_roles_set_input"];
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: {
+		id?:number
+};
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: {
+		id?:number
+};
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: {
+		id?:number
+};
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: {
+		id?:number
+};
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]: GraphQLTypes["account_roles_update_column"];
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: {
+		id?:number
+};
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: {
+		id?:number
+};
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: {
+		id?:number
+};
 	/** columns and relationships of "accounts" */
 ["accounts"]: {
 		address:ModelTypes["bpchar"],
@@ -3262,7 +3527,11 @@ export type ModelTypes = {
 };
 	/** mutation root */
 ["mutation_root"]: {
-		/** delete data from the table: "accounts" */
+		/** delete data from the table: "account_roles" */
+	delete_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** delete single row from the table: "account_roles" */
+	delete_account_roles_by_pk?:ModelTypes["account_roles"],
+	/** delete data from the table: "accounts" */
 	delete_accounts?:ModelTypes["accounts_mutation_response"],
 	/** delete data from the table: "accounts_balances" */
 	delete_accounts_balances?:ModelTypes["accounts_balances_mutation_response"],
@@ -3302,6 +3571,10 @@ export type ModelTypes = {
 	delete_transactions?:ModelTypes["transactions_mutation_response"],
 	/** delete single row from the table: "transactions" */
 	delete_transactions_by_pk?:ModelTypes["transactions"],
+	/** insert data into the table: "account_roles" */
+	insert_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** insert a single row into the table: "account_roles" */
+	insert_account_roles_one?:ModelTypes["account_roles"],
 	/** insert data into the table: "accounts" */
 	insert_accounts?:ModelTypes["accounts_mutation_response"],
 	/** insert data into the table: "accounts_balances" */
@@ -3342,6 +3615,10 @@ export type ModelTypes = {
 	insert_transactions?:ModelTypes["transactions_mutation_response"],
 	/** insert a single row into the table: "transactions" */
 	insert_transactions_one?:ModelTypes["transactions"],
+	/** update data of the table: "account_roles" */
+	update_account_roles?:ModelTypes["account_roles_mutation_response"],
+	/** update single row of the table: "account_roles" */
+	update_account_roles_by_pk?:ModelTypes["account_roles"],
 	/** update data of the table: "accounts" */
 	update_accounts?:ModelTypes["accounts_mutation_response"],
 	/** update data of the table: "accounts_balances" */
@@ -3521,7 +3798,13 @@ export type ModelTypes = {
 	transaction_version?:number
 };
 	["query_root"]: {
-		/** fetch data from the table: "accounts" */
+		/** fetch data from the table: "account_roles" */
+	account_roles:ModelTypes["account_roles"][],
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate:ModelTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?:ModelTypes["account_roles"],
+	/** fetch data from the table: "accounts" */
 	accounts:ModelTypes["accounts"][],
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate:ModelTypes["accounts_aggregate"],
@@ -3975,7 +4258,13 @@ export type ModelTypes = {
 	/** Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'. */
 ["smallint_comparison_exp"]: GraphQLTypes["smallint_comparison_exp"];
 	["subscription_root"]: {
-		/** fetch data from the table: "accounts" */
+		/** fetch data from the table: "account_roles" */
+	account_roles:ModelTypes["account_roles"][],
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate:ModelTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?:ModelTypes["account_roles"],
+	/** fetch data from the table: "accounts" */
 	accounts:ModelTypes["accounts"][],
 	/** fetch aggregated fields from the table: "accounts" */
 	accounts_aggregate:ModelTypes["accounts_aggregate"],
@@ -4279,6 +4568,136 @@ export type GraphQLTypes = {
 	_regex?: string,
 	/** does the column match the given SQL regular expression */
 	_similar?: string
+};
+	/** columns and relationships of "account_roles" */
+["account_roles"]: {
+	__typename: "account_roles",
+	id: number,
+	name: string
+};
+	/** aggregated selection of "account_roles" */
+["account_roles_aggregate"]: {
+	__typename: "account_roles_aggregate",
+	aggregate?: GraphQLTypes["account_roles_aggregate_fields"],
+	nodes: Array<GraphQLTypes["account_roles"]>
+};
+	/** aggregate fields of "account_roles" */
+["account_roles_aggregate_fields"]: {
+	__typename: "account_roles_aggregate_fields",
+	avg?: GraphQLTypes["account_roles_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["account_roles_max_fields"],
+	min?: GraphQLTypes["account_roles_min_fields"],
+	stddev?: GraphQLTypes["account_roles_stddev_fields"],
+	stddev_pop?: GraphQLTypes["account_roles_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["account_roles_stddev_samp_fields"],
+	sum?: GraphQLTypes["account_roles_sum_fields"],
+	var_pop?: GraphQLTypes["account_roles_var_pop_fields"],
+	var_samp?: GraphQLTypes["account_roles_var_samp_fields"],
+	variance?: GraphQLTypes["account_roles_variance_fields"]
+};
+	/** aggregate avg on columns */
+["account_roles_avg_fields"]: {
+	__typename: "account_roles_avg_fields",
+	id?: number
+};
+	/** Boolean expression to filter rows from the table "account_roles". All fields are combined with a logical 'AND'. */
+["account_roles_bool_exp"]: {
+		_and?: Array<GraphQLTypes["account_roles_bool_exp"]>,
+	_not?: GraphQLTypes["account_roles_bool_exp"],
+	_or?: Array<GraphQLTypes["account_roles_bool_exp"]>,
+	id?: GraphQLTypes["Int_comparison_exp"],
+	name?: GraphQLTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "account_roles" */
+["account_roles_constraint"]: account_roles_constraint;
+	/** input type for incrementing numeric columns in table "account_roles" */
+["account_roles_inc_input"]: {
+		id?: number
+};
+	/** input type for inserting data into table "account_roles" */
+["account_roles_insert_input"]: {
+		id?: number,
+	name?: string
+};
+	/** aggregate max on columns */
+["account_roles_max_fields"]: {
+	__typename: "account_roles_max_fields",
+	id?: number,
+	name?: string
+};
+	/** aggregate min on columns */
+["account_roles_min_fields"]: {
+	__typename: "account_roles_min_fields",
+	id?: number,
+	name?: string
+};
+	/** response of any mutation on the table "account_roles" */
+["account_roles_mutation_response"]: {
+	__typename: "account_roles_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows: number,
+	/** data from the rows affected by the mutation */
+	returning: Array<GraphQLTypes["account_roles"]>
+};
+	/** on conflict condition type for table "account_roles" */
+["account_roles_on_conflict"]: {
+		constraint: GraphQLTypes["account_roles_constraint"],
+	update_columns: Array<GraphQLTypes["account_roles_update_column"]>,
+	where?: GraphQLTypes["account_roles_bool_exp"]
+};
+	/** Ordering options when selecting data from "account_roles". */
+["account_roles_order_by"]: {
+		id?: GraphQLTypes["order_by"],
+	name?: GraphQLTypes["order_by"]
+};
+	/** primary key columns input for table: account_roles */
+["account_roles_pk_columns_input"]: {
+		id: number
+};
+	/** select columns of table "account_roles" */
+["account_roles_select_column"]: account_roles_select_column;
+	/** input type for updating data in table "account_roles" */
+["account_roles_set_input"]: {
+		id?: number,
+	name?: string
+};
+	/** aggregate stddev on columns */
+["account_roles_stddev_fields"]: {
+	__typename: "account_roles_stddev_fields",
+	id?: number
+};
+	/** aggregate stddev_pop on columns */
+["account_roles_stddev_pop_fields"]: {
+	__typename: "account_roles_stddev_pop_fields",
+	id?: number
+};
+	/** aggregate stddev_samp on columns */
+["account_roles_stddev_samp_fields"]: {
+	__typename: "account_roles_stddev_samp_fields",
+	id?: number
+};
+	/** aggregate sum on columns */
+["account_roles_sum_fields"]: {
+	__typename: "account_roles_sum_fields",
+	id?: number
+};
+	/** update columns of table "account_roles" */
+["account_roles_update_column"]: account_roles_update_column;
+	/** aggregate var_pop on columns */
+["account_roles_var_pop_fields"]: {
+	__typename: "account_roles_var_pop_fields",
+	id?: number
+};
+	/** aggregate var_samp on columns */
+["account_roles_var_samp_fields"]: {
+	__typename: "account_roles_var_samp_fields",
+	id?: number
+};
+	/** aggregate variance on columns */
+["account_roles_variance_fields"]: {
+	__typename: "account_roles_variance_fields",
+	id?: number
 };
 	/** columns and relationships of "accounts" */
 ["accounts"]: {
@@ -5312,6 +5731,10 @@ export type GraphQLTypes = {
 	/** mutation root */
 ["mutation_root"]: {
 	__typename: "mutation_root",
+	/** delete data from the table: "account_roles" */
+	delete_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** delete single row from the table: "account_roles" */
+	delete_account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** delete data from the table: "accounts" */
 	delete_accounts?: GraphQLTypes["accounts_mutation_response"],
 	/** delete data from the table: "accounts_balances" */
@@ -5352,6 +5775,10 @@ export type GraphQLTypes = {
 	delete_transactions?: GraphQLTypes["transactions_mutation_response"],
 	/** delete single row from the table: "transactions" */
 	delete_transactions_by_pk?: GraphQLTypes["transactions"],
+	/** insert data into the table: "account_roles" */
+	insert_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** insert a single row into the table: "account_roles" */
+	insert_account_roles_one?: GraphQLTypes["account_roles"],
 	/** insert data into the table: "accounts" */
 	insert_accounts?: GraphQLTypes["accounts_mutation_response"],
 	/** insert data into the table: "accounts_balances" */
@@ -5392,6 +5819,10 @@ export type GraphQLTypes = {
 	insert_transactions?: GraphQLTypes["transactions_mutation_response"],
 	/** insert a single row into the table: "transactions" */
 	insert_transactions_one?: GraphQLTypes["transactions"],
+	/** update data of the table: "account_roles" */
+	update_account_roles?: GraphQLTypes["account_roles_mutation_response"],
+	/** update single row of the table: "account_roles" */
+	update_account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** update data of the table: "accounts" */
 	update_accounts?: GraphQLTypes["accounts_mutation_response"],
 	/** update data of the table: "accounts_balances" */
@@ -5637,6 +6068,12 @@ export type GraphQLTypes = {
 };
 	["query_root"]: {
 	__typename: "query_root",
+	/** fetch data from the table: "account_roles" */
+	account_roles: Array<GraphQLTypes["account_roles"]>,
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate: GraphQLTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** fetch data from the table: "accounts" */
 	accounts: Array<GraphQLTypes["accounts"]>,
 	/** fetch aggregated fields from the table: "accounts" */
@@ -6296,6 +6733,12 @@ export type GraphQLTypes = {
 };
 	["subscription_root"]: {
 	__typename: "subscription_root",
+	/** fetch data from the table: "account_roles" */
+	account_roles: Array<GraphQLTypes["account_roles"]>,
+	/** fetch aggregated fields from the table: "account_roles" */
+	account_roles_aggregate: GraphQLTypes["account_roles_aggregate"],
+	/** fetch data from the table: "account_roles" using primary key columns */
+	account_roles_by_pk?: GraphQLTypes["account_roles"],
 	/** fetch data from the table: "accounts" */
 	accounts: Array<GraphQLTypes["accounts"]>,
 	/** fetch aggregated fields from the table: "accounts" */
@@ -6641,6 +7084,20 @@ export type GraphQLTypes = {
 	version?: number
 }
     }
+/** unique or primary key constraints on table "account_roles" */
+export const enum account_roles_constraint {
+	account_roles_pkey = "account_roles_pkey"
+}
+/** select columns of table "account_roles" */
+export const enum account_roles_select_column {
+	id = "id",
+	name = "name"
+}
+/** update columns of table "account_roles" */
+export const enum account_roles_update_column {
+	id = "id",
+	name = "name"
+}
 /** unique or primary key constraints on table "accounts_balances" */
 export const enum accounts_balances_constraint {
 	accounts_balances_pkey = "accounts_balances_pkey"

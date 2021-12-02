@@ -9,14 +9,12 @@ function transformBlockchainResponse(
 ): DataOrErrors<BlockchainTransaction> {
   if (response.error) {
     return {
-      data: null,
       errors: [{ message: response.error.message }],
     }
   } else {
     return {
       // @ts-ignore (Tolerate a deficiency in library type)
       data: response.result[0],
-      errors: null,
     }
   }
 }
@@ -43,6 +41,6 @@ export async function getBlockchainTransaction(
       return transformBlockchainResponse(response)
     })
     .catch((error: FetchError) => {
-      return { errors: [{ message: error.toString() }], data: null }
+      return { errors: [{ message: error.toString() }] }
     })
 }

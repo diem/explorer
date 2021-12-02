@@ -14,12 +14,14 @@ import {
 } from './Pages/EventPages/__mocks__/EventPages'
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
+import { mockLeaderboardPageText } from './Pages/LeaderboardPage/__mocks__/LeaderboardPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
 jest.mock('./Pages/EventPages/EventPages')
 jest.mock('./Pages/DiemInCirculationPage/DiemInCirculationPage')
 jest.mock('./Pages/AccountPage/AccountPage')
+jest.mock('./Pages/LeaderboardPage/LeaderboardPage')
 
 function renderWithRouter(path: string) {
   const history = createMemoryHistory()
@@ -27,73 +29,80 @@ function renderWithRouter(path: string) {
   return render(
     <Router history={history}>
       <ExplorerRouter />
-    </Router>
+    </Router>,
   )
 }
 
 describe('ExplorerRouter', () => {
-  it('should render Landing page when path is /', async function () {
-    renderWithRouter('/')
-    expect(screen.getByRole('main').textContent).toContain(mockLandingPageText)
-  })
-  it('should render Transaction Details page when path is /txn/{?}', async function () {
-    const fakeId = 'some_id'
-    renderWithRouter(`/txn/${fakeId}`)
-    expect(screen.getByRole('main').textContent).toContain(
-      mockTxnDetailsPageText
-    )
-    expect(screen.getByRole('main').textContent).toContain(fakeId)
-  })
-  it('should render Mint Events page when path is /events/mint', async function () {
-    renderWithRouter('/events/mint')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockMintEventsPageText
-    )
-  })
-  it('should render Burn Events page when path is /events/burn', async function () {
-    renderWithRouter('/events/burn')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockBurnEventsPageText
-    )
-  })
-  it('should render Payment Events page when path is /events/payment', async function () {
-    renderWithRouter('/events/payment')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockPaymentEventsPageText
-    )
-  })
-  it('should render Gas Events page when path is /events/gas', async function () {
-    renderWithRouter('/events/gas')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockGasEventsPageText
-    )
-  })
-  it('should render Preburn Events page when path is /events/preburn', async function () {
-    renderWithRouter('/events/preburn')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockPreburnEventsPageText
-    )
-  })
-  it('should render Account Events Events page when path is /events/accountcreation', async function () {
-    renderWithRouter('/events/accountcreation')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockAccountCreationEventsPageText
-    )
-  })
-  it('should render Diem In Circulation page when path is /dieminciculation', async function () {
-    renderWithRouter('/diemincirculation')
-    expect(screen.getByRole('main').textContent).toContain(
-      mockDiemInCirculationPageText
-    )
-  })
-  it('should render Account page when path is /address/{?}', async function () {
-    const fakeId = 'some_id'
-    renderWithRouter(`/address/${fakeId}`)
-    expect(screen.getByRole('main').textContent).toContain(mockAccountPageText)
-    expect(screen.getByRole('main').textContent).toContain(fakeId)
-  })
-  it('should render 404 page when path is unknown', async function () {
-    renderWithRouter('/not_a_real_url')
-    expect(screen.getByRole('main').textContent).toContain('Page not found.')
-  })
+  [
+    {
+      name: 'Landing',
+      route: '/',
+      text: [mockLandingPageText],
+    },
+    {
+      name: 'Mint Events',
+      route: '/events/mint',
+      text: [mockMintEventsPageText],
+    },
+    {
+      name: 'Burn Events',
+      route: '/events/burn',
+      text: [mockBurnEventsPageText],
+    },
+    {
+      name: 'Payment Events',
+      route: '/events/payment',
+      text: [mockPaymentEventsPageText],
+    },
+    {
+      name: 'Gas Events',
+      route: '/events/gas',
+      text: [mockGasEventsPageText],
+    },
+    {
+      name: 'Preburn Events',
+      route: '/events/preburn',
+      text: [mockPreburnEventsPageText],
+    },
+    {
+      name: 'Account Creation Events',
+      route: '/events/accountcreation',
+      text: [mockAccountCreationEventsPageText],
+    },
+    {
+      name: 'Diem In Circulation',
+      route: '/diemincirculation',
+      text: [mockDiemInCirculationPageText],
+    },
+    {
+      name: 'Leaderboard',
+      route: '/leaderboard',
+      text: [mockLeaderboardPageText],
+    },
+    {
+      name: 'Transaction Details',
+      route: '/txn/some_id',
+      text: [mockTxnDetailsPageText, 'some_id'],
+    },
+    {
+      name: 'Account',
+      route: '/address/some_id',
+      text: [mockAccountPageText, 'some_id'],
+    },
+    {
+      name: '404',
+      route: '/not_a_real_url',
+      text: ['Page not found.'],
+    },
+  ]
+    .forEach(spec => {
+      it(`should render ${spec.name} page when path is ${spec.route}`, () => {
+        renderWithRouter(spec.route)
+        const textContent = screen.getByRole('main').textContent
+        spec.text.forEach(text => {
+          expect(textContent).toContain(text)
+        })
+      })
+    })
 })

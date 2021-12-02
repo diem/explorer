@@ -176,7 +176,7 @@ const testPassesDataThrough = async (
   path: string,
   response: any
 ) => {
-  const expected = { data: response, errors: null }
+  const expected = { data: response }
   setBlockchainRestApiResponse(server, path, response)
   const result = await methodUnderTest(fakeAddress)
   expect(result).toEqual(expected)
@@ -186,7 +186,7 @@ const testPassesErrorsThrough = async (
   methodUnderTest: Function,
   path: string
 ) => {
-  const expected = { data: null, errors: [{ message: errorResponse.message }] }
+  const expected = { errors: [{ message: errorResponse.message }] }
   setBlockchainRestApiResponse(server, path, errorResponse)
   const result = await methodUnderTest(fakeAddress)
   expect(result).toEqual(expected)
@@ -198,7 +198,6 @@ const testNetworkErrorsAreErrors = async (
 ) => {
   const error = 'The internet went boom 💥'
   const expected = {
-    data: null,
     errors: [
       {
         message: `FetchError: request to ${
@@ -228,7 +227,7 @@ describe('Blockchain REST Client', function () {
       await testNetworkErrorsAreErrors(getAccountResources, resourcesPath)
     })
     it('should canonicalize the address before calling the blockchain', async () => {
-      const expected = { data: goodResourceResponse, errors: null }
+      const expected = { data: goodResourceResponse }
       setBlockchainRestApiResponse(server, resourcesPath, goodResourceResponse)
       const result = await getAccountResources(nonCanonicalFakeAddress)
       expect(result).toEqual(expected)
@@ -237,7 +236,6 @@ describe('Blockchain REST Client', function () {
       setBlockchainRestApiResponse(server, resourcesPath, errorResponse)
       const result = await getAccountResources('this address is invalid')
       expect(result).toEqual({
-        data: null,
         errors: [
           {
             message:

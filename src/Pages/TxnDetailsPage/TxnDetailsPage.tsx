@@ -1,4 +1,4 @@
-import ApiRequestPage from '../../ApiRequestPage'
+import ApiRequestComponent from '../../ApiRequestComponent'
 import React from 'react'
 import {
   BlockchainTransaction,
@@ -119,12 +119,12 @@ interface TxnDetailsPageProps
 
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
-    <ApiRequestPage
+    <ApiRequestComponent
       request={() => {
         return getBlockchainTransaction(props.match.params.version)
       }}
     >
       <TxnDetailsPageWithResponse data={undefined} />
-    </ApiRequestPage>
+    </ApiRequestComponent>
   )
 }

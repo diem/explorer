@@ -69,6 +69,9 @@ function MainWrapper(props: MainWrapperProps) {
                 <Link className="nav-link" to="/diemincirculation">
                   Diem-In-Circulation
                 </Link>
+                <Link className='nav-link' to='/leaderboard'>
+                  Leaderboard
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

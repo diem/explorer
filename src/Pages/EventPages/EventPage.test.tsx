@@ -40,7 +40,6 @@ const eventType = 'Arbitrary'
 beforeEach(async () => {
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValue({
-    errors: null,
     data: [mockFakeEvent],
   })
   render(

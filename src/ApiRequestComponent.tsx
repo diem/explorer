@@ -11,27 +11,43 @@ interface ApiRequestPageProps<T> {
   errorComponent?: ReactElement
 }
 
-function DefaultErrorComponent() {
+export function PlainErrorComponent() {
+  return (
+    <span role='dialog' className='network-error'>
+      Something went wrong. Please try again later
+    </span>
+  )
+}
+
+export function FullPageErrorComponent() {
   return (
     <MainWrapper>
-      <span role="dialog" className="network-error">
-        Something went wrong. Please try again later
-      </span>
+      <PlainErrorComponent />
     </MainWrapper>
   )
 }
 
-function DefaultLoadingComponent() {
+const DefaultErrorComponent = FullPageErrorComponent
+
+export function PlainLoadingComponent() {
+  return (
+    <span className='loading' role='loading'>
+      Loading, please wait
+    </span>
+  )
+}
+
+export function FullPageLoadingComponent() {
   return (
     <MainWrapper>
-      <span className="loading" role="loading">
-        Loading, please wait
-      </span>
+      <PlainLoadingComponent />
     </MainWrapper>
   )
 }
 
-function ApiRequestPage<T>({
+const DefaultLoadingComponent = FullPageLoadingComponent
+
+function ApiRequestComponent<T>({
   request,
   args = [],
   children,
@@ -45,7 +61,7 @@ function ApiRequestPage<T>({
   useEffect(() => {
     async function getResponse() {
       await request(...args).then((apiResponse) => {
-        if (apiResponse.data) {
+        if ('data' in apiResponse) {
           setResponse(apiResponse.data)
           setLoading(false)
         } else {
@@ -62,7 +78,7 @@ function ApiRequestPage<T>({
     if (loading) {
       return <>{React.cloneElement(loadingComponent)}</>
     } else if (errors && errors.length) {
-      console.error('Error loading the ApiRequestPage: ', errors)
+      console.error('Error loading the ApiRequestComponent: ', errors)
       return <>{React.cloneElement(errorComponent, { errors })}</>
     } else {
       return <>{React.cloneElement(children, { data: response })}</>
@@ -72,4 +88,4 @@ function ApiRequestPage<T>({
   return renderContent()
 }
 
-export default ApiRequestPage
+export default ApiRequestComponent
