@@ -3,10 +3,10 @@ import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/ze
 export interface TransactionRow {
   version: number
   expirationTimestamp: string | undefined
-  commitTimestamp: string | undefined
+  commitTimestamp: string
   sender: string | undefined
-  txnType: string | undefined
-  status: string | undefined
+  txnType: string
+  status: string
 }
 
 function getTransactionTypeFromEnum(txnType: number) {
@@ -18,6 +18,9 @@ function getTransactionTypeFromEnum(txnType: number) {
     case 3:
       return 'UserTransaction'
     case 4:
+      return 'Unknown'
+    default:
+      console.error(`Unknown transaction type value: ${txnType}`)
       return 'Unknown'
   }
 }
@@ -40,6 +43,9 @@ function getStatusFromEnum(status: number) {
       return 'DeserializationError'
     case 8:
       return 'PublishingFailure'
+    default:
+      console.error(`Unknown transaction status value: ${status}`)
+      return 'Unknown'
   }
 }
 

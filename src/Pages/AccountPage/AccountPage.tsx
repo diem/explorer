@@ -2,13 +2,10 @@ import { RouteComponentProps } from 'react-router-dom'
 import ApiRequestComponent from '../../ApiRequestComponent'
 import { getAccountModules, getAccountResources } from '../../api_clients/BlockchainRestClient'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import {
-  transactionsBySenderAddressQuery,
-  transactionsQueryType
-} from '../../api_clients/AnalyticsQueries'
+import { transactionsBySenderAddressQuery, transactionsQueryType } from '../../api_clients/AnalyticsQueries'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
-import Table, { ColumnWithAccessorDescriptor } from '../../Table'
+import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
 import React from 'react'
@@ -23,10 +20,7 @@ import {
   Module,
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
-import {
-  TransactionRow,
-  transformAnalyticsTransactionIntoTransaction
-} from '../Common/TransactionModel'
+import { TransactionRow, transformAnalyticsTransactionIntoTransaction } from '../Common/TransactionModel'
 
 interface AccountPageWithResponseProps {
   resources: Resource[]
@@ -58,27 +52,12 @@ function UnsupportedAccountCard() {
 }
 
 const RecentTransactionsTable: React.FC<{ transactions: TransactionRow[] }> = ({ transactions }) => {
-  const columns: ColumnWithAccessorDescriptor<TransactionRow>[] = [
-    {
-      Header: 'Version',
-      accessor: 'version',
-      Cell: TransactionVersion
-    },
-    {
-      Header: 'Timestamp',
-      accessor: 'commitTimestamp'
-    },
-    {
-      Header: 'Type',
-      accessor: 'txnType'
-    },
-    {
-      Header: 'Status',
-      accessor: 'status'
-    },
-  ]
-
-  return <Table columns={columns} data={transactions} id="recentTransactions"/>
+  return <Table columns={[
+    column('Version', 'version', TransactionVersion),
+    column('Timestamp', 'commitTimestamp'),
+    column('Type', 'txnType'),
+    column('Status', 'status'),
+  ]} data={transactions} id='recentTransactions' />
 }
 
 function AccountPageWithResponse({

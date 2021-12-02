@@ -45,6 +45,20 @@ describe('Top10TransactionsCard', () => {
     expect(cardBody.rows[0].cells[1].textContent).toEqual('12345')
     expect(cardBody.rows[0].cells[2].textContent).toEqual('54321')
   })
+  it('should link to the corresponding transactions', async () => {
+    await renderSubject([
+      {
+        transaction_version: 12345,
+        amount: 54321,
+      },
+    ])
+
+    const transactionCell = screen.queryByTestId('top-10-transactions')!.querySelector('table tbody tr td:nth-child(2)')
+    expect(transactionCell).toBeInTheDocument()
+    const transactionLink: HTMLAnchorElement | null = transactionCell!.querySelector('a')
+    expect(transactionLink).toBeInTheDocument()
+    expect(transactionLink!.href).toMatch(/\/txn\/12345$/)
+  })
   it('should render the data in the order provided by the API', async () => {
     await renderSubject([
       {

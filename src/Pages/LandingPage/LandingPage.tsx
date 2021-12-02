@@ -2,11 +2,8 @@ import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
 import ApiRequestComponent from '../../ApiRequestComponent'
 import MainWrapper from '../../MainWrapper'
-import {
-  TransactionRow,
-  transformAnalyticsTransactionIntoTransaction
-} from '../Common/TransactionModel'
-import Table, { ColumnWithAccessorDescriptor } from '../../Table'
+import { TransactionRow, transformAnalyticsTransactionIntoTransaction } from '../Common/TransactionModel'
+import Table, { column } from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
@@ -17,7 +14,7 @@ import {
   countTransactionsInLast10MinutesType,
   LatestMintBurnNetQuery,
   transactionsQuery,
-  transactionsQueryType
+  transactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import ReactTooltip from 'react-tooltip'
 import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
@@ -27,9 +24,10 @@ function Wrapper(props: { children: ReactNode }) {
   return (
     <MainWrapper>
       <>
-        <h2 className="mb-5" role="note">
+        <h2 className='mb-5' role='note'>
           Welcome To Diem Explorer
         </h2>
+        <h3 className='mb-2'>Recent Transactions</h3>
         {props.children}
       </>
     </MainWrapper>
@@ -42,16 +40,23 @@ function CurrentStatisticsCard({ averageTps, totalMintValue, totalBurnValue, tot
   return (
     <Card className='mb-5' data-testid='statisticsCard'>
       <Card.Header>Current Statistics</Card.Header>
-      <Card.Body style = { { display: 'flex', justifyContent: 'space-between' }}>
-        <section style={{}} >
-          <div data-tip data-for={'Transactions Per Second'} >
-            <span style={{ fontWeight: 'bold', textDecoration: 'underline', textDecorationStyle: 'dotted' }}>
+      <Card.Body style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}>
+        <section style={{}}>
+          <div data-tip data-for={'Transactions Per Second'}>
+            <span style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              textDecorationStyle: 'dotted',
+            }}>
               TPS
             </span>
             <br />
             {new Intl.NumberFormat().format(averageTps)}
           </div>
-          <ReactTooltip id='Transactions Per Second' effect="solid">
+          <ReactTooltip id='Transactions Per Second' effect='solid'>
             Transactions Per Second
           </ReactTooltip>
         </section>
@@ -82,24 +87,18 @@ function CurrentStatisticsCard({ averageTps, totalMintValue, totalBurnValue, tot
 }
 
 function TransactionTable(props: { transactions: TransactionRow[] }) {
-  const columns: ColumnWithAccessorDescriptor<TransactionRow>[] = [
-    { Header: 'Version', accessor: 'version', Cell: TransactionVersion },
-    { Header: 'Timestamp', accessor: 'commitTimestamp' },
-    { Header: 'Type', accessor: 'txnType' },
-    { Header: 'Status', accessor: 'status' },
-  ]
-
   return (
     <>
       <h3 className="mb-2">Recent Transactions</h3>
-      <Table
-        columns={columns}
-        data={props.transactions}
-        id="landingPageTransactions"
-      />
+      <Table columns={[
+        column('Version', 'version', TransactionVersion),
+        column('Timestamp', 'commitTimestamp'),
+        column('Type', 'txnType'),
+        column('Status', 'status'),
+      ]} data={props.transactions} id='landingPageTransactions' />
     </>
   )
-}
+
 type LandingPageWithResponseProps = {
   data: {
     recentTransactions: TransactionRow[]
@@ -112,6 +111,7 @@ type LandingPageWithResponseProps = {
 
 function LandingPageWithResponse(props: LandingPageWithResponseProps) {
   const history = useHistory()
+
   function handleSearch(event: any) {
     // Enter Key
     if (event.key === 'Enter') {
@@ -136,10 +136,10 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
 
   return (
     <Wrapper>
-      <InputGroup className="mb-5">
+      <InputGroup className='mb-5'>
         <FormControl
-          placeholder="Search by Address or Transaction Version"
-          aria-label="Search by Address or Transaction Version"
+          placeholder='Search by Address or Transaction Version'
+          aria-label='Search by Address or Transaction Version'
           onKeyPress={handleSearch}
         />
       </InputGroup>
@@ -150,7 +150,7 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
 }
 
 function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<transactionsQueryType>
+  response: DataOrErrors<transactionsQueryType>,
 ): DataOrErrors<TransactionRow[]> {
   if ('data' in response) {
     return {
@@ -190,7 +190,7 @@ export default function LandingPage() {
               averageTps: txnsInLast10m.data.aggregate.count / 600,
               totalMintAmount: latestMintBurnNetAmounts.data[0]?.total_mint_value,
               totalBurnAmount: latestMintBurnNetAmounts.data[0]?.total_burn_value,
-              totalNetAmount: latestMintBurnNetAmounts.data[0]?.total_net_value
+              totalNetAmount: latestMintBurnNetAmounts.data[0]?.total_net_value,
             },
           }
         }

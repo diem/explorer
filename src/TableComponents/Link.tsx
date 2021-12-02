@@ -21,11 +21,19 @@ export const Link =
     }
 Link.displayName = 'DiemExplorerLink'
 
-export const TransactionVersion: React.FC<{ value: string }> = (props: {
-  value: string
-}) => {
-  return Link({ className: 'transaction-link', linkPrefix: '/txn/' })(props)
+export const TransactionVersion: React.FC<{ value?: string | number }> = (props: { value?: string | number }) => {
+  if (!('value' in props)) {
+    return <></>
+  }
+  return Link({
+    className: 'transaction-link',
+    linkPrefix: '/txn/',
+  })({ ...props, value: props.value!.toString() })
 }
+
 export function AccountAddress(props: { value: string }) {
-  return Link({ className: 'address-link', linkPrefix: '/address/' })(props)
+  return Link({
+    className: 'address-link',
+    linkPrefix: '/address/',
+  })(props)
 }

@@ -4,8 +4,9 @@ import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
 import { KnownCurrency } from '../../../api_clients/BlockchainRestTypes'
 import { Card } from 'react-bootstrap'
-import Table from '../../../Table'
+import Table, { column } from '../../../Table'
 import ReactTooltip from 'react-tooltip'
+import { TransactionVersion } from '../../../TableComponents/Link'
 
 export interface TopSentPaymentEvent {
   // eslint-disable-next-line camelcase
@@ -22,7 +23,7 @@ function Top10TransactionsTable({ data }: { data: Top10TransactionsTableProps })
     transaction_version,
     amount,
   }, index) => ({
-    transactionVersion: transaction_version,
+    version: transaction_version,
     amount,
     rank: index + 1,
   }))
@@ -35,22 +36,12 @@ function Top10TransactionsTable({ data }: { data: Top10TransactionsTableProps })
         <ReactTooltip id='top-10-definition-xus'>
           10 largest transactions in XUS in the last 24 hours
         </ReactTooltip>
-        { /* TODO: display a tooltip explaining this */}
       </Card.Header>
       <Card.Body>
         <Table columns={[
-          {
-            Header: 'Ranking',
-            accessor: 'rank',
-          },
-          {
-            Header: 'Version',
-            accessor: 'transactionVersion',
-          },
-          {
-            Header: 'Amount (XUS)',
-            accessor: 'amount',
-          },
+          column('Ranking', 'rank'),
+          column('Version', 'version', TransactionVersion),
+          column('Amount(XUS)', 'amount'),
         ]} data={paymentData} />
       </Card.Body>
     </>
