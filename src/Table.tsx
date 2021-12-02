@@ -5,29 +5,35 @@ import React from 'react'
 type ColumnWithAccessorDescriptor<T, K extends keyof T> = {
   Header: string
   accessor: K
-  Cell?: React.FC<{value: T[K]}>
+  Cell?: React.FC<{ value: T[K] }>
 }
 
 export function column<C>(header: string, accessor: keyof C, cell?: React.FC<{ value: C[typeof accessor] }>) {
-  return {
-    Header: header,
-    accessor,
-    Cell: cell,
+  if (cell === undefined) {
+    return {
+      Header: header,
+      accessor,
+    }
+  } else {
+    return {
+      Header: header,
+      accessor,
+      Cell: cell,
+    }
   }
 }
 
-type TableProps<T extends { [key: string]: any }> = {
+type TableProps<T> = {
   columns: ColumnWithAccessorDescriptor<T, keyof T>[]
   data: T[]
   className?: string
   id?: string
 }
 
-export default function Table<T>(props: TableProps<T>) {
+export default function Table<T extends object>(props: TableProps<T>) {
   const { columns, data, className = '', id = '' } = props
 
-  // @ts-ignore (Tolerate a deficiency in library type)
-  const useTableOptions: TableOptions = { columns, data }
+  const useTableOptions: TableOptions<T> = { columns, data }
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(useTableOptions, useFilters, useSortBy)
 
