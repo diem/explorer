@@ -11,25 +11,41 @@ interface ApiRequestPageProps<T> {
   errorComponent?: ReactElement
 }
 
-function DefaultErrorComponent() {
+export function PlainErrorComponent() {
+  return (
+    <span role='dialog' className='network-error'>
+      Something went wrong. Please try again later
+    </span>
+  )
+}
+
+export function FullPageErrorComponent() {
   return (
     <MainWrapper>
-      <span role="dialog" className="network-error">
-        Something went wrong. Please try again later
-      </span>
+      <PlainErrorComponent />
     </MainWrapper>
   )
 }
 
-function DefaultLoadingComponent() {
+const DefaultErrorComponent = FullPageErrorComponent
+
+export function PlainLoadingComponent() {
+  return (
+    <span className='loading' role='loading'>
+      Loading, please wait
+    </span>
+  )
+}
+
+export function FullPageLoadingComponent() {
   return (
     <MainWrapper>
-      <span className="loading" role="loading">
-        Loading, please wait
-      </span>
+      <PlainLoadingComponent />
     </MainWrapper>
   )
 }
+
+const DefaultLoadingComponent = FullPageLoadingComponent
 
 function ApiRequestComponent<T>({
   request,

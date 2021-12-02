@@ -1,4 +1,4 @@
-import ApiRequestComponent from '../../../ApiRequestComponent'
+import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../../ApiRequestComponent'
 import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
@@ -60,7 +60,12 @@ async function getTopTransactions(currency: KnownCurrency): Promise<DataOrErrors
 export default function Top10TransactionsCard() {
   return (
     <Card data-testid='top-10-transactions'>
-      <ApiRequestComponent request={getTopTransactions} args={['XUS']}>
+      <ApiRequestComponent
+        request={getTopTransactions}
+        args={['XUS']}
+        errorComponent={<PlainErrorComponent />}
+        loadingComponent={<PlainLoadingComponent />}
+      >
         <Top10TransactionsTable data={{ topPayments: [] }} />
       </ApiRequestComponent>
     </Card>
