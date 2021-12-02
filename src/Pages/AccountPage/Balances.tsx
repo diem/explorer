@@ -8,8 +8,12 @@ import {
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
 
-function parseBalancesFromResources(resources: Resource[]): Record<KnownCurrency, string> {
-  const balanceResources = resources.filter(isBalanceResource) as BalanceResource[]
+function parseBalancesFromResources(
+  resources: Resource[]
+): Record<KnownCurrency, string> {
+  const balanceResources = resources.filter(
+    isBalanceResource
+  ) as BalanceResource[]
 
   return Object.assign(
     {},
@@ -17,11 +21,15 @@ function parseBalancesFromResources(resources: Resource[]): Record<KnownCurrency
       const currency = getCurrency(balance)
       const amount = parseInt(balance.value.coin.value)
       return { [currency]: amount }
-    }),
+    })
   )
 }
 
-function BalancesTable({ balances }: { balances: Record<KnownCurrency, string> }) {
+function BalancesTable({
+  balances,
+}: {
+  balances: Record<KnownCurrency, string>
+}) {
   return (
     <>
       <h2>Balances</h2>
@@ -32,7 +40,13 @@ function BalancesTable({ balances }: { balances: Record<KnownCurrency, string> }
 
 export default function Balances({ resources }: { resources: Resource[] }) {
   const balances = parseBalancesFromResources(resources)
-  return (<>
-    {Object.keys(balances).length > 0 ? (<BalancesTable balances={balances} />) : null}
-  </>)
+  return (
+    <>
+      {Object.keys(balances).length > 0
+        ? (
+          <BalancesTable balances={balances} />
+        )
+        : null}
+    </>
+  )
 }

@@ -165,8 +165,8 @@ const goodModulesResponse = [
     },
   },
 ]
-const fakeAddress =
-  'theAddressDoesntMatterSinceWereMockingTheServiceWorkersWithMsw'
+const nonCanonicalFakeAddress = 'bf485d8190b38ecaa223d7'
+const fakeAddress = '0000000000bf485d8190b38ecaa223d7'
 const resourcesPath = `/accounts/${fakeAddress}/resources`
 const modulesPath = `/accounts/${fakeAddress}/modules`
 const server = setupIntegrationTestApiServer()
@@ -226,6 +226,25 @@ describe('Blockchain REST Client', function () {
     })
     it('should pass network errors through like any other error', async () => {
       await testNetworkErrorsAreErrors(getAccountResources, resourcesPath)
+    })
+    it('should canonicalize the address before calling the blockchain', async () => {
+      const expected = { data: goodResourceResponse, errors: null }
+      setBlockchainRestApiResponse(server, resourcesPath, goodResourceResponse)
+      const result = await getAccountResources(nonCanonicalFakeAddress)
+      expect(result).toEqual(expected)
+    })
+    it('should return an error if the address is invalid', async () => {
+      setBlockchainRestApiResponse(server, resourcesPath, errorResponse)
+      const result = await getAccountResources('this address is invalid')
+      expect(result).toEqual({
+        data: null,
+        errors: [
+          {
+            message:
+              'getCanonicalAddress received Invalid address type : this address is invalid',
+          },
+        ],
+      })
     })
   })
   describe('getAccountModules', function () {

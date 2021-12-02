@@ -7,15 +7,23 @@ import Table from '../../Table'
 interface EventPageProps {
   query: Object
   columns: {
-    Header: string,
-    accessor: string,
-    Cell?: React.FC<{value:any}>
+    Header: string
+    accessor: string
+    Cell?: React.FC<{ value: any }>
   }[]
   tableName: string
   eventType: string
 }
 
-function EventPageWithResponse({ data, columns, eventType }: { data: any[], columns: EventPageProps['columns'], eventType: EventPageProps['eventType'] }) {
+function EventPageWithResponse({
+  data,
+  columns,
+  eventType,
+}: {
+  data: any[]
+  columns: EventPageProps['columns']
+  eventType: EventPageProps['eventType']
+}) {
   return (
     <MainWrapper>
       <>
@@ -26,14 +34,19 @@ function EventPageWithResponse({ data, columns, eventType }: { data: any[], colu
   )
 }
 
-const EventPage = ({ query, columns, tableName, eventType }: EventPageProps) => {
+const EventPage = ({
+  query,
+  columns,
+  tableName,
+  eventType,
+}: EventPageProps) => {
   return (
-    <ApiRequestPage
-      request={() =>
-        postQueryToAnalyticsApi(query, tableName)
-      }
-    >
-      <EventPageWithResponse data={[]} columns={columns} eventType={eventType} />
+    <ApiRequestPage request={() => postQueryToAnalyticsApi(query, tableName)}>
+      <EventPageWithResponse
+        data={[]}
+        columns={columns}
+        eventType={eventType}
+      />
     </ApiRequestPage>
   )
 }

@@ -18,7 +18,9 @@ export function isBalanceResource(resource: Resource): boolean {
 }
 
 export function getCurrency(balanceResource: BalanceResource): KnownCurrency {
-  const match = balanceResource.type.match(/0x1::DiemAccount::Balance<0x1::(\w+)::\1>/)!
+  const match = balanceResource.type.match(
+    /0x1::DiemAccount::Balance<0x1::(\w+)::\1>/
+  )!
   return match[1] as KnownCurrency
 }
 
@@ -29,7 +31,7 @@ namespace Resources {
   export type Resource = KnownResource | UnknownResource
 
   interface UnknownResource {
-    type: string,
+    type: string
     value: Record<string, string | {}>
   }
 
@@ -39,18 +41,19 @@ namespace Resources {
     export type Resource = DiemAccount | Balance
 
     export interface DiemAccount extends UnknownResource {
-      type: '0x1::DiemAccount::DiemAccount',
+      type: '0x1::DiemAccount::DiemAccount'
       value: {
-        sequence_number: string,
-        authentication_key: string,
-        [key: string]: string | {},
-      },
+        sequence_number: string
+        authentication_key: string
+        [key: string]: string | {}
+      }
     }
 
     export type Balance = AbstractBalance<KnownCurrency>
 
-    interface AbstractBalance<TCurrency extends KnownCurrency> extends UnknownResource {
-      type: `0x1::DiemAccount::Balance<0x1::${TCurrency}::${TCurrency}>`,
+    interface AbstractBalance<TCurrency extends KnownCurrency>
+      extends UnknownResource {
+      type: `0x1::DiemAccount::Balance<0x1::${TCurrency}::${TCurrency}>`
       value: { coin: { value: string } }
     }
   }
@@ -67,25 +70,25 @@ namespace Resources {
 
 namespace Modules {
   export type Module = {
-    bytecode: string,
+    bytecode: string
     abi: {
-      structs: Struct[],
-      exposed_functions: ExposedFunction[],
-      [key: string]: string | {},
+      structs: Struct[]
+      exposed_functions: ExposedFunction[]
+      [key: string]: string | {}
     }
   }
 
   export interface Struct {
-    name: String,
-    fields: { name: string, type: string }[],
-    [key: string]: string | {},
+    name: String
+    fields: { name: string; type: string }[]
+    [key: string]: string | {}
   }
 
   export interface ExposedFunction {
-    name: String,
-    visibility: 'public',
-    generic_type_params: unknown[],
-    params: string[],
-    return: string[],
+    name: String
+    visibility: 'public'
+    generic_type_params: unknown[]
+    params: string[]
+    return: string[]
   }
 }
