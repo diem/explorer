@@ -41,7 +41,7 @@ function Top10TransactionsTable({ data }: { data: Top10TransactionsTableProps })
         <Table columns={[
           column('Ranking', 'rank'),
           column('Version', 'version', TransactionVersion),
-          column('Amount(XUS)', 'amount'),
+          column('Amount (XUS)', 'amount'),
         ]} data={paymentData} />
       </Card.Body>
     </>
