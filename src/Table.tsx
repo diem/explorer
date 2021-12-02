@@ -27,12 +27,10 @@ export default function Table(props: TableProps) {
     hover: true,
     ...getTableProps(),
     className: `border ${className}`,
-    id: id || undefined
+    id: id || undefined,
   }
   return (
-    <BTable
-      {...btableProps}
-    >
+    <BTable {...btableProps}>
       <thead>
         {headerGroups.map((headerGroup, hgIndex: number) => (
           <tr

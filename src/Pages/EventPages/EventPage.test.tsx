@@ -23,14 +23,15 @@ const mockFakeEvent = {
   transaction_version: '3120398580',
 }
 
-const query = 'the query doesn\'t matter because we\'re mocking the service workers'
+const query =
+  "the query doesn't matter because we're mocking the service workers"
 const columns = [
   { Header: 'The hype', accessor: 'hype' },
   { Header: 'The who', accessor: 'who' },
   { Header: 'This is the currency', accessor: 'currency' },
   { Header: 'Gasoline', accessor: 'gas', Cell: TruncatedCell },
   { Header: 'Sequence Number', accessor: 'sequence_number' },
-  { Header: 'TXN', accessor: 'transaction_version', Cell: TruncatedCell }
+  { Header: 'TXN', accessor: 'transaction_version', Cell: TruncatedCell },
 ]
 
 const tableName = 'this string is arbitrary'
@@ -44,7 +45,12 @@ beforeEach(async () => {
   })
   render(
     <BrowserRouter>
-      <EventPage query={query} columns={columns} tableName={tableName} eventType={eventType}/>
+      <EventPage
+        query={query}
+        columns={columns}
+        tableName={tableName}
+        eventType={eventType}
+      />
     </BrowserRouter>
   )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
@@ -58,20 +64,30 @@ describe('EventPage', () => {
   it('should display event data in a table', async function () {
     expect(screen.queryByText(`${eventType} Events`)).toBeInTheDocument()
 
-    columns.map(col => col.Header).forEach((header) => {
-      expect(screen.queryByText(header)).toBeInTheDocument()
-    })
+    columns
+      .map((col) => col.Header)
+      .forEach((header) => {
+        expect(screen.queryByText(header)).toBeInTheDocument()
+      })
 
     expect(screen.queryByText(mockFakeEvent.hype)).toBeInTheDocument()
     expect(screen.queryByText(mockFakeEvent.who)).toBeInTheDocument()
     expect(screen.queryByText(mockFakeEvent.currency)).toBeInTheDocument()
     expect(screen.queryByText('The b...ut :(')).toBeInTheDocument()
-    expect(screen.queryByText(mockFakeEvent.sequence_number)).toBeInTheDocument()
-    expect(screen.queryByText(mockFakeEvent.transaction_version)).toBeInTheDocument()
+    expect(
+      screen.queryByText(mockFakeEvent.sequence_number)
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText(mockFakeEvent.transaction_version)
+    ).toBeInTheDocument()
     expect(screen.queryByText('31203...98580')).toBeInTheDocument()
 
     configure({ testIdAttribute: 'data-id' })
-    expect(await screen.getAllByTestId('tooltip')[0]).toHaveTextContent(mockFakeEvent.gas)
-    expect(await screen.getAllByTestId('tooltip')[1]).toHaveTextContent(mockFakeEvent.transaction_version.toString())
+    expect(await screen.getAllByTestId('tooltip')[0]).toHaveTextContent(
+      mockFakeEvent.gas
+    )
+    expect(await screen.getAllByTestId('tooltip')[1]).toHaveTextContent(
+      mockFakeEvent.transaction_version.toString()
+    )
   })
 })
