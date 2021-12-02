@@ -1,6 +1,7 @@
 import { DataOrErrors, FetchError } from './FetchTypes'
 import { getWithFetch } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
+import { getCanonicalAddress } from '../utils'
 
 export interface RestError {
   code: number
@@ -33,9 +34,13 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
     ? 'resources'
     : never
 ): Promise<DataOrErrors<T>> {
-  const url = `${
-    import.meta.env.VITE_BLOCKCHAIN_REST_URL
-  }/accounts/${address}/${assetType}`
+  const canonicalAddress = getCanonicalAddress(address)
+  if (canonicalAddress.err) {
+    return { data: null, errors: [{ message: canonicalAddress.val }] }
+  }
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
+    canonicalAddress.val
+  }/${assetType}`
   return getWithFetch<RestResponse>(url, {})
     .then((response) => {
       return transformBlockchainRestResponse<T>(response)

@@ -216,11 +216,13 @@ export default function LandingPage() {
           latestMintBurnNetAmounts.errors
         ) {
           return {
-            // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
             data: null,
             errors: []
+              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
               .concat(txnsInLast10m.errors)
+              // @ts-ignore ☝️
               .concat(recentTxns.errors)
+              // @ts-ignore ☝️
               .concat(latestMintBurnNetAmounts.errors)
               .filter((error) => error !== null),
           }

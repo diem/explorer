@@ -4,6 +4,7 @@ import {
   order_by,
 } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
+import { getCanonicalAddress } from '../utils'
 
 export type mintEventsQueryType =
   GraphQLTypes['query_root']['receivedmint_events']
@@ -183,11 +184,15 @@ export function LatestMintBurnNetQuery() {
 }
 
 export function transactionsBySenderAddressQuery(senderAddress: string) {
+  const canonicalAddress = getCanonicalAddress(senderAddress)
+  if (canonicalAddress.err) {
+    return { error: canonicalAddress.val }
+  }
   return {
     transactions: [
       {
         limit: 10,
-        where: { sender: { _eq: senderAddress } },
+        where: { sender: { _eq: canonicalAddress.val } },
         order_by: [{ version: order_by.desc }],
       },
       {

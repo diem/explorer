@@ -20,8 +20,8 @@ const mockXusInCirculation = {
 }
 
 beforeEach(async () => {
-  // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi
+    // @ts-ignore TS is bad at mocking
     .mockResolvedValueOnce({
       errors: null,
       data: {

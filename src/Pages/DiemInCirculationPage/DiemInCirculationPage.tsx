@@ -47,10 +47,11 @@ export default function DiemInCirculationPage() {
           )
         if (xusOrErrors.errors || xdxOrErrors.errors) {
           return {
-            // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
             data: null,
             errors: []
+              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
               .concat(xusOrErrors.errors)
+              // @ts-ignore ☝️
               .concat(xdxOrErrors.errors)
               .filter((error) => error !== null),
           }
