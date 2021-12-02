@@ -6,7 +6,7 @@ import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction
 } from '../Common/TransactionModel'
-import Table from '../../Table'
+import Table, { ColumnWithAccessorDescriptor } from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
@@ -82,7 +82,7 @@ function CurrentStatisticsCard({ averageTps, totalMintValue, totalBurnValue, tot
 }
 
 function TransactionTable(props: { transactions: TransactionRow[] }) {
-  const columns = [
+  const columns: ColumnWithAccessorDescriptor<TransactionRow>[] = [
     { Header: 'Version', accessor: 'version', Cell: TransactionVersion },
     { Header: 'Timestamp', accessor: 'commitTimestamp' },
     { Header: 'Type', accessor: 'txnType' },

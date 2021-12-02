@@ -8,7 +8,7 @@ import {
 } from '../../api_clients/AnalyticsQueries'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
-import Table from '../../Table'
+import Table, { ColumnWithAccessorDescriptor } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
 import React from 'react'
@@ -58,7 +58,7 @@ function UnsupportedAccountCard() {
 }
 
 const RecentTransactionsTable: React.FC<{ transactions: TransactionRow[] }> = ({ transactions }) => {
-  const columns = [
+  const columns: ColumnWithAccessorDescriptor<TransactionRow>[] = [
     {
       Header: 'Version',
       accessor: 'version',

@@ -29,13 +29,6 @@ describe('Top10TransactionsCard', () => {
     postQueryToAnalyticsApi.mockReset()
   })
 
-  it('should have a title with an explanation', async () => {
-    await renderSubject()
-
-    const cardHeader = screen.queryByText('Top 10 Transactions (XUS)')
-    expect(cardHeader).toBeInTheDocument()
-    expect(cardHeader!.title).toContain('in the last 24 hours')
-  })
   it('should render the data', async () => {
     await renderSubject([
       {
@@ -44,7 +37,7 @@ describe('Top10TransactionsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement | null = screen.queryByTestId('top-10-transactions')
+    const table: HTMLTableElement | null | undefined = screen.queryByTestId('top-10-transactions')?.querySelector('table')
     expect(table).toBeInTheDocument()
     const cardBody = table!.tBodies.item(0)!
     expect(cardBody.rows).toHaveLength(1)
@@ -64,7 +57,7 @@ describe('Top10TransactionsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement = screen.queryByTestId('top-10-transactions')!
+    const table: HTMLTableElement = screen.queryByTestId('top-10-transactions')!.querySelector('table')!
     const cardBody = table.tBodies.item(0)!
     expect(cardBody!.rows).toHaveLength(2)
     expect(cardBody!.rows[0].cells[1].textContent).toEqual('1')
