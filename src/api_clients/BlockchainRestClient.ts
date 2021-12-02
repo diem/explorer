@@ -34,7 +34,7 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
 ): Promise<DataOrErrors<T>> {
   const canonicalAddress = getCanonicalAddress(address)
   if (canonicalAddress.err) {
-    return { data: null, errors: [{ message: canonicalAddress.val }] }
+    return { errors: [{ message: canonicalAddress.val }] }
   }
   const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
     canonicalAddress.val

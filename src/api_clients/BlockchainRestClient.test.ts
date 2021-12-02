@@ -227,7 +227,7 @@ describe('Blockchain REST Client', function () {
       await testNetworkErrorsAreErrors(getAccountResources, resourcesPath)
     })
     it('should canonicalize the address before calling the blockchain', async () => {
-      const expected = { data: goodResourceResponse, errors: null }
+      const expected = { data: goodResourceResponse }
       setBlockchainRestApiResponse(server, resourcesPath, goodResourceResponse)
       const result = await getAccountResources(nonCanonicalFakeAddress)
       expect(result).toEqual(expected)
@@ -236,7 +236,6 @@ describe('Blockchain REST Client', function () {
       setBlockchainRestApiResponse(server, resourcesPath, errorResponse)
       const result = await getAccountResources('this address is invalid')
       expect(result).toEqual({
-        data: null,
         errors: [
           {
             message:

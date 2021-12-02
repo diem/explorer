@@ -64,7 +64,6 @@ const renderSubject = async (
   })
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValueOnce({
-    errors: null,
     data: [
       {
         total_burn_value: 700,

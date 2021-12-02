@@ -4,11 +4,12 @@ import { BrowserRouter } from 'react-router-dom'
 import Top10TransactionsCard, { TopSentPaymentEvent } from './Top10TransactionsCard'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
-import moment from 'moment'
 
 jest.mock('../../../api_clients/AnalyticsClient', () => ({
   postQueryToAnalyticsApi: jest.fn(),
 }))
+
+jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
 const renderSubject = async (
   transactions: TopSentPaymentEvent[] = [],
@@ -22,13 +23,6 @@ const renderSubject = async (
     <Top10TransactionsCard />
   </BrowserRouter>)
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
-}
-
-async function elapsedMilliseconds(callback: Promise<any>): Promise<number> {
-  const timeBefore = moment().valueOf()
-  await callback
-  const timeAfter = moment().valueOf()
-  return timeAfter - timeBefore
 }
 
 describe('Top10TransactionsCard', () => {
@@ -86,19 +80,8 @@ describe('Top10TransactionsCard', () => {
     expect(cardBody!.rows[1].cells[1].textContent).toEqual('2')
   })
   it('should query the Analytics API correctly', async () => {
-    const elapsedTime = await elapsedMilliseconds(renderSubject())
+    await renderSubject()
     const expectedQuery = top10Transactions('XUS')
-
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
-    // @ts-ignore TS is bad at mocking
-    const actualQuery = postQueryToAnalyticsApi.mock.calls[0][0]
-
-    const actualTimeMilliseconds = moment(actualQuery.sentpayment_events[0].where.commit_timestamp._gt).valueOf()
-    const expectedMilliseconds = moment(expectedQuery.sentpayment_events[0].where!.commit_timestamp._gt).valueOf()
-    expect(actualTimeMilliseconds).toBeCloseTo(expectedMilliseconds, elapsedTime)
-
-    delete actualQuery.sentpayment_events[0].where.commit_timestamp._gt
-    delete (expectedQuery.sentpayment_events[0].where!.commit_timestamp as any)._gt
-    expect(actualQuery).toEqual(expectedQuery)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(expectedQuery, 'sentpayment_events')
   })
 })

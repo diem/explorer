@@ -27,7 +27,6 @@ function Wrapper(props: { children: ReactNode }) {
         <h2 className='mb-5' role='note'>
           Welcome To Diem Explorer
         </h2>
-        <h3 className='mb-2'>Recent Transactions</h3>
         {props.children}
       </>
     </MainWrapper>
@@ -95,7 +94,7 @@ function TransactionTable(props: { transactions: TransactionRow[] }) {
         column('Timestamp', 'commitTimestamp'),
         column('Type', 'txnType'),
         column('Status', 'status'),
-      ]} data={props.transactions} id='landingPageTransactions' />
+      ]} data={props.transactions} id='landingPageTransactions'/>
     </>
   )
 }
@@ -109,7 +108,6 @@ type LandingPageWithResponseProps = {
     totalNetAmount: number
   }
 }
-
 function LandingPageWithResponse(props: LandingPageWithResponseProps) {
   const history = useHistory()
 
@@ -144,8 +142,9 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
           onKeyPress={handleSearch}
         />
       </InputGroup>
-      <CurrentStatisticsCard averageTps={props.data.averageTps} totalMintValue={props.data.totalMintAmount} totalBurnValue={props.data.totalBurnAmount} totalNetValue={props.data.totalNetAmount} />
-      <TransactionTable transactions={props.data.recentTransactions} />
+      <CurrentStatisticsCard averageTps={props.data.averageTps} totalMintValue={props.data.totalMintAmount}
+        totalBurnValue={props.data.totalBurnAmount} totalNetValue={props.data.totalNetAmount}/>
+      <TransactionTable transactions={props.data.recentTransactions}/>
     </Wrapper>
   )
 }
@@ -197,7 +196,7 @@ export default function LandingPage() {
         }
       }}
     >
-      <LandingPageWithResponse data={nullData} />
+      <LandingPageWithResponse data={nullData}/>
     </ApiRequestComponent>
   )
 }
