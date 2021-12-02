@@ -98,6 +98,7 @@ function TransactionTable(props: { transactions: TransactionRow[] }) {
       ]} data={props.transactions} id='landingPageTransactions' />
     </>
   )
+}
 
 type LandingPageWithResponseProps = {
   data: {
