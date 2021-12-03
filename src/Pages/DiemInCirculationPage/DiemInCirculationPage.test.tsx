@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import DiemInCirculationPage from './DiemInCirculationPage'
-import { currencyInCirculationPageQuery } from '../../api_clients/AnalyticsQueries'
+import { currencyInCirculationPageQuery, diemInCirculationHistoryQuery } from '../../api_clients/AnalyticsQueries'
 
 jest.mock('../../api_clients/AnalyticsClient', () => ({
   ...jest.requireActual('../../api_clients/AnalyticsClient'),
@@ -29,6 +29,11 @@ beforeEach(async () => {
     data: {
       diem_in_circulation_realtime_aggregates: []
     }
+  }).mockResolvedValueOnce({
+    errors: null,
+    data: [
+      { timestamp: '2021-10-30T01:22:18.660956+00:00', total_net_value: 2000 }
+    ]
   })
   render(
     <BrowserRouter>
@@ -47,7 +52,9 @@ describe('DiemInCirculationPage', () => {
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       currencyInCirculationPageQuery('XDX')
     )
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(diemInCirculationHistoryQuery())
   })
+
   it('should display event data in a table', async function () {
     expect(screen.queryByText('Total Diem In Circulation')).toBeInTheDocument()
     expect(screen.queryByText('Currency')).toBeInTheDocument()
@@ -63,5 +70,9 @@ describe('DiemInCirculationPage', () => {
     expect(
       screen.queryByText(mockXusInCirculation.timestamp)
     ).toBeInTheDocument()
+  })
+
+  it('should display a graph containing a history of diem circulation', () => {
+    expect(screen.queryByText('Diem In Circulation History In Past Week')).toBeInTheDocument()
   })
 })

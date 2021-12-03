@@ -257,3 +257,28 @@ export function top10Transactions(currency: KnownCurrency) {
     ],
   }
 }
+
+// eslint-disable-next-line camelcase
+export type DiemInCirculationHistoryType = { diem_in_circulation_realtime_aggregates: { timestamp: string, total_net_value: number }[] }
+export function diemInCirculationHistoryQuery() {
+  const now = moment()
+  const TODAY = now.format()
+  const ONE_WEEK = now.subtract(40, 'days').format()
+
+  console.log(ONE_WEEK)
+  // wrong   => 2021-12-02T12:31:42-08:00
+  // correct => 2021-10-29T01:22:42+00:00
+  console.log(TODAY)
+  return {
+    diem_in_circulation_realtime_aggregates: [
+      {
+        where: { timestamp: { _gt: ONE_WEEK, _lt: TODAY } },
+        limit: 100
+      },
+      {
+        total_net_value: true,
+        timestamp: true
+      },
+    ],
+  }
+}
