@@ -248,7 +248,7 @@ export function top10Transactions(currency: KnownCurrency) {
           commit_timestamp: { _gt: TWENTY_FOUR_HOURS_AGO },
           currency: { _eq: currency },
         },
-        order_by: [{ transaction_version: order_by.desc }],
+        order_by: [{ amount: order_by.desc }],
       },
       {
         amount: true,
