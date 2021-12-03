@@ -229,135 +229,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	account_roles_aggregate_fields:{
-		count:{
-			columns:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	account_roles_bool_exp:{
-		_and:{
-			type:"account_roles_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"account_roles_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"account_roles_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		id:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_constraint: "enum",
-	account_roles_inc_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_insert_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_on_conflict:{
-		constraint:{
-			type:"account_roles_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"account_roles_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"account_roles_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_order_by:{
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_pk_columns_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	account_roles_select_column: "enum",
-	account_roles_set_input:{
-		id:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		name:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	account_roles_update_column: "enum",
 	accounts_aggregate_fields:{
 		count:{
 			columns:{
@@ -1621,6 +1492,153 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	burn_events_update_column: "enum",
+	diem_in_circulation_dynamic_aggregate_fields:{
+		count:{
+			columns:{
+				type:"diem_in_circulation_dynamic_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	diem_in_circulation_dynamic_bool_exp:{
+		_and:{
+			type:"diem_in_circulation_dynamic_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"diem_in_circulation_dynamic_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"diem_in_circulation_dynamic_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		burns:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		mints:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		net:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burns:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mints:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_net:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	diem_in_circulation_dynamic_order_by:{
+		burns:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		currency:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		mints:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		net:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		timestamp:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burns:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mints:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_net:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	diem_in_circulation_dynamic_select_column: "enum",
 	diem_in_circulation_realtime_aggregates_aggregate_fields:{
 		count:{
 			columns:{
@@ -2102,22 +2120,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	gas_payments_update_column: "enum",
 	mutation_root:{
-		delete_account_roles:{
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		delete_accounts:{
 			where:{
 				type:"accounts_bool_exp",
@@ -2330,34 +2332,6 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
-			}
-		},
-		insert_account_roles:{
-			objects:{
-				type:"account_roles_insert_input",
-				array:true,
-				arrayRequired:true,
-				required:true
-			},
-			on_conflict:{
-				type:"account_roles_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		insert_account_roles_one:{
-			object:{
-				type:"account_roles_insert_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			on_conflict:{
-				type:"account_roles_on_conflict",
-				array:false,
-				arrayRequired:false,
-				required:false
 			}
 		},
 		insert_accounts:{
@@ -2638,46 +2612,6 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:false
-			}
-		},
-		update_account_roles:{
-			_inc:{
-				type:"account_roles_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"account_roles_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_account_roles_by_pk:{
-			_inc:{
-				type:"account_roles_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_set:{
-				type:"account_roles_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			pk_columns:{
-				type:"account_roles_pk_columns_input",
-				array:false,
-				arrayRequired:false,
-				required:true
 			}
 		},
 		update_accounts:{
@@ -3380,78 +3314,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	preburn_events_update_column: "enum",
 	query_root:{
-		account_roles:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_aggregate:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		accounts:{
 			distinct_on:{
 				type:"accounts_select_column",
@@ -3684,6 +3546,70 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		diem_in_circulation_dynamic:{
+			distinct_on:{
+				type:"diem_in_circulation_dynamic_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"diem_in_circulation_dynamic_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"diem_in_circulation_dynamic_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		diem_in_circulation_dynamic_aggregate:{
+			distinct_on:{
+				type:"diem_in_circulation_dynamic_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"diem_in_circulation_dynamic_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"diem_in_circulation_dynamic_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		diem_in_circulation_realtime_aggregates:{
@@ -5170,78 +5096,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	subscription_root:{
-		account_roles:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_aggregate:{
-			distinct_on:{
-				type:"account_roles_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"account_roles_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"account_roles_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		account_roles_by_pk:{
-			id:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		accounts:{
 			distinct_on:{
 				type:"accounts_select_column",
@@ -5474,6 +5328,70 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		diem_in_circulation_dynamic:{
+			distinct_on:{
+				type:"diem_in_circulation_dynamic_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"diem_in_circulation_dynamic_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"diem_in_circulation_dynamic_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		diem_in_circulation_dynamic_aggregate:{
+			distinct_on:{
+				type:"diem_in_circulation_dynamic_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"diem_in_circulation_dynamic_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"diem_in_circulation_dynamic_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		diem_in_circulation_realtime_aggregates:{
@@ -6516,63 +6434,6 @@ export const ReturnTypes: Record<string,any> = {
 		ttl:"Int",
 		refresh:"Boolean"
 	},
-	account_roles:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_aggregate:{
-		aggregate:"account_roles_aggregate_fields",
-		nodes:"account_roles"
-	},
-	account_roles_aggregate_fields:{
-		avg:"account_roles_avg_fields",
-		count:"Int",
-		max:"account_roles_max_fields",
-		min:"account_roles_min_fields",
-		stddev:"account_roles_stddev_fields",
-		stddev_pop:"account_roles_stddev_pop_fields",
-		stddev_samp:"account_roles_stddev_samp_fields",
-		sum:"account_roles_sum_fields",
-		var_pop:"account_roles_var_pop_fields",
-		var_samp:"account_roles_var_samp_fields",
-		variance:"account_roles_variance_fields"
-	},
-	account_roles_avg_fields:{
-		id:"Float"
-	},
-	account_roles_max_fields:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_min_fields:{
-		id:"Int",
-		name:"String"
-	},
-	account_roles_mutation_response:{
-		affected_rows:"Int",
-		returning:"account_roles"
-	},
-	account_roles_stddev_fields:{
-		id:"Float"
-	},
-	account_roles_stddev_pop_fields:{
-		id:"Float"
-	},
-	account_roles_stddev_samp_fields:{
-		id:"Float"
-	},
-	account_roles_sum_fields:{
-		id:"Int"
-	},
-	account_roles_var_pop_fields:{
-		id:"Float"
-	},
-	account_roles_var_samp_fields:{
-		id:"Float"
-	},
-	account_roles_variance_fields:{
-		id:"Float"
-	},
 	accounts:{
 		address:"bpchar",
 		authentication_key:"String",
@@ -6867,6 +6728,128 @@ export const ReturnTypes: Record<string,any> = {
 		status:"Float",
 		transaction_version:"Float"
 	},
+	diem_in_circulation_dynamic:{
+		burns:"bigint",
+		currency:"bpchar",
+		mints:"bigint",
+		net:"bigint",
+		timestamp:"timestamptz",
+		total_burns:"bigint",
+		total_mints:"bigint",
+		total_net:"bigint",
+		version:"bigint"
+	},
+	diem_in_circulation_dynamic_aggregate:{
+		aggregate:"diem_in_circulation_dynamic_aggregate_fields",
+		nodes:"diem_in_circulation_dynamic"
+	},
+	diem_in_circulation_dynamic_aggregate_fields:{
+		avg:"diem_in_circulation_dynamic_avg_fields",
+		count:"Int",
+		max:"diem_in_circulation_dynamic_max_fields",
+		min:"diem_in_circulation_dynamic_min_fields",
+		stddev:"diem_in_circulation_dynamic_stddev_fields",
+		stddev_pop:"diem_in_circulation_dynamic_stddev_pop_fields",
+		stddev_samp:"diem_in_circulation_dynamic_stddev_samp_fields",
+		sum:"diem_in_circulation_dynamic_sum_fields",
+		var_pop:"diem_in_circulation_dynamic_var_pop_fields",
+		var_samp:"diem_in_circulation_dynamic_var_samp_fields",
+		variance:"diem_in_circulation_dynamic_variance_fields"
+	},
+	diem_in_circulation_dynamic_avg_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_max_fields:{
+		burns:"bigint",
+		currency:"bpchar",
+		mints:"bigint",
+		net:"bigint",
+		timestamp:"timestamptz",
+		total_burns:"bigint",
+		total_mints:"bigint",
+		total_net:"bigint",
+		version:"bigint"
+	},
+	diem_in_circulation_dynamic_min_fields:{
+		burns:"bigint",
+		currency:"bpchar",
+		mints:"bigint",
+		net:"bigint",
+		timestamp:"timestamptz",
+		total_burns:"bigint",
+		total_mints:"bigint",
+		total_net:"bigint",
+		version:"bigint"
+	},
+	diem_in_circulation_dynamic_stddev_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_stddev_pop_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_stddev_samp_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_sum_fields:{
+		burns:"bigint",
+		mints:"bigint",
+		net:"bigint",
+		total_burns:"bigint",
+		total_mints:"bigint",
+		total_net:"bigint",
+		version:"bigint"
+	},
+	diem_in_circulation_dynamic_var_pop_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_var_samp_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
+	diem_in_circulation_dynamic_variance_fields:{
+		burns:"Float",
+		mints:"Float",
+		net:"Float",
+		total_burns:"Float",
+		total_mints:"Float",
+		total_net:"Float",
+		version:"Float"
+	},
 	diem_in_circulation_realtime_aggregates:{
 		currency:"bpchar",
 		timestamp:"timestamptz",
@@ -7038,8 +7021,6 @@ export const ReturnTypes: Record<string,any> = {
 		version:"Float"
 	},
 	mutation_root:{
-		delete_account_roles:"account_roles_mutation_response",
-		delete_account_roles_by_pk:"account_roles",
 		delete_accounts:"accounts_mutation_response",
 		delete_accounts_balances:"accounts_balances_mutation_response",
 		delete_accounts_balances_by_pk:"accounts_balances",
@@ -7060,8 +7041,6 @@ export const ReturnTypes: Record<string,any> = {
 		delete_sentpayment_events_by_pk:"sentpayment_events",
 		delete_transactions:"transactions_mutation_response",
 		delete_transactions_by_pk:"transactions",
-		insert_account_roles:"account_roles_mutation_response",
-		insert_account_roles_one:"account_roles",
 		insert_accounts:"accounts_mutation_response",
 		insert_accounts_balances:"accounts_balances_mutation_response",
 		insert_accounts_balances_one:"accounts_balances",
@@ -7082,8 +7061,6 @@ export const ReturnTypes: Record<string,any> = {
 		insert_sentpayment_events_one:"sentpayment_events",
 		insert_transactions:"transactions_mutation_response",
 		insert_transactions_one:"transactions",
-		update_account_roles:"account_roles_mutation_response",
-		update_account_roles_by_pk:"account_roles",
 		update_accounts:"accounts_mutation_response",
 		update_accounts_balances:"accounts_balances_mutation_response",
 		update_accounts_balances_by_pk:"accounts_balances",
@@ -7205,9 +7182,6 @@ export const ReturnTypes: Record<string,any> = {
 		transaction_version:"Float"
 	},
 	query_root:{
-		account_roles:"account_roles",
-		account_roles_aggregate:"account_roles_aggregate",
-		account_roles_by_pk:"account_roles",
 		accounts:"accounts",
 		accounts_aggregate:"accounts_aggregate",
 		accounts_balances:"accounts_balances",
@@ -7217,6 +7191,8 @@ export const ReturnTypes: Record<string,any> = {
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
 		burn_events_by_pk:"burn_events",
+		diem_in_circulation_dynamic:"diem_in_circulation_dynamic",
+		diem_in_circulation_dynamic_aggregate:"diem_in_circulation_dynamic_aggregate",
 		diem_in_circulation_realtime_aggregates:"diem_in_circulation_realtime_aggregates",
 		diem_in_circulation_realtime_aggregates_aggregate:"diem_in_circulation_realtime_aggregates_aggregate",
 		diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",
@@ -7521,9 +7497,6 @@ export const ReturnTypes: Record<string,any> = {
 		transaction_version:"Float"
 	},
 	subscription_root:{
-		account_roles:"account_roles",
-		account_roles_aggregate:"account_roles_aggregate",
-		account_roles_by_pk:"account_roles",
 		accounts:"accounts",
 		accounts_aggregate:"accounts_aggregate",
 		accounts_balances:"accounts_balances",
@@ -7533,6 +7506,8 @@ export const ReturnTypes: Record<string,any> = {
 		burn_events:"burn_events",
 		burn_events_aggregate:"burn_events_aggregate",
 		burn_events_by_pk:"burn_events",
+		diem_in_circulation_dynamic:"diem_in_circulation_dynamic",
+		diem_in_circulation_dynamic_aggregate:"diem_in_circulation_dynamic_aggregate",
 		diem_in_circulation_realtime_aggregates:"diem_in_circulation_realtime_aggregates",
 		diem_in_circulation_realtime_aggregates_aggregate:"diem_in_circulation_realtime_aggregates_aggregate",
 		diem_in_circulation_realtime_aggregates_by_pk:"diem_in_circulation_realtime_aggregates",

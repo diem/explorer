@@ -1,25 +1,31 @@
 import ApiRequestComponent from '../../ApiRequestComponent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import MainWrapper from '../../MainWrapper'
-import Table from '../../Table'
+import Table, { column } from '../../Table'
 import React from 'react'
 import {
   currencyInCirculationPageQuery,
-  currencyInCirculationPageQueryType, diemInCirculationHistoryQuery,
+  currencyInCirculationPageQueryType,
+  diemInCirculationHistoryQuery,
   DiemInCirculationHistoryType
 } from '../../api_clients/AnalyticsQueries'
-import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import { Line, LineChart, XAxis, YAxis } from 'recharts'
 import moment from 'moment'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 
+interface DiemCurrency {
+  currency: string,
+  totalNetValue: number,
+  timestamp: string,
+}
+
 interface DiemCurrencies {
-  xus: GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
-  xdx: GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
+  xus?: DiemCurrency
+  xdx?: DiemCurrency
 }
 
 type DiemCirculationHistory = {
-  totalNetValue: number
+  totalNet: number
   timestamp: string
 }
 
@@ -43,29 +49,18 @@ const DiemInCirculationGraph: React.FC<{ data: DiemCirculationHistory[] }> = ({ 
 }
 
 const TotalDiemInCirculationTable: React.FC<{ diemCurrencies: DiemCurrencies }> = ({ diemCurrencies }) => {
-  const columns = [
-    {
-      Header: 'Currency',
-      accessor: 'currency'
-    },
-    {
-      Header: 'Total Net Value',
-      accessor: 'total_net_value'
-    },
-    {
-      Header: 'Timestamp',
-      accessor: 'timestamp'
-    },
-  ]
-
-  const data = Object.values(diemCurrencies).reduce((acc = [], currency) => {
+  const data: DiemCurrency[] = Object.values(diemCurrencies).reduce((acc = [], currency) => {
     return acc.concat(currency)
   })
 
   return (
     <>
       <h3 className="mb-2">Total Diem In Circulation</h3>
-      <Table columns={columns} data={data}/>
+      <Table columns={[
+        column('Currency', 'currency'),
+        column('Total Net Value', 'totalNetValue'),
+        column('Timestamp', 'timestamp'),
+      ]} data={data}/>
     </>
   )
 }
@@ -74,7 +69,7 @@ const DiemInCirculationPageWithResponse: React.FC<{ data: DiemInCirculationRespo
   return (
     <MainWrapper>
       <>
-        <TotalDiemInCirculationTable diemCurrencies={data.diemCurrencies} />
+        <TotalDiemInCirculationTable diemCurrencies={data.diemCurrencies}/>
         <DiemInCirculationGraph data={data.diemCirculationHistory}/>
       </>
     </MainWrapper>
@@ -84,39 +79,48 @@ const DiemInCirculationPageWithResponse: React.FC<{ data: DiemInCirculationRespo
 const request = async (): Promise<DataOrErrors<DiemInCirculationResponse>> => {
   const xusOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XUS'))
   const xdxOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XDX'))
-  const history = await postQueryToAnalyticsApi<DiemInCirculationHistoryType>(diemInCirculationHistoryQuery())
-  if ('errors' in xusOrErrors || 'errors' in xdxOrErrors || 'errors' in history) {
+  const historyOrErrors = await postQueryToAnalyticsApi<DiemInCirculationHistoryType>(diemInCirculationHistoryQuery('XUS'))
+
+  if ('errors' in xusOrErrors || 'errors' in xdxOrErrors || 'errors' in historyOrErrors) {
     return {
       // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-      errors: [].concat(xusOrErrors.errors).concat(xdxOrErrors.errors).concat(history.errors).filter((error) => error !== null)
+      errors: [].concat(xusOrErrors.errors).concat(xdxOrErrors.errors).concat(historyOrErrors.errors).filter((error) => error !== null)
     }
   } else {
-    console.log(history)
+    const xdxAggregate = xdxOrErrors.data.diem_in_circulation_realtime_aggregates[0]
+    const xusAggregate = xusOrErrors.data.diem_in_circulation_realtime_aggregates[0]
+
+    const diemCurrencies = {
+      xdx: xdxAggregate && {
+        // TODO: format this for human readability
+        timestamp: moment(xdxAggregate.timestamp).format(),
+        totalNetValue: xdxAggregate.total_net_value,
+        currency: xdxAggregate.currency
+      },
+      xus: xusAggregate && {
+        timestamp: moment(xusAggregate.timestamp).format(),
+        totalNetValue: xusAggregate.total_net_value,
+        currency: xusAggregate.currency
+      },
+    }
     return {
       data: {
-        diemCurrencies: {
-          xdx: xdxOrErrors.data.diem_in_circulation_realtime_aggregates ? xdxOrErrors.data.diem_in_circulation_realtime_aggregates[0] : [],
-          xus: xusOrErrors.data.diem_in_circulation_realtime_aggregates[0]
-        },
-        diemCirculationHistory: history.data!.diem_in_circulation_realtime_aggregates.map(item => ({
+        diemCurrencies,
+        diemCirculationHistory: historyOrErrors.data.diem_in_circulation_dynamic.map(item => ({
           timestamp: item.timestamp,
-          totalNetValue: item.total_net_value
+          totalNet: item.total_net
         }))
       },
     }
   }
 }
 
-
 export default function DiemInCirculationPage() {
   return (
     <ApiRequestComponent request={request}>
       <DiemInCirculationPageWithResponse data={{
-        diemCurrencies: {
-          xdx: [],
-          xus: []
-        },
-        diemCirculationHistory: []
+        diemCurrencies: {},
+        diemCirculationHistory: [],
       }}/>
     </ApiRequestComponent>
   )

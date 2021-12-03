@@ -202,7 +202,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 }
 
 // eslint-disable-next-line camelcase
-export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
+export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: [{ currency: string, total_net_value: number, timestamp: string}] | [] }
 export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -259,24 +259,19 @@ export function top10Transactions(currency: KnownCurrency) {
 }
 
 // eslint-disable-next-line camelcase
-export type DiemInCirculationHistoryType = { diem_in_circulation_realtime_aggregates: { timestamp: string, total_net_value: number }[] }
-export function diemInCirculationHistoryQuery() {
-  const now = moment()
-  const TODAY = now.format()
-  const ONE_WEEK = now.subtract(40, 'days').format()
+export type DiemInCirculationHistoryType = { diem_in_circulation_dynamic: { timestamp: string, total_net: number }[] }
+export function diemInCirculationHistoryQuery(currency: KnownCurrency) {
+  const TODAY = moment().format()
+  const ONE_WEEK_AGO = moment().subtract(7, 'days').format()
 
-  console.log(ONE_WEEK)
-  // wrong   => 2021-12-02T12:31:42-08:00
-  // correct => 2021-10-29T01:22:42+00:00
-  console.log(TODAY)
   return {
-    diem_in_circulation_realtime_aggregates: [
+    diem_in_circulation_dynamic: [
       {
-        where: { timestamp: { _gt: ONE_WEEK, _lt: TODAY } },
-        limit: 100
+        where: { timestamp: { _gt: ONE_WEEK_AGO, _lt: TODAY }, currency: { _eq: currency } },
+        order_by: [{ timestamp: order_by.desc }],
       },
       {
-        total_net_value: true,
+        total_net: true,
         timestamp: true
       },
     ],
