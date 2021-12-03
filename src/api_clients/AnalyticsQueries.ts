@@ -1,6 +1,6 @@
-/* eslint-disable camelcase */
 import {
   GraphQLTypes,
+  /* eslint-disable camelase */
   order_by,
 } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
@@ -141,6 +141,23 @@ export function accountcreationEventsQuery() {
         authentication_key: true,
         human_name: true,
         compliance_key_rotation_events_key: true,
+      },
+    ],
+  }
+}
+
+export type AccountBalancesQueryType = GraphQLTypes['query_root']['accounts_balances']
+export function top10AccountsQuery(currency: KnownCurrency) {
+  return {
+    accounts_balances: [
+      {
+        limit: 10,
+        where: { currency: { _eq: currency } },
+        order_by: [{ balance: order_by.desc }],
+      },
+      {
+        address: true,
+        balance: true
       },
     ],
   }

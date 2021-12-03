@@ -1,0 +1,35 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query{accounts_balances(limit:10,where:{currency:{_eq:\"XUS\"}},order_by:[{balance:desc}]){address balance}"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+        "accounts": [
+          {
+            "address": "0000000000000000000000000B1E55ED",
+            "balance": 5432
+          },
+          {
+            "address": "00000000000000000000000000000001",
+            "balance": 789
+          }
+        ]
+      }
+    }
+  }
+}
