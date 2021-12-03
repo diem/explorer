@@ -46,7 +46,7 @@ function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
 }
 
 async function getTopAccounts(currency: KnownCurrency): Promise<DataOrErrors<Top10AccountsTableProps>> {
-  const result: DataOrErrors<TopAccountEvent[]> = await postQueryToAnalyticsApi(top10AccountsQuery(currency), 'accounts')
+  const result: DataOrErrors<TopAccountEvent[]> = await postQueryToAnalyticsApi(top10AccountsQuery(currency), 'accounts_balances')
   if ('data' in result) {
     return { data: { topAccounts: result.data } }
   } else {

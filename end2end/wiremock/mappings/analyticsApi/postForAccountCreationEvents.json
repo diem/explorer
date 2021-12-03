@@ -6,7 +6,7 @@
       {
         "matchesJsonPath": {
           "expression": "$.query",
-          "contains": "query{accounts(limit:10,order_by:[{ transaction_version:"
+          "contains": "query{accounts(limit:10,order_by:[{transaction_version:"
         }
       }
     ]

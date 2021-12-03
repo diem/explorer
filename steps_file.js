@@ -31,6 +31,11 @@ module.exports = function () {
       this.click(address)
       this.seeInCurrentUrl(`/address/${address}`)
       this.goBack()
+    },
+
+    seeInsideTestId(text, testId) {
+      // eslint-disable-next-line no-undef
+      locate(`[data-test-id=${testId}]`).withText(text)
     }
   })
 }

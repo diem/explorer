@@ -1,19 +1,15 @@
 Feature('leaderboard-page')
 
 function seeRowHeaders(I) {
-  I.within(I.getByTestId('top-10-transactions'), () => {
-    I.see('Ranking')
-    I.see('Version')
-    I.see('Amount (XUS)')
-  })
+  I.seeInsideTestId('Ranking', 'top-10-transactions')
+  I.seeInsideTestId('Version', 'top-10-transactions')
+  I.seeInsideTestId('Amount (XUS)', 'top-10-transactions')
 }
 
 function seeRowData(I) {
-  I.within(I.getByTestId('top-10-transactions'), () => {
-    I.see('1')
-    I.see('2345')
-    I.see('5432')
-  })
+  I.seeInsideTestId('1', 'top-10-transactions')
+  I.seeInsideTestId('2345', 'top-10-transactions')
+  I.seeInsideTestId('5432', 'top-10-transactions')
 }
 
 Scenario('navigating to the leaderboard page', ({ I }) => {
@@ -33,19 +29,15 @@ Scenario('displaying the top 10 transactions in the past 24 hours', ({ I }) => {
 
 Scenario('displaying the top 10 accounts in the past 24 hours', ({ I }) => {
   const seeRowHeaders = (I) => {
-    I.within(I.getByTestId('top-10-accounts'), () => {
-      I.see('Rank')
-      I.see('Address')
-      I.see('Amount (XUS)')
-    })
+    I.seeInsideTestId('Rank', 'top-10-accounts')
+    I.seeInsideTestId('Address', 'top-10-accounts')
+    I.seeInsideTestId('Amount (XUS)', 'top-10-accounts')
   }
 
   const seeRowData = (I) => {
-    I.within(I.getByTestId('top-10-accounts'), () => {
-      I.see('1')
-      I.see('0000000000000000000000000B1E55ED')
-      I.see('5432')
-    })
+    I.seeInsideTestId('1', 'top-10-accounts')
+    I.seeInsideTestId('0000000000000000000000000B1E55ED', 'top-10-accounts')
+    I.seeInsideTestId('5432', 'top-10-accounts')
   }
 
   I.amOnPage('/leaderboard')

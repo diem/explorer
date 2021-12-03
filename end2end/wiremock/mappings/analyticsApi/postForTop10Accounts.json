@@ -19,7 +19,7 @@
     },
     "jsonBody": {
       "data": {
-        "accounts": [
+        "accounts_balances": [
           {
             "address": "0000000000000000000000000B1E55ED",
             "balance": 5432
