@@ -12,6 +12,7 @@ import {
 import { Line, LineChart, XAxis, YAxis } from 'recharts'
 import moment from 'moment'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
+import { Card } from 'react-bootstrap'
 
 interface DiemCurrency {
   currency: string,
@@ -35,16 +36,19 @@ type DiemInCirculationResponse = {
 }
 
 const DiemInCirculationGraph: React.FC<{ data: DiemCirculationHistory[] }> = ({ data }) => {
-  console.log(data)
   return (
-    <>
-      <h3 className="mb-2">Diem In Circulation History In Past Week</h3>
-      <LineChart width={500} height={300} data={data}>
-        <XAxis dataKey="timestamp" tickFormatter={(timestamp) => moment(timestamp).format('MM/DD')}/>
-        <YAxis/>
-        <Line type="monotone" dataKey="totalNetValue" stroke="#82ca9d"/>
-      </LineChart>
-    </>
+    <Card data-testid='circulation-graph-card' data-test-points-quantity={data.length}>
+      <Card.Header>
+        Diem In Circulation History In Past Week
+      </Card.Header>
+      <Card.Body>
+        <LineChart width={500} height={300} data={data}>
+          <XAxis dataKey="timestamp" tickFormatter={(timestamp) => moment(timestamp).format('MM/DD HH:mm')}/>
+          <YAxis/>
+          <Line type="monotone" dataKey="totalNet" stroke="#82ca9d"/>
+        </LineChart>
+      </Card.Body>
+    </Card>
   )
 }
 
@@ -66,11 +70,18 @@ const TotalDiemInCirculationTable: React.FC<{ diemCurrencies: DiemCurrencies }> 
 }
 
 const DiemInCirculationPageWithResponse: React.FC<{ data: DiemInCirculationResponse }> = ({ data }) => {
+  let historyPoints: DiemCirculationHistory[] = data.diemCirculationHistory
+  if (historyPoints.length === 0 && 'xus' in data.diemCurrencies) {
+    historyPoints = [{
+      totalNet: data.diemCurrencies.xus!.totalNetValue,
+      timestamp: data.diemCurrencies.xus!.timestamp,
+    }]
+  }
   return (
     <MainWrapper>
       <>
         <TotalDiemInCirculationTable diemCurrencies={data.diemCurrencies}/>
-        <DiemInCirculationGraph data={data.diemCirculationHistory}/>
+        <DiemInCirculationGraph data={historyPoints}/>
       </>
     </MainWrapper>
   )

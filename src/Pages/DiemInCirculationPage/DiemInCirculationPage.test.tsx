@@ -34,13 +34,13 @@ const mockHistory: DiemInCirculationHistoryType = {
   diem_in_circulation_dynamic: [
     {
       timestamp: '2021-10-30T01:00:00+00:00',
-      total_net: 1040002525680000
+      total_net: 1040002525680000,
     },
     {
       timestamp: '2021-10-30T00:00:00+00:00',
-      total_net: 1040002502000000
-    }
-  ]
+      total_net: 1040002502000000,
+    },
+  ],
 }
 
 const renderSubject = async (
@@ -55,8 +55,8 @@ const renderSubject = async (
     .mockResolvedValueOnce({ data: historyResponse })
   render(
     <BrowserRouter>
-      <DiemInCirculationPage/>
-    </BrowserRouter>
+      <DiemInCirculationPage />
+    </BrowserRouter>,
   )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
@@ -66,10 +66,10 @@ describe('DiemInCirculationPage', () => {
     await renderSubject()
     expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(3)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
-      currencyInCirculationPageQuery('XUS')
+      currencyInCirculationPageQuery('XUS'),
     )
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
-      currencyInCirculationPageQuery('XDX')
+      currencyInCirculationPageQuery('XDX'),
     )
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(diemInCirculationHistoryQuery('XUS'))
   })
@@ -95,17 +95,18 @@ describe('DiemInCirculationPage', () => {
       await renderSubject()
       expect(screen.queryByText('Diem In Circulation History In Past Week')).toBeInTheDocument()
     })
-    it('should use the historical data when there is historical data for the past week', () => {
-      // mock a historical data response which contains some diem_in_circulation_dynamic rows
-      // assert that the number of points in the graph is equal to the number of mocked rows
-      // if it is feasible, assert that data about the points corresponds to the rows
-      throw new Error('not implemented')
+    it('should use the historical data when there is historical data for the past week', async () => {
+      await renderSubject()
+
+      const points = screen.queryByTestId('circulation-graph-card')!.getAttribute('data-test-points-quantity')!
+      const expectedPoints = mockHistory.diem_in_circulation_dynamic.length.toString()
+      expect(points).toEqual(expectedPoints)
     })
-    it('should use the current XUS in circulation when there is no historical data in the past week', () => {
-      // mock a historical data response that is empty, i.e. []
-      // also mock a diem in circulation response for XUS
-      // assert that there is a single data point in the graph, corresponding to the diem in circulation response
-      throw new Error('not implemented')
+    it('should use the current XUS in circulation when there is no historical data in the past week', async () => {
+      await renderSubject(mockXusInCirculation, mockXdxInCirculation, { diem_in_circulation_dynamic: [] })
+
+      const points = screen.queryByTestId('circulation-graph-card')!.getAttribute('data-test-points-quantity')!
+      expect(points).toEqual('1')
     })
   })
 })
