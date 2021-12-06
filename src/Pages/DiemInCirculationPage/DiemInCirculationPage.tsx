@@ -104,12 +104,12 @@ const request = async (): Promise<DataOrErrors<DiemInCirculationResponse>> => {
     const diemCurrencies = {
       xdx: xdxAggregate && {
         // TODO: format this for human readability
-        timestamp: moment(xdxAggregate.timestamp).format(),
+        timestamp: moment(xdxAggregate.timestamp).toISOString(false),
         totalNetValue: xdxAggregate.total_net_value,
         currency: xdxAggregate.currency
       },
       xus: xusAggregate && {
-        timestamp: moment(xusAggregate.timestamp).format(),
+        timestamp: moment(xusAggregate.timestamp).toISOString(false),
         totalNetValue: xusAggregate.total_net_value,
         currency: xusAggregate.currency
       },

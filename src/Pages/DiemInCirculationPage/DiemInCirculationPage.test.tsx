@@ -86,7 +86,7 @@ describe('DiemInCirculationPage', () => {
     const expectedNetValue = mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.total_net_value
     expect(screen.queryByText(expectedNetValue)).toBeInTheDocument()
 
-    const expectedTimestamp = moment(mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.timestamp).format()
+    const expectedTimestamp = moment(mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.timestamp).toISOString(false)
     expect(screen.queryByText(expectedTimestamp)).toBeInTheDocument()
   })
 

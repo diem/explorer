@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{diem_in_circulation_dynamic"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+        "diem_in_circulation_dynamic": [
+          {
+            "totalNet": 1,
+            "timestamp":"2021-10-22T12:22:18.660Z"
+          },
+          {
+            "totalNet": 10,
+            "timestamp": "2021-10-23T12:22:18.660Z"
+          },
+          {
+            "totalNet": 100,
+            "timestamp": "2021-10-24T12:22:18.660Z"
+          },
+          {
+            "totalNet": 100000000000000000,
+            "timestamp": "2021-10-25T12:22:18.660Z"
+          }
+        ]
+      }
+    }
+  }
+}
