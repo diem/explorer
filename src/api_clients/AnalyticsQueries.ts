@@ -202,7 +202,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 }
 
 // eslint-disable-next-line camelcase
-export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: ['diem_in_circulation_realtime_aggregates'][] }
+export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: [{ currency: string, total_net_value: number, timestamp: string}] | [] }
 export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -253,6 +253,26 @@ export function top10Transactions(currency: KnownCurrency) {
       {
         amount: true,
         transaction_version: true,
+      },
+    ],
+  }
+}
+
+// eslint-disable-next-line camelcase
+export type DiemInCirculationHistoryType = { diem_in_circulation_dynamic: { timestamp: string, total_net: number }[] }
+export function diemInCirculationHistoryQuery(currency: KnownCurrency) {
+  const TODAY = moment().format()
+  const ONE_WEEK_AGO = moment().subtract(7, 'days').format()
+
+  return {
+    diem_in_circulation_dynamic: [
+      {
+        where: { timestamp: { _gt: ONE_WEEK_AGO, _lt: TODAY }, currency: { _eq: currency } },
+        order_by: [{ timestamp: order_by.desc }],
+      },
+      {
+        total_net: true,
+        timestamp: true
       },
     ],
   }

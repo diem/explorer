@@ -5,7 +5,7 @@
     "bodyPatterns" : [ {
       "matchesJsonPath" : {
         "expression": "$.query",
-        "contains": "currency:{_eq:\"XDX\"}"
+        "contains": "query{diem_in_circulation_realtime_aggregates(limit:1,where:{currency:{_eq:\"XDX\"}},order_by:[{timestamp:desc}]){currency total_net_value timestamp}}"
       }
     } ]
   },
