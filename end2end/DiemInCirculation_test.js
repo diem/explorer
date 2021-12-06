@@ -13,15 +13,25 @@ function seeRowData(I) {
 }
 
 function seeAbscissaLabels(I) {
-  I.see('10/22')
-  I.see('10/23')
-  I.see('10/24')
-  I.see('10/25')
+  // eslint-disable-next-line no-undef
+  within('.recharts-wrapper', () => {
+    I.see('10/22')
+    I.see('10/25')
+  })
+}
+
+function seeOrdinateLabels(I) {
+  // eslint-disable-next-line no-undef
+  within('.recharts-wrapper', () => {
+    I.see('0')
+    I.see('1000')
+  })
 }
 
 function seeGraph(I) {
   I.see('Diem In Circulation History In Past Week')
   seeAbscissaLabels(I)
+  seeOrdinateLabels(I)
 }
 
 Scenario('navigating to diem in circulation button', ({ I }) => {

@@ -22,19 +22,19 @@
       "data": {
         "diem_in_circulation_dynamic": [
           {
-            "totalNet": 1,
+            "total_net": 1,
             "timestamp":"2021-10-22T12:22:18.660Z"
           },
           {
-            "totalNet": 10,
+            "total_net": 10,
             "timestamp": "2021-10-23T12:22:18.660Z"
           },
           {
-            "totalNet": 100,
+            "total_net": 100,
             "timestamp": "2021-10-24T12:22:18.660Z"
           },
           {
-            "totalNet": 100000000000000000,
+            "total_net": 1000,
             "timestamp": "2021-10-25T12:22:18.660Z"
           }
         ]
