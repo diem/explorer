@@ -6,10 +6,74 @@
   "response": {
     "status": 200,
     "headers": {
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "*"
     },
-    "body": "[{\"emoji\": \"\uD83E\uDD76, Cold face is intentionally silly data to signal that raw resources are rendered on page.\"},{\"type\": \"0x1::Event::EventHandleGenerator\",\"value\": {\"addr\": \"0x1fc5dd16a92e82a281a063e308ebcca9\",\"counter\": \"2\"}},{\"type\": \"0x1::Roles::RoleId\",\"value\": {\"role_id\": \"4\"}},{\"type\": \"0x1::DiemAccount::DiemAccount\",\"value\": {\"authentication_key\": \"0xd8feed37ebabc4db0e9ca2601b288d451fc5dd16a92e82a281a063e308ebcca9\",\"key_rotation_capability\": {\"vec\": [{\"account_address\": \"0x1fc5dd16a92e82a281a063e308ebcca9\"}]},\"received_events\": {\"counter\": \"0\",\"guid\": \"0x00000000000000001fc5dd16a92e82a281a063e308ebcca9\"},\"sent_events\": {\"counter\": \"0\",\"guid\": \"0x01000000000000001fc5dd16a92e82a281a063e308ebcca9\"},\"sequence_number\": \"143\",\"withdraw_capability\": {\"vec\": [{\"account_address\": \"0x1fc5dd16a92e82a281a063e308ebcca9\"}]}}},{\"type\": \"0x1::AccountFreezing::FreezingBit\",\"value\": {\"is_frozen\": false}},{\"type\": {\"type\": \"struct\",\"address\": \"0x1\",\"module\": \"ValidatorOperatorConfig\",\"name\": \"ValidatorOperatorConfig\",\"generic_type_params\": []},\"value\": {\"human_name\": \"0x616e63686f72616765\"}}]"
+    "jsonBody": [
+      {
+        "emoji": "🥶, Cold face is intentionally silly data to signal that raw resources are rendered on page."
+      },
+      {
+        "type": "0x1::Event::EventHandleGenerator",
+        "value": {
+          "addr": "0x1fc5dd16a92e82a281a063e308ebcca9",
+          "counter": "2"
+        }
+      },
+      {
+        "type": "0x1::Roles::RoleId",
+        "value": {
+          "role_id": "4"
+        }
+      },
+      {
+        "type": "0x1::DiemAccount::DiemAccount",
+        "value": {
+          "authentication_key": "0xd8feed37ebabc4db0e9ca2601b288d451fc5dd16a92e82a281a063e308ebcca9",
+          "key_rotation_capability": {
+            "vec": [
+              {
+                "account_address": "0x1fc5dd16a92e82a281a063e308ebcca9"
+              }
+            ]
+          },
+          "received_events": {
+            "counter": "0",
+            "guid": "0x00000000000000001fc5dd16a92e82a281a063e308ebcca9"
+          },
+          "sent_events": {
+            "counter": "0",
+            "guid": "0x01000000000000001fc5dd16a92e82a281a063e308ebcca9"
+          },
+          "sequence_number": "143",
+          "withdraw_capability": {
+            "vec": [
+              {
+                "account_address": "0x1fc5dd16a92e82a281a063e308ebcca9"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "0x1::AccountFreezing::FreezingBit",
+        "value": {
+          "is_frozen": false
+        }
+      },
+      {
+        "type": {
+          "type": "struct",
+          "address": "0x1",
+          "module": "ValidatorOperatorConfig",
+          "name": "ValidatorOperatorConfig",
+          "generic_type_params": []
+        },
+        "value": {
+          "human_name": "0x616e63686f72616765"
+        }
+      }
+    ]
   }
 }

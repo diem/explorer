@@ -60,43 +60,73 @@ const RecentTransactionsTable: React.FC<{ transactions: TransactionRow[] }> = ({
   ]} data={transactions} id='recentTransactions' />
 }
 
+const EventHandlesTable: React.FC<{ diemAccountResource: DiemAccountResource }> = ({ diemAccountResource }) => {
+  const eventHandleData = [
+    {
+      key: 'received_events',
+      ...diemAccountResource.value.received_events,
+    },
+    {
+      key: 'sent_events',
+      ...diemAccountResource.value.sent_events,
+    },
+  ]
+  return (
+    <Card data-testid='event-handles-card'>
+      <Card.Header className='Header'>Event Handles</Card.Header>
+      <Card.Body>
+        <Table
+          columns={[
+            column('Event Handle', 'key'),
+            column('Counter', 'counter'),
+            column('GUID', 'guid'),
+          ]}
+          data={eventHandleData} />
+      </Card.Body>
+    </Card>
+  )
+}
+
 function AccountPageWithResponse({
   data,
 }: {
   data: AccountPageWithResponseProps
 }) {
+  const diemAccountResource = data.resources.find(isDiemAccountResource) as DiemAccountResource | null
   return (
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        {!accountIsSupported(data) && <UnsupportedAccountCard/>}
-        <Balances resources={data.resources}/>
+        {!accountIsSupported(data) && <UnsupportedAccountCard />}
+        <Balances resources={data.resources} />
 
         <h2>Recent Transactions</h2>
-        <RecentTransactionsTable transactions={data.transactions}/>
+        <RecentTransactionsTable transactions={data.transactions} />
 
-        <SmartContractMethods modules={data.modules}/>
-        <SmartContractStructs modules={data.modules}/>
+        <SmartContractMethods modules={data.modules} />
+        <SmartContractStructs modules={data.modules} />
 
-        <Card className="mb-5">
+        {diemAccountResource && <Card className='mb-5'>
           <Card.Header>Sequence Number</Card.Header>
-          <Card.Body id="sequenceNumber">
-            {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.sequence_number}
+          <Card.Body id='sequenceNumber'>
+            {diemAccountResource.value.sequence_number}
           </Card.Body>
-        </Card>
+        </Card>}
 
-        <Card className="mb-5">
+        {diemAccountResource && <Card className='mb-5'>
           <Card.Header>Authentication Key</Card.Header>
-          <Card.Body id="authenticationKey">
-            {(data.resources.find(isDiemAccountResource) as DiemAccountResource)?.value.authentication_key}
+          <Card.Body id='authenticationKey'>
+            {diemAccountResource?.value.authentication_key}
           </Card.Body>
-        </Card>
+        </Card>}
+
+        {diemAccountResource && <EventHandlesTable diemAccountResource={diemAccountResource} />}
 
         <h2>Raw Resources</h2>
-        <JSONPretty data={data.resources} id="rawResources"/>
+        <JSONPretty data={data.resources} id='rawResources' />
 
         <h2>Raw Smart Contracts</h2>
-        <JSONPretty data={data.modules} id="rawModules"/>
+        <JSONPretty data={data.modules} id='rawModules' />
       </>
     </MainWrapper>
   )
@@ -126,7 +156,7 @@ async function getAccountData(
       data: {
         resources: resourcesResponse.data,
         modules: modulesResponse.data,
-        transactions: recentTransactions.data.map(transformAnalyticsTransactionIntoTransaction)
+        transactions: recentTransactions.data.map(transformAnalyticsTransactionIntoTransaction),
       },
     }
   }
@@ -136,13 +166,14 @@ interface AccountPageMatch {
   address: string
 }
 
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
+interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {
+}
 
 export default function AccountPage(props: AccountPageProps) {
   const nullData = {
     resources: [],
     modules: [],
-    transactions: []
+    transactions: [],
   }
 
   return (
@@ -150,7 +181,7 @@ export default function AccountPage(props: AccountPageProps) {
       request={getAccountData}
       args={[props.match.params.address.toUpperCase()]}
     >
-      <AccountPageWithResponse data={nullData}/>
+      <AccountPageWithResponse data={nullData} />
     </ApiRequestComponent>
   )
 }

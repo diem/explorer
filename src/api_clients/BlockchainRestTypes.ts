@@ -45,6 +45,14 @@ namespace Resources {
       value: {
         sequence_number: string
         authentication_key: string
+        received_events: {
+          counter: string,
+          guid: string,
+        }
+        sent_events: {
+          counter: string,
+          guid: string,
+        }
         [key: string]: string | {}
       }
     }
