@@ -31,6 +31,41 @@ Track the following tables:
 - `sentpayment_events`
 - `transactions`
 
+### Using the Makefile
+
+Explorer uses `make` to automate development tasks.
+In general, every development task related to the application lifecycle can be controlled via `make`.
+The following commands are provided:
+
+#### General
+- `start`: Launch the application and all runtime dependencies for ordinary local development
+- `stop`: Shut down the application and all runtime dependencies
+- `test`: Run all tests.
+Equivalent to running `integration_test`, `contract_test`, and `acceptance_test`
+- `lint`: Lint all application code.
+Returns a nonzero exit code if any issues are found
+- `ship`: Lints and tests all code, then, if successful, execute `git push`
+- `build`: Compile the application for deployment
+- `fmt`: Autoformat all application code with Prettier
+- `list`: Display all available Make targets
+- `lintfix`: Lint all application code and automatically fix issues that can be fixed.
+Returns a nonzero exit code if any unfixable issues are found
+
+#### Less Commonly Used
+- `integration_test`: Run Jest unit tests for the application
+- `contract_test`: Validate the GraphQL client is being used without type errors
+- `acceptance_test`: Run Codecept UI tests headlessly.
+In this configuration, the application uses Wiremock for all runtime dependencies
+- `acceptance_test_ui`: Run Codecept UI tests with the Codecept runner
+- `start_for_e2e`: Start the application and the dependencies that are used for acceptance tests (i.e. Wiremock)
+- `hasura_start`: Start the Hasura server, for local development
+- `hasura_stop`: Stop the Hasura server
+- `wiremock_start`: Start the Wiremock server, for acceptance tests
+- `wiremock_stop`: Stop the Wiremock server
+- `generate_diem_client`: Regenerate the auto-generated Diem blockchain client from the OpenAPI documentation.
+Edit the Makefile directly if you need to change the URL of the `openapi.yaml` file used.
+- `generate_gql_client`: Regenerate the auto-generated Zeus GraphQL client from the configuration of the Hasura server
+
 ## Helm Chart
 
 [Helm](https://helm.sh) must be installed to use the charts.
