@@ -2,20 +2,32 @@
   "request": {
     "method": "POST",
     "url": "/v1/graphql",
-    "bodyPatterns" : [ {
-      "matchesJsonPath" : {
-        "expression": "$.query",
-        "contains": "query{diem_in_circulation_realtime_aggregates(limit:1,where:{currency:{_eq:\"XUS\"}},order_by:[{timestamp:desc}]){currency total_net_value timestamp}}"
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{diem_in_circulation_realtime_aggregates(limit:1,where:{currency:{_eq:\"XUS\"}},order_by:[{timestamp:desc}]){currency total_net_value timestamp}}"
+        }
       }
-    } ]
+    ]
   },
   "response": {
     "status": 200,
     "headers": {
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "*"
     },
-    "body": "{\"data\":{\"diem_in_circulation_realtime_aggregates\":[{\"currency\":\"XUS\",\"total_net_value\":1040002525680000,\"timestamp\":\"2021-10-30T01:22:18.660956+00:00\"}]}}"
+    "jsonBody": {
+      "data": {
+        "diem_in_circulation_realtime_aggregates": [
+          {
+            "currency": "XUS",
+            "total_net_value": 1040002525680000,
+            "timestamp": "2021-10-30T01:22:18.660956+00:00"
+          }
+        ]
+      }
+    }
   }
 }

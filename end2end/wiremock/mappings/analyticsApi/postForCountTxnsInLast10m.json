@@ -2,20 +2,30 @@
   "request": {
     "method": "POST",
     "url": "/v1/graphql",
-    "bodyPatterns" : [ {
-      "matchesJsonPath" : {
-        "expression": "$.query",
-        "contains": "query{transactions_aggregate(order_by:"
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{transactions_aggregate(order_by:"
+        }
       }
-    } ]
+    ]
   },
   "response": {
     "status": 200,
     "headers": {
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "*"
     },
-    "body": "{\"data\":{\"transactions_aggregate\":{\"aggregate\" : {\"count\" : 25200}}}}"
+    "jsonBody": {
+      "data": {
+        "transactions_aggregate": {
+          "aggregate": {
+            "count": 25200
+          }
+        }
+      }
+    }
   }
 }

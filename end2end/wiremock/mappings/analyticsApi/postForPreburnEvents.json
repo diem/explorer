@@ -2,20 +2,97 @@
   "request": {
     "method": "POST",
     "url": "/v1/graphql",
-    "bodyPatterns" : [ {
-      "matchesJsonPath" : {
-        "expression": "$.query",
-        "contains": "query{preburn_events(limit:"
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.query",
+          "contains": "query{preburn_events(limit:"
+        }
       }
-    } ]
+    ]
   },
   "response": {
     "status": 200,
     "headers": {
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "*"
     },
-"body": "{\"data\": {\"preburn_events\": [{\"transaction_version\": 312039453,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 950000,\"currency\": \"XUS\"    },    {\"transaction_version\": 310352666,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 1010000,\"currency\": \"XUS\"    },    {\"transaction_version\": 309521880,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 1740000,\"currency\": \"XUS\"    },    {\"transaction_version\": 294527641,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 40000,\"currency\": \"XUS\"    },    {\"transaction_version\": 289417738,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"44932CDBBE47D3333382A59B25C566BF\",\"amount\": 30000,\"currency\": \"XUS\"    },    {\"transaction_version\": 289417613,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"44932CDBBE47D3333382A59B25C566BF\",\"amount\": 40000,\"currency\": \"XUS\"    },    {\"transaction_version\": 285506083,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 1850000,\"currency\": \"XUS\"    },    {\"transaction_version\": 275755616,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"CF9405939FD0262B8BB8F2D513F63E11\",\"amount\": 40000,\"currency\": \"XUS\"    },    {\"transaction_version\": 273561664,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"C408CB86863376934BD1019402EEFDB2\",\"amount\": 1650000,\"currency\": \"XUS\"    },    {\"transaction_version\": 272553192,\"commit_timestamp\": \"1970-01-01T00:00:00+00:00\",\"address\": \"C408CB86863376934BD1019402EEFDB2\",\"amount\": 1650000,\"currency\": \"XUS\"    }  ]}\n}"
-}
+    "jsonBody": {
+      "data": {
+        "preburn_events": [
+          {
+            "transaction_version": 312039453,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 950000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 310352666,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 1010000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 309521880,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 1740000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 294527641,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 40000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 289417738,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "44932CDBBE47D3333382A59B25C566BF",
+            "amount": 30000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 289417613,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "44932CDBBE47D3333382A59B25C566BF",
+            "amount": 40000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 285506083,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 1850000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 275755616,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "CF9405939FD0262B8BB8F2D513F63E11",
+            "amount": 40000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 273561664,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "C408CB86863376934BD1019402EEFDB2",
+            "amount": 1650000,
+            "currency": "XUS"
+          },
+          {
+            "transaction_version": 272553192,
+            "commit_timestamp": "1970-01-01T00:00:00+00:00",
+            "address": "C408CB86863376934BD1019402EEFDB2",
+            "amount": 1650000,
+            "currency": "XUS"
+          }
+        ]
+      }
+    }
+  }
 }
