@@ -1,8 +1,14 @@
 import { RouteComponentProps } from 'react-router-dom'
-import ApiRequestComponent from '../../ApiRequestComponent'
-import { getAccountModules, getAccountResources } from '../../api_clients/BlockchainRestClient'
+import ApiRequestComponent, {PlainErrorComponent, PlainLoadingComponent} from '../../ApiRequestComponent'
+import {
+  getAccountModules,
+  getAccountResources,
+} from '../../api_clients/BlockchainRestClient'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import { transactionsBySenderAddressQuery, transactionsQueryType } from '../../api_clients/AnalyticsQueries'
+import {
+  transactionsBySenderAddressQuery,
+  transactionsQueryType,
+} from '../../api_clients/AnalyticsQueries'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
@@ -20,23 +26,25 @@ import {
   Module,
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
-import { TransactionRow, transformAnalyticsTransactionIntoTransaction } from '../Common/TransactionModel'
+import {
+  TransactionRow,
+  transformAnalyticsTransactionIntoTransaction,
+} from '../Common/TransactionModel'
 
-interface AccountPageWithResponseProps {
-  resources: Resource[]
-  modules: Module[]
-  transactions: TransactionRow[]
-}
-
-function accountIsSupported(data: AccountPageWithResponseProps) {
-  const hasStructs = data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
-  const hasMethods = data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
+function accountIsSupported(data: { resources: Resource[], modules: Module[] }) {
+  const hasStructs =
+    data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
+  const hasMethods =
+    data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
   const hasBalance = data.resources.some(isBalanceResource)
 
   return hasStructs || hasMethods || hasBalance
 }
 
-function UnsupportedAccountCard() {
+function UnsupportedAccountCard({ data }: { data: { resources: Resource[], modules: Module[] } }) {
+  if (accountIsSupported(data)) {
+    return <></>
+  }
   return (
     <Alert variant={'warning'} style={{ width: '30rem' }}>
       <h4>Unsupported Account</h4>
@@ -51,29 +59,42 @@ function UnsupportedAccountCard() {
   )
 }
 
-const RecentTransactionsTable: React.FC<{ transactions: TransactionRow[] }> = ({ transactions }) => {
-  return <Table columns={[
-    column('Version', 'version', TransactionVersion),
-    column('Timestamp', 'commitTimestamp'),
-    column('Type', 'txnType'),
-    column('Status', 'status'),
-  ]} data={transactions} id='recentTransactions' />
+const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
+  data,
+}) => {
+  return (
+    <Table
+      columns={[
+        column('Version', 'version', TransactionVersion),
+        column('Timestamp', 'commitTimestamp'),
+        column('Type', 'txnType'),
+        column('Status', 'status'),
+      ]}
+      data={data}
+      id="recentTransactions"
+    />
+  )
 }
 
-const EventHandlesTable: React.FC<{ diemAccountResource: DiemAccountResource }> = ({ diemAccountResource }) => {
+const EventHandlesTable: React.FC<{
+  data: DiemAccountResource | null
+}> = ({ data }) => {
+  if (!data) {
+    return <></>
+  }
   const eventHandleData = [
     {
       key: 'received_events',
-      ...diemAccountResource.value.received_events,
+      ...data.value.received_events,
     },
     {
       key: 'sent_events',
-      ...diemAccountResource.value.sent_events,
+      ...data.value.sent_events,
     },
   ]
   return (
-    <Card data-testid='event-handles-card'>
-      <Card.Header className='Header'>Event Handles</Card.Header>
+    <Card data-testid="event-handles-card">
+      <Card.Header className="Header">Event Handles</Card.Header>
       <Card.Body>
         <Table
           columns={[
@@ -81,107 +102,177 @@ const EventHandlesTable: React.FC<{ diemAccountResource: DiemAccountResource }> 
             column('Counter', 'counter'),
             column('GUID', 'guid'),
           ]}
-          data={eventHandleData} />
+          data={eventHandleData}
+        />
       </Card.Body>
     </Card>
   )
 }
 
-function AccountPageWithResponse({
-  data,
-}: {
-  data: AccountPageWithResponseProps
-}) {
-  const diemAccountResource = data.resources.find(isDiemAccountResource) as DiemAccountResource | null
+function SequenceNumber({ data }: { data: DiemAccountResource | null }) {
+  if (!data) {
+    return <></>
+  }
   return (
-    <MainWrapper>
-      <>
-        <h1>Account Details</h1>
-        {!accountIsSupported(data) && <UnsupportedAccountCard />}
-        <Balances resources={data.resources} />
-
-        <h2>Recent Transactions</h2>
-        <RecentTransactionsTable transactions={data.transactions} />
-
-        <SmartContractMethods modules={data.modules} />
-        <SmartContractStructs modules={data.modules} />
-
-        {diemAccountResource && <Card className='mb-5'>
-          <Card.Header>Sequence Number</Card.Header>
-          <Card.Body id='sequenceNumber'>
-            {diemAccountResource.value.sequence_number}
-          </Card.Body>
-        </Card>}
-
-        {diemAccountResource && <Card className='mb-5'>
-          <Card.Header>Authentication Key</Card.Header>
-          <Card.Body id='authenticationKey'>
-            {diemAccountResource?.value.authentication_key}
-          </Card.Body>
-        </Card>}
-
-        {diemAccountResource && <EventHandlesTable diemAccountResource={diemAccountResource} />}
-
-        <h2>Raw Resources</h2>
-        <JSONPretty data={data.resources} id='rawResources' />
-
-        <h2>Raw Smart Contracts</h2>
-        <JSONPretty data={data.modules} id='rawModules' />
-      </>
-    </MainWrapper>
+    <Card className="mb-5">
+      <Card.Header>Sequence Number</Card.Header>
+      <Card.Body id="sequenceNumber">{data.value.sequence_number}</Card.Body>
+    </Card>
   )
 }
 
-async function getAccountData(
-  address: string,
-): Promise<DataOrErrors<AccountPageWithResponseProps>> {
-  const resourcesResponse = await getAccountResources(address)
-  const modulesResponse = await getAccountModules(address)
-  const recentTransactions = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsBySenderAddressQuery(address), 'transactions')
-
-  if ('errors' in resourcesResponse || 'errors' in modulesResponse || 'errors' in recentTransactions) {
-    const allErrors = []
-      // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-      .concat(resourcesResponse.errors)
-      // @ts-ignore 👆
-      .concat(modulesResponse.errors)
-      // @ts-ignore 👆
-      .concat(recentTransactions.errors)
-      .filter((error) => error !== null)
-    return {
-      errors: allErrors,
-    }
-  } else {
-    return {
-      data: {
-        resources: resourcesResponse.data,
-        modules: modulesResponse.data,
-        transactions: recentTransactions.data.map(transformAnalyticsTransactionIntoTransaction),
-      },
-    }
+function AuthenticationKey({ data }: { data: DiemAccountResource | null }) {
+  if (!data) {
+    return <></>
   }
+  return (
+    <Card className="mb-5">
+      <Card.Header>Authentication Key</Card.Header>
+      <Card.Body id="authenticationKey">
+        {data.value.authentication_key}
+      </Card.Body>
+    </Card>
+  )
 }
 
 interface AccountPageMatch {
   address: string
 }
 
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {
-}
+interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
 
 export default function AccountPage(props: AccountPageProps) {
-  const nullData = {
-    resources: [],
-    modules: [],
-    transactions: [],
-  }
+  const address = props.match.params.address.toUpperCase()
+
+  const resourcesResponse = getAccountResources(address)
+  const modulesResponse = getAccountModules(address)
+  const recentTransactions = postQueryToAnalyticsApi<transactionsQueryType>(
+    transactionsBySenderAddressQuery(address),
+    'transactions'
+  ).then((analyticsTransactionsOrError) => {
+    if ('data' in analyticsTransactionsOrError) {
+      return {
+        data: analyticsTransactionsOrError.data.map(
+          transformAnalyticsTransactionIntoTransaction
+        ),
+      }
+    } else {
+      return analyticsTransactionsOrError
+    }
+  })
+
+  const resourcesAndModulesResponse = Promise
+    .all([resourcesResponse, modulesResponse])
+    .then(([resourcesOrErrors, modulesOrErrors]) => {
+      if ('errors' in resourcesOrErrors || 'errors' in modulesOrErrors) {
+        const allErrors = []
+          // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+          .concat(resourcesOrErrors.errors)
+          // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+          .concat(modulesOrErrors.errors)
+          .filter(e => e !== null)
+        return { errors: allErrors }
+      } else {
+        return {
+          data: {
+            resources: resourcesOrErrors.data,
+            modules: modulesOrErrors.data,
+          }
+        }
+      }
+    })
+
+  const accountResourceResponse: Promise<
+    DataOrErrors<DiemAccountResource | null>
+  > = resourcesResponse.then((resourcesOrError) => {
+    if ('data' in resourcesOrError) {
+      return { data: resourcesOrError.data.find(isDiemAccountResource) as DiemAccountResource || null }
+    } else {
+      return resourcesOrError
+    }
+  })
 
   return (
-    <ApiRequestComponent
-      request={getAccountData}
-      args={[props.match.params.address.toUpperCase()]}
-    >
-      <AccountPageWithResponse data={nullData} />
-    </ApiRequestComponent>
+    <MainWrapper>
+      <>
+        <h1>Account Details</h1>
+        <ApiRequestComponent
+          request={() => resourcesAndModulesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <UnsupportedAccountCard data={{ modules: [], resources: [] }}/>
+        </ApiRequestComponent>
+        <ApiRequestComponent
+          request={() => resourcesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <Balances data={[]} />
+        </ApiRequestComponent>
+
+        <h2>Recent Transactions</h2>
+        <ApiRequestComponent
+          request={() => recentTransactions}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <RecentTransactionsTable data={[]} />
+        </ApiRequestComponent>
+
+        <ApiRequestComponent
+          request={() => modulesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <SmartContractMethods data={[]} />
+        </ApiRequestComponent>
+        <ApiRequestComponent
+          request={() => modulesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <SmartContractStructs data={[]} />
+        </ApiRequestComponent>
+
+        <ApiRequestComponent
+          request={() => accountResourceResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <SequenceNumber data={null} />
+        </ApiRequestComponent>
+
+        <ApiRequestComponent request={() => accountResourceResponse}>
+          <AuthenticationKey data={null} />
+        </ApiRequestComponent>
+
+        <ApiRequestComponent
+          request={() => accountResourceResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <EventHandlesTable data={null} />
+        </ApiRequestComponent>
+
+        <h2>Raw Resources</h2>
+        <ApiRequestComponent
+          request={() => resourcesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <JSONPretty data={[]} id="rawResources" />
+        </ApiRequestComponent>
+
+        <h2>Raw Smart Contracts</h2>
+        <ApiRequestComponent
+          request={() => modulesResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
+          <JSONPretty data={[]} id="rawModules" />
+        </ApiRequestComponent>
+      </>
+    </MainWrapper>
   )
 }

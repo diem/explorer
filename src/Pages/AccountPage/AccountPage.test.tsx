@@ -38,7 +38,7 @@ const mockAddress = '1FC5DD16A92E82A281A063E308EBCCA9'
 const renderSubject = async (
   resources: Resource[] = [],
   modules: Module[] = [],
-  transactions: any = [],
+  transactions: any = []
 ) => {
   // @ts-ignore TS is bad at mocking
   getAccountResources.mockResolvedValue({
@@ -70,20 +70,23 @@ const renderSubject = async (
   render(
     <BrowserRouter>
       <AccountPage {...mockHistory} />
-    </BrowserRouter>,
+    </BrowserRouter>
   )
-  await waitForElementToBeRemoved(screen.queryByRole('loading'))
+  await waitForElementToBeRemoved(screen.queryAllByRole('loading'))
 }
 
-describe('AccountPage', function() {
-  it('should get data from the BlockchainRestClient', async function() {
+describe('AccountPage', function () {
+  it('should get data from the Blockchain client and GraphQL client', async function () {
     await renderSubject()
 
     expect(getAccountResources).toHaveBeenCalledWith(mockAddress)
+    expect(getAccountResources).toHaveBeenCalledTimes(1)
     expect(getAccountModules).toHaveBeenCalledWith(mockAddress)
+    expect(getAccountModules).toHaveBeenCalledTimes(1)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
   })
 
-  it('should display unsupported account when balance object, and Smart Contracts are not found', async function() {
+  it('should display unsupported account when balance object, and Smart Contracts are not found', async function () {
     await renderSubject([], [])
 
     expect(screen.queryByText('Balances')).not.toBeInTheDocument()
@@ -92,20 +95,20 @@ describe('AccountPage', function() {
     expect(screen.queryByText('Unsupported Account')).toBeInTheDocument()
   })
 
-  describe('when there are account resources', function() {
+  describe('when there are account resources', function () {
     beforeEach(
       async () =>
         await renderSubject(
           [xdxBalanceResource, xusBalanceResource, diemAccountResource],
-          [],
-        ),
+          []
+        )
     )
 
     it('should not display the Unsupported Account card', async () => {
       expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
     })
 
-    it('should display Balance resource data in a table', async function() {
+    it('should display Balance resource data in a table', async function () {
       expect(document.getElementById('objectPropertiesTable')).not.toBeNull()
 
       const balancesTable = document.getElementById('objectPropertiesTable')!
@@ -113,15 +116,15 @@ describe('AccountPage', function() {
       expect(screen.queryByText('Balances')).toBeInTheDocument()
 
       expect(
-        within(balancesTable).queryByText(xdxBalanceResource.value.coin.value),
+        within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)
       ).toBeInTheDocument()
 
       expect(
-        within(balancesTable).queryByText(getCurrency(xdxBalanceResource)),
+        within(balancesTable).queryByText(getCurrency(xdxBalanceResource))
       ).toBeInTheDocument()
 
       expect(
-        within(balancesTable).queryByText(xusBalanceResource.value.coin.value),
+        within(balancesTable).queryByText(xusBalanceResource.value.coin.value)
       ).toBeInTheDocument()
     })
 
@@ -134,7 +137,7 @@ describe('AccountPage', function() {
           xdxBalanceResource,
           xusBalanceResource,
           diemAccountResource,
-        ]),
+        ])
       )
     })
 
@@ -151,7 +154,7 @@ describe('AccountPage', function() {
         document.getElementById('authenticationKey')!
 
       expect(authenticationKeyCard.textContent).toMatch(
-        '0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e',
+        '0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e'
       )
     })
 
@@ -159,7 +162,8 @@ describe('AccountPage', function() {
       const eventHandlesCard = screen.queryByTestId('event-handles-card')!
       expect(eventHandlesCard).toBeInTheDocument()
 
-      const eventHandlesTable: HTMLTableElement = eventHandlesCard.querySelector('table')!
+      const eventHandlesTable: HTMLTableElement =
+        eventHandlesCard.querySelector('table')!
       expect(eventHandlesTable).toBeInTheDocument()
 
       expect(eventHandlesTable.rows).toHaveLength(3)
@@ -167,12 +171,20 @@ describe('AccountPage', function() {
       const sentEventsRow = eventHandlesTable.rows.item(2)!
 
       expect(receivedEventsRow.textContent).toContain('received_events')
-      expect(receivedEventsRow.textContent).toContain(diemAccountResource.value.received_events.counter)
-      expect(receivedEventsRow.textContent).toContain(diemAccountResource.value.received_events.guid)
+      expect(receivedEventsRow.textContent).toContain(
+        diemAccountResource.value.received_events.counter
+      )
+      expect(receivedEventsRow.textContent).toContain(
+        diemAccountResource.value.received_events.guid
+      )
 
       expect(sentEventsRow.textContent).toContain('sent_events')
-      expect(sentEventsRow.textContent).toContain(diemAccountResource.value.sent_events.counter)
-      expect(sentEventsRow.textContent).toContain(diemAccountResource.value.sent_events.guid)
+      expect(sentEventsRow.textContent).toContain(
+        diemAccountResource.value.sent_events.counter
+      )
+      expect(sentEventsRow.textContent).toContain(
+        diemAccountResource.value.sent_events.guid
+      )
     })
   })
 
@@ -190,7 +202,7 @@ describe('AccountPage', function() {
             status: 1,
             sender: null,
           },
-        ],
+        ]
       )
 
       expect(document.getElementById('recentTransactions')).not.toEqual(null)
@@ -200,34 +212,34 @@ describe('AccountPage', function() {
       expect(screen.queryByText('Recent Transactions')).toBeInTheDocument()
 
       expect(
-        within(transactionsTable).queryByText('Version'),
+        within(transactionsTable).queryByText('Version')
       ).toBeInTheDocument()
       expect(
-        within(transactionsTable).queryByText('372413434'),
+        within(transactionsTable).queryByText('372413434')
       ).toBeInTheDocument()
 
       expect(
-        within(transactionsTable).queryByText('Timestamp'),
+        within(transactionsTable).queryByText('Timestamp')
       ).toBeInTheDocument()
       expect(
-        within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00'),
+        within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00')
       ).toBeInTheDocument()
 
       expect(within(transactionsTable).queryByText('Type')).toBeInTheDocument()
       expect(
-        within(transactionsTable).queryByText('UserTransaction'),
+        within(transactionsTable).queryByText('UserTransaction')
       ).toBeInTheDocument()
 
       expect(
-        within(transactionsTable).queryByText('Status'),
+        within(transactionsTable).queryByText('Status')
       ).toBeInTheDocument()
       expect(
-        within(transactionsTable).queryByText('Executed'),
+        within(transactionsTable).queryByText('Executed')
       ).toBeInTheDocument()
     })
   })
 
-  describe('when there are Smart Contracts', function() {
+  describe('when there are Smart Contracts', function () {
     beforeEach(async () => await renderSubject([], testModules))
 
     it('should not display the Unsupported Account card', async () => {
@@ -236,23 +248,23 @@ describe('AccountPage', function() {
 
     it('should display Smart Contract Method Signatures in a card', async () => {
       expect(document.getElementById('smart-contract-methods')).not.toEqual(
-        null,
+        null
       )
       const methodsCard = document.getElementById('smart-contract-methods')!
 
       expect(methodsCard.textContent).toContain(
-        'fun exchangeXdxForXus(arg1: u64): bool',
+        'fun exchangeXdxForXus(arg1: u64): bool'
       )
     })
 
     it('should display Smart Contract Structs in a card', async () => {
       expect(document.getElementById('smart-contract-structs')).not.toEqual(
-        null,
+        null
       )
       const structsCard = document.getElementById('smart-contract-structs')!
 
       expect(structsCard.textContent).toContain(
-        'struct AccountType {\n\taccount_type: u64\n}',
+        'struct AccountType {\n\taccount_type: u64\n}'
       )
     })
 
@@ -261,7 +273,7 @@ describe('AccountPage', function() {
       const rawModules = document.getElementById('rawModules')!
 
       expect(rawModules.textContent?.replace(/\s/g, '')).toEqual(
-        JSON.stringify(testModules),
+        JSON.stringify(testModules)
       )
     })
   })
