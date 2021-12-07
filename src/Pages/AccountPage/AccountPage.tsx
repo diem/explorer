@@ -30,6 +30,7 @@ import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction,
 } from '../Common/TransactionModel'
+import {getCanonicalAddress} from "../../utils";
 
 function accountIsSupported(data: { resources: Resource[], modules: Module[] }) {
   const hasStructs =
@@ -142,7 +143,11 @@ interface AccountPageMatch {
 interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
 
 export default function AccountPage(props: AccountPageProps) {
-  const address = props.match.params.address.toUpperCase()
+  const maybeAddress = getCanonicalAddress(props.match.params.address)
+  if (maybeAddress.err) {
+    return <></>
+  }
+  const address = maybeAddress.val
 
   const resourcesResponse = getAccountResources(address)
   const modulesResponse = getAccountModules(address)
@@ -243,7 +248,11 @@ export default function AccountPage(props: AccountPageProps) {
           <SequenceNumber data={null} />
         </ApiRequestComponent>
 
-        <ApiRequestComponent request={() => accountResourceResponse}>
+        <ApiRequestComponent
+          request={() => accountResourceResponse}
+          errorComponent={<PlainErrorComponent />}
+          loadingComponent={<PlainLoadingComponent />}
+        >
           <AuthenticationKey data={null} />
         </ApiRequestComponent>
 
