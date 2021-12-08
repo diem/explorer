@@ -44,7 +44,7 @@ describe('Top10AccountsCard', () => {
     const cardBody = table!.tBodies.item(0)!
     expect(cardBody.rows).toHaveLength(1)
     expect(cardBody.rows[0].cells[0].textContent).toEqual('1')
-    expect(cardBody.rows[0].cells[1].textContent).toEqual('0000000000000000000000000B1E55ED')
+    expect(cardBody.rows[0].cells[1].textContent).toEqual('0000000000000000000000000b1e55ed')
     expect(cardBody.rows[0].cells[2].textContent).toEqual('54321')
   })
   it('should link to the corresponding accounts', async () => {
@@ -59,7 +59,7 @@ describe('Top10AccountsCard', () => {
     expect(transactionCell).toBeInTheDocument()
     const transactionLink: HTMLAnchorElement | null = transactionCell!.querySelector('a')
     expect(transactionLink).toBeInTheDocument()
-    expect(transactionLink!.href).toMatch('http://localhost/address/0000000000000000000010000B1E55ED')
+    expect(transactionLink!.href).toMatch('http://localhost/address/0000000000000000000010000b1e55ed')
   })
   it('should render the data in the order provided by the API', async () => {
     await renderSubject([
@@ -76,8 +76,8 @@ describe('Top10AccountsCard', () => {
     const table: HTMLTableElement = screen.queryByTestId('top-10-accounts')!.querySelector('table')!
     const cardBody = table.tBodies.item(0)!
     expect(cardBody!.rows).toHaveLength(2)
-    expect(cardBody!.rows[0].cells[1].textContent).toEqual('0000000000000000000000000B0E55ED')
-    expect(cardBody!.rows[1].cells[1].textContent).toEqual('0000000000000000000000000B1E552D')
+    expect(cardBody!.rows[0].cells[1].textContent).toEqual('0000000000000000000000000b0e55ed')
+    expect(cardBody!.rows[1].cells[1].textContent).toEqual('0000000000000000000000000b1e552d')
   })
   it('should query the Analytics API correctly', async () => {
     await renderSubject()
