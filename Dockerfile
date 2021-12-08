@@ -10,7 +10,6 @@ COPY package.json /app
 COPY yarn.lock /app
 RUN yarn install
 COPY . /app
-RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./src/config.json > ./src/config.tmp.json && mv ./src/config.tmp.json ./src/config.json
 RUN yarn run -- vite build
 
 FROM nginx:1.21
