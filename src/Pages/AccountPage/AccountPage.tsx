@@ -7,7 +7,7 @@ import {
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import {
   transactionsBySenderAddressQuery,
-  transactionsQueryType,
+  TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
@@ -159,7 +159,7 @@ export default function AccountPage(props: AccountPageProps) {
     setState({
       resourcesResponse: getAccountResources(address),
       modulesResponse: getAccountModules(address),
-      recentTransactionsResponse: postQueryToAnalyticsApi<transactionsQueryType>(
+      recentTransactionsResponse: postQueryToAnalyticsApi<TransactionsQueryType>(
         transactionsBySenderAddressQuery(address),
         'transactions'
       ).then((analyticsTransactionsOrError) => {

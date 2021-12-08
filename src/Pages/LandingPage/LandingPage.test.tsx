@@ -12,7 +12,7 @@ import {
   countTransactionsInLast10Minutes,
   LatestMintBurnNetQuery,
   transactionsQuery,
-  transactionsQueryType,
+  TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import userEvent from '@testing-library/user-event'
 
@@ -51,7 +51,7 @@ const fakeTransaction = {
   expiration_timestamp: '2021-04-19 00:30:00.000000 +00:00',
 }
 const renderSubject = async (
-  transactions: transactionsQueryType = [fakeTransaction],
+  transactions: TransactionsQueryType = [fakeTransaction],
   countTxnsInLast10m: number = 42 * 600
 ) => {
   // @ts-ignore TS is bad at mocking

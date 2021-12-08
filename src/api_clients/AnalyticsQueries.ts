@@ -4,7 +4,7 @@ import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 
-export type mintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
+export type MintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -24,7 +24,7 @@ export function mintEventsQuery() {
   }
 }
 
-export type burnEventsQueryType = GraphQLTypes['query_root']['burn_events']
+export type BurnEventsQueryType = GraphQLTypes['query_root']['burn_events']
 export function burnEventsQuery() {
   return {
     burn_events: [
@@ -44,7 +44,7 @@ export function burnEventsQuery() {
   }
 }
 
-export type paymentEventsQueryType = GraphQLTypes['query_root']['sentpayment_events']
+export type PaymentEventsQueryType = GraphQLTypes['query_root']['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -66,7 +66,7 @@ export function paymentEventsQuery() {
   }
 }
 
-export type gasEventsQueryType = GraphQLTypes['query_root']['gas_payments']
+export type GasEventsQueryType = GraphQLTypes['query_root']['gas_payments']
 export function gasEventsQuery() {
   return {
     gas_payments: [
@@ -86,7 +86,7 @@ export function gasEventsQuery() {
   }
 }
 
-export type preburnEventsQueryType = GraphQLTypes['query_root']['preburn_events']
+export type PreburnEventsQueryType = GraphQLTypes['query_root']['preburn_events']
 export function preburnEventsQuery() {
   return {
     preburn_events: [
@@ -105,7 +105,7 @@ export function preburnEventsQuery() {
   }
 }
 
-export type accountcreationEventsQueryType = GraphQLTypes['query_root']['accounts']
+export type AccountcreationEventsQueryType = GraphQLTypes['query_root']['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [
@@ -139,7 +139,7 @@ export function accountcreationEventsQuery() {
   }
 }
 
-export type transactionsQueryType = GraphQLTypes['query_root']['transactions']
+export type TransactionsQueryType = GraphQLTypes['query_root']['transactions']
 export function transactionsQuery() {
   return {
     transactions: [
@@ -202,7 +202,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 }
 
 // eslint-disable-next-line camelcase
-export type currencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: [{ currency: string, total_net_value: number, timestamp: string}] | [] }
+export type CurrencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: [{ currency: string, total_net_value: number, timestamp: string}] | [] }
 export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -220,7 +220,7 @@ export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   }
 }
 
-export type countTransactionsInLast10MinutesType = { aggregate: { count: number } }
+export type CountTransactionsInLast10MinutesType = { aggregate: { count: number } }
 export function countTransactionsInLast10Minutes() {
   const TEN_MINUTES_AGO = moment.utc().subtract(10, 'minutes').format()
   return {

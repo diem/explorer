@@ -8,7 +8,7 @@ import {
 import { BrowserRouter } from 'react-router-dom'
 import DiemInCirculationPage from './DiemInCirculationPage'
 import {
-  currencyInCirculationPageQuery, currencyInCirculationPageQueryType,
+  currencyInCirculationPageQuery, CurrencyInCirculationPageQueryType,
   diemInCirculationHistoryQuery, DiemInCirculationHistoryType,
 } from '../../api_clients/AnalyticsQueries'
 import moment from 'moment'
@@ -19,14 +19,14 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
   ...jest.requireActual('../../api_clients/AnalyticsClient'),
   postQueryToAnalyticsApi: jest.fn(),
 }))
-const mockXusInCirculation: currencyInCirculationPageQueryType = {
+const mockXusInCirculation: CurrencyInCirculationPageQueryType = {
   diem_in_circulation_realtime_aggregates: [{
     currency: 'XUS',
     total_net_value: 1040002525680000,
     timestamp: '2021-10-30T01:22:18.660956+00:00',
   }],
 }
-const mockXdxInCirculation: currencyInCirculationPageQueryType = {
+const mockXdxInCirculation: CurrencyInCirculationPageQueryType = {
   diem_in_circulation_realtime_aggregates: [],
 }
 
@@ -44,8 +44,8 @@ const mockHistory: DiemInCirculationHistoryType = {
 }
 
 const renderSubject = async (
-  xusInCirculationResponse: currencyInCirculationPageQueryType = mockXusInCirculation,
-  xdxInCirculationResponse: currencyInCirculationPageQueryType = mockXdxInCirculation,
+  xusInCirculationResponse: CurrencyInCirculationPageQueryType = mockXusInCirculation,
+  xdxInCirculationResponse: CurrencyInCirculationPageQueryType = mockXdxInCirculation,
   historyResponse: DiemInCirculationHistoryType = mockHistory,
 ) => {
   postQueryToAnalyticsApi

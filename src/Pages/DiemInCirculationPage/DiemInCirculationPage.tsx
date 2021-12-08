@@ -5,7 +5,7 @@ import Table, { column } from '../../Table'
 import React from 'react'
 import {
   currencyInCirculationPageQuery,
-  currencyInCirculationPageQueryType,
+  CurrencyInCirculationPageQueryType,
   diemInCirculationHistoryQuery,
   DiemInCirculationHistoryType
 } from '../../api_clients/AnalyticsQueries'
@@ -88,8 +88,8 @@ const DiemInCirculationPageWithResponse: React.FC<{ data: DiemInCirculationRespo
 }
 
 const request = async (): Promise<DataOrErrors<DiemInCirculationResponse>> => {
-  const xusOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XUS'))
-  const xdxOrErrors = await postQueryToAnalyticsApi<currencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XDX'))
+  const xusOrErrors = await postQueryToAnalyticsApi<CurrencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XUS'))
+  const xdxOrErrors = await postQueryToAnalyticsApi<CurrencyInCirculationPageQueryType>(currencyInCirculationPageQuery('XDX'))
   const historyOrErrors = await postQueryToAnalyticsApi<DiemInCirculationHistoryType>(diemInCirculationHistoryQuery('XUS'))
 
   if ('errors' in xusOrErrors || 'errors' in xdxOrErrors || 'errors' in historyOrErrors) {
