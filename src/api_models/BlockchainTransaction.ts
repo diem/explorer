@@ -2,8 +2,8 @@ import { KnownCurrencyBlockchainAddress } from '../api_clients/BlockchainRestTyp
 
 export interface TxnEvent {
   key: string
-  sequence_number: string
-  type: string
+  sequence_number: number
+  transaction_number: number
   data: any
 }
 

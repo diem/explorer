@@ -31,8 +31,8 @@ function seeUserTxnRowData (I) {
   I.see('511')
   I.see('0')
   I.see('1000000')
-  I.see('0x7b1568a5d5e14be898fa56f3bdb460b8bc4de9bf1267e1cc7982338d51cc1b37')
-  I.see('0xec841ca48bfef97c4c867c5e18483730b6075820050baeef5c8ac0cdc3e28eb7dd6a16f7ab5b52f2ce16478b5b57d751ea3a351b71cc02973188dc8b4e086b03')
+  I.see('7b1568a5d5e14be898fa56f3bdb460b8bc4de9bf1267e1cc7982338d51cc1b37')
+  I.see('ec841ca48bfef97c4c867c5e18483730b6075820050baeef5c8ac0cdc3e28eb7dd6a16f7ab5b52f2ce16478b5b57d751ea3a351b71cc02973188dc8b4e086b03')
 }
 
 function seeUnsupportedTransactionCard(I) {

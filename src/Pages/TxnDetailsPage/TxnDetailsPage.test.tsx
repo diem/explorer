@@ -127,7 +127,7 @@ describe('TxnDetailsPage', function () {
       ).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1616373715')).toBeInTheDocument()
-      expect(within(detailsTable).queryByText('0x1::XUS::XUS')).toBeInTheDocument()
+      expect(within(detailsTable).queryByText('0x585553')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('511')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('0')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1000000')).toBeInTheDocument()
