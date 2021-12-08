@@ -42,7 +42,7 @@ else
 endif
 
 # General Utility Command Aliases
-.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build generate_diem_client generate_gql_client contract_test
+.PHONY: no_targets__ list fmt lint lintfix integration_test test ship build generate_gql_client contract_test
 
 no_targets__:
 list:
@@ -68,10 +68,6 @@ ship: lint integration_test contract_test acceptance_test
 
 build:
 	@yarn run tsc && yarn run vite build
-
-# Generates typescript client code for diem rest api
-generate_diem_client:
-	@yarn openapi-generator-cli version-manager set 5.2.1 && yarn openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/diem/diem/main/api/doc/openapi.yaml -o generated/diemclient
 
 contract_test : generate_gql_client
 	@yarn run tsc && echo "contract tests complete 👍"

@@ -20,7 +20,7 @@ import {
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import ReactTooltip from 'react-tooltip'
-import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { GraphQLTypes } from '../../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import { getCanonicalAddress } from '../../utils'
 
 function Wrapper(props: { children: ReactNode }) {

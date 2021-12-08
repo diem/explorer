@@ -22,6 +22,6 @@
     "node_modules/@types/jest/index.d.ts"
   ],
   "exclude": [
-    "utils/Analytics_Hasura_Api_Zeus_Client"
+    "generated/Analytics_Hasura_Api_Zeus_Client"
   ]
 }

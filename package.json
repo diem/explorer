@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite preview",
-    "generate-gql-client": "zeus http://localhost:8888/v1/graphql ./utils/Analytics_Hasura_Api_Zeus_Client --ts"
+    "generate-gql-client": "zeus http://localhost:8888/v1/graphql ./generated/Analytics_Hasura_Api_Zeus_Client --ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
@@ -35,7 +35,6 @@
     "@codeceptjs/configure": "^0.6.2",
     "@codeceptjs/examples": "^1.2.1",
     "@codeceptjs/ui": "^0.4.5",
-    "@openapitools/openapi-generator-cli": "^2.4.13",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
