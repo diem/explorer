@@ -41,8 +41,6 @@ export const AccountAddress: React.FC<AccountAddressProps> = (props: AccountAddr
 
   const maybeAddress = getCanonicalAddress(props.value)
 
-  console.log(maybeAddress)
-
   if (maybeAddress.err) {
     console.error(`Unable to get canonical address from: ${props.value}`, maybeAddress.val)
     return <>{maybeAddress.val}</>
