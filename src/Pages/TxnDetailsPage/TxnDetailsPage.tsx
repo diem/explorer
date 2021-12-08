@@ -11,7 +11,6 @@ import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
-import { getCanonicalAddress } from '../../utils'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -37,8 +36,8 @@ function UserTxnDetailsTable({
     'Version ID': data.version,
     Status: data.vm_status,
     'Transaction Type': data.type,
-    To: AccountAddress({ value: getCanonicalAddress(data.payload.arguments[0]).val }),
-    From: AccountAddress({ value: getCanonicalAddress(data.sender).val }),
+    To: AccountAddress({ value: data.payload.arguments[0] }),
+    From: AccountAddress({ value: data.sender }),
     Amount: data.payload.arguments[1],
     Expiration: data.expiration_timestamp_secs,
     'Currency Code': data.payload.type_arguments.toString(),

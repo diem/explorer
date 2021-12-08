@@ -14,7 +14,7 @@ function seeRowData(I) {
   I.see('730000')
   I.see('XUS')
   I.see('00000...63e11')
-  I.see('CF9405939FD0262B8BB8F2D513F63E11')
+  I.see('cf9405939fd0262b8bb8f2d513f63e11')
   I.see('36')
 }
 
@@ -27,5 +27,5 @@ Scenario('navigating to mint event from landing page', ({ I }) => {
   I.see('Mint Events')
   seeRowHeaders(I)
   seeRowData(I)
-  I.navigateToAddressPage('CF9405939FD0262B8BB8F2D513F63E11')
+  I.navigateToAddressPage('cf9405939fd0262b8bb8f2d513f63e11')
 })

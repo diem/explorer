@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom'
 import React from 'react'
+import { getCanonicalAddress } from '../utils'
 
 interface LinkProps {
   className: string
@@ -21,7 +22,8 @@ export const Link =
     }
 Link.displayName = 'DiemExplorerLink'
 
-export const TransactionVersion: React.FC<{ value?: string | number }> = (props: { value?: string | number }) => {
+export type TxnVersionProps = { value?: string | number }
+export const TransactionVersion: React.FC<TxnVersionProps> = (props: TxnVersionProps) => {
   if (!('value' in props)) {
     return <></>
   }
@@ -31,9 +33,21 @@ export const TransactionVersion: React.FC<{ value?: string | number }> = (props:
   })({ ...props, value: props.value!.toString() })
 }
 
-export function AccountAddress(props: { value: string }) {
+export type AccountAddressProps = { value: string | null }
+export const AccountAddress: React.FC<AccountAddressProps> = (props: AccountAddressProps) => {
+  if (props.value === '' || props.value === null) {
+    return <></>
+  }
+
+  const maybeAddress = getCanonicalAddress(props.value)
+
+  if (maybeAddress.err) {
+    console.error(`Unable to get canonical address from: ${props.value}`, maybeAddress.val)
+    return <>{maybeAddress.val}</>
+  }
+
   return Link({
     className: 'address-link',
     linkPrefix: '/address/',
-  })(props)
+  })({ ...props, value: maybeAddress.val })
 }
