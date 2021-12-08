@@ -1,78 +1,64 @@
-// Adapated from https://github.com/diem/diem/blob/master/json-rpc/docs/type_transaction.md#type-transactiondata
-
-import { KnownCurrency } from '../api_clients/BlockchainRestTypes'
+import { KnownCurrencyBlockchainAddress } from '../api_clients/BlockchainRestTypes'
 
 export interface TxnEvent {
   key: string
-  sequence_number: number
-  transaction_number: number
+  sequence_number: string
+  type: string
   data: any
 }
 
-export interface VMstatus {
-  type: string
-}
-
-export interface BlockchainScript {
-  type: string
-  code: string
-  arguments: any[]
-  type_arguments: any[]
-}
-
-export interface UnknownBlockChainScript extends BlockchainScript {
-  type: 'unknown'
-}
-
-export interface PeerToPeerWithMetadataBlockChainScript
-  extends BlockchainScript {
-  receiver: string
-  amount: number
-  currency: KnownCurrency
-  metadata: string
-  metadata_signature: string
-}
-
-export interface BlockchainTxnData {
-  type: string
-}
-
-export interface BlockchainBlockmetadataTxnData extends BlockchainTxnData {
+export interface BlockchainBlockmetadataTxnData extends BlockchainTransaction {
   type: 'blockmetadata'
-  timestamp_usecs: number
 }
 
-export interface BlockchainUnknownTxnData extends BlockchainTxnData {
+export interface BlockchainUnknownTxnData extends BlockchainTransaction {
   type: 'unknown'
 }
 
-export interface BlockchainWritesetTxnData extends BlockchainTxnData {
+export interface BlockchainWritesetTxnData extends BlockchainTransaction {
   type: 'writeset'
 }
 
-export interface BlockchainUserTxnData extends BlockchainTxnData {
-  type: 'user'
+export interface BlockchainTransactionPayload {
+  type: string
+  function: string
+}
+
+type PayeeArgument = string
+type AmountArgument = string
+
+export interface BlockchainP2PTransactionPayload extends BlockchainTransactionPayload {
+  type: 'script_function_payload'
+  function: '0x1::PaymentScripts::peer_to_peer_with_metadata'
+  arguments: [
+    PayeeArgument,
+    AmountArgument,
+    string, // ???
+    string // ???
+  ]
+  type_arguments: [ KnownCurrencyBlockchainAddress ]
+}
+
+export interface BlockchainUserTxnData extends BlockchainTransaction {
+  type: 'user_transaction'
+  state_root_hash: string
+  event_root_hash: string
+  success: boolean
+  max_gas_amount: string
+  gas_unit_price: string
+  gas_currency_code: string
+  expiration_timestamp_secs: string
   sender: string
-  signature_scheme: string
-  signature: string
-  public_key: string
-  sequence_number: number
-  chain_id: number
-  max_gas_amount: number
-  gas_unit_price: number
-  gas_currency: string
-  expiration_timestamp_secs: number
-  script_hash: string
-  script_bytes: string
-  script: BlockchainScript
+  sequence_number: string
+  payload: BlockchainP2PTransactionPayload
+  signature: any
 }
 
 export interface BlockchainTransaction {
-  version: number
-  transaction?: BlockchainTxnData
+  type: string
+  version: string
   hash?: string
-  bytes?: string
   events: TxnEvent[]
-  vm_status?: VMstatus
-  gas_used?: number
+  vm_status?: string
+  gas_used?: string
 }

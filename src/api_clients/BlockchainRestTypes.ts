@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 export type KnownCurrency = 'XUS' | 'XDX'
+export type KnownCurrencyBlockchainAddress = '0x1::XUS::XUS'
 
 export type Resource = Resources.Resource
 export type Module = Modules.Module

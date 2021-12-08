@@ -10,5 +10,5 @@ export function getCanonicalAddress(address: string): Result<string, string> {
     // pad with 0s
     address = '0'.repeat(32 - address.length) + address
   }
-  return new Ok(address)
+  return Ok(address)
 }

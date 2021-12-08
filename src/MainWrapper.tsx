@@ -9,7 +9,6 @@ import {
   NavDropdown,
 } from 'react-bootstrap'
 import logo from '../static/logo.svg'
-import Config from './config.json'
 import { Link } from 'react-router-dom'
 interface MainWrapperProps {
   children?: ReactChild
@@ -38,7 +37,7 @@ function MainWrapper(props: MainWrapperProps) {
               <Nav className="me-auto align-items-center">
                 <DropdownButton
                   id="dropdown-basic-button"
-                  title={`${Config.DIEMX_CHAIN} ${Config.DIEMX_ENV}`}
+                  title={'DPN Dev'}
                   className="d-inline"
                   size="sm"
                   variant="secondary"

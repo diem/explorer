@@ -1,0 +1,93 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blockchainRestApi/transactions/64117651"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "type": "user_transaction",
+      "version": "64117651",
+      "hash": "0xa145e8faefa6ab14fb379fb6960eee6e3e9aefca43c71d6368e366325026e7da",
+      "state_root_hash": "0xb1ecd2aaa48f89aee9742b8d7ee54de965e76d7f98a9fc62d2c7e82efb0a1156",
+      "event_root_hash": "0xccd9500189582dd8126fea77926267b58064eae0462538aa3964e5edb42a5d8a",
+      "gas_used": "511",
+      "success": true,
+      "vm_status": "Executed successfully",
+      "sender": "0xe4d382572c1286984aecfae682db0370",
+      "sequence_number": "3653",
+      "max_gas_amount": "1000000",
+      "gas_unit_price": "0",
+      "gas_currency_code": "XUS",
+      "expiration_timestamp_secs": "1616166081",
+      "payload": {
+        "type": "script_payload",
+        "code": {
+          "bytecode": "0xa11ceb0b010000000701000202020403061004160205181d0735600895011000000001010000020001000003020301010004010300010501060c0108000506080005030a020a020005060c05030a020a020109000b4469656d4163636f756e741257697468647261774361706162696c6974791b657874726163745f77697468647261775f6361706162696c697479087061795f66726f6d1b726573746f72655f77697468647261775f6361706162696c69747900000000000000000000000000000001010104010c0b0011000c050e050a010a020b030b0438000b05110202",
+          "abi": {
+            "name": "main",
+            "visibility": "script",
+            "generic_type_params": [
+              {
+                "constraints": [
+                  "store"
+                ]
+              }
+            ],
+            "params": [
+              "&signer",
+              "address",
+              "u64",
+              "vector<u8>",
+              "vector<u8>"
+            ],
+            "return": []
+          }
+        },
+        "type_arguments": [
+          "0x1::XUS::XUS"
+        ],
+        "arguments": [
+          "0xed53d2c05bc4ff33d15a744f35010026",
+          "1",
+          "0x",
+          "0x"
+        ]
+      },
+      "signature": {
+        "type": "ed25519_signature",
+        "public_key": "0x7b1568a5d5e14be898fa56f3bdb460b8bc4de9bf1267e1cc7982338d51cc1b37",
+        "signature": "0xec841ca48bfef97c4c867c5e18483730b6075820050baeef5c8ac0cdc3e28eb7dd6a16f7ab5b52f2ce16478b5b57d751ea3a351b71cc02973188dc8b4e086b03"
+      },
+      "events": [
+        {
+          "key": "0x0100000000000000e4d382572c1286984aecfae682db0370",
+          "sequence_number": "3653",
+          "type": "0x1::DiemAccount::SentPaymentEvent",
+          "data": {
+            "amount": "1",
+            "currency_code": "0x585553",
+            "metadata": "0x",
+            "payee": "0xed53d2c05bc4ff33d15a744f35010026"
+          }
+        },
+        {
+          "key": "0x0000000000000000ed53d2c05bc4ff33d15a744f35010026",
+          "sequence_number": "3476",
+          "type": "0x1::DiemAccount::ReceivedPaymentEvent",
+          "data": {
+            "amount": "1",
+            "currency_code": "0x585553",
+            "metadata": "0x",
+            "payer": "0xe4d382572c1286984aecfae682db0370"
+          }
+        }
+      ]
+    }
+  }
+}

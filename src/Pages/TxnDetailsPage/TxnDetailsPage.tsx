@@ -3,15 +3,15 @@ import React from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
-  PeerToPeerWithMetadataBlockChainScript,
 } from '../../api_models/BlockchainTransaction'
 import { RouteComponentProps } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
-import { getBlockchainTransaction } from '../../api_clients/BlockchainJsonRpcClient'
+import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
+import { getCanonicalAddress } from '../../utils'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -31,34 +31,30 @@ function UnsupportedTxnDetailsTable() {
 function UserTxnDetailsTable({
   data,
 }: {
-  data: BlockchainTransaction | undefined
+  data: BlockchainUserTxnData
 }) {
-  const userTxnData = data?.transaction as BlockchainUserTxnData
-  const txnScript = userTxnData.script as PeerToPeerWithMetadataBlockChainScript
   const txnForDisplay = {
-    'Version ID': data?.version,
-    Status: data?.vm_status?.type,
-    'Transaction Type': data?.transaction?.type,
-    To: AccountAddress({ value: txnScript.receiver }),
-    From: AccountAddress({ value: userTxnData.sender }),
-    Amount: txnScript.amount,
-    Expiration: userTxnData.expiration_timestamp_secs,
-    Currency: userTxnData.gas_currency,
-    Metadata: txnScript.metadata,
-    'Metadata Signature': txnScript.metadata_signature,
-    'Sequence Number': userTxnData.sequence_number,
-    'Gas Used': data?.gas_used,
-    'Gas Unit Price': userTxnData.gas_unit_price,
-    'Max Gas Amount': userTxnData.max_gas_amount,
-    'Public Key': userTxnData.public_key,
-    Signature: userTxnData.signature,
-    'Script Hash': userTxnData.script_hash,
+    'Version ID': data.version,
+    Status: data.vm_status,
+    'Transaction Type': data.type,
+    To: AccountAddress({ value: getCanonicalAddress(data.payload.arguments[0]).val }),
+    From: AccountAddress({ value: getCanonicalAddress(data.sender).val }),
+    Amount: data.payload.arguments[1],
+    Expiration: data.expiration_timestamp_secs,
+    'Currency Code': data.payload.type_arguments.toString(),
+    'Sequence Number': data.sequence_number,
+    'Gas Used': data.gas_used,
+    'Gas Unit Price': data.gas_unit_price,
+    'Max Gas Amount': data.max_gas_amount,
+    'Public Key': data.signature.public_key,
+    Signature: data.signature.signature,
+    'Script Hash': data.hash,
   }
   return <ObjectPropertiesTable object={txnForDisplay} />
 }
 
 function transactionIsSupported(data: BlockchainTransaction | undefined) {
-  return !!data && !!data.transaction && data.transaction.type === 'user'
+  return !!data && data.type === 'user_transaction'
 }
 
 function TxnDetailsTable({
@@ -73,7 +69,7 @@ function TxnDetailsTable({
       </h2>
       {transactionIsSupported(data)
         ? (
-          <UserTxnDetailsTable data={data} />
+          <UserTxnDetailsTable data={(data as BlockchainUserTxnData)} />
         )
         : (
           <UnsupportedTxnDetailsTable />
