@@ -13,12 +13,8 @@ function mapModuleIntoStructs(module: Module): string[] {
   })
 }
 
-export default function SmartContractStructs({
-  modules,
-}: {
-  modules: Module[]
-}) {
-  const structs = modules.flatMap(mapModuleIntoStructs)
+export default function SmartContractStructs({ data }: { data: Module[] }) {
+  const structs = data.flatMap(mapModuleIntoStructs)
   if (structs.length === 0) {
     return null
   }

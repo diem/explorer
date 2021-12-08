@@ -35,12 +35,8 @@ function mapModuleIntoMethodSignatures(module: Module) {
   )
 }
 
-export default function SmartContractMethods({
-  modules,
-}: {
-  modules: Module[]
-}) {
-  const methodSignatures = modules.flatMap(mapModuleIntoMethodSignatures)
+export default function SmartContractMethods({ data }: { data: Module[] }) {
+  const methodSignatures = data.flatMap(mapModuleIntoMethodSignatures)
   if (methodSignatures.length === 0) {
     return null
   }
