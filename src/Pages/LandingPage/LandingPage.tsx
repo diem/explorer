@@ -11,10 +11,10 @@ import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import {
   countTransactionsInLast10Minutes,
-  countTransactionsInLast10MinutesType,
+  CountTransactionsInLast10MinutesType,
   LatestMintBurnNetQuery,
   transactionsQuery,
-  transactionsQueryType,
+  TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import ReactTooltip from 'react-tooltip'
 import { GraphQLTypes } from '../../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
@@ -150,7 +150,7 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
 }
 
 function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<transactionsQueryType>,
+  response: DataOrErrors<TransactionsQueryType>,
 ): DataOrErrors<TransactionRow[]> {
   if ('data' in response) {
     return {
@@ -174,8 +174,8 @@ export default function LandingPage() {
   return (
     <ApiRequestComponent
       request={async () => {
-        const txnsInLast10m = await postQueryToAnalyticsApi<countTransactionsInLast10MinutesType>(countTransactionsInLast10Minutes(), 'transactions_aggregate')
-        const recentTxns = await postQueryToAnalyticsApi<transactionsQueryType>(transactionsQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
+        const txnsInLast10m = await postQueryToAnalyticsApi<CountTransactionsInLast10MinutesType>(countTransactionsInLast10Minutes(), 'transactions_aggregate')
+        const recentTxns = await postQueryToAnalyticsApi<TransactionsQueryType>(transactionsQuery(), 'transactions').then(transformAnalyticsTransactionsOrErrors)
         const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<GraphQLTypes['diem_in_circulation_realtime_aggregates'][]>(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
 
         if ('errors' in txnsInLast10m || 'errors' in recentTxns || 'errors' in latestMintBurnNetAmounts) {
