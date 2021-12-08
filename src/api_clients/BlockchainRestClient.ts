@@ -11,9 +11,9 @@ export interface RestError {
 
 type RestResponse = Resource[] | Module[] | RestError
 
-function transformBlockchainRestResponse<T extends Module[] | Resource[] | BlockchainTransaction>(
-  response: RestResponse
-): DataOrErrors<T> {
+function transformBlockchainRestResponse<
+  T extends Module[] | Resource[] | BlockchainTransaction
+>(response: RestResponse): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {
     return {
       errors: [{ message: response.message }],
@@ -25,8 +25,12 @@ function transformBlockchainRestResponse<T extends Module[] | Resource[] | Block
   }
 }
 
-export function getBlockchainTransaction(txnVersion: string): Promise<DataOrErrors<BlockchainTransaction>> {
-  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/transactions/${txnVersion}`
+export function getBlockchainTransaction(
+  txnVersion: string
+): Promise<DataOrErrors<BlockchainTransaction>> {
+  const url = `${
+    import.meta.env.VITE_BLOCKCHAIN_REST_URL
+  }/transactions/${txnVersion}`
   return getWithFetch<RestResponse>(url, {})
     .then((response) => {
       return transformBlockchainRestResponse<BlockchainTransaction>(response)

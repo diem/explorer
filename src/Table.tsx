@@ -8,7 +8,11 @@ type ColumnWithAccessorDescriptor<T, K extends keyof T> = {
   Cell?: React.FC<{ value: T[K] }>
 }
 
-export function column<C>(header: string, accessor: keyof C, cell?: React.FC<{ value: C[typeof accessor] }>) {
+export function column<C>(
+  header: string,
+  accessor: keyof C,
+  cell?: React.FC<{ value: C[typeof accessor] }>
+) {
   if (cell === undefined) {
     return {
       Header: header,
@@ -65,7 +69,7 @@ export default function Table<T extends object>(props: TableProps<T>) {
         {rows.map((row) => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()} key={`row-${row.id}`} role="menuitem">
+            <tr {...row.getRowProps()} key={`row-${row.id}`} role='menuitem'>
               {row.cells.map((cell, cellIndex) => {
                 return (
                   <td {...cell.getCellProps()} key={`cell-${cellIndex}`}>

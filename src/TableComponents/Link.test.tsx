@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
 import { render, screen } from '@testing-library/react'
-import { AccountAddress, AccountAddressProps, TransactionVersion, TxnVersionProps } from './Link'
+import {
+  AccountAddress,
+  AccountAddressProps,
+  TransactionVersion,
+  TxnVersionProps,
+} from './Link'
 import { BrowserRouter } from 'react-router-dom'
 import { getCanonicalAddress } from '../utils'
 import { Err, Ok } from 'ts-results'
@@ -11,7 +16,12 @@ jest.mock('../utils', () => ({
 }))
 
 describe('TransactionVersion', function () {
-  const renderSubject = (props: TxnVersionProps) => render(<BrowserRouter><TransactionVersion {...props}/></BrowserRouter>)
+  const renderSubject = (props: TxnVersionProps) =>
+    render(
+      <BrowserRouter>
+        <TransactionVersion {...props} />
+      </BrowserRouter>
+    )
   it('should return empty if no value is passed', async () => {
     renderSubject({})
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
@@ -25,13 +35,20 @@ describe('TransactionVersion', function () {
     expect(screen.queryByRole('link')).toBeInTheDocument()
   })
   it('should not perform any sort of validation (yet)', async () => {
-    renderSubject({ value: "You'll render pretty much anything but undefined 🤷" })
+    renderSubject({
+      value: "You'll render pretty much anything but undefined 🤷",
+    })
     expect(screen.queryByRole('link')).toBeInTheDocument()
   })
 })
 
 describe('AccountAddress', function () {
-  const renderSubject = (value: AccountAddressProps['value']) => render(<BrowserRouter><AccountAddress value={value}/></BrowserRouter>)
+  const renderSubject = (value: AccountAddressProps['value']) =>
+    render(
+      <BrowserRouter>
+        <AccountAddress value={value} />
+      </BrowserRouter>
+    )
   it('should return empty if value is empty string', async () => {
     renderSubject('')
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
@@ -52,7 +69,9 @@ describe('AccountAddress', function () {
   })
   it('should display link if address passes validation', async () => {
     // @ts-ignore TS is bad at mocking
-    getCanonicalAddress.mockResolvedValue(Ok('0000000000000000000000000b1e55ed'))
+    getCanonicalAddress.mockResolvedValue(
+      Ok('0000000000000000000000000b1e55ed')
+    )
 
     renderSubject('0xB1E55ED')
 

@@ -1,10 +1,14 @@
-// eslint-disable-next-line camelcase
-import { GraphQLTypes, order_by } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+/* eslint-disable camelcase */
+import {
+  GraphQLTypes,
+  order_by,
+} from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 
-export type MintEventsQueryType = GraphQLTypes['query_root']['receivedmint_events']
+export type MintEventsQueryType =
+  GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -44,7 +48,8 @@ export function burnEventsQuery() {
   }
 }
 
-export type PaymentEventsQueryType = GraphQLTypes['query_root']['sentpayment_events']
+export type PaymentEventsQueryType =
+  GraphQLTypes['query_root']['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -86,7 +91,8 @@ export function gasEventsQuery() {
   }
 }
 
-export type PreburnEventsQueryType = GraphQLTypes['query_root']['preburn_events']
+export type PreburnEventsQueryType =
+  GraphQLTypes['query_root']['preburn_events']
 export function preburnEventsQuery() {
   return {
     preburn_events: [
@@ -105,7 +111,8 @@ export function preburnEventsQuery() {
   }
 }
 
-export type AccountcreationEventsQueryType = GraphQLTypes['query_root']['accounts']
+export type AccountcreationEventsQueryType =
+  GraphQLTypes['query_root']['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [
@@ -202,7 +209,11 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 }
 
 // eslint-disable-next-line camelcase
-export type CurrencyInCirculationPageQueryType = { diem_in_circulation_realtime_aggregates: [{ currency: string, total_net_value: number, timestamp: string}] | [] }
+export type CurrencyInCirculationPageQueryType = {
+  diem_in_circulation_realtime_aggregates:
+    | [{ currency: string; total_net_value: number; timestamp: string }]
+    | []
+}
 export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_realtime_aggregates: [
@@ -220,7 +231,9 @@ export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   }
 }
 
-export type CountTransactionsInLast10MinutesType = { aggregate: { count: number } }
+export type CountTransactionsInLast10MinutesType = {
+  aggregate: { count: number }
+}
 export function countTransactionsInLast10Minutes() {
   const TEN_MINUTES_AGO = moment.utc().subtract(10, 'minutes').format()
   return {
@@ -259,7 +272,9 @@ export function top10Transactions(currency: KnownCurrency) {
 }
 
 // eslint-disable-next-line camelcase
-export type DiemInCirculationHistoryType = { diem_in_circulation_dynamic: { timestamp: string, total_net: number }[] }
+export type DiemInCirculationHistoryType = {
+  diem_in_circulation_dynamic: { timestamp: string; total_net: number }[]
+}
 export function diemInCirculationHistoryQuery(currency: KnownCurrency) {
   const TODAY = moment().format()
   const ONE_WEEK_AGO = moment().subtract(7, 'days').format()
@@ -267,12 +282,15 @@ export function diemInCirculationHistoryQuery(currency: KnownCurrency) {
   return {
     diem_in_circulation_dynamic: [
       {
-        where: { timestamp: { _gt: ONE_WEEK_AGO, _lt: TODAY }, currency: { _eq: currency } },
+        where: {
+          timestamp: { _gt: ONE_WEEK_AGO, _lt: TODAY },
+          currency: { _eq: currency },
+        },
         order_by: [{ timestamp: order_by.desc }],
       },
       {
         total_net: true,
-        timestamp: true
+        timestamp: true,
       },
     ],
   }

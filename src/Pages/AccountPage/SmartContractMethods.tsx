@@ -24,7 +24,7 @@ function mapModuleIntoMethodSignatures(module: Module) {
 
       return (
         <li key={`method-${idx}`}>
-          <pre className="mb-0 method-signature">
+          <pre className='mb-0 method-signature'>
             {`fun ${fn.name}(${params.join(', ')}): ${formatReturnTypes(
               fn.return
             )}`}
@@ -42,10 +42,10 @@ export default function SmartContractMethods({ data }: { data: Module[] }) {
   }
   return (
     <>
-      <Card className="mb-5">
+      <Card className='mb-5'>
         <Card.Header>Smart Contract Methods</Card.Header>
-        <Card.Body id="smart-contract-methods">
-          <ul className="method-list">{methodSignatures}</ul>
+        <Card.Body id='smart-contract-methods'>
+          <ul className='method-list'>{methodSignatures}</ul>
         </Card.Body>
       </Card>
     </>

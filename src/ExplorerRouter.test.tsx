@@ -29,12 +29,12 @@ function renderWithRouter(path: string) {
   return render(
     <Router history={history}>
       <ExplorerRouter />
-    </Router>,
+    </Router>
   )
 }
 
 describe('ExplorerRouter', () => {
-  [
+  ;[
     {
       name: 'Landing',
       route: '/',
@@ -95,14 +95,13 @@ describe('ExplorerRouter', () => {
       route: '/not_a_real_url',
       text: ['Page not found.'],
     },
-  ]
-    .forEach(spec => {
-      it(`should render ${spec.name} page when path is ${spec.route}`, () => {
-        renderWithRouter(spec.route)
-        const textContent = screen.getByRole('main').textContent
-        spec.text.forEach(text => {
-          expect(textContent).toContain(text)
-        })
+  ].forEach((spec) => {
+    it(`should render ${spec.name} page when path is ${spec.route}`, () => {
+      renderWithRouter(spec.route)
+      const textContent = screen.getByRole('main').textContent
+      spec.text.forEach((text) => {
+        expect(textContent).toContain(text)
       })
     })
+  })
 })

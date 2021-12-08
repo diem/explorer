@@ -1,4 +1,7 @@
-import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../../ApiRequestComponent'
+import ApiRequestComponent, {
+  PlainErrorComponent,
+  PlainLoadingComponent,
+} from '../../../ApiRequestComponent'
 import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
@@ -10,23 +13,32 @@ import { TransactionVersion } from '../../../TableComponents/Link'
 
 export interface TopSentPaymentEvent {
   // eslint-disable-next-line camelcase
-  transaction_version: number,
-  amount: number,
+  transaction_version: number
+  amount: number
 }
 
-type Top10TransactionsTableProps = { topPayments: TopSentPaymentEvent[] };
+type Top10TransactionsTableProps = { topPayments: TopSentPaymentEvent[] }
 
-function Top10TransactionsTable({ data }: { data: Top10TransactionsTableProps }) {
+function Top10TransactionsTable({
+  data,
+}: {
+  data: Top10TransactionsTableProps
+}) {
   const { topPayments } = data
-  const paymentData = topPayments.map(({
-    // eslint-disable-next-line camelcase
-    transaction_version,
-    amount,
-  }, index) => ({
-    version: transaction_version,
-    amount,
-    rank: index + 1,
-  }))
+  const paymentData = topPayments.map(
+    (
+      {
+        // eslint-disable-next-line camelcase
+        transaction_version,
+        amount,
+      },
+      index
+    ) => ({
+      version: transaction_version,
+      amount,
+      rank: index + 1,
+    })
+  )
   return (
     <>
       <Card.Header>
@@ -38,18 +50,27 @@ function Top10TransactionsTable({ data }: { data: Top10TransactionsTableProps })
         </ReactTooltip>
       </Card.Header>
       <Card.Body>
-        <Table columns={[
-          column('Ranking', 'rank'),
-          column('Version', 'version', TransactionVersion),
-          column('Amount (XUS)', 'amount'),
-        ]} data={paymentData} />
+        <Table
+          columns={[
+            column('Ranking', 'rank'),
+            column('Version', 'version', TransactionVersion),
+            column('Amount (XUS)', 'amount'),
+          ]}
+          data={paymentData}
+        />
       </Card.Body>
     </>
   )
 }
 
-async function getTopTransactions(currency: KnownCurrency): Promise<DataOrErrors<Top10TransactionsTableProps>> {
-  const result: DataOrErrors<TopSentPaymentEvent[]> = await postQueryToAnalyticsApi(top10Transactions(currency), 'sentpayment_events')
+async function getTopTransactions(
+  currency: KnownCurrency
+): Promise<DataOrErrors<Top10TransactionsTableProps>> {
+  const result: DataOrErrors<TopSentPaymentEvent[]> =
+    await postQueryToAnalyticsApi(
+      top10Transactions(currency),
+      'sentpayment_events'
+    )
   if ('data' in result) {
     return { data: { topPayments: result.data } }
   } else {

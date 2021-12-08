@@ -8,8 +8,10 @@ import {
 import { BrowserRouter } from 'react-router-dom'
 import DiemInCirculationPage from './DiemInCirculationPage'
 import {
-  currencyInCirculationPageQuery, CurrencyInCirculationPageQueryType,
-  diemInCirculationHistoryQuery, DiemInCirculationHistoryType,
+  currencyInCirculationPageQuery,
+  CurrencyInCirculationPageQueryType,
+  diemInCirculationHistoryQuery,
+  DiemInCirculationHistoryType,
 } from '../../api_clients/AnalyticsQueries'
 import moment from 'moment'
 
@@ -20,11 +22,13 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
   postQueryToAnalyticsApi: jest.fn(),
 }))
 const mockXusInCirculation: CurrencyInCirculationPageQueryType = {
-  diem_in_circulation_realtime_aggregates: [{
-    currency: 'XUS',
-    total_net_value: 1040002525680000,
-    timestamp: '2021-10-30T01:22:18.660956+00:00',
-  }],
+  diem_in_circulation_realtime_aggregates: [
+    {
+      currency: 'XUS',
+      total_net_value: 1040002525680000,
+      timestamp: '2021-10-30T01:22:18.660956+00:00',
+    },
+  ],
 }
 const mockXdxInCirculation: CurrencyInCirculationPageQueryType = {
   diem_in_circulation_realtime_aggregates: [],
@@ -46,7 +50,7 @@ const mockHistory: DiemInCirculationHistoryType = {
 const renderSubject = async (
   xusInCirculationResponse: CurrencyInCirculationPageQueryType = mockXusInCirculation,
   xdxInCirculationResponse: CurrencyInCirculationPageQueryType = mockXdxInCirculation,
-  historyResponse: DiemInCirculationHistoryType = mockHistory,
+  historyResponse: DiemInCirculationHistoryType = mockHistory
 ) => {
   postQueryToAnalyticsApi
     // @ts-ignore TS is bad at mocking
@@ -56,7 +60,7 @@ const renderSubject = async (
   render(
     <BrowserRouter>
       <DiemInCirculationPage />
-    </BrowserRouter>,
+    </BrowserRouter>
   )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
@@ -66,12 +70,14 @@ describe('DiemInCirculationPage', () => {
     await renderSubject()
     expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(3)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
-      currencyInCirculationPageQuery('XUS'),
+      currencyInCirculationPageQuery('XUS')
     )
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
-      currencyInCirculationPageQuery('XDX'),
+      currencyInCirculationPageQuery('XDX')
     )
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(diemInCirculationHistoryQuery('XUS'))
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      diemInCirculationHistoryQuery('XUS')
+    )
   })
 
   it('should display event data in a table', async () => {
@@ -83,29 +89,42 @@ describe('DiemInCirculationPage', () => {
 
     expect(screen.queryByText('XUS')).toBeInTheDocument()
 
-    const expectedNetValue = mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.total_net_value
+    const expectedNetValue =
+      mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!
+        .total_net_value
     expect(screen.queryByText(expectedNetValue)).toBeInTheDocument()
 
-    const expectedTimestamp = moment(mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.timestamp).toISOString(false)
+    const expectedTimestamp = moment(
+      mockXusInCirculation.diem_in_circulation_realtime_aggregates[0]!.timestamp
+    ).toISOString(false)
     expect(screen.queryByText(expectedTimestamp)).toBeInTheDocument()
   })
 
   describe('history graph', () => {
     it('should display a graph containing a history of diem circulation', async () => {
       await renderSubject()
-      expect(screen.queryByText('Diem In Circulation History In Past Week')).toBeInTheDocument()
+      expect(
+        screen.queryByText('Diem In Circulation History In Past Week')
+      ).toBeInTheDocument()
     })
     it('should use the historical data when there is historical data for the past week', async () => {
       await renderSubject()
 
-      const points = screen.queryByTestId('circulation-graph-card')!.getAttribute('data-test-points-quantity')!
-      const expectedPoints = mockHistory.diem_in_circulation_dynamic.length.toString()
+      const points = screen
+        .queryByTestId('circulation-graph-card')!
+        .getAttribute('data-test-points-quantity')!
+      const expectedPoints =
+        mockHistory.diem_in_circulation_dynamic.length.toString()
       expect(points).toEqual(expectedPoints)
     })
     it('should use the current XUS in circulation when there is no historical data in the past week', async () => {
-      await renderSubject(mockXusInCirculation, mockXdxInCirculation, { diem_in_circulation_dynamic: [] })
+      await renderSubject(mockXusInCirculation, mockXdxInCirculation, {
+        diem_in_circulation_dynamic: [],
+      })
 
-      const points = screen.queryByTestId('circulation-graph-card')!.getAttribute('data-test-points-quantity')!
+      const points = screen
+        .queryByTestId('circulation-graph-card')!
+        .getAttribute('data-test-points-quantity')!
       expect(points).toEqual('1')
     })
   })

@@ -1,27 +1,27 @@
 export const mockAccountCreationEventsPageText =
   'This is account creation events page'
 const mockAccountCreationEventsPage = () => (
-  <div role="main">{mockAccountCreationEventsPageText}</div>
+  <div role='main'>{mockAccountCreationEventsPageText}</div>
 )
 
 export const mockPreburnEventsPageText = 'This is preburn events page'
 const mockPreburnEventsPage = () => (
-  <div role="main">{mockPreburnEventsPageText}</div>
+  <div role='main'>{mockPreburnEventsPageText}</div>
 )
 
 export const mockGasEventsPageText = 'This is gas events page'
-const mockGasEventsPage = () => <div role="main">{mockGasEventsPageText}</div>
+const mockGasEventsPage = () => <div role='main'>{mockGasEventsPageText}</div>
 
 export const mockPaymentEventsPageText = 'This is payment events page'
 const mockPaymentEventsPage = () => (
-  <div role="main">{mockPaymentEventsPageText}</div>
+  <div role='main'>{mockPaymentEventsPageText}</div>
 )
 
 export const mockBurnEventsPageText = 'This is burn events page'
-const mockBurnEventsPage = () => <div role="main">{mockBurnEventsPageText}</div>
+const mockBurnEventsPage = () => <div role='main'>{mockBurnEventsPageText}</div>
 
 export const mockMintEventsPageText = 'This is mint events page'
-const mockMintEventsPage = () => <div role="main">{mockMintEventsPageText}</div>
+const mockMintEventsPage = () => <div role='main'>{mockMintEventsPageText}</div>
 
 const mockEventPages = {
   BurnEventsPage: mockBurnEventsPage,
