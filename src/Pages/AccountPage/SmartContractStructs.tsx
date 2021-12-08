@@ -20,9 +20,9 @@ export default function SmartContractStructs({ data }: { data: Module[] }) {
   }
   return (
     <>
-      <Card className="mb-5">
+      <Card className='mb-5'>
         <Card.Header>Smart Contract Structs</Card.Header>
-        <Card.Body id="smart-contract-structs">
+        <Card.Body id='smart-contract-structs'>
           <pre>{structs}</pre>
         </Card.Body>
       </Card>

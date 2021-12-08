@@ -1,7 +1,13 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import Top10TransactionsCard, { TopSentPaymentEvent } from './Top10TransactionsCard'
+import Top10TransactionsCard, {
+  TopSentPaymentEvent,
+} from './Top10TransactionsCard'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
 
@@ -11,17 +17,17 @@ jest.mock('../../../api_clients/AnalyticsClient', () => ({
 
 jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
-const renderSubject = async (
-  transactions: TopSentPaymentEvent[] = [],
-) => {
+const renderSubject = async (transactions: TopSentPaymentEvent[] = []) => {
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValue({
     data: transactions,
   })
 
-  render(<BrowserRouter>
-    <Top10TransactionsCard />
-  </BrowserRouter>)
+  render(
+    <BrowserRouter>
+      <Top10TransactionsCard />
+    </BrowserRouter>
+  )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
 
@@ -39,7 +45,9 @@ describe('Top10TransactionsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement | null | undefined = screen.queryByTestId('top-10-transactions')?.querySelector('table')
+    const table: HTMLTableElement | null | undefined = screen
+      .queryByTestId('top-10-transactions')
+      ?.querySelector('table')
     expect(table).toBeInTheDocument()
     const cardBody = table!.tBodies.item(0)!
     expect(cardBody.rows).toHaveLength(1)
@@ -55,9 +63,12 @@ describe('Top10TransactionsCard', () => {
       },
     ])
 
-    const transactionCell = screen.queryByTestId('top-10-transactions')!.querySelector('table tbody tr td:nth-child(2)')
+    const transactionCell = screen
+      .queryByTestId('top-10-transactions')!
+      .querySelector('table tbody tr td:nth-child(2)')
     expect(transactionCell).toBeInTheDocument()
-    const transactionLink: HTMLAnchorElement | null = transactionCell!.querySelector('a')
+    const transactionLink: HTMLAnchorElement | null =
+      transactionCell!.querySelector('a')
     expect(transactionLink).toBeInTheDocument()
     expect(transactionLink!.href).toMatch(/\/txn\/12345$/)
   })
@@ -73,7 +84,9 @@ describe('Top10TransactionsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement = screen.queryByTestId('top-10-transactions')!.querySelector('table')!
+    const table: HTMLTableElement = screen
+      .queryByTestId('top-10-transactions')!
+      .querySelector('table')!
     const cardBody = table.tBodies.item(0)!
     expect(cardBody!.rows).toHaveLength(2)
     expect(cardBody!.rows[0].cells[1].textContent).toEqual('1')
@@ -82,6 +95,9 @@ describe('Top10TransactionsCard', () => {
   it('should query the Analytics API correctly', async () => {
     await renderSubject()
     const expectedQuery = top10Transactions('XUS')
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(expectedQuery, 'sentpayment_events')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      expectedQuery,
+      'sentpayment_events'
+    )
   })
 })

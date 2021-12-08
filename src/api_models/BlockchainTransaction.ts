@@ -27,7 +27,8 @@ export interface BlockchainTransactionPayload {
 type PayeeArgument = string
 type AmountArgument = string
 
-export interface BlockchainP2PTransactionPayload extends BlockchainTransactionPayload {
+export interface BlockchainP2PTransactionPayload
+  extends BlockchainTransactionPayload {
   type: 'script_function_payload'
   function: '0x1::PaymentScripts::peer_to_peer_with_metadata'
   arguments: [
@@ -36,7 +37,7 @@ export interface BlockchainP2PTransactionPayload extends BlockchainTransactionPa
     string, // ???
     string // ???
   ]
-  type_arguments: [ KnownCurrencyBlockchainAddress ]
+  type_arguments: [KnownCurrencyBlockchainAddress]
 }
 
 export interface BlockchainUserTxnData extends BlockchainTransaction {

@@ -3,7 +3,7 @@ const mockTxnDetailsPage = (props: {
   match: { params: { version: number } }
 }) => {
   return (
-    <div role="main">
+    <div role='main'>
       {props.match.params.version}
       {mockTxnDetailsPageText}
     </div>

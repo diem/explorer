@@ -1,5 +1,8 @@
 import { RouteComponentProps } from 'react-router-dom'
-import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../ApiRequestComponent'
+import ApiRequestComponent, {
+  PlainErrorComponent,
+  PlainLoadingComponent,
+} from '../../ApiRequestComponent'
 import {
   getAccountModules,
   getAccountResources,
@@ -32,7 +35,10 @@ import {
 } from '../Common/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
 
-function accountIsSupported(data: { resources: Resource[], modules: Module[] }): boolean {
+function accountIsSupported(data: {
+  resources: Resource[]
+  modules: Module[]
+}): boolean {
   const hasStructs =
     data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
   const hasMethods =
@@ -42,7 +48,11 @@ function accountIsSupported(data: { resources: Resource[], modules: Module[] }):
   return hasStructs || hasMethods || hasBalance
 }
 
-function UnsupportedAccountCard({ data }: { data: { resources: Resource[], modules: Module[] } }) {
+function UnsupportedAccountCard({
+  data,
+}: {
+  data: { resources: Resource[]; modules: Module[] }
+}) {
   if (accountIsSupported(data)) {
     return <></>
   }
@@ -72,7 +82,7 @@ const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
         column('Status', 'status'),
       ]}
       data={data}
-      id="recentTransactions"
+      id='recentTransactions'
     />
   )
 }
@@ -94,8 +104,8 @@ const EventHandlesTable: React.FC<{
     },
   ]
   return (
-    <Card data-testid="event-handles-card">
-      <Card.Header className="Header">Event Handles</Card.Header>
+    <Card data-testid='event-handles-card'>
+      <Card.Header className='Header'>Event Handles</Card.Header>
       <Card.Body>
         <Table
           columns={[
@@ -115,9 +125,9 @@ function SequenceNumber({ data }: { data: DiemAccountResource | null }) {
     return <></>
   }
   return (
-    <Card className="mb-5">
+    <Card className='mb-5'>
       <Card.Header>Sequence Number</Card.Header>
-      <Card.Body id="sequenceNumber">{data.value.sequence_number}</Card.Body>
+      <Card.Body id='sequenceNumber'>{data.value.sequence_number}</Card.Body>
     </Card>
   )
 }
@@ -127,9 +137,9 @@ function AuthenticationKey({ data }: { data: DiemAccountResource | null }) {
     return <></>
   }
   return (
-    <Card className="mb-5">
+    <Card className='mb-5'>
       <Card.Header>Authentication Key</Card.Header>
-      <Card.Body id="authenticationKey">
+      <Card.Body id='authenticationKey'>
         {data.value.authentication_key}
       </Card.Body>
     </Card>
@@ -142,9 +152,9 @@ interface AccountPageMatch {
 
 type AccountPageProps = RouteComponentProps<AccountPageMatch>
 interface AccountPageState {
-  resourcesResponse?: Promise<DataOrErrors<Resource[]>>,
-  modulesResponse?: Promise<DataOrErrors<Module[]>>,
-  recentTransactionsResponse?: Promise<DataOrErrors<TransactionRow[]>>,
+  resourcesResponse?: Promise<DataOrErrors<Resource[]>>
+  modulesResponse?: Promise<DataOrErrors<Module[]>>
+  recentTransactionsResponse?: Promise<DataOrErrors<TransactionRow[]>>
 }
 
 export default function AccountPage(props: AccountPageProps) {
@@ -154,57 +164,67 @@ export default function AccountPage(props: AccountPageProps) {
   }
   const address = maybeAddress.val
 
-  const [{ resourcesResponse, modulesResponse, recentTransactionsResponse }, setState] = useState<AccountPageState>({})
+  const [
+    { resourcesResponse, modulesResponse, recentTransactionsResponse },
+    setState,
+  ] = useState<AccountPageState>({})
   useEffect(() => {
     setState({
       resourcesResponse: getAccountResources(address),
       modulesResponse: getAccountModules(address),
-      recentTransactionsResponse: postQueryToAnalyticsApi<TransactionsQueryType>(
-        transactionsBySenderAddressQuery(address),
-        'transactions'
-      ).then((analyticsTransactionsOrError) => {
-        if ('data' in analyticsTransactionsOrError) {
-          return {
-            data: analyticsTransactionsOrError.data.map(
-              transformAnalyticsTransactionIntoTransaction
-            ),
+      recentTransactionsResponse:
+        postQueryToAnalyticsApi<TransactionsQueryType>(
+          transactionsBySenderAddressQuery(address),
+          'transactions'
+        ).then((analyticsTransactionsOrError) => {
+          if ('data' in analyticsTransactionsOrError) {
+            return {
+              data: analyticsTransactionsOrError.data.map(
+                transformAnalyticsTransactionIntoTransaction
+              ),
+            }
+          } else {
+            return analyticsTransactionsOrError
           }
-        } else {
-          return analyticsTransactionsOrError
-        }
-      })
+        }),
     })
   }, [])
   if (!resourcesResponse || !modulesResponse || !recentTransactionsResponse) {
     return <></>
   }
 
-  const resourcesAndModulesResponse = Promise
-    .all([resourcesResponse, modulesResponse])
-    .then(([resourcesOrErrors, modulesOrErrors]) => {
-      if ('errors' in resourcesOrErrors || 'errors' in modulesOrErrors) {
-        const allErrors = []
-          // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-          .concat(resourcesOrErrors.errors)
-          // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-          .concat(modulesOrErrors.errors)
-          .filter(e => e !== null)
-        return { errors: allErrors }
-      } else {
-        return {
-          data: {
-            resources: resourcesOrErrors.data,
-            modules: modulesOrErrors.data,
-          }
-        }
+  const resourcesAndModulesResponse = Promise.all([
+    resourcesResponse,
+    modulesResponse,
+  ]).then(([resourcesOrErrors, modulesOrErrors]) => {
+    if ('errors' in resourcesOrErrors || 'errors' in modulesOrErrors) {
+      const allErrors = []
+        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+        .concat(resourcesOrErrors.errors)
+        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+        .concat(modulesOrErrors.errors)
+        .filter((e) => e !== null)
+      return { errors: allErrors }
+    } else {
+      return {
+        data: {
+          resources: resourcesOrErrors.data,
+          modules: modulesOrErrors.data,
+        },
       }
-    })
+    }
+  })
 
   const accountResourceResponse: Promise<
     DataOrErrors<DiemAccountResource | null>
   > = resourcesResponse.then((resourcesOrError) => {
     if ('data' in resourcesOrError) {
-      return { data: resourcesOrError.data.find(isDiemAccountResource) as DiemAccountResource || null }
+      return {
+        data:
+          (resourcesOrError.data.find(
+            isDiemAccountResource
+          ) as DiemAccountResource) || null,
+      }
     } else {
       return resourcesOrError
     }
@@ -219,7 +239,7 @@ export default function AccountPage(props: AccountPageProps) {
           errorComponent={<PlainErrorComponent />}
           loadingComponent={<PlainLoadingComponent />}
         >
-          <UnsupportedAccountCard data={{ modules: [], resources: [] }}/>
+          <UnsupportedAccountCard data={{ modules: [], resources: [] }} />
         </ApiRequestComponent>
         <ApiRequestComponent
           request={() => resourcesResponse}
@@ -283,7 +303,7 @@ export default function AccountPage(props: AccountPageProps) {
           errorComponent={<PlainErrorComponent />}
           loadingComponent={<PlainLoadingComponent />}
         >
-          <JSONPretty data={[]} id="rawResources" />
+          <JSONPretty data={[]} id='rawResources' />
         </ApiRequestComponent>
 
         <h2>Raw Smart Contracts</h2>
@@ -292,7 +312,7 @@ export default function AccountPage(props: AccountPageProps) {
           errorComponent={<PlainErrorComponent />}
           loadingComponent={<PlainLoadingComponent />}
         >
-          <JSONPretty data={[]} id="rawModules" />
+          <JSONPretty data={[]} id='rawModules' />
         </ApiRequestComponent>
       </>
     </MainWrapper>

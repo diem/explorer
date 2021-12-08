@@ -17,55 +17,55 @@ interface MainWrapperProps {
 function MainWrapper(props: MainWrapperProps) {
   const { children } = props
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className='d-flex flex-column min-vh-100'>
       <header>
         <Navbar
           collapseOnSelect
-          expand="lg"
-          bg="light"
-          className="border-bottom"
+          expand='lg'
+          bg='light'
+          className='border-bottom'
         >
           <Container>
-            <Navbar.Brand href="/" className="d-flex align-items-center">
-              <img src={logo} alt="Diem logo" />
+            <Navbar.Brand href='/' className='d-flex align-items-center'>
+              <img src={logo} alt='Diem logo' />
               &nbsp;
-              <span className="navbar-text">explorer</span>
+              <span className='navbar-text'>explorer</span>
               &nbsp;
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto align-items-center">
+            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+            <Navbar.Collapse id='responsive-navbar-nav'>
+              <Nav className='me-auto align-items-center'>
                 <DropdownButton
-                  id="dropdown-basic-button"
+                  id='dropdown-basic-button'
                   title={'DPN Dev'}
-                  className="d-inline"
-                  size="sm"
-                  variant="secondary"
+                  className='d-inline'
+                  size='sm'
+                  variant='secondary'
                 >
-                  <Dropdown.Item href="#">DPN Premainnet</Dropdown.Item>
+                  <Dropdown.Item href='#'>DPN Premainnet</Dropdown.Item>
                 </DropdownButton>{' '}
-                <Nav.Link href="/">Home</Nav.Link>
-                <NavDropdown title="Events" id="collasible-nav-dropdown">
-                  <Link className="dropdown-item" to="/events/mint">
+                <Nav.Link href='/'>Home</Nav.Link>
+                <NavDropdown title='Events' id='collasible-nav-dropdown'>
+                  <Link className='dropdown-item' to='/events/mint'>
                     Mint Events
                   </Link>
-                  <Link className="dropdown-item" to="/events/burn">
+                  <Link className='dropdown-item' to='/events/burn'>
                     Burn Events
                   </Link>
-                  <Link className="dropdown-item" to="/events/payment">
+                  <Link className='dropdown-item' to='/events/payment'>
                     Payment Events
                   </Link>
-                  <Link className="dropdown-item" to="/events/gas">
+                  <Link className='dropdown-item' to='/events/gas'>
                     Gas Events
                   </Link>
-                  <Link className="dropdown-item" to="/events/preburn">
+                  <Link className='dropdown-item' to='/events/preburn'>
                     Preburn Events
                   </Link>
-                  <Link className="dropdown-item" to="/events/accountcreation">
+                  <Link className='dropdown-item' to='/events/accountcreation'>
                     Account Creation Events
                   </Link>
                 </NavDropdown>
-                <Link className="nav-link" to="/diemincirculation">
+                <Link className='nav-link' to='/diemincirculation'>
                   Diem-In-Circulation
                 </Link>
                 <Link className='nav-link' to='/leaderboard'>
@@ -77,12 +77,12 @@ function MainWrapper(props: MainWrapperProps) {
         </Navbar>{' '}
       </header>
 
-      <main className="flex-shrink-0">
-        <div className="container">{children}</div>
+      <main className='flex-shrink-0'>
+        <div className='container'>{children}</div>
       </main>
 
-      <footer className="footer mt-auto py-3 bg-light">
-        <div className="container">
+      <footer className='footer mt-auto py-3 bg-light'>
+        <div className='container'>
           <span>© 2021 Diem Association</span>
         </div>
       </footer>

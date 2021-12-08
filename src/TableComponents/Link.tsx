@@ -7,23 +7,28 @@ interface LinkProps {
   linkPrefix: string | undefined
 }
 
-export const Link =
-  ({ className, linkPrefix = '/' }: LinkProps) =>
+export function Link({
+  className,
+  linkPrefix = '/',
+}: LinkProps): React.FC<{ value: string }> {
   // eslint-disable-next-line react/display-name
-    ({ value }: { value: string }) => {
-      return (
-        <RouterLink
-          className={`dx-link ${className}`}
-          to={`${linkPrefix}${value}`}
-        >
-          {value}
-        </RouterLink>
-      )
-    }
+  return ({ value }: { value: string }) => {
+    return (
+      <RouterLink
+        className={`dx-link ${className}`}
+        to={`${linkPrefix}${value}`}
+      >
+        {value}
+      </RouterLink>
+    )
+  }
+}
 Link.displayName = 'DiemExplorerLink'
 
 export type TxnVersionProps = { value?: string | number }
-export const TransactionVersion: React.FC<TxnVersionProps> = (props: TxnVersionProps) => {
+export const TransactionVersion: React.FC<TxnVersionProps> = (
+  props: TxnVersionProps
+) => {
   if (!('value' in props)) {
     return <></>
   }
@@ -34,7 +39,9 @@ export const TransactionVersion: React.FC<TxnVersionProps> = (props: TxnVersionP
 }
 
 export type AccountAddressProps = { value: string | null }
-export const AccountAddress: React.FC<AccountAddressProps> = (props: AccountAddressProps) => {
+export const AccountAddress: React.FC<AccountAddressProps> = (
+  props: AccountAddressProps
+) => {
   if (props.value === '' || props.value === null) {
     return <></>
   }
@@ -42,7 +49,10 @@ export const AccountAddress: React.FC<AccountAddressProps> = (props: AccountAddr
   const maybeAddress = getCanonicalAddress(props.value)
 
   if (maybeAddress.err) {
-    console.error(`Unable to get canonical address from: ${props.value}`, maybeAddress.val)
+    console.error(
+      `Unable to get canonical address from: ${props.value}`,
+      maybeAddress.val
+    )
     return <>{maybeAddress.val}</>
   }
 

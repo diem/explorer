@@ -164,7 +164,9 @@ describe('LandingPage', function () {
         screen.getByLabelText('Search by Address or Transaction Version'),
         '74767203!{enter}'
       )
-      expect(mockHistory.push).toHaveBeenCalledWith('/address/00000000000000000000000074767203')
+      expect(mockHistory.push).toHaveBeenCalledWith(
+        '/address/00000000000000000000000074767203'
+      )
     })
   })
 })

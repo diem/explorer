@@ -27,11 +27,7 @@ function UnsupportedTxnDetailsTable() {
   )
 }
 
-function UserTxnDetailsTable({
-  data,
-}: {
-  data: BlockchainUserTxnData
-}) {
+function UserTxnDetailsTable({ data }: { data: BlockchainUserTxnData }) {
   const txnForDisplay = {
     'Version ID': data.version,
     Status: data.vm_status,
@@ -63,16 +59,14 @@ function TxnDetailsTable({
 }) {
   return (
     <>
-      <h2 className="mb-5" role="note">
+      <h2 className='mb-5' role='note'>
         Transaction Details
       </h2>
-      {transactionIsSupported(data)
-        ? (
-          <UserTxnDetailsTable data={(data as BlockchainUserTxnData)} />
-        )
-        : (
-          <UnsupportedTxnDetailsTable />
-        )}
+      {transactionIsSupported(data) ? (
+        <UserTxnDetailsTable data={data as BlockchainUserTxnData} />
+      ) : (
+        <UnsupportedTxnDetailsTable />
+      )}
     </>
   )
 }
@@ -80,7 +74,7 @@ function TxnDetailsTable({
 function RawTxn({ data }: { data: BlockchainTransaction | undefined }) {
   return (
     <Accordion activeKey={transactionIsSupported(data) ? undefined : '0'}>
-      <Accordion.Item eventKey="0">
+      <Accordion.Item eventKey='0'>
         <Accordion.Header>Raw Transaction</Accordion.Header>
         <Accordion.Body>
           <JSONPretty data={data}></JSONPretty>
