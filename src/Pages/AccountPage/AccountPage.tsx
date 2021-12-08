@@ -1,5 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom'
-import ApiRequestComponent, {PlainErrorComponent, PlainLoadingComponent} from '../../ApiRequestComponent'
+import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../ApiRequestComponent'
 import {
   getAccountModules,
   getAccountResources,
@@ -14,7 +14,7 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
@@ -30,9 +30,9 @@ import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction,
 } from '../Common/TransactionModel'
-import {getCanonicalAddress} from "../../utils";
+import { getCanonicalAddress } from '../../utils'
 
-function accountIsSupported(data: { resources: Resource[], modules: Module[] }) {
+function accountIsSupported(data: { resources: Resource[], modules: Module[] }): boolean {
   const hasStructs =
     data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
   const hasMethods =
@@ -140,31 +140,44 @@ interface AccountPageMatch {
   address: string
 }
 
-interface AccountPageProps extends RouteComponentProps<AccountPageMatch> {}
+type AccountPageProps = RouteComponentProps<AccountPageMatch>
+interface AccountPageState {
+  resourcesResponse?: Promise<DataOrErrors<Resource[]>>,
+  modulesResponse?: Promise<DataOrErrors<Module[]>>,
+  recentTransactionsResponse?: Promise<DataOrErrors<TransactionRow[]>>,
+}
 
 export default function AccountPage(props: AccountPageProps) {
   const maybeAddress = getCanonicalAddress(props.match.params.address)
   if (maybeAddress.err) {
-    return <></>
+    throw new Error(`Invalid address: "${maybeAddress.val}"`)
   }
   const address = maybeAddress.val
 
-  const resourcesResponse = getAccountResources(address)
-  const modulesResponse = getAccountModules(address)
-  const recentTransactions = postQueryToAnalyticsApi<transactionsQueryType>(
-    transactionsBySenderAddressQuery(address),
-    'transactions'
-  ).then((analyticsTransactionsOrError) => {
-    if ('data' in analyticsTransactionsOrError) {
-      return {
-        data: analyticsTransactionsOrError.data.map(
-          transformAnalyticsTransactionIntoTransaction
-        ),
-      }
-    } else {
-      return analyticsTransactionsOrError
-    }
-  })
+  const [{ resourcesResponse, modulesResponse, recentTransactionsResponse }, setState] = useState<AccountPageState>({})
+  useEffect(() => {
+    setState({
+      resourcesResponse: getAccountResources(address),
+      modulesResponse: getAccountModules(address),
+      recentTransactionsResponse: postQueryToAnalyticsApi<transactionsQueryType>(
+        transactionsBySenderAddressQuery(address),
+        'transactions'
+      ).then((analyticsTransactionsOrError) => {
+        if ('data' in analyticsTransactionsOrError) {
+          return {
+            data: analyticsTransactionsOrError.data.map(
+              transformAnalyticsTransactionIntoTransaction
+            ),
+          }
+        } else {
+          return analyticsTransactionsOrError
+        }
+      })
+    })
+  }, [])
+  if (!resourcesResponse || !modulesResponse || !recentTransactionsResponse) {
+    return <></>
+  }
 
   const resourcesAndModulesResponse = Promise
     .all([resourcesResponse, modulesResponse])
@@ -218,7 +231,7 @@ export default function AccountPage(props: AccountPageProps) {
 
         <h2>Recent Transactions</h2>
         <ApiRequestComponent
-          request={() => recentTransactions}
+          request={() => recentTransactionsResponse}
           errorComponent={<PlainErrorComponent />}
           loadingComponent={<PlainLoadingComponent />}
         >

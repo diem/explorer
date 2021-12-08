@@ -34,7 +34,7 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
   postQueryToAnalyticsApi: jest.fn(),
 }))
 
-const mockAddress = '1FC5DD16A92E82A281A063E308EBCCA9'
+const mockAddress = '1fc5dd16a92e82a281a063e308ebcca9'
 const renderSubject = async (
   resources: Resource[] = [],
   modules: Module[] = [],

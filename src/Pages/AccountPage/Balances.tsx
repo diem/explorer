@@ -42,9 +42,7 @@ export default function Balances({ data }: { data: Resource[] }) {
   const balances = parseBalancesFromResources(data)
   return (
     <>
-      {Object.keys(balances).length > 0 ? (
-        <BalancesTable balances={balances} />
-      ) : null}
+      {Object.keys(balances).length > 0 ? (<BalancesTable balances={balances} />) : null}
     </>
   )
 }
