@@ -1,4 +1,7 @@
-import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../../ApiRequestComponent'
+import ApiRequestComponent, {
+  ErrorCardComponent,
+  LoadingCardComponent,
+} from '../../../ApiRequestComponent'
 import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10AccountsQuery } from '../../../api_clients/AnalyticsQueries'
@@ -9,12 +12,11 @@ import ReactTooltip from 'react-tooltip'
 import { AccountAddress } from '../../../TableComponents/Link'
 
 export interface TopAccountEvent {
-  // eslint-disable-next-line camelcase
-  address: string,
-  balance: number,
+  address: string
+  balance: number
 }
 
-type Top10AccountsTableProps = { topAccounts: TopAccountEvent[] };
+type Top10AccountsTableProps = { topAccounts: TopAccountEvent[] }
 
 function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
   const { topAccounts } = data
@@ -27,26 +29,34 @@ function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
   return (
     <>
       <Card.Header>
-        <div data-tip data-for='top-10-definition-xus'>
+        <div data-tip data-for="top-10-definition-xus">
           Top 10 Accounts (XUS)
         </div>
-        <ReactTooltip id='top-10-definition-xus'>
+        <ReactTooltip id="top-10-definition-xus">
           10 largest accounts in XUS currently
         </ReactTooltip>
       </Card.Header>
       <Card.Body>
-        <Table columns={[
-          column('Ranking', 'rank'),
-          column('Address', 'address', AccountAddress),
-          column('Amount (XUS)', 'balance'),
-        ]} data={paymentData}/>
+        <Table
+          columns={[
+            column('Ranking', 'rank'),
+            column('Address', 'address', AccountAddress),
+            column('Amount (XUS)', 'balance'),
+          ]}
+          data={paymentData}
+        />
       </Card.Body>
     </>
   )
 }
 
-async function getTopAccounts(currency: KnownCurrency): Promise<DataOrErrors<Top10AccountsTableProps>> {
-  const result: DataOrErrors<TopAccountEvent[]> = await postQueryToAnalyticsApi(top10AccountsQuery(currency), 'accounts_balances')
+async function getTopAccounts(
+  currency: KnownCurrency
+): Promise<DataOrErrors<Top10AccountsTableProps>> {
+  const result: DataOrErrors<TopAccountEvent[]> = await postQueryToAnalyticsApi(
+    top10AccountsQuery(currency),
+    'accounts_balances'
+  )
   if ('data' in result) {
     return { data: { topAccounts: result.data } }
   } else {
@@ -56,14 +66,14 @@ async function getTopAccounts(currency: KnownCurrency): Promise<DataOrErrors<Top
 
 export default function Top10AccountsCard() {
   return (
-    <Card data-testid='top-10-accounts'>
+    <Card data-testid="top-10-accounts">
       <ApiRequestComponent
         request={getTopAccounts}
         args={['XUS']}
-        errorComponent={<PlainErrorComponent/>}
-        loadingComponent={<PlainLoadingComponent/>}
+        errorComponent={<ErrorCardComponent title={'Top 10 Accounts (XUS)'}/>}
+        loadingComponent={<LoadingCardComponent title={'Top 10 Accounts (XUS)'}/>}
       >
-        <Top10AccountsTable data={{ topAccounts: [] }}/>
+        <Top10AccountsTable data={{ topAccounts: [] }} />
       </ApiRequestComponent>
     </Card>
   )
