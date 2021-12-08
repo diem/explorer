@@ -19,7 +19,12 @@ jest.mock('../../api_clients/BlockchainRestClient', () => ({
   getBlockchainTransaction: jest.fn(),
 }))
 const mockUserTransaction: BlockchainUserTxnData = {
-  payload: undefined,
+  payload: {
+    type: 'script_function_payload',
+    function: '0x1::PaymentScripts::peer_to_peer_with_metadata',
+    arguments: ['4197763c1cc5f25397520530c76e0a86', '1', '0x', '0x'],
+    type_arguments: ['0x1::XUS::XUS']
+  },
   type: 'user_transaction',
   version: '66651271',
   hash: 'f77681996cc577851ed50b588b4de6e7290b615e05625040d24a3ceec7f9c624',
@@ -28,7 +33,7 @@ const mockUserTransaction: BlockchainUserTxnData = {
   gas_used: '511',
   success: true,
   vm_status: 'Executed successfully',
-  sender: '0x1081322fef2da29d62fe4e131ef4c859',
+  sender: '0x7f7c1917f1191487e3ab429b0dc3b118',
   sequence_number: '3971',
   max_gas_amount: '1000000',
   gas_unit_price: '0',
@@ -39,30 +44,7 @@ const mockUserTransaction: BlockchainUserTxnData = {
     public_key: 'f1910421e2a1433027a7b0e444bed67469b573adba72353ad3cde20b54e1b7a0',
     signature: 'e7b6730712283f887f52f9dd7bfb9210801c3b1093fe13ca9a5d00f129543cc0eda55d66b2d8214e5acc848626685c6098f9c09a127ee15bbf545ae69495450f'
   },
-  events: [
-    {
-      key: '0x04000000000000001081322fef2da29d62fe4e131ef4c859',
-      sequence_number: '48136',
-      type: '0x1::DiemAccount::SentPaymentEvent',
-      data: {
-        amount: '1',
-        currency_code: '0x585553',
-        metadata: '0x',
-        payee: '4197763c1cc5f25397520530c76e0a86'
-      }
-    },
-    {
-      key: '0x0200000000000000bd3c1801820aa917993888b2fa8d8c0e',
-      sequence_number: '47650',
-      type: '0x1::DiemAccount::ReceivedPaymentEvent',
-      data: {
-        amount: '1',
-        currency_code: '0x585553',
-        metadata: '0x',
-        payer: '7f7c1917f1191487e3ab429b0dc3b118'
-      }
-    }
-  ]
+  events: [],
 }
 
 const mockUnsupportedTransaction: BlockchainTransaction = {
@@ -145,7 +127,7 @@ describe('TxnDetailsPage', function () {
       ).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1616373715')).toBeInTheDocument()
-      expect(within(detailsTable).queryByText('0x585553')).toBeInTheDocument()
+      expect(within(detailsTable).queryByText('0x1::XUS::XUS')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('511')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('0')).toBeInTheDocument()
       expect(within(detailsTable).queryByText('1000000')).toBeInTheDocument()

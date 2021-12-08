@@ -31,26 +31,24 @@ function UnsupportedTxnDetailsTable() {
 function UserTxnDetailsTable({
   data,
 }: {
-  data: BlockchainUserTxnData | undefined
+  data: BlockchainUserTxnData
 }) {
-  const sentPaymentEvent = data?.events.find(event => event.type === '0x1::DiemAccount::SentPaymentEvent')
-  const receivedPaymentEvent = data?.events.find(event => event.type === '0x1::DiemAccount::ReceivedPaymentEvent')
   const txnForDisplay = {
-    'Version ID': data?.version,
-    Status: data?.vm_status,
-    'Transaction Type': data?.type,
-    To: AccountAddress({ value: getCanonicalAddress(sentPaymentEvent?.data.payee).val }),
-    From: AccountAddress({ value: getCanonicalAddress(receivedPaymentEvent?.data.payer).val }),
-    Amount: sentPaymentEvent?.data.amount,
-    Expiration: data?.expiration_timestamp_secs,
-    'Currency Code': sentPaymentEvent?.data.currency_code,
-    'Sequence Number': data?.sequence_number,
-    'Gas Used': data?.gas_used,
-    'Gas Unit Price': data?.gas_unit_price,
-    'Max Gas Amount': data?.max_gas_amount,
-    'Public Key': data?.signature.public_key,
-    Signature: data?.signature.signature,
-    'Script Hash': data?.hash,
+    'Version ID': data.version,
+    Status: data.vm_status,
+    'Transaction Type': data.type,
+    To: AccountAddress({ value: getCanonicalAddress(data.payload.arguments[0]).val }),
+    From: AccountAddress({ value: getCanonicalAddress(data.sender).val }),
+    Amount: data.payload.arguments[1],
+    Expiration: data.expiration_timestamp_secs,
+    'Currency Code': data.payload.type_arguments.toString(),
+    'Sequence Number': data.sequence_number,
+    'Gas Used': data.gas_used,
+    'Gas Unit Price': data.gas_unit_price,
+    'Max Gas Amount': data.max_gas_amount,
+    'Public Key': data.signature.public_key,
+    Signature: data.signature.signature,
+    'Script Hash': data.hash,
   }
   return <ObjectPropertiesTable object={txnForDisplay} />
 }

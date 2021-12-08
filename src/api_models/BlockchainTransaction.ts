@@ -1,3 +1,5 @@
+import { KnownCurrencyBlockchainAddress } from '../api_clients/BlockchainRestTypes'
+
 export interface TxnEvent {
   key: string
   sequence_number: string
@@ -17,6 +19,22 @@ export interface BlockchainWritesetTxnData extends BlockchainTransaction {
   type: 'writeset'
 }
 
+export interface BlockchainTransactionPayload {
+  type: string
+  function: string
+}
+
+export interface BlockchainP2PTransactionPayload extends BlockchainTransactionPayload {
+  type: 'script_function_payload'
+  function: '0x1::PaymentScripts::peer_to_peer_with_metadata'
+  arguments: [
+    string, // payee
+    string, // amount
+    string, string // ???
+  ]
+  type_arguments: [ KnownCurrencyBlockchainAddress ]
+}
+
 export interface BlockchainUserTxnData extends BlockchainTransaction {
   type: 'user_transaction'
   state_root_hash: string
@@ -28,7 +46,7 @@ export interface BlockchainUserTxnData extends BlockchainTransaction {
   expiration_timestamp_secs: string
   sender: string
   sequence_number: string
-  payload: any
+  payload: BlockchainP2PTransactionPayload
   signature: any
 }
 

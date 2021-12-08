@@ -26,7 +26,7 @@ function seeUserTxnRowData (I) {
   I.see('ed53d2c05bc4ff33d15a744f35010026')
   I.see('1')
   I.see('1616166081')
-  I.see('0x585553')
+  I.see('0x1::XUS::XUS')
   I.see('3653')
   I.see('511')
   I.see('0')
