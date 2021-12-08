@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
 import MainWrapper from './MainWrapper'
 import { DataOrErrors, FetchError } from './api_clients/FetchTypes'
+import { Card } from 'react-bootstrap'
 
 interface ApiRequestPageProps<T> {
   children: ReactElement
@@ -13,37 +14,49 @@ interface ApiRequestPageProps<T> {
 
 export function PlainErrorComponent() {
   return (
-    <span role='dialog' className='network-error'>
+    <span role="dialog" className="network-error">
       Something went wrong. Please try again later
     </span>
   )
 }
 
-export function FullPageErrorComponent() {
-  return (
-    <MainWrapper>
+export const FullPageErrorComponent = () => (
+  <MainWrapper>
+    <PlainErrorComponent />
+  </MainWrapper>
+)
+export const ErrorCardComponent = ({ title = '' }: { title?: string }) => (
+  <>
+    <Card.Header>{title}</Card.Header>
+    <Card.Body>
       <PlainErrorComponent />
-    </MainWrapper>
-  )
-}
+    </Card.Body>
+  </>
+)
 
 const DefaultErrorComponent = FullPageErrorComponent
 
 export function PlainLoadingComponent() {
   return (
-    <span className='loading' role='loading'>
+    <span className="loading" role="loading">
       Loading, please wait
     </span>
   )
 }
 
-export function FullPageLoadingComponent() {
-  return (
-    <MainWrapper>
+export const FullPageLoadingComponent = () => (
+  <MainWrapper>
+    <PlainLoadingComponent />
+  </MainWrapper>
+)
+export const LoadingCardComponent = ({ title = '' }: { title?: string }) => (
+  <>
+    <Card.Header>{title}</Card.Header>
+    <Card.Body>
       <PlainLoadingComponent />
-    </MainWrapper>
-  )
-}
+    </Card.Body>
+  </>
+)
 
 const DefaultLoadingComponent = FullPageLoadingComponent
 

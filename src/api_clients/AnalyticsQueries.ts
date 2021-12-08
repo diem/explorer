@@ -1,6 +1,6 @@
-/* eslint-disable camelcase */
 import {
   GraphQLTypes,
+  /* eslint-disable camelcase */
   order_by,
 } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
@@ -146,6 +146,23 @@ export function accountcreationEventsQuery() {
   }
 }
 
+export type AccountBalancesQueryType = GraphQLTypes['query_root']['accounts_balances']
+export function top10AccountsQuery(currency: KnownCurrency) {
+  return {
+    accounts_balances: [
+      {
+        limit: 10,
+        where: { currency: { _eq: currency } },
+        order_by: [{ balance: order_by.desc }],
+      },
+      {
+        address: true,
+        balance: true
+      },
+    ],
+  }
+}
+
 export type TransactionsQueryType = GraphQLTypes['query_root']['transactions']
 export function transactionsQuery() {
   return {
@@ -208,9 +225,10 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
   }
 }
 
-// eslint-disable-next-line camelcase
 export type CurrencyInCirculationPageQueryType = {
+  // eslint-disable-next-line camelcase
   diem_in_circulation_realtime_aggregates:
+  // eslint-disable-next-line camelcase
     | [{ currency: string; total_net_value: number; timestamp: string }]
     | []
 }
@@ -271,8 +289,8 @@ export function top10Transactions(currency: KnownCurrency) {
   }
 }
 
-// eslint-disable-next-line camelcase
 export type DiemInCirculationHistoryType = {
+  // eslint-disable-next-line camelcase
   diem_in_circulation_dynamic: { timestamp: string; total_net: number }[]
 }
 export function diemInCirculationHistoryQuery(currency: KnownCurrency) {

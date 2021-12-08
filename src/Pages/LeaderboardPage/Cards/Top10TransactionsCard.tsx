@@ -1,6 +1,5 @@
 import ApiRequestComponent, {
-  PlainErrorComponent,
-  PlainLoadingComponent,
+  ErrorCardComponent, LoadingCardComponent,
 } from '../../../ApiRequestComponent'
 import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
@@ -84,8 +83,8 @@ export default function Top10TransactionsCard() {
       <ApiRequestComponent
         request={getTopTransactions}
         args={['XUS']}
-        errorComponent={<PlainErrorComponent />}
-        loadingComponent={<PlainLoadingComponent />}
+        errorComponent={<ErrorCardComponent title={'Top 10 Transactions (XUS)'}/>}
+        loadingComponent={<LoadingCardComponent title={'Top 10 Transactions (XUS)'}/>}
       >
         <Top10TransactionsTable data={{ topPayments: [] }} />
       </ApiRequestComponent>
