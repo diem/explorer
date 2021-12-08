@@ -1,9 +1,9 @@
 import BTable from 'react-bootstrap/Table'
-import React, { ReactChild } from 'react'
+import React, { ReactChild, ReactElement } from 'react'
 
 interface ObjectPropertiesTableProps {
   object: {
-    [key: string]: string | number | undefined | ReactChild
+    [key: string]: string | number | undefined | null | ReactChild | ReactElement
   }
 }
 export default function ObjectPropertiesTable({
