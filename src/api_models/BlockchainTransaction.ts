@@ -24,13 +24,17 @@ export interface BlockchainTransactionPayload {
   function: string
 }
 
+type PayeeArgument = string
+type AmountArgument = string
+
 export interface BlockchainP2PTransactionPayload extends BlockchainTransactionPayload {
   type: 'script_function_payload'
   function: '0x1::PaymentScripts::peer_to_peer_with_metadata'
   arguments: [
-    string, // payee
-    string, // amount
-    string, string // ???
+    PayeeArgument,
+    AmountArgument,
+    string, // ???
+    string // ???
   ]
   type_arguments: [ KnownCurrencyBlockchainAddress ]
 }
