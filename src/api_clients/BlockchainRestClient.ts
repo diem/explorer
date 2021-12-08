@@ -2,6 +2,7 @@ import { DataOrErrors, FetchError } from './FetchTypes'
 import { getWithFetch } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
+import { BlockchainTransaction } from '../api_models/BlockchainTransaction'
 
 export interface RestError {
   code: number
@@ -10,7 +11,7 @@ export interface RestError {
 
 type RestResponse = Resource[] | Module[] | RestError
 
-function transformBlockchainRestResponse<T extends Module[] | Resource[]>(
+function transformBlockchainRestResponse<T extends Module[] | Resource[] | BlockchainTransaction>(
   response: RestResponse
 ): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {
@@ -22,6 +23,19 @@ function transformBlockchainRestResponse<T extends Module[] | Resource[]>(
       data: response as T,
     }
   }
+}
+
+export function getBlockchainTransaction(txnVersion: string): Promise<DataOrErrors<BlockchainTransaction>> {
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/transactions/${txnVersion}`
+  return getWithFetch<RestResponse>(url, {})
+    .then((response) => {
+      return transformBlockchainRestResponse<BlockchainTransaction>(response)
+    })
+    .catch((error: FetchError) => {
+      return {
+        errors: [{ message: error.toString() }],
+      }
+    })
 }
 
 async function getAccountAsset<T extends Resource[] | Module[]>(

@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blockchainRestApi/transactions/321960031"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "type": "block_metadata_transaction",
+      "version": "321960031",
+      "hash": "0xc5c969761211f65d41a8a747f66e45309a45e71c03ba915412baabfaea247cea",
+      "state_root_hash": "0x0d875b3cb1b37e9be197a0c9f38371bb59a442e81c65a0935ebeb12a84fd66c5",
+      "event_root_hash": "0x453942b90a424d40832b3f75acef170eac9026fd03a0baf8b1ed69517f4e093e",
+      "gas_used": "100000000",
+      "success": true,
+      "vm_status": "Executed successfully",
+      "id": "0xacc2e890f996e8d710a56aeddf01e5797f2366616a9d0d349ebc8d784c5c2880",
+      "round": "17127",
+      "previous_block_votes": [
+        "0x3aaee9f2794e4d2863f58e5ba0434f",
+        "0x1b8a315ecb5da3bf65324e5c98d7c5d2",
+        "0x1ee66634a9d307e598a9001c70350f57",
+        "0x3b4f0b8a914678fd087935cf01b7cc78",
+        "0x3ec43d8df8e6a8d192cb7db7d88ceaaa",
+        "0x49e14093c12d40d8fe9ac2af30bc6fc4",
+        "0x63e721fbc1999c3c721caedfea9ab00d",
+        "0x76e8f447ac03d161366b1c95e3230aa9",
+        "0x8dba6983cdfdd9577a0220264a4c52ab",
+        "0x92d4d3baf2716b09d4f863176dc77980",
+        "0x94511281e2e59b01c36da19fd56e067a",
+        "0xab257bf8e91862d2d41d0629d9618800",
+        "0xb68cf702c43aff3d9ada6a88041bd13f",
+        "0xc0a38f4b8de6ef37e84402873b33feed",
+        "0xc8dacb8b498a61bddfb9cccc2ddc8ba5",
+        "0xed5d9b97d7f1ca058bcfc035a072e887"
+      ],
+      "proposer": "0xed5d9b97d7f1ca058bcfc035a072e887",
+      "timestamp": "1634926726032337"
+    }
+  }
+}

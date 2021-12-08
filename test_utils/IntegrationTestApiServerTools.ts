@@ -1,6 +1,5 @@
 import { setupServer, SetupServerApi } from 'msw/node'
 import { rest } from 'msw'
-import Config from '../src/config.json'
 
 export function setPostResponseForUrl(server: SetupServerApi, url: string, responseData: Object, delay: number = 0) {
   server.use(
@@ -42,14 +41,6 @@ export function setAnalyticsApiResponse (server: SetupServerApi, responseData: O
 
 export function setAnalyticsNetworkError (server: SetupServerApi, errorText: string) {
   setPostNetworkErrorForUrl(server, 'http://localhost:8888/v1/graphql', errorText)
-}
-
-export function setJsonRpcBlockchainApiResponse (server: SetupServerApi, responseData: Object, delay: number = 0) {
-  setPostResponseForUrl(server, Config.DIEMX_BLOCKCHAIN_JSON_RPC_URL, responseData)
-}
-
-export function setBlockchainJsonRpcNetworkError(server: SetupServerApi, errorText: string) {
-  setPostNetworkErrorForUrl(server, Config.DIEMX_BLOCKCHAIN_JSON_RPC_URL, errorText)
 }
 
 export function setBlockchainRestApiResponse (server: SetupServerApi, path: string, responseData: Object, delay: number = 0) {

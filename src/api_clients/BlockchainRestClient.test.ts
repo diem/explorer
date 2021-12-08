@@ -3,7 +3,7 @@ import {
   setBlockchainRestApiResponse,
   setBlockchainRestNetworkError,
 } from '../../test_utils/IntegrationTestApiServerTools'
-import { getAccountModules, getAccountResources } from './BlockchainRestClient'
+import { getAccountModules, getAccountResources, getBlockchainTransaction } from './BlockchainRestClient'
 
 const errorResponse = {
   code: 400,
@@ -165,10 +165,13 @@ const goodModulesResponse = [
     },
   },
 ]
+const goodTransactionResponse = { type: 'user_transaction', version: '382751998', hash: '0xddb1c95a3197bcd227868bc9bb96f5f76134b7b4dd881d2bc66041b1e335b739', state_root_hash: '0x5534033901cc6bf7792dc0d14f17fbe8929b8a21808af1b398b9d3ca0292722e', event_root_hash: '0x414343554d554c41544f525f504c414345484f4c4445525f4841534800000000', gas_used: '282', success: false, vm_status: 'Move abort by NOT_PUBLISHED - EPAYEE_DOES_NOT_EXIST\n A resource is required but not published. Example: access to non-existing AccountLimits resource.\n Attempted to send funds to an account that does not exist', sender: '0x5d2bedb24091a926624d2e439ccbbfd1', sequence_number: '11210', max_gas_amount: '1000000', gas_unit_price: '0', gas_currency_code: 'XUS', expiration_timestamp_secs: '1638829520', payload: { type: 'script_function_payload', function: '0x1::PaymentScripts::peer_to_peer_with_metadata', type_arguments: ['0x1::XUS::XUS'], arguments: ['0xdfb77b475a59d74510894d4ba82ea84c', '1', '0x', '0x'] }, signature: { type: 'ed25519_signature', public_key: '0xb33b4d5e5058c9d660350e9d2de6890b48726ddf28efcddcd2de8048a72f6bc0', signature: '0x30617fa9ee239852a4f453a893d754d39a8fcd7b456c574b36197fb4749d93bf068c79a8cade88c42889c1a702975e0268a6b5c47b31486106c61febc1b5c205' }, events: [] }
 const nonCanonicalFakeAddress = 'bf485d8190b38ecaa223d7'
 const fakeAddress = '0000000000bf485d8190b38ecaa223d7'
+const fakeTxnVersion = '382751998'
 const resourcesPath = `/accounts/${fakeAddress}/resources`
 const modulesPath = `/accounts/${fakeAddress}/modules`
+const transactionPath = `/transactions/${fakeTxnVersion}`
 const server = setupIntegrationTestApiServer()
 
 const testPassesDataThrough = async (
@@ -178,7 +181,7 @@ const testPassesDataThrough = async (
 ) => {
   const expected = { data: response }
   setBlockchainRestApiResponse(server, path, response)
-  const result = await methodUnderTest(fakeAddress)
+  const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
 
@@ -188,7 +191,7 @@ const testPassesErrorsThrough = async (
 ) => {
   const expected = { errors: [{ message: errorResponse.message }] }
   setBlockchainRestApiResponse(server, path, errorResponse)
-  const result = await methodUnderTest(fakeAddress)
+  const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
 
@@ -207,24 +210,25 @@ const testNetworkErrorsAreErrors = async (
     ],
   }
   setBlockchainRestNetworkError(server, path, error)
-  const result = await methodUnderTest(fakeAddress)
+  const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
 
 describe('Blockchain REST Client', function () {
   describe('getAccountResources', function () {
+    const getAccountResourcesUnderTest = () => getAccountResources(fakeAddress)
     it('should pass data through', async () => {
       await testPassesDataThrough(
-        getAccountResources,
+        getAccountResourcesUnderTest,
         resourcesPath,
         goodResourceResponse
       )
     })
     it('should pass errors through', async () => {
-      await testPassesErrorsThrough(getAccountResources, resourcesPath)
+      await testPassesErrorsThrough(getAccountResourcesUnderTest, resourcesPath)
     })
     it('should pass network errors through like any other error', async () => {
-      await testNetworkErrorsAreErrors(getAccountResources, resourcesPath)
+      await testNetworkErrorsAreErrors(getAccountResourcesUnderTest, resourcesPath)
     })
     it('should canonicalize the address before calling the blockchain', async () => {
       const expected = { data: goodResourceResponse }
@@ -246,18 +250,36 @@ describe('Blockchain REST Client', function () {
     })
   })
   describe('getAccountModules', function () {
+    const getAccountModulesUnderTest = () => getAccountModules(fakeAddress)
     it('should pass data through', async () => {
       await testPassesDataThrough(
-        getAccountModules,
+        getAccountModulesUnderTest,
         modulesPath,
         goodModulesResponse
       )
     })
     it('should pass errors through', async () => {
-      await testPassesErrorsThrough(getAccountModules, modulesPath)
+      await testPassesErrorsThrough(getAccountModulesUnderTest, modulesPath)
     })
     it('should pass network errors through like any other error', async () => {
-      await testNetworkErrorsAreErrors(getAccountModules, modulesPath)
+      await testNetworkErrorsAreErrors(getAccountModulesUnderTest, modulesPath)
+    })
+  })
+
+  describe('getTransaction', function () {
+    const getBlockchainTransactionUnderTest = () => getBlockchainTransaction(fakeTxnVersion)
+    it('should pass data through', async () => {
+      await testPassesDataThrough(
+        getBlockchainTransactionUnderTest,
+        transactionPath,
+        goodTransactionResponse
+      )
+    })
+    it('should pass errors through', async () => {
+      await testPassesErrorsThrough(getBlockchainTransactionUnderTest, transactionPath)
+    })
+    it('should pass network errors through like any other error', async () => {
+      await testNetworkErrorsAreErrors(getBlockchainTransactionUnderTest, transactionPath)
     })
   })
 })
