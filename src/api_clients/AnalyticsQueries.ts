@@ -2,7 +2,7 @@ import {
   GraphQLTypes,
   /* eslint-disable camelcase */
   order_by,
-} from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+} from '../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'

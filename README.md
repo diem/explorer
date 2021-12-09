@@ -64,7 +64,6 @@ In this configuration, the application uses Wiremock for all runtime dependencie
 - `hasura_stop`: Stop the Hasura server
 - `wiremock_start`: Start the Wiremock server, for acceptance tests
 - `wiremock_stop`: Stop the Wiremock server
-- `generate_diem_client`: Regenerate the auto-generated Diem blockchain client from the OpenAPI documentation.
 Edit the Makefile directly if you need to change the URL of the `openapi.yaml` file used.
 - `generate_gql_client`: Regenerate the auto-generated Zeus GraphQL client from the configuration of the Hasura server
 

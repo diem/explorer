@@ -1,5 +1,5 @@
 import { DataOrErrors } from './FetchTypes'
-import { Gql } from '../../utils/Analytics_Hasura_Api_Zeus_Client/zeus'
+import { Gql } from '../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import fetch from 'isomorphic-fetch'
 
 globalThis.fetch = fetch
