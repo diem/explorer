@@ -11,11 +11,11 @@ import Top10TransactionsCard, {
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
 
+jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
+
 jest.mock('../../../api_clients/AnalyticsClient', () => ({
   postQueryToAnalyticsApi: jest.fn(),
 }))
-
-jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
 const renderSubject = async (transactions: TopSentPaymentEvent[] = []) => {
   // @ts-ignore TS is bad at mocking
@@ -95,6 +95,7 @@ describe('Top10TransactionsCard', () => {
   it('should query the Analytics API correctly', async () => {
     await renderSubject()
     const expectedQuery = top10Transactions('XUS')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       expectedQuery,
       'sentpayment_events'

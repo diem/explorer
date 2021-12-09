@@ -14,7 +14,7 @@ interface ApiRequestPageProps<T> {
 
 export function PlainErrorComponent() {
   return (
-    <span role="dialog" className="network-error">
+    <span role='dialog' className='network-error'>
       Something went wrong. Please try again later
     </span>
   )
@@ -38,7 +38,7 @@ const DefaultErrorComponent = FullPageErrorComponent
 
 export function PlainLoadingComponent() {
   return (
-    <span className="loading" role="loading">
+    <span className='loading' role='loading'>
       Loading, please wait
     </span>
   )

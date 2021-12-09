@@ -17,7 +17,12 @@ export const TruncatedCell: React.FC<{ value: string }> = ({
   )
   return (
     <>
-      <div data-tip data-for={value} style={{ fontFamily: 'monospace' }}>
+      <div
+        data-tip
+        data-for={value}
+        style={{ fontFamily: 'monospace' }}
+        data-testid={value}
+      >
         {firstPart}...{secondPart}
       </div>
       <ReactTooltip id={value} effect='solid'>

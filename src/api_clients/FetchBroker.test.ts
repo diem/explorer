@@ -4,7 +4,7 @@ import {
   setPostNetworkErrorForUrl,
   setPostResponseForUrl,
   setupIntegrationTestApiServer,
-} from '../../test_utils/IntegrationTestApiServerTools'
+} from '../test_utils/IntegrationTestApiServerTools'
 import { getWithFetch, postWithFetch } from './FetchBroker'
 
 const server = setupIntegrationTestApiServer()

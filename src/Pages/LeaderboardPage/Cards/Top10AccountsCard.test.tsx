@@ -1,27 +1,31 @@
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10AccountsQuery } from '../../../api_clients/AnalyticsQueries'
 import Top10AccountsCard, { TopAccountEvent } from './Top10AccountsCard'
 
+jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
+
 jest.mock('../../../api_clients/AnalyticsClient', () => ({
   postQueryToAnalyticsApi: jest.fn(),
 }))
 
-jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
-
-const renderSubject = async (
-  accounts: TopAccountEvent[] = [],
-) => {
+const renderSubject = async (accounts: TopAccountEvent[] = []) => {
   // @ts-ignore TS is bad at mocking
   postQueryToAnalyticsApi.mockResolvedValue({
     data: accounts,
   })
 
-  render(<BrowserRouter>
-    <Top10AccountsCard />
-  </BrowserRouter>)
+  render(
+    <BrowserRouter>
+      <Top10AccountsCard />
+    </BrowserRouter>
+  )
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
 
@@ -39,12 +43,16 @@ describe('Top10AccountsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement | null | undefined = screen.queryByTestId('top-10-accounts')?.querySelector('table')
+    const table: HTMLTableElement | null | undefined = screen
+      .queryByTestId('top-10-accounts')
+      ?.querySelector('table')
     expect(table).toBeInTheDocument()
     const cardBody = table!.tBodies.item(0)!
     expect(cardBody.rows).toHaveLength(1)
     expect(cardBody.rows[0].cells[0].textContent).toEqual('1')
-    expect(cardBody.rows[0].cells[1].textContent).toEqual('0000000000000000000000000b1e55ed')
+    expect(cardBody.rows[0].cells[1].textContent).toEqual(
+      '0000000000000000000000000b1e55ed'
+    )
     expect(cardBody.rows[0].cells[2].textContent).toEqual('54321')
   })
   it('should link to the corresponding accounts', async () => {
@@ -55,11 +63,16 @@ describe('Top10AccountsCard', () => {
       },
     ])
 
-    const transactionCell = screen.queryByTestId('top-10-accounts')!.querySelector('table tbody tr td:nth-child(2)')
+    const transactionCell = screen
+      .queryByTestId('top-10-accounts')!
+      .querySelector('table tbody tr td:nth-child(2)')
     expect(transactionCell).toBeInTheDocument()
-    const transactionLink: HTMLAnchorElement | null = transactionCell!.querySelector('a')
+    const transactionLink: HTMLAnchorElement | null =
+      transactionCell!.querySelector('a')
     expect(transactionLink).toBeInTheDocument()
-    expect(transactionLink!.href).toMatch('http://localhost/address/0000000000000000000010000b1e55ed')
+    expect(transactionLink!.href).toMatch(
+      'http://localhost/address/0000000000000000000010000b1e55ed'
+    )
   })
   it('should render the data in the order provided by the API', async () => {
     await renderSubject([
@@ -73,15 +86,25 @@ describe('Top10AccountsCard', () => {
       },
     ])
 
-    const table: HTMLTableElement = screen.queryByTestId('top-10-accounts')!.querySelector('table')!
+    const table: HTMLTableElement = screen
+      .queryByTestId('top-10-accounts')!
+      .querySelector('table')!
     const cardBody = table.tBodies.item(0)!
     expect(cardBody!.rows).toHaveLength(2)
-    expect(cardBody!.rows[0].cells[1].textContent).toEqual('0000000000000000000000000b0e55ed')
-    expect(cardBody!.rows[1].cells[1].textContent).toEqual('0000000000000000000000000b1e552d')
+    expect(cardBody!.rows[0].cells[1].textContent).toEqual(
+      '0000000000000000000000000b0e55ed'
+    )
+    expect(cardBody!.rows[1].cells[1].textContent).toEqual(
+      '0000000000000000000000000b1e552d'
+    )
   })
   it('should query the Analytics API correctly', async () => {
     await renderSubject()
     const expectedQuery = top10AccountsQuery('XUS')
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(expectedQuery, 'accounts_balances')
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      expectedQuery,
+      'accounts_balances'
+    )
   })
 })

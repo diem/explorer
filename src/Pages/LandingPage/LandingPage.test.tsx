@@ -16,6 +16,8 @@ import {
 } from '../../api_clients/AnalyticsQueries'
 import userEvent from '@testing-library/user-event'
 
+jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
+
 const mockHistory = {
   push: jest.fn(),
 }
@@ -31,8 +33,6 @@ jest.mock('react-router-dom', () => {
     useHistory: () => mockHistory,
   }
 })
-
-jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
 const fakeTransaction = {
   __typename: 'transactions' as const,
@@ -82,8 +82,12 @@ const renderSubject = async (
 }
 
 describe('LandingPage', function () {
+  beforeEach(() => {
+    mockHistory.push.mockReset()
+  })
   it('should get data from the AnalyticsClient', async function () {
     await renderSubject()
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(3)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       transactionsQuery(),
       'transactions'
@@ -146,6 +150,7 @@ describe('LandingPage', function () {
         screen.getByLabelText('Search by Address or Transaction Version'),
         '1fc5dd16a92e82a281a063e308ebcca9{enter}'
       )
+      expect(mockHistory.push).toHaveBeenCalledTimes(1)
       expect(mockHistory.push).toHaveBeenCalledWith(
         '/address/1fc5dd16a92e82a281a063e308ebcca9'
       )
@@ -156,17 +161,16 @@ describe('LandingPage', function () {
         screen.getByLabelText('Search by Address or Transaction Version'),
         '74767203{enter}'
       )
+      expect(mockHistory.push).toHaveBeenCalledTimes(1)
       expect(mockHistory.push).toHaveBeenCalledWith('/txn/74767203')
     })
-    it('should route to an address page if any character of the search string is not a digit', async () => {
+    it('should not route to any page if any character of the search string is not a digit', async () => {
       await renderSubject()
       userEvent.type(
         screen.getByLabelText('Search by Address or Transaction Version'),
         '74767203!{enter}'
       )
-      expect(mockHistory.push).toHaveBeenCalledWith(
-        '/address/00000000000000000000000074767203'
-      )
+      expect(mockHistory.push).not.toHaveBeenCalled()
     })
   })
 })

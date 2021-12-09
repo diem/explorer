@@ -15,8 +15,8 @@ import {
   diemAccountResource,
   xdxBalanceResource,
   xusBalanceResource,
-} from '../../../test_utils/MockBlockchainAccountResources'
-import { testModules } from '../../../test_utils/MockBlockchainAccountModules'
+} from '../../test_utils/MockBlockchainAccountResources'
+import { testModules } from '../../test_utils/MockBlockchainAccountModules'
 import {
   getCurrency,
   Module,

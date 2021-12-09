@@ -1,5 +1,4 @@
 {
-  "priority": 1,
   "request": {
     "method": "POST",
     "url": "/v1/graphql",

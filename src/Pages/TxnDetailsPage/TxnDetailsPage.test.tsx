@@ -93,6 +93,7 @@ describe('TxnDetailsPage', function () {
   it('should get data from the BlockchainRestClient', async function () {
     await renderWithTransaction()
 
+    expect(getBlockchainTransaction).toHaveBeenCalledTimes(1)
     expect(getBlockchainTransaction).toHaveBeenCalledWith(
       mockUserTransaction.version.toString()
     )
@@ -153,12 +154,12 @@ describe('TxnDetailsPage', function () {
       expect(within(detailsTable).queryByText('1000000')).toBeInTheDocument()
       expect(
         within(detailsTable).queryByText(
-          'f1910421e2a1433027a7b0e444bed67469b573adba72353ad3cde20b54e1b7a0'
+          mockUserTransaction.signature.public_key
         )
       ).toBeInTheDocument()
       expect(
         within(detailsTable).queryByText(
-          'e7b6730712283f887f52f9dd7bfb9210801c3b1093fe13ca9a5d00f129543cc0eda55d66b2d8214e5acc848626685c6098f9c09a127ee15bbf545ae69495450f'
+          mockUserTransaction.signature.signature
         )
       ).toBeInTheDocument()
     })

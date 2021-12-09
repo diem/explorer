@@ -33,6 +33,8 @@ describe('LeaderboardPage', () => {
     await renderSubject()
     const top10TransactionsCard = screen.queryByTestId('top-10-transactions')
     expect(top10TransactionsCard).toBeInTheDocument()
-    expect(top10TransactionsCard!.textContent).toContain(mockTop10TransactionsCardText)
+    expect(top10TransactionsCard!.textContent).toContain(
+      mockTop10TransactionsCardText
+    )
   })
 })
