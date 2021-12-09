@@ -20,13 +20,15 @@ Hasura must be configured to connect to a database.
 
 TODO: describe what this database is and where to get the credentials.
 
-Track the following tables:
+Track the following tables and views:
 - `accounts`
 - `accounts_balances`
 - `burn_events`
+- `diem_in_circulation_dynamic`
 - `diem_in_circulation_realtime_aggregates`
 - `gas_payments`
 - `preburn_events`
+- `realtime_account_balances`
 - `receivedmint_events`
 - `sentpayment_events`
 - `transactions`
