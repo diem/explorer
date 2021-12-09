@@ -1,14 +1,12 @@
+/* eslint-disable camelcase */
 import {
   GraphQLTypes,
-  /* eslint-disable camelcase */
   order_by,
 } from '../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 
-export type MintEventsQueryType =
-  GraphQLTypes['query_root']['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -28,7 +26,6 @@ export function mintEventsQuery() {
   }
 }
 
-export type BurnEventsQueryType = GraphQLTypes['query_root']['burn_events']
 export function burnEventsQuery() {
   return {
     burn_events: [
@@ -48,8 +45,6 @@ export function burnEventsQuery() {
   }
 }
 
-export type PaymentEventsQueryType =
-  GraphQLTypes['query_root']['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -71,7 +66,6 @@ export function paymentEventsQuery() {
   }
 }
 
-export type GasEventsQueryType = GraphQLTypes['query_root']['gas_payments']
 export function gasEventsQuery() {
   return {
     gas_payments: [
@@ -91,8 +85,6 @@ export function gasEventsQuery() {
   }
 }
 
-export type PreburnEventsQueryType =
-  GraphQLTypes['query_root']['preburn_events']
 export function preburnEventsQuery() {
   return {
     preburn_events: [
@@ -111,8 +103,6 @@ export function preburnEventsQuery() {
   }
 }
 
-export type AccountcreationEventsQueryType =
-  GraphQLTypes['query_root']['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [
@@ -146,7 +136,8 @@ export function accountcreationEventsQuery() {
   }
 }
 
-export type AccountBalancesQueryType = GraphQLTypes['query_root']['accounts_balances']
+export type AccountBalancesQueryType =
+  GraphQLTypes['query_root']['accounts_balances']
 export function top10AccountsQuery(currency: KnownCurrency) {
   return {
     accounts_balances: [
@@ -157,7 +148,7 @@ export function top10AccountsQuery(currency: KnownCurrency) {
       },
       {
         address: true,
-        balance: true
+        balance: true,
       },
     ],
   }
@@ -226,9 +217,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
 }
 
 export type CurrencyInCirculationPageQueryType = {
-  // eslint-disable-next-line camelcase
   diem_in_circulation_realtime_aggregates:
-  // eslint-disable-next-line camelcase
     | [{ currency: string; total_net_value: number; timestamp: string }]
     | []
 }
@@ -290,7 +279,6 @@ export function top10Transactions(currency: KnownCurrency) {
 }
 
 export type DiemInCirculationHistoryType = {
-  // eslint-disable-next-line camelcase
   diem_in_circulation_dynamic: { timestamp: string; total_net: number }[]
 }
 export function diemInCirculationHistoryQuery(currency: KnownCurrency) {

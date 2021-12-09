@@ -65,10 +65,12 @@ describe('ApiRequestComponent', () => {
     it('should pass each argument separately', function () {
       const myArgs = [1, 'bananas', { deeply: { nested: { object: true } } }]
       renderSubject(myArgs)
+      expect(mockRequest).toHaveBeenCalledTimes(1)
       expect(mockRequest).toHaveBeenCalledWith(myArgs[0], myArgs[1], myArgs[2])
     })
     it('should pass no arguments if args is undefined', function () {
       renderSubject(undefined)
+      expect(mockRequest).toHaveBeenCalledTimes(1)
       expect(mockRequest).toHaveBeenCalledWith()
     })
   })
@@ -95,6 +97,7 @@ describe('ApiRequestComponent', () => {
       })
 
       await waitFor(() => screen.getByRole(childComponentRole))
+      expect(mockRequest).toHaveBeenCalledTimes(1)
       expect(mockRequest).toHaveBeenCalledWith(mockArgs[0])
       expect(screen.getByRole(childComponentRole).textContent).toContain(
         childComponentText
@@ -110,6 +113,7 @@ describe('ApiRequestComponent', () => {
       })
 
       await waitFor(() => screen.getByRole(errorComponentRole))
+      expect(mockRequest).toHaveBeenCalledTimes(1)
       expect(mockRequest).toHaveBeenCalledWith(mockArgs[0])
       expect(screen.getByRole(errorComponentRole).textContent).toContain(
         errorComponentText

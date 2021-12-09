@@ -141,15 +141,15 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
         if (result.ok) {
           history.push(`/address/${result.val}`)
         }
-      }
-      if (/^\d+$/.test(value)) {
+      } else if (/^\d+$/.test(value)) {
         // Its a txn version
         history.push(`/txn/${value}`)
-      }
-      // It might still be a valid address
-      const result = getCanonicalAddress(value)
-      if (result.ok) {
-        history.push(`/address/${result.val}`)
+      } else {
+        // It might still be a valid address
+        const result = getCanonicalAddress(value)
+        if (result.ok) {
+          history.push(`/address/${result.val}`)
+        }
       }
     }
   }

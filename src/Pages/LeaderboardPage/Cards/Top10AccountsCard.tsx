@@ -4,7 +4,10 @@ import ApiRequestComponent, {
 } from '../../../ApiRequestComponent'
 import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
-import { top10AccountsQuery } from '../../../api_clients/AnalyticsQueries'
+import {
+  AccountBalancesQueryType,
+  top10AccountsQuery,
+} from '../../../api_clients/AnalyticsQueries'
 import { KnownCurrency } from '../../../api_clients/BlockchainRestTypes'
 import { Card } from 'react-bootstrap'
 import Table, { column } from '../../../Table'
@@ -29,10 +32,10 @@ function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
   return (
     <>
       <Card.Header>
-        <div data-tip data-for="top-10-definition-xus">
+        <div data-tip data-for='top-10-definition-xus'>
           Top 10 Accounts (XUS)
         </div>
-        <ReactTooltip id="top-10-definition-xus">
+        <ReactTooltip id='top-10-definition-xus'>
           10 largest accounts in XUS currently
         </ReactTooltip>
       </Card.Header>
@@ -53,10 +56,11 @@ function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
 async function getTopAccounts(
   currency: KnownCurrency
 ): Promise<DataOrErrors<Top10AccountsTableProps>> {
-  const result: DataOrErrors<TopAccountEvent[]> = await postQueryToAnalyticsApi(
-    top10AccountsQuery(currency),
-    'accounts_balances'
-  )
+  const result: DataOrErrors<TopAccountEvent[]> =
+    await postQueryToAnalyticsApi<AccountBalancesQueryType>(
+      top10AccountsQuery(currency),
+      'accounts_balances'
+    )
   if ('data' in result) {
     return { data: { topAccounts: result.data } }
   } else {
@@ -66,12 +70,14 @@ async function getTopAccounts(
 
 export default function Top10AccountsCard() {
   return (
-    <Card data-testid="top-10-accounts">
+    <Card data-testid='top-10-accounts'>
       <ApiRequestComponent
         request={getTopAccounts}
         args={['XUS']}
-        errorComponent={<ErrorCardComponent title={'Top 10 Accounts (XUS)'}/>}
-        loadingComponent={<LoadingCardComponent title={'Top 10 Accounts (XUS)'}/>}
+        errorComponent={<ErrorCardComponent title={'Top 10 Accounts (XUS)'} />}
+        loadingComponent={
+          <LoadingCardComponent title={'Top 10 Accounts (XUS)'} />
+        }
       >
         <Top10AccountsTable data={{ topAccounts: [] }} />
       </ApiRequestComponent>

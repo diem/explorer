@@ -57,7 +57,7 @@ beforeEach(async () => {
 
 describe('EventPage', () => {
   it('should call the analytics client with a query', async () => {
-    expect(postQueryToAnalyticsApi).toHaveBeenCalled()
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(query, tableName)
   })
   it('should display event data in a table', async function () {
@@ -73,6 +73,7 @@ describe('EventPage', () => {
     expect(screen.queryByText(mockFakeEvent.who)).toBeInTheDocument()
     expect(screen.queryByText(mockFakeEvent.currency)).toBeInTheDocument()
     expect(screen.queryByText('The b...ut :(')).toBeInTheDocument()
+    expect(screen.queryByTestId(mockFakeEvent.gas)).toBeInTheDocument()
     expect(
       screen.queryByText(mockFakeEvent.sequence_number)
     ).toBeInTheDocument()
@@ -80,6 +81,9 @@ describe('EventPage', () => {
       screen.queryByText(mockFakeEvent.transaction_version)
     ).toBeInTheDocument()
     expect(screen.queryByText('31203...98580')).toBeInTheDocument()
+    expect(
+      screen.queryByTestId(mockFakeEvent.transaction_version)
+    ).toBeInTheDocument()
 
     configure({ testIdAttribute: 'data-id' })
     expect(await screen.getAllByTestId('tooltip')[0]).toHaveTextContent(

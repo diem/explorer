@@ -7,7 +7,7 @@ interface LinkProps {
   linkPrefix: string | undefined
 }
 
-export function Link({
+function Link({
   className,
   linkPrefix = '/',
 }: LinkProps): React.FC<{ value: string }> {

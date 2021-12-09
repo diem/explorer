@@ -2,7 +2,7 @@ import {
   setupIntegrationTestApiServer,
   setBlockchainRestApiResponse,
   setBlockchainRestNetworkError,
-} from '../../test_utils/IntegrationTestApiServerTools'
+} from '../test_utils/IntegrationTestApiServerTools'
 import {
   getAccountModules,
   getAccountResources,
@@ -202,7 +202,6 @@ const goodTransactionResponse = {
   },
   events: [],
 }
-const nonCanonicalFakeAddress = 'bf485d8190b38ecaa223d7'
 const fakeAddress = '0000000000bf485d8190b38ecaa223d7'
 const fakeTxnVersion = '382751998'
 const resourcesPath = `/accounts/${fakeAddress}/resources`
@@ -272,6 +271,7 @@ describe('Blockchain REST Client', function () {
     it('should canonicalize the address before calling the blockchain', async () => {
       const expected = { data: goodResourceResponse }
       setBlockchainRestApiResponse(server, resourcesPath, goodResourceResponse)
+      const nonCanonicalFakeAddress = 'bf485d8190b38ecaa223d7'
       const result = await getAccountResources(nonCanonicalFakeAddress)
       expect(result).toEqual(expected)
     })
