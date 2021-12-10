@@ -86,195 +86,189 @@ describe('AccountPage', function () {
     expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
   })
 
-  it('should display unsupported account when balance object, and Smart Contracts are not found', async function () {
-    await renderSubject([], [])
+  describe('when the account exists', () => {
 
-    expect(screen.queryByText('Balances')).not.toBeInTheDocument()
-    expect(screen.queryByText('Smart Contract Methods')).not.toBeInTheDocument()
-    expect(screen.queryByText('Smart Contract Structs')).not.toBeInTheDocument()
-    expect(screen.queryByText('Unsupported Account')).toBeInTheDocument()
-  })
-
-  describe('when there are account resources', function () {
-    beforeEach(
-      async () =>
-        await renderSubject(
-          [xdxBalanceResource, xusBalanceResource, diemAccountResource],
-          []
-        )
-    )
-
-    it('should not display the Unsupported Account card', async () => {
-      expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
-    })
-
-    it('should display Balance resource data in a table', async function () {
-      expect(document.getElementById('objectPropertiesTable')).not.toBeNull()
-
-      const balancesTable = document.getElementById('objectPropertiesTable')!
-
-      expect(screen.queryByText('Balances')).toBeInTheDocument()
-
-      expect(
-        within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)
-      ).toBeInTheDocument()
-
-      expect(
-        within(balancesTable).queryByText(getCurrency(xdxBalanceResource))
-      ).toBeInTheDocument()
-
-      expect(
-        within(balancesTable).queryByText(xusBalanceResource.value.coin.value)
-      ).toBeInTheDocument()
-    })
-
-    it('should display raw resources in a pretty printed format', async () => {
-      expect(document.getElementById('rawResources')).not.toBeNull()
-      const rawResources = document.getElementById('rawResources')!
-
-      expect(rawResources.textContent?.replace(/\s/g, '')).toEqual(
-        JSON.stringify([
-          xdxBalanceResource,
-          xusBalanceResource,
-          diemAccountResource,
-        ])
+    describe('when there are account resources', function () {
+      beforeEach(
+        async () =>
+          await renderSubject(
+            [xdxBalanceResource, xusBalanceResource, diemAccountResource],
+            []
+          )
       )
-    })
 
-    it('should display the sequence number in a card', async () => {
-      expect(document.getElementById('sequenceNumber')).not.toBeNull()
-      const sequenceNumberCard = document.getElementById('sequenceNumber')!
+      it('should not display the Unsupported Account card', async () => {
+        expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
+      })
 
-      expect(sequenceNumberCard.textContent).toMatch(/89647663/)
-    })
+      it('should display Balance resource data in a table', async function () {
+        expect(document.getElementById('objectPropertiesTable')).not.toBeNull()
 
-    it('should display the authentication key in a card', async () => {
-      expect(document.getElementById('authenticationKey')).not.toBeNull()
-      const authenticationKeyCard =
+        const balancesTable = document.getElementById('objectPropertiesTable')!
+
+        expect(screen.queryByText('Balances')).toBeInTheDocument()
+
+        expect(
+          within(balancesTable).queryByText(xdxBalanceResource.value.coin.value)
+        ).toBeInTheDocument()
+
+        expect(
+          within(balancesTable).queryByText(getCurrency(xdxBalanceResource))
+        ).toBeInTheDocument()
+
+        expect(
+          within(balancesTable).queryByText(xusBalanceResource.value.coin.value)
+        ).toBeInTheDocument()
+      })
+
+      it('should display raw resources in a pretty printed format', async () => {
+        expect(document.getElementById('rawResources')).not.toBeNull()
+        const rawResources = document.getElementById('rawResources')!
+
+        expect(rawResources.textContent?.replace(/\s/g, '')).toEqual(
+          JSON.stringify([
+            xdxBalanceResource,
+            xusBalanceResource,
+            diemAccountResource,
+          ])
+        )
+      })
+
+      it('should display the sequence number in a card', async () => {
+        expect(document.getElementById('sequenceNumber')).not.toBeNull()
+        const sequenceNumberCard = document.getElementById('sequenceNumber')!
+
+        expect(sequenceNumberCard.textContent).toMatch(/89647663/)
+      })
+
+      it('should display the authentication key in a card', async () => {
+        expect(document.getElementById('authenticationKey')).not.toBeNull()
+        const authenticationKeyCard =
         document.getElementById('authenticationKey')!
 
-      expect(authenticationKeyCard.textContent).toMatch(
-        '0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e'
-      )
-    })
+        expect(authenticationKeyCard.textContent).toMatch(
+          '0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e'
+        )
+      })
 
-    it('should display event handles in a card', async () => {
-      const eventHandlesCard = screen.queryByTestId('event-handles-card')!
-      expect(eventHandlesCard).toBeInTheDocument()
+      it('should display event handles in a card', async () => {
+        const eventHandlesCard = screen.queryByTestId('event-handles-card')!
+        expect(eventHandlesCard).toBeInTheDocument()
 
-      const eventHandlesTable: HTMLTableElement =
+        const eventHandlesTable: HTMLTableElement =
         eventHandlesCard.querySelector('table')!
-      expect(eventHandlesTable).toBeInTheDocument()
+        expect(eventHandlesTable).toBeInTheDocument()
 
-      expect(eventHandlesTable.rows).toHaveLength(3)
-      const receivedEventsRow = eventHandlesTable.rows.item(1)!
-      const sentEventsRow = eventHandlesTable.rows.item(2)!
+        expect(eventHandlesTable.rows).toHaveLength(3)
+        const receivedEventsRow = eventHandlesTable.rows.item(1)!
+        const sentEventsRow = eventHandlesTable.rows.item(2)!
 
-      expect(receivedEventsRow.textContent).toContain('received_events')
-      expect(receivedEventsRow.textContent).toContain(
-        diemAccountResource.value.received_events.counter
-      )
-      expect(receivedEventsRow.textContent).toContain(
-        diemAccountResource.value.received_events.guid
-      )
+        expect(receivedEventsRow.textContent).toContain('received_events')
+        expect(receivedEventsRow.textContent).toContain(
+          diemAccountResource.value.received_events.counter
+        )
+        expect(receivedEventsRow.textContent).toContain(
+          diemAccountResource.value.received_events.guid
+        )
 
-      expect(sentEventsRow.textContent).toContain('sent_events')
-      expect(sentEventsRow.textContent).toContain(
-        diemAccountResource.value.sent_events.counter
-      )
-      expect(sentEventsRow.textContent).toContain(
-        diemAccountResource.value.sent_events.guid
-      )
-    })
-  })
-
-  describe('when there are recent transactions', () => {
-    it('should display the recent transactions', async () => {
-      await renderSubject(
-        [],
-        [],
-        [
-          {
-            version: 372413434,
-            txn_type: 3,
-            expiration_timestamp: null,
-            commit_timestamp: '2021-11-29T19:57:52+00:00',
-            status: 1,
-            sender: null,
-          },
-        ]
-      )
-
-      expect(document.getElementById('recentTransactions')).not.toEqual(null)
-
-      const transactionsTable = document.getElementById('recentTransactions')!
-
-      expect(screen.queryByText('Recent Transactions')).toBeInTheDocument()
-
-      expect(
-        within(transactionsTable).queryByText('Version')
-      ).toBeInTheDocument()
-      expect(
-        within(transactionsTable).queryByText('372413434')
-      ).toBeInTheDocument()
-
-      expect(
-        within(transactionsTable).queryByText('Timestamp')
-      ).toBeInTheDocument()
-      expect(
-        within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00')
-      ).toBeInTheDocument()
-
-      expect(within(transactionsTable).queryByText('Type')).toBeInTheDocument()
-      expect(
-        within(transactionsTable).queryByText('UserTransaction')
-      ).toBeInTheDocument()
-
-      expect(
-        within(transactionsTable).queryByText('Status')
-      ).toBeInTheDocument()
-      expect(
-        within(transactionsTable).queryByText('Executed')
-      ).toBeInTheDocument()
-    })
-  })
-
-  describe('when there are Smart Contracts', function () {
-    beforeEach(async () => await renderSubject([], testModules))
-
-    it('should not display the Unsupported Account card', async () => {
-      expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
+        expect(sentEventsRow.textContent).toContain('sent_events')
+        expect(sentEventsRow.textContent).toContain(
+          diemAccountResource.value.sent_events.counter
+        )
+        expect(sentEventsRow.textContent).toContain(
+          diemAccountResource.value.sent_events.guid
+        )
+      })
     })
 
-    it('should display Smart Contract Method Signatures in a card', async () => {
-      expect(document.getElementById('smart-contract-methods')).not.toEqual(
-        null
-      )
-      const methodsCard = document.getElementById('smart-contract-methods')!
+    describe('when there are recent transactions', () => {
+      it('should display the recent transactions', async () => {
+        await renderSubject(
+          [],
+          [],
+          [
+            {
+              version: 372413434,
+              txn_type: 3,
+              expiration_timestamp: null,
+              commit_timestamp: '2021-11-29T19:57:52+00:00',
+              status: 1,
+              sender: null,
+            },
+          ]
+        )
 
-      expect(methodsCard.textContent).toContain(
-        'fun exchangeXdxForXus(arg1: u64): bool'
-      )
+        expect(document.getElementById('recentTransactions')).not.toEqual(null)
+
+        const transactionsTable = document.getElementById('recentTransactions')!
+
+        expect(screen.queryByText('Recent Transactions')).toBeInTheDocument()
+
+        expect(
+          within(transactionsTable).queryByText('Version')
+        ).toBeInTheDocument()
+        expect(
+          within(transactionsTable).queryByText('372413434')
+        ).toBeInTheDocument()
+
+        expect(
+          within(transactionsTable).queryByText('Timestamp')
+        ).toBeInTheDocument()
+        expect(
+          within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00')
+        ).toBeInTheDocument()
+
+        expect(within(transactionsTable).queryByText('Type')).toBeInTheDocument()
+        expect(
+          within(transactionsTable).queryByText('UserTransaction')
+        ).toBeInTheDocument()
+
+        expect(
+          within(transactionsTable).queryByText('Status')
+        ).toBeInTheDocument()
+        expect(
+          within(transactionsTable).queryByText('Executed')
+        ).toBeInTheDocument()
+      })
     })
 
-    it('should display Smart Contract Structs in a card', async () => {
-      expect(document.getElementById('smart-contract-structs')).not.toEqual(
-        null
-      )
-      const structsCard = document.getElementById('smart-contract-structs')!
+    describe('when there are Smart Contracts', function () {
+      beforeEach(async () => await renderSubject([], testModules))
 
-      expect(structsCard.textContent).toContain(
-        'struct AccountType {\n\taccount_type: u64\n}'
-      )
-    })
+      it('should not display the Unsupported Account card', async () => {
+        expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
+      })
 
-    it('should display raw modules in a pretty printed format', async () => {
-      expect(document.getElementById('rawModules')).not.toEqual(null)
-      const rawModules = document.getElementById('rawModules')!
+      it('should display Smart Contract Method Signatures in a card', async () => {
+        expect(document.getElementById('smart-contract-methods')).not.toEqual(
+          null
+        )
+        const methodsCard = document.getElementById('smart-contract-methods')!
 
-      expect(rawModules.textContent?.replace(/\s/g, '')).toEqual(
-        JSON.stringify(testModules)
-      )
+        expect(methodsCard.textContent).toContain(
+          'fun exchangeXdxForXus(arg1: u64): bool'
+        )
+      })
+
+      it('should display Smart Contract Structs in a card', async () => {
+        expect(document.getElementById('smart-contract-structs')).not.toEqual(
+          null
+        )
+        const structsCard = document.getElementById('smart-contract-structs')!
+
+        expect(structsCard.textContent).toContain(
+          'struct AccountType {\n\taccount_type: u64\n}'
+        )
+      })
+
+      it('should display raw modules in a pretty printed format', async () => {
+        expect(document.getElementById('rawModules')).not.toEqual(null)
+        const rawModules = document.getElementById('rawModules')!
+
+        expect(rawModules.textContent?.replace(/\s/g, '')).toEqual(
+          JSON.stringify(testModules)
+        )
+      })
     })
   })
 })

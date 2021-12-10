@@ -18,10 +18,6 @@ function seeRawResources(I) {
   I.see('🥶, Cold face is intentionally silly data to signal that raw resources are rendered on page.')
 }
 
-function seeUnsupportedAccountCard(I) {
-  I.see('Unsupported Account')
-}
-
 function seeSmartContractMethods(I) {
   I.see('Smart Contract Methods')
   I.see('fun exchangeXdxForXus(arg1: u64): bool')
@@ -111,8 +107,6 @@ Scenario('Displaying a Designated Dealer account', ({ I }) => {
 Scenario('Displaying a Validator account', ({ I }) => {
   I.amOnPage(`/address/${validatorAddress}`)
 
-  seeUnsupportedAccountCard(I)
-
   seeRawSmartContracts(I)
   seeRawResources(I)
 
@@ -125,8 +119,6 @@ Scenario('Displaying a Validator account', ({ I }) => {
 
 Scenario('Displaying a Validator Operator account', ({ I }) => {
   I.amOnPage(`/address/${validatorOperatorAddress}`)
-
-  seeUnsupportedAccountCard(I)
 
   seeRawSmartContracts(I)
   seeRawResources(I)

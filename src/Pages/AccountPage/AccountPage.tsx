@@ -21,10 +21,9 @@ import React, { useEffect, useState } from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
-import { Alert, Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import {
   DiemAccountResource,
-  isBalanceResource,
   isDiemAccountResource,
   Module,
   Resource,
@@ -34,41 +33,6 @@ import {
   transformAnalyticsTransactionIntoTransaction,
 } from '../Common/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
-
-function accountIsSupported(data: {
-  resources: Resource[]
-  modules: Module[]
-}): boolean {
-  const hasStructs =
-    data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
-  const hasMethods =
-    data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
-  const hasBalance = data.resources.some(isBalanceResource)
-
-  return hasStructs || hasMethods || hasBalance
-}
-
-function UnsupportedAccountCard({
-  data,
-}: {
-  data: { resources: Resource[]; modules: Module[] }
-}) {
-  if (accountIsSupported(data)) {
-    return <></>
-  }
-  return (
-    <Alert variant={'warning'} style={{ width: '30rem' }}>
-      <h4>Unsupported Account</h4>
-      <p>
-        Diem Explorer is still being built and does not support this type of
-        account yet.
-      </p>
-      <p>
-        In the mean time the raw data is displayed here for your convenience
-      </p>
-    </Alert>
-  )
-}
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   data,
@@ -193,28 +157,6 @@ export default function AccountPage(props: AccountPageProps) {
     return <></>
   }
 
-  const resourcesAndModulesResponse = Promise.all([
-    resourcesResponse,
-    modulesResponse,
-  ]).then(([resourcesOrErrors, modulesOrErrors]) => {
-    if ('errors' in resourcesOrErrors || 'errors' in modulesOrErrors) {
-      const allErrors = []
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(resourcesOrErrors.errors)
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(modulesOrErrors.errors)
-        .filter((e) => e !== null)
-      return { errors: allErrors }
-    } else {
-      return {
-        data: {
-          resources: resourcesOrErrors.data,
-          modules: modulesOrErrors.data,
-        },
-      }
-    }
-  })
-
   const accountResourceResponse: Promise<
     DataOrErrors<DiemAccountResource | null>
   > = resourcesResponse.then((resourcesOrError) => {
@@ -234,13 +176,6 @@ export default function AccountPage(props: AccountPageProps) {
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        <ApiRequestComponent
-          request={() => resourcesAndModulesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
-          <UnsupportedAccountCard data={{ modules: [], resources: [] }} />
-        </ApiRequestComponent>
         <ApiRequestComponent
           request={() => resourcesResponse}
           errorComponent={<PlainErrorComponent />}
