@@ -59,43 +59,38 @@ function CurrentStatisticsCard({
         }}
       >
         <section style={{}}>
-          <div data-tip data-for={'Transactions Per Second'}>
-            <span
+          <dl data-tip data-for={'Transactions Per Second'}>
+            <dt
               style={{
-                fontWeight: 'bold',
                 textDecoration: 'underline',
                 textDecorationStyle: 'dotted',
               }}
             >
               TPS
-            </span>
-            <br />
-            {new Intl.NumberFormat().format(averageTps)}
-          </div>
+            </dt>
+            <dd>{new Intl.NumberFormat().format(averageTps)}</dd>
+          </dl>
           <ReactTooltip id='Transactions Per Second' effect='solid'>
             Transactions Per Second
           </ReactTooltip>
         </section>
         <section>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Total Mint Value</span>
-            <br />
-            {new Intl.NumberFormat().format(totalMintValue)} XUS
-          </div>
+          <dl>
+            <dt>Total Mint Value</dt>
+            <dd>{new Intl.NumberFormat().format(totalMintValue)} XUS</dd>
+          </dl>
         </section>
         <section>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Total Burn Value</span>
-            <br />
-            {new Intl.NumberFormat().format(totalBurnValue)} XUS
-          </div>
+          <dl>
+            <dt>Total Burn Value</dt>
+            <dd>{new Intl.NumberFormat().format(totalBurnValue)} XUS</dd>
+          </dl>
         </section>
         <section>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Total Net Value</span>
-            <br />
-            {new Intl.NumberFormat().format(totalNetValue)} XUS
-          </div>
+          <dl>
+            <dt>XUS In Circulation</dt>
+            <dd>{new Intl.NumberFormat().format(totalNetValue)} XUS</dd>
+          </dl>
         </section>
       </Card.Body>
     </Card>
