@@ -40,7 +40,11 @@ function column<C>(
 const MintEventsPageProps = {
   query: mintEventsQuery(),
   columns: [
-    column<MintEvent>('Transaction Version', 'transaction_version', TransactionVersion),
+    column<MintEvent>(
+      'Transaction Version',
+      'transaction_version',
+      TransactionVersion
+    ),
     column<MintEvent>('Amount', 'amount'),
     column<MintEvent>('Currency', 'currency'),
     column<MintEvent>('Key', 'key', TruncatedCell),
@@ -54,7 +58,11 @@ const MintEventsPageProps = {
 const BurnEventsPageProps = {
   query: burnEventsQuery(),
   columns: [
-    column<BurnEvent>('Transaction Version', 'transaction_version', TransactionVersion),
+    column<BurnEvent>(
+      'Transaction Version',
+      'transaction_version',
+      TransactionVersion
+    ),
     column<BurnEvent>('Amount', 'amount'),
     column<BurnEvent>('Currency', 'currency'),
     column<BurnEvent>('Key', 'key', TruncatedCell),
@@ -68,7 +76,11 @@ const BurnEventsPageProps = {
 const PaymentEventsPageProps = {
   query: paymentEventsQuery(),
   columns: [
-    column<PaymentEvent>('Transaction Version', 'transaction_version', TransactionVersion),
+    column<PaymentEvent>(
+      'Transaction Version',
+      'transaction_version',
+      TransactionVersion
+    ),
     column<PaymentEvent>('Amount', 'amount'),
     column<PaymentEvent>('Currency', 'currency'),
     column<PaymentEvent>('Key', 'key', TruncatedCell),
@@ -97,7 +109,11 @@ const GasEventsPageProps = {
 const PreburnEventsPageProps = {
   query: preburnEventsQuery(),
   columns: [
-    column<PreburnEvent>('Transaction Version', 'transaction_version', TransactionVersion),
+    column<PreburnEvent>(
+      'Transaction Version',
+      'transaction_version',
+      TransactionVersion
+    ),
     column<PreburnEvent>('Timestamp', 'commit_timestamp'),
     column<PreburnEvent>('Address', 'address', AccountAddress),
     column<PreburnEvent>('Amount', 'amount'),
@@ -110,26 +126,72 @@ const PreburnEventsPageProps = {
 const AccountCreationEventsPageProps = {
   query: accountcreationEventsQuery(),
   columns: [
-    column<AccountcreationEvent>('Transaction Version', 'transaction_version', TransactionVersion),
-    column<AccountcreationEvent>('Sent Events Key', 'sent_events_key', TruncatedCell),
+    column<AccountcreationEvent>(
+      'Transaction Version',
+      'transaction_version',
+      TransactionVersion
+    ),
+    column<AccountcreationEvent>(
+      'Sent Events Key',
+      'sent_events_key',
+      TruncatedCell
+    ),
     column<AccountcreationEvent>('Role', 'role'),
-    column<AccountcreationEvent>('Received Mint Events Key', 'received_mint_events_key', TruncatedCell),
-    column<AccountcreationEvent>('Received Events Key', 'received_events_key', TruncatedCell),
-    column<AccountcreationEvent>('Parent VASP Address', 'parent_vasp_address', AccountAddress),
+    column<AccountcreationEvent>(
+      'Received Mint Events Key',
+      'received_mint_events_key',
+      TruncatedCell
+    ),
+    column<AccountcreationEvent>(
+      'Received Events Key',
+      'received_events_key',
+      TruncatedCell
+    ),
+    column<AccountcreationEvent>(
+      'Parent VASP Address',
+      'parent_vasp_address',
+      AccountAddress
+    ),
     column<AccountcreationEvent>('Is Frozen', 'is_frozen', BooleanCell),
     column<AccountcreationEvent>('Indexed At', 'indexed_at'),
-    column<AccountcreationEvent>('Diem Id Domain Events Key', 'diem_id_domain_events_key'),
+    column<AccountcreationEvent>(
+      'Diem Id Domain Events Key',
+      'diem_id_domain_events_key'
+    ),
     column<AccountcreationEvent>('Expiration Time', 'expiration_time'),
-    column<AccountcreationEvent>('Delegated Withdrawal Capability', 'delegated_withdrawal_capability', BooleanCell),
-    column<AccountcreationEvent>('Delegated Key Rotation Capability', 'delegated_key_rotation_capability', BooleanCell),
-    column<AccountcreationEvent>('Create Account Event Stream Sequence Number', 'create_account_event_stream_sequence_number'),
+    column<AccountcreationEvent>(
+      'Delegated Withdrawal Capability',
+      'delegated_withdrawal_capability',
+      BooleanCell
+    ),
+    column<AccountcreationEvent>(
+      'Delegated Key Rotation Capability',
+      'delegated_key_rotation_capability',
+      BooleanCell
+    ),
+    column<AccountcreationEvent>(
+      'Create Account Event Stream Sequence Number',
+      'create_account_event_stream_sequence_number'
+    ),
     column<AccountcreationEvent>('Compliance Key', 'compliance_key'),
     column<AccountcreationEvent>('Address', 'address', AccountAddress),
     column<AccountcreationEvent>('Base Url', 'base_url'),
-    column<AccountcreationEvent>('Base Url Rotation Events Key', 'base_url_rotation_events_key', TruncatedCell),
-    column<AccountcreationEvent>('Authentication Key', 'authentication_key', TruncatedCell),
+    column<AccountcreationEvent>(
+      'Base Url Rotation Events Key',
+      'base_url_rotation_events_key',
+      TruncatedCell
+    ),
+    column<AccountcreationEvent>(
+      'Authentication Key',
+      'authentication_key',
+      TruncatedCell
+    ),
     column<AccountcreationEvent>('Human Name', 'human_name'),
-    column<AccountcreationEvent>('Compliance Key Rotation Events Key', 'compliance_key_rotation_events_key', TruncatedCell),
+    column<AccountcreationEvent>(
+      'Compliance Key Rotation Events Key',
+      'compliance_key_rotation_events_key',
+      TruncatedCell
+    ),
   ],
   tableName: 'accounts',
   eventType: 'Account Creation',
