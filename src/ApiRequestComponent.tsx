@@ -12,6 +12,10 @@ interface ApiRequestPageProps<T> {
   errorComponent?: ReactElement
 }
 
+export function PlainValue<T>({ data }: { data?: T }) {
+  return data === undefined ? <></> : <>{`${data}`}</>
+}
+
 export function PlainErrorComponent() {
   return (
     <span role='dialog' className='network-error'>

@@ -11,6 +11,7 @@ import LandingPage from './LandingPage'
 import {
   countTransactionsInLast10Minutes,
   LatestMintBurnNetQuery,
+  totalPaymentsQuery,
   transactionsQuery,
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
@@ -72,6 +73,14 @@ const renderSubject = async (
       },
     ],
   })
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValueOnce({
+    data: {
+      aggregate: {
+        count: 123,
+      },
+    },
+  })
 
   render(
     <BrowserRouter>
@@ -83,11 +92,13 @@ const renderSubject = async (
 
 describe('LandingPage', function () {
   beforeEach(() => {
+    // @ts-ignore TS is bad at mocking
+    postQueryToAnalyticsApi.mockReset()
     mockHistory.push.mockReset()
   })
   it('should get data from the AnalyticsClient', async function () {
     await renderSubject()
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(3)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(4)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       transactionsQuery(),
       'transactions'
@@ -99,6 +110,10 @@ describe('LandingPage', function () {
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       LatestMintBurnNetQuery(),
       'diem_in_circulation_realtime_aggregates'
+    )
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      totalPaymentsQuery(),
+      'sentpayment_events_aggregate'
     )
   })
 
@@ -141,6 +156,10 @@ describe('LandingPage', function () {
       within(statisticsCard).queryByText('XUS In Circulation')
     ).toBeInTheDocument()
     expect(statisticsCard.textContent).toContain('100 XUS')
+    expect(
+      within(statisticsCard).queryByText('Total Payments')
+    ).toBeInTheDocument()
+    expect(within(statisticsCard).queryByText('123')).toBeInTheDocument()
   })
 
   describe('Search Box', function () {

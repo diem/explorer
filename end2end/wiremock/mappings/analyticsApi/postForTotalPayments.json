@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/graphql",
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : {
+        "expression": "$.query",
+        "contains": "query{sentpayment_events_aggregate"
+      }
+    } ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "data": {
+          "sentpayment_events_aggregate": {
+          "aggregate": {
+            "count": 123
+          }
+        }
+      }
+    }
+  }
+}
