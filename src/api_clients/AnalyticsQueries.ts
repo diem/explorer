@@ -7,6 +7,7 @@ import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 
+export type MintEvent = GraphQLTypes['receivedmint_events']
 export function mintEventsQuery() {
   return {
     receivedmint_events: [
@@ -26,6 +27,7 @@ export function mintEventsQuery() {
   }
 }
 
+export type BurnEvent = GraphQLTypes['burn_events']
 export function burnEventsQuery() {
   return {
     burn_events: [
@@ -45,6 +47,7 @@ export function burnEventsQuery() {
   }
 }
 
+export type PaymentEvent = GraphQLTypes['sentpayment_events']
 export function paymentEventsQuery() {
   return {
     sentpayment_events: [
@@ -66,6 +69,7 @@ export function paymentEventsQuery() {
   }
 }
 
+export type GasEvent = GraphQLTypes['gas_payments']
 export function gasEventsQuery() {
   return {
     gas_payments: [
@@ -85,6 +89,7 @@ export function gasEventsQuery() {
   }
 }
 
+export type PreburnEvent = GraphQLTypes['preburn_events']
 export function preburnEventsQuery() {
   return {
     preburn_events: [
@@ -103,6 +108,7 @@ export function preburnEventsQuery() {
   }
 }
 
+export type AccountcreationEvent = GraphQLTypes['accounts']
 export function accountcreationEventsQuery() {
   return {
     accounts: [

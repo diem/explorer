@@ -132,24 +132,25 @@ type LandingPageWithResponseProps = {
 function LandingPageWithResponse(props: LandingPageWithResponseProps) {
   const history = useHistory()
 
+  function getSearchRouteFromSearchTerm(term: string): string | null {
+    if (/^[0-9]+$/i.test(term)) {
+      return `/txn/${term}`
+    }
+
+    const maybeAddress = getCanonicalAddress(term)
+    if (maybeAddress.ok) {
+      return `/address/${maybeAddress.val}`
+    }
+
+    return null
+  }
+
   function handleSearch(event: any) {
     // Enter Key
     if (event.key === 'Enter') {
-      const value = event.target.value.trim().toLowerCase()
-      if (/^0x[0-9A-F]+$/i.test(value)) {
-        const result = getCanonicalAddress(value)
-        if (result.ok) {
-          history.push(`/address/${result.val}`)
-        }
-      } else if (/^\d+$/.test(value)) {
-        // Its a txn version
-        history.push(`/txn/${value}`)
-      } else {
-        // It might still be a valid address
-        const result = getCanonicalAddress(value)
-        if (result.ok) {
-          history.push(`/address/${result.val}`)
-        }
+      const searchRoute = getSearchRouteFromSearchTerm(event.target.value)
+      if (searchRoute) {
+        history.push(searchRoute)
       }
     }
   }

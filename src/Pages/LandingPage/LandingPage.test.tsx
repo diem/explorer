@@ -144,27 +144,62 @@ describe('LandingPage', function () {
   })
 
   describe('Search Box', function () {
-    it('should route to an address page if the search string has alphabetical characters', async () => {
-      await renderSubject()
-      userEvent.type(
-        screen.getByLabelText('Search by Address or Transaction Version'),
-        '1fc5dd16a92e82a281a063e308ebcca9{enter}'
-      )
-      expect(mockHistory.push).toHaveBeenCalledTimes(1)
-      expect(mockHistory.push).toHaveBeenCalledWith(
-        '/address/1fc5dd16a92e82a281a063e308ebcca9'
-      )
+    ;[
+      {
+        description: 'when searching for full address without prefix',
+        searchTerm: '1fc5dd16a92e82a281a063e308ebcca9',
+        expectedRoute: '/address/1fc5dd16a92e82a281a063e308ebcca9',
+      },
+      {
+        description: 'when searching for full address with prefix',
+        searchTerm: '0x1fc5dd16a92e82a281a063e308ebcca9',
+        expectedRoute: '/address/1fc5dd16a92e82a281a063e308ebcca9',
+      },
+      {
+        description: 'when searching for partial address without prefix',
+        searchTerm: '281a063e308ebcca9',
+        expectedRoute: '/address/000000000000000281a063e308ebcca9',
+      },
+      {
+        description: 'when searching for partial address with prefix',
+        searchTerm: '0x281a063e308ebcca9',
+        expectedRoute: '/address/000000000000000281a063e308ebcca9',
+      },
+      {
+        description:
+          'when searching for an uppercase partial address without prefix',
+        searchTerm: '281A063E308EBCCA9',
+        expectedRoute: '/address/000000000000000281a063e308ebcca9',
+      },
+      {
+        description:
+          'when searching for an uppercase partial address with prefix',
+        searchTerm: '0x281A063E308EBCCA9',
+        expectedRoute: '/address/000000000000000281a063e308ebcca9',
+      },
+      {
+        description: 'when searching for transaction',
+        searchTerm: '312039453',
+        expectedRoute: '/txn/312039453',
+      },
+      {
+        description:
+          'should assume any all numeric search term is a transaction version',
+        searchTerm: '99999999999999999999999999999999',
+        expectedRoute: '/txn/99999999999999999999999999999999',
+      },
+    ].forEach((spec) => {
+      it(`${spec.description}`, async () => {
+        await renderSubject()
+        userEvent.type(
+          screen.getByLabelText('Search by Address or Transaction Version'),
+          `${spec.searchTerm}{enter}`
+        )
+        expect(mockHistory.push).toHaveBeenCalledTimes(1)
+        expect(mockHistory.push).toHaveBeenCalledWith(spec.expectedRoute)
+      })
     })
-    it('should route to an transaction page if the search string is all numeric characters', async () => {
-      await renderSubject()
-      userEvent.type(
-        screen.getByLabelText('Search by Address or Transaction Version'),
-        '74767203{enter}'
-      )
-      expect(mockHistory.push).toHaveBeenCalledTimes(1)
-      expect(mockHistory.push).toHaveBeenCalledWith('/txn/74767203')
-    })
-    it('should not route to any page if any character of the search string is not a digit', async () => {
+    it('should perform no navigation if any character of the search string (besides account prefix) is non hexadecimal', async () => {
       await renderSubject()
       userEvent.type(
         screen.getByLabelText('Search by Address or Transaction Version'),
