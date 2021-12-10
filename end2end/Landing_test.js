@@ -23,9 +23,9 @@ function seeLandingPageTableValues (I) {
 function seeCurrentStatisticsCard(I) {
   I.see('Current Statistics')
   I.see('TPS\n42')
-  I.see('Total Mint Value\n800')
-  I.see('Total Burn Value\n700')
-  I.see('Total Net Value\n100')
+  I.see('Total Mint Value\n800 XUS')
+  I.see('Total Burn Value\n700 XUS')
+  I.see('XUS In Circulation\n100 XUS')
 }
 
 Scenario('test after data has loaded', ({ I }) => {

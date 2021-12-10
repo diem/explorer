@@ -132,15 +132,15 @@ describe('LandingPage', function () {
     expect(
       within(statisticsCard).queryByText('Total Mint Value')
     ).toBeInTheDocument()
-    expect(statisticsCard.textContent).toContain('800')
+    expect(statisticsCard.textContent).toContain('800 XUS')
     expect(
       within(statisticsCard).queryByText('Total Burn Value')
     ).toBeInTheDocument()
-    expect(statisticsCard.textContent).toContain('700')
+    expect(statisticsCard.textContent).toContain('700 XUS')
     expect(
-      within(statisticsCard).queryByText('Total Net Value')
+      within(statisticsCard).queryByText('XUS In Circulation')
     ).toBeInTheDocument()
-    expect(statisticsCard.textContent).toContain('100')
+    expect(statisticsCard.textContent).toContain('100 XUS')
   })
 
   describe('Search Box', function () {
