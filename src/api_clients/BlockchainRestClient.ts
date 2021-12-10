@@ -16,7 +16,10 @@ function transformBlockchainRestResponse<
 >(response: RestResponse): DataOrErrors<T> {
   if ('message' in response && 'code' in response) {
     return {
-      errors: [{ message: response.message }],
+      errors: [{
+        message: response.message,
+        code: response.code
+      }],
     }
   } else {
     return {

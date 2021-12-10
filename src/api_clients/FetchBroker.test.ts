@@ -10,10 +10,10 @@ import { getWithFetch, postWithFetch } from './FetchBroker'
 const server = setupIntegrationTestApiServer()
 const fakeUrl = 'http://localhost/fake_url'
 
-const setPostResponse = (response: any) =>
-  setPostResponseForUrl(server, fakeUrl, response)
-const setGetResponse = (response: any) =>
-  setGetResponseForUrl(server, fakeUrl, response)
+const setPostResponse = (response: any, options = {}) =>
+  setPostResponseForUrl(server, fakeUrl, response, options)
+const setGetResponse = (response: any, options = {}) =>
+  setGetResponseForUrl(server, fakeUrl, response, options)
 const setPostNetworkError = (error: string) =>
   setPostNetworkErrorForUrl(server, fakeUrl, error)
 const setGetNetworkError = (error: string) =>
@@ -51,6 +51,18 @@ describe('Fetch Broker', function () {
         expect(thrownError).toEqual(expected)
       })
     })
+
+    it('should pass any response from the API up as failed promises', async () => {
+      setPostResponse({ ok: false }, {status: 404})
+
+      await postWithFetch(
+        fakeUrl,
+        "doesn't matter since we're mocking the service workers",
+        { headers: "don't matter since we're mocking the service workers" }
+      ).catch((thrownError) => {
+        expect(thrownError.message).toEqual("Not Found")
+      })
+    })
   })
   describe('getWithFetch', function () {
     it('should call .json before returning', async function () {
@@ -74,6 +86,16 @@ describe('Fetch Broker', function () {
         headers: "don't matter since we're mocking the service workers",
       }).catch((thrownError) => {
         expect(thrownError.message).toEqual(expectedMessage)
+      })
+    })
+    it('should pass any response from the API up as failed promises', async () => {
+      setGetResponse({ ok: false }, {status: 404})
+
+      await getWithFetch(
+        fakeUrl,
+        { headers: "don't matter since we're mocking the service workers" }
+      ).catch((thrownError) => {
+        expect(thrownError.message).toEqual("Not Found")
       })
     })
   })

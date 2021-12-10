@@ -9,10 +9,6 @@ import {
   getBlockchainTransaction,
 } from './BlockchainRestClient'
 
-const errorResponse = {
-  code: 400,
-  message: 'invalid account address: E58479132486A975C6FF1EF1F',
-}
 const goodResourceResponse = [
   {
     type: {
@@ -220,12 +216,14 @@ const testPassesDataThrough = async (
   expect(result).toEqual(expected)
 }
 
-const testPassesErrorsThrough = async (
+const testPassesApiErrorsThrough = async (
   methodUnderTest: Function,
   path: string
 ) => {
-  const expected = { errors: [{ message: errorResponse.message }] }
-  setBlockchainRestApiResponse(server, path, errorResponse)
+  const expected = {
+    errors: [{ message: "Error: Not Found" }],
+  }
+  setBlockchainRestApiResponse(server, path, { ok: false }, {status: 404})
   const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
@@ -234,7 +232,7 @@ const testNetworkErrorsAreErrors = async (
   methodUnderTest: Function,
   path: string
 ) => {
-  const error = 'The internet went boom 💥'
+  const error = 'The gateway times out, or the internet went boom 💥'
   const expected = {
     errors: [
       {
@@ -259,8 +257,11 @@ describe('Blockchain REST Client', function () {
         goodResourceResponse
       )
     })
-    it('should pass errors through', async () => {
-      await testPassesErrorsThrough(getAccountResourcesUnderTest, resourcesPath)
+    it('should pass Api errors through', async () => {
+      await testPassesApiErrorsThrough(
+        getAccountResourcesUnderTest,
+        resourcesPath
+      )
     })
     it('should pass network errors through like any other error', async () => {
       await testNetworkErrorsAreErrors(
@@ -276,7 +277,6 @@ describe('Blockchain REST Client', function () {
       expect(result).toEqual(expected)
     })
     it('should return an error if the address is invalid', async () => {
-      setBlockchainRestApiResponse(server, resourcesPath, errorResponse)
       const result = await getAccountResources('this address is invalid')
       expect(result).toEqual({
         errors: [
@@ -297,8 +297,8 @@ describe('Blockchain REST Client', function () {
         goodModulesResponse
       )
     })
-    it('should pass errors through', async () => {
-      await testPassesErrorsThrough(getAccountModulesUnderTest, modulesPath)
+    it('should pass Api errors through', async () => {
+      await testPassesApiErrorsThrough(getAccountModulesUnderTest, modulesPath)
     })
     it('should pass network errors through like any other error', async () => {
       await testNetworkErrorsAreErrors(getAccountModulesUnderTest, modulesPath)
@@ -315,8 +315,8 @@ describe('Blockchain REST Client', function () {
         goodTransactionResponse
       )
     })
-    it('should pass errors through', async () => {
-      await testPassesErrorsThrough(
+    it('should pass Api errors through', async () => {
+      await testPassesApiErrorsThrough(
         getBlockchainTransactionUnderTest,
         transactionPath
       )
