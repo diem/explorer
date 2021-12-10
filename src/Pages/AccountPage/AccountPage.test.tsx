@@ -86,8 +86,41 @@ describe('AccountPage', function () {
     expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
   })
 
-  describe('when the account exists', () => {
+  describe('when the account does not exists', function () {
+    it('should forward to the 404 page', async () => {
+      // @ts-ignore TS is bad at mocking
+      getAccountResources.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
 
+      // @ts-ignore TS is bad at mocking
+      getAccountModules.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
+
+      // @ts-ignore TS is bad at mocking
+      postQueryToAnalyticsApi.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
+
+      const mockHistory = {
+        history: {} as any,
+        location: {} as any,
+        match: {
+          path: '/address/:address',
+          url: '/address/' + mockAddress,
+          isExact: true,
+          params: {
+            address: mockAddress,
+          },
+        },
+      }
+      render(
+        <BrowserRouter>
+          <AccountPage {...mockHistory} />
+        </BrowserRouter>
+      )
+      await waitForElementToBeRemoved(screen.queryAllByRole('loading'))
+      screen.debug()
+      expect(screen.queryByText('Page not found.')).toBeInTheDocument()
+    })
+  })
+
+  describe('when the account exists', () => {
     describe('when there are account resources', function () {
       beforeEach(
         async () =>
@@ -96,10 +129,6 @@ describe('AccountPage', function () {
             []
           )
       )
-
-      it('should not display the Unsupported Account card', async () => {
-        expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
-      })
 
       it('should display Balance resource data in a table', async function () {
         expect(document.getElementById('objectPropertiesTable')).not.toBeNull()
@@ -144,7 +173,7 @@ describe('AccountPage', function () {
       it('should display the authentication key in a card', async () => {
         expect(document.getElementById('authenticationKey')).not.toBeNull()
         const authenticationKeyCard =
-        document.getElementById('authenticationKey')!
+          document.getElementById('authenticationKey')!
 
         expect(authenticationKeyCard.textContent).toMatch(
           '0x16973acfaa51751234cdaffb3563b665bd3c1801820aa917993888b2fa8d8c0e'
@@ -156,7 +185,7 @@ describe('AccountPage', function () {
         expect(eventHandlesCard).toBeInTheDocument()
 
         const eventHandlesTable: HTMLTableElement =
-        eventHandlesCard.querySelector('table')!
+          eventHandlesCard.querySelector('table')!
         expect(eventHandlesTable).toBeInTheDocument()
 
         expect(eventHandlesTable.rows).toHaveLength(3)
@@ -218,7 +247,9 @@ describe('AccountPage', function () {
           within(transactionsTable).queryByText('2021-11-29T19:57:52+00:00')
         ).toBeInTheDocument()
 
-        expect(within(transactionsTable).queryByText('Type')).toBeInTheDocument()
+        expect(
+          within(transactionsTable).queryByText('Type')
+        ).toBeInTheDocument()
         expect(
           within(transactionsTable).queryByText('UserTransaction')
         ).toBeInTheDocument()
@@ -234,10 +265,6 @@ describe('AccountPage', function () {
 
     describe('when there are Smart Contracts', function () {
       beforeEach(async () => await renderSubject([], testModules))
-
-      it('should not display the Unsupported Account card', async () => {
-        expect(screen.queryByText('Unsupported Account')).not.toBeInTheDocument()
-      })
 
       it('should display Smart Contract Method Signatures in a card', async () => {
         expect(document.getElementById('smart-contract-methods')).not.toEqual(

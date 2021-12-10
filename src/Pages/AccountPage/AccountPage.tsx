@@ -171,7 +171,9 @@ export default function AccountPage(props: AccountPageProps) {
       return resourcesOrError
     }
   })
-
+  // TODO: Convince the BlockchainRestClient to propogate up the information that the request failed because 404
+  // TODO: Until we have that we cannot know whether to fwd to 404, or say try again later
+  console.log(resourcesResponse, modulesResponse, recentTransactionsResponse)
   return (
     <MainWrapper>
       <>
