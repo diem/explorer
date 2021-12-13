@@ -32,10 +32,8 @@ export function setGetResponseForUrl(
     status?: number
   }
 ) {
-
   const delay = options?.delay || 0
   const status = options?.status || 200
-
 
   server.use(
     rest.get(url, (req, res, ctx) => {

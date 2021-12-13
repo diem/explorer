@@ -8,6 +8,7 @@ import {
   getAccountResources,
   getBlockchainTransaction,
 } from './BlockchainRestClient'
+import { ResponseError } from './FetchBroker'
 
 const goodResourceResponse = [
   {
@@ -212,6 +213,7 @@ const testPassesDataThrough = async (
 ) => {
   const expected = { data: response }
   setBlockchainRestApiResponse(server, path, response)
+
   const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
@@ -221,7 +223,19 @@ const testPassesApiErrorsThrough = async (
   path: string
 ) => {
   const expected = {
-    errors: [{ message: "Error: Not Found" }],
+    errors: [{ message: ResponseError.UNHANDLED}],
+  }
+  setBlockchainRestApiResponse(server, path, { ok: false }, {status: 400})
+  const result = await methodUnderTest()
+  expect(result).toEqual(expected)
+}
+
+const testPasses404ErrorsThrough = async (
+  methodUnderTest: Function,
+  path: string
+) => {
+  const expected = {
+    errors: [{ message: ResponseError.NOT_FOUND}],
   }
   setBlockchainRestApiResponse(server, path, { ok: false }, {status: 404})
   const result = await methodUnderTest()
@@ -234,13 +248,7 @@ const testNetworkErrorsAreErrors = async (
 ) => {
   const error = 'The gateway times out, or the internet went boom 💥'
   const expected = {
-    errors: [
-      {
-        message: `FetchError: request to ${
-          import.meta.env.VITE_BLOCKCHAIN_REST_URL
-        }${path} failed, reason: ${error}`,
-      },
-    ],
+    errors: [{ message: ResponseError.UNHANDLED}],
   }
   setBlockchainRestNetworkError(server, path, error)
   const result = await methodUnderTest()
@@ -287,6 +295,9 @@ describe('Blockchain REST Client', function () {
         ],
       })
     })
+    it('should pass 404 errors through with a `Not  Found` message', async () => {
+      await testPasses404ErrorsThrough(getAccountResourcesUnderTest, modulesPath)
+    })
   })
   describe('getAccountModules', function () {
     const getAccountModulesUnderTest = () => getAccountModules(fakeAddress)
@@ -302,6 +313,9 @@ describe('Blockchain REST Client', function () {
     })
     it('should pass network errors through like any other error', async () => {
       await testNetworkErrorsAreErrors(getAccountModulesUnderTest, modulesPath)
+    })
+    it('should pass 404 errors through with a `Not  Found` message', async () => {
+      await testPasses404ErrorsThrough(getAccountModulesUnderTest, modulesPath)
     })
   })
 
@@ -326,6 +340,9 @@ describe('Blockchain REST Client', function () {
         getBlockchainTransactionUnderTest,
         transactionPath
       )
+    })
+    it('should pass 404 errors through with a `Not  Found` message', async () => {
+      await testPasses404ErrorsThrough(getBlockchainTransactionUnderTest, modulesPath)
     })
   })
 })
