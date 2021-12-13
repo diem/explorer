@@ -1,6 +1,10 @@
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { ReactNode } from 'react'
-import ApiRequestComponent from '../../ApiRequestComponent'
+import ApiRequestComponent, {
+  PlainErrorComponent,
+  PlainLoadingComponent,
+  PlainValue,
+} from '../../ApiRequestComponent'
 import MainWrapper from '../../MainWrapper'
 import {
   TransactionRow,
@@ -13,9 +17,11 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import { DataOrErrors } from '../../api_clients/FetchTypes'
 import {
+  CountTotalPayments,
   countTransactionsInLast10Minutes,
   CountTransactionsInLast10MinutesType,
   LatestMintBurnNetQuery,
+  totalPaymentsQuery,
   transactionsQuery,
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
@@ -52,14 +58,14 @@ function CurrentStatisticsCard({
   return (
     <Card className='mb-5' data-testid='statisticsCard'>
       <Card.Header>Current Statistics</Card.Header>
-      <Card.Body
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <section style={{}}>
-          <dl data-tip data-for={'Transactions Per Second'}>
+      <Card.Body>
+        <dl
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div data-tip data-for={'Transactions Per Second'}>
             <dt
               style={{
                 textDecoration: 'underline',
@@ -67,31 +73,46 @@ function CurrentStatisticsCard({
               }}
             >
               TPS
+              <ReactTooltip id='Transactions Per Second' effect='solid'>
+                Transactions Per Second
+              </ReactTooltip>
             </dt>
             <dd>{new Intl.NumberFormat().format(averageTps)}</dd>
-          </dl>
-          <ReactTooltip id='Transactions Per Second' effect='solid'>
-            Transactions Per Second
-          </ReactTooltip>
-        </section>
-        <section>
-          <dl>
+          </div>
+          <div>
             <dt>Total Mint Value</dt>
             <dd>{new Intl.NumberFormat().format(totalMintValue)} XUS</dd>
-          </dl>
-        </section>
-        <section>
-          <dl>
+          </div>
+          <div>
             <dt>Total Burn Value</dt>
             <dd>{new Intl.NumberFormat().format(totalBurnValue)} XUS</dd>
-          </dl>
-        </section>
-        <section>
-          <dl>
+          </div>
+          <div>
             <dt>XUS In Circulation</dt>
             <dd>{new Intl.NumberFormat().format(totalNetValue)} XUS</dd>
-          </dl>
-        </section>
+          </div>
+          <div>
+            <dt>Total Payments</dt>
+            <dd>
+              <ApiRequestComponent
+                request={() =>
+                  postQueryToAnalyticsApi<CountTotalPayments>(
+                    totalPaymentsQuery(),
+                    'sentpayment_events_aggregate'
+                  ).then((result) =>
+                    'data' in result
+                      ? { data: result.data.aggregate.count }
+                      : result
+                  )
+                }
+                loadingComponent={<PlainLoadingComponent />}
+                errorComponent={<PlainErrorComponent />}
+              >
+                <PlainValue />
+              </ApiRequestComponent>
+            </dd>
+          </div>
+        </dl>
       </Card.Body>
     </Card>
   )

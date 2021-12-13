@@ -26,6 +26,7 @@ function seeCurrentStatisticsCard(I) {
   I.see('Total Mint Value\n800 XUS')
   I.see('Total Burn Value\n700 XUS')
   I.see('XUS In Circulation\n100 XUS')
+  I.see('Total Payments\n123')
 }
 
 Scenario('test after data has loaded', ({ I }) => {

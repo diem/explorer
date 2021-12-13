@@ -7,6 +7,12 @@ import moment from 'moment'
 import { KnownCurrency } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 
+type CountResult = {
+  aggregate: {
+    count: number
+  }
+}
+
 export type MintEvent = GraphQLTypes['receivedmint_events']
 export function mintEventsQuery() {
   return {
@@ -244,9 +250,7 @@ export function currencyInCirculationPageQuery(currency: KnownCurrency) {
   }
 }
 
-export type CountTransactionsInLast10MinutesType = {
-  aggregate: { count: number }
-}
+export type CountTransactionsInLast10MinutesType = CountResult
 export function countTransactionsInLast10Minutes() {
   const TEN_MINUTES_AGO = moment.utc().subtract(10, 'minutes').format()
   return {
@@ -303,6 +307,25 @@ export function diemInCirculationHistoryQuery(currency: KnownCurrency) {
       {
         total_net: true,
         timestamp: true,
+      },
+    ],
+  }
+}
+
+export type CountTotalPayments = CountResult
+export function totalPaymentsQuery() {
+  const EXECUTED_SUCCESSFULLY = 1
+  return {
+    sentpayment_events_aggregate: [
+      {
+        where: {
+          status: { _eq: EXECUTED_SUCCESSFULLY },
+        },
+      },
+      {
+        aggregate: {
+          count: [{}, true],
+        },
       },
     ],
   }
