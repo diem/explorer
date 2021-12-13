@@ -218,13 +218,32 @@ describe('LandingPage', function () {
         expect(mockHistory.push).toHaveBeenCalledWith(spec.expectedRoute)
       })
     })
-    it('should perform no navigation if any character of the search string (besides account prefix) is non hexadecimal', async () => {
+    it('should perform no navigation and display an error if any character of the search string (besides account prefix) is non hexadecimal', async () => {
       await renderSubject()
-      userEvent.type(
-        screen.getByLabelText('Search by Address or Transaction Version'),
-        '74767203!{enter}'
-      )
+      const searchBar: HTMLInputElement = screen.getByLabelText(
+        'Search by Address or Transaction Version'
+      )!
+      userEvent.type(searchBar, '74767203!{enter}')
       expect(mockHistory.push).not.toHaveBeenCalled()
+      expect(searchBar.classList).toContain('is-invalid')
+      expect(
+        screen.getByText('Invalid address or transaction version')
+      ).toBeVisible()
+    })
+    it('should perform no navigation but display no error when the search string is empty', async () => {
+      await renderSubject()
+      const searchBar: HTMLInputElement = screen.getByLabelText(
+        'Search by Address or Transaction Version'
+      )!
+      userEvent.type(searchBar, '{enter}')
+      expect(mockHistory.push).not.toHaveBeenCalled()
+      expect(searchBar.classList).not.toContain('is-invalid')
+      // The following assertion is disabled due to a limitation of JSDOM CSS processing:
+      // expect(screen.getByText('Invalid address or transaction version')).not.toBeVisible()
+      // Refer to the following for more details:
+      // https://github.com/testing-library/dom-testing-library/issues/196#issuecomment-487432178
+      // https://github.com/testing-library/jest-dom/issues/209
+      // However, the preceding assertion sufficiently describes the CSS change that causes the message to be hidden.
     })
   })
 })

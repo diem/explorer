@@ -1,5 +1,5 @@
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
-import React, { ReactNode } from 'react'
+import React, { FormEvent, KeyboardEvent, ReactNode, useState } from 'react'
 import ApiRequestComponent, {
   PlainErrorComponent,
   PlainLoadingComponent,
@@ -147,6 +147,7 @@ type LandingPageWithResponseProps = {
 }
 function LandingPageWithResponse(props: LandingPageWithResponseProps) {
   const history = useHistory()
+  const [isValid, setIsValid] = useState<boolean>(true)
 
   function getSearchRouteFromSearchTerm(term: string): string | null {
     if (/^[0-9]+$/i.test(term)) {
@@ -161,11 +162,17 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
     return null
   }
 
-  function handleSearch(event: any) {
-    // Enter Key
+  function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
+    const searchTerm = (event.target as HTMLInputElement).value
+    const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
+    setIsValid(searchRoute !== null || searchTerm === '')
+  }
+
+  function submitSearch(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      const searchRoute = getSearchRouteFromSearchTerm(event.target.value)
-      if (searchRoute) {
+      const searchTerm = (event.target as HTMLInputElement).value
+      const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
+      if (searchRoute !== null) {
         history.push(searchRoute)
       }
     }
@@ -177,8 +184,13 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
         <FormControl
           placeholder='Search by Address or Transaction Version'
           aria-label='Search by Address or Transaction Version'
-          onKeyPress={handleSearch}
+          onInput={validateSearchTerm}
+          onKeyPress={submitSearch}
+          isInvalid={!isValid}
         />
+        <FormControl.Feedback type='invalid'>
+          Invalid address or transaction version
+        </FormControl.Feedback>
       </InputGroup>
       <CurrentStatisticsCard
         averageTps={props.data.averageTps}
