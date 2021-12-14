@@ -70,6 +70,7 @@ function seeEventHandles(I, receivedEventsCounter, receivedEventsGuid, sentEvent
   })
 }
 
+const nonExistantAccountAddress = '87ee911d7ce1708bb3cf85f2e99212ba'
 const designatedDealerAddress = '1081322fef2da29d62fe4e131ef4c859'
 const validatorAddress = '88c5db7ad36f7a66a8fb2789fbdb30cc'
 const validatorOperatorAddress = '1fc5dd16a92e82a281a063e308ebcca9'
@@ -86,6 +87,24 @@ Scenario('navigating to an account from landing page', ({ I }) => {
   I.see('Account Details')
 
   seeRecentTransactions(I)
+})
+
+Scenario('navigating to an account that doesnt exist from landing page', ({ I }) => {
+  I.amOnPage('/')
+  I.fillField('Search by Address or Transaction Version', nonExistantAccountAddress)
+  I.pressKey('Enter')
+
+  I.seeInCurrentUrl('/address/not-found')
+  I.seeMainWrapper()
+  I.see('Address is not associated with an account.')
+})
+
+Scenario('navigating directly to an invalid address', ({ I }) => {
+  I.amOnPage(`/address/${nonExistantAccountAddress}`)
+
+  I.seeInCurrentUrl('/address/not-found')
+  I.seeMainWrapper()
+  I.see('Address is not associated with an account.')
 })
 
 Scenario('Displaying a Designated Dealer account', ({ I }) => {

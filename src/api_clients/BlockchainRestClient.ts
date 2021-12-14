@@ -11,11 +11,13 @@ export interface RestError {
 }
 
 type RestApiResource = Resource[] | Module[] | RestError | ResponseError
-function toDataOrErrors<T>(result: Result<T, ResponseError>): Promise<DataOrErrors<T>> {
+function toDataOrErrors<T>(
+  result: Result<T, ResponseError>
+): Promise<DataOrErrors<T>> {
   if (result.ok) {
     return Promise.resolve({ data: result.val })
   } else {
-    return Promise.resolve({ errors: [ { message: result.val } ] } )
+    return Promise.resolve({ errors: [{ message: result.val }] })
   }
 }
 

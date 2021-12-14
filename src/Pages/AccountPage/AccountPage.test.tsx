@@ -23,6 +23,9 @@ import {
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
+import { ResponseError } from '../../api_clients/FetchBroker'
+import { DataOrErrors } from '../../api_clients/FetchTypes'
+import { TransactionsQueryType } from '../../api_clients/AnalyticsQueries'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
   ...jest.requireActual('../../api_clients/BlockchainRestClient'),
@@ -35,35 +38,22 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
 }))
 
 const mockAddress = '1fc5dd16a92e82a281a063e308ebcca9'
-const renderSubject = async (
-  resources: Resource[] = [],
-  modules: Module[] = [],
-  transactions: any = []
-) => {
-  // @ts-ignore TS is bad at mocking
-  getAccountResources.mockResolvedValue({
-    data: resources,
-  })
 
-  // @ts-ignore TS is bad at mocking
-  getAccountModules.mockResolvedValue({
-    data: modules,
-  })
+const mockHistoryPush = jest.fn()
 
-  // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
-    data: transactions,
-  })
-
+function renderWithAddress(address: string) {
+  mockHistoryPush.mockReset()
   const mockHistory = {
-    history: {} as any,
+    history: {
+      push: mockHistoryPush,
+    } as any,
     location: {} as any,
     match: {
       path: '/address/:address',
-      url: '/address/' + mockAddress,
+      url: '/address/' + address,
       isExact: true,
       params: {
-        address: mockAddress,
+        address: address,
       },
     },
   }
@@ -72,6 +62,24 @@ const renderSubject = async (
       <AccountPage {...mockHistory} />
     </BrowserRouter>
   )
+}
+
+const renderSubject = async (
+  resources: DataOrErrors<Resource[]> = { data: [] },
+  modules: DataOrErrors<Module[]> = { data: [] },
+  transactions: DataOrErrors<TransactionsQueryType[]> = { data: [] }
+) => {
+  // @ts-ignore TS is bad at mocking
+  getAccountResources.mockResolvedValue(resources)
+
+  // @ts-ignore TS is bad at mocking
+  getAccountModules.mockResolvedValue(modules)
+
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValue(transactions)
+
+  renderWithAddress(mockAddress)
+
   await waitForElementToBeRemoved(screen.queryAllByRole('loading'))
 }
 
@@ -85,38 +93,22 @@ describe('AccountPage', function () {
     expect(getAccountModules).toHaveBeenCalledTimes(1)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(1)
   })
+  describe('when the address is invalid', () => {
+    it('should forward to the AccountNotFound page', async () => {
+      renderWithAddress('thisAddressIsInvalid')
 
+      expect(mockHistoryPush).toHaveBeenCalledWith('/address/not-found')
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1)
+    })
+  })
   describe('when the account does not exists', function () {
     it('should forward to the 404 page', async () => {
-      // @ts-ignore TS is bad at mocking
-      getAccountResources.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
-
-      // @ts-ignore TS is bad at mocking
-      getAccountModules.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
-
-      // @ts-ignore TS is bad at mocking
-      postQueryToAnalyticsApi.mockResolvedValue({ errors: [{ message: "Error: Not Found" }] })
-
-      const mockHistory = {
-        history: {} as any,
-        location: {} as any,
-        match: {
-          path: '/address/:address',
-          url: '/address/' + mockAddress,
-          isExact: true,
-          params: {
-            address: mockAddress,
-          },
-        },
+      const notFoundResponse = {
+        errors: [{ message: ResponseError.NOT_FOUND }],
       }
-      render(
-        <BrowserRouter>
-          <AccountPage {...mockHistory} />
-        </BrowserRouter>
-      )
-      await waitForElementToBeRemoved(screen.queryAllByRole('loading'))
-      screen.debug()
-      expect(screen.queryByText('Page not found.')).toBeInTheDocument()
+      await renderSubject(notFoundResponse, notFoundResponse, notFoundResponse)
+
+      expect(mockHistoryPush.mock.calls[0]).toEqual(['/address/not-found'])
     })
   })
 
@@ -125,8 +117,14 @@ describe('AccountPage', function () {
       beforeEach(
         async () =>
           await renderSubject(
-            [xdxBalanceResource, xusBalanceResource, diemAccountResource],
-            []
+            {
+              data: [
+                xdxBalanceResource,
+                xusBalanceResource,
+                diemAccountResource,
+              ],
+            },
+            { data: [] }
           )
       )
 
@@ -213,18 +211,21 @@ describe('AccountPage', function () {
     describe('when there are recent transactions', () => {
       it('should display the recent transactions', async () => {
         await renderSubject(
-          [],
-          [],
-          [
-            {
-              version: 372413434,
-              txn_type: 3,
-              expiration_timestamp: null,
-              commit_timestamp: '2021-11-29T19:57:52+00:00',
-              status: 1,
-              sender: null,
-            },
-          ]
+          { data: [] },
+          { data: [] },
+          {
+            data: [
+              {
+                // @ts-ignore
+                version: 372413434,
+                txn_type: 3,
+                expiration_timestamp: '2021-12-14T00:56:08+00:00',
+                commit_timestamp: '2021-11-29T19:57:52+00:00',
+                status: 1,
+                sender: '5D908A4BFCFF104F62ADBD423E449504',
+              },
+            ],
+          }
         )
 
         expect(document.getElementById('recentTransactions')).not.toEqual(null)
@@ -264,7 +265,9 @@ describe('AccountPage', function () {
     })
 
     describe('when there are Smart Contracts', function () {
-      beforeEach(async () => await renderSubject([], testModules))
+      beforeEach(
+        async () => await renderSubject({ data: [] }, { data: testModules })
+      )
 
       it('should display Smart Contract Method Signatures in a card', async () => {
         expect(document.getElementById('smart-contract-methods')).not.toEqual(

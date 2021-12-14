@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 const childComponentText = 'The data loaded and it was this: '
 const childComponentRole = 'main'
 const data = '|THIS|IS|DATA|'
-const ChildComponent = (props: { data: string | undefined }) => {
+const TestChildComponent = (props: { data: string | undefined }) => {
   return (
     <div role={childComponentRole}>
       {childComponentText}
@@ -22,7 +22,7 @@ const errorComponentText = 'There was an error and it was this: '
 const errorComponentRole = 'alert'
 const error =
   'THIS IS A GOOD ERROR, IF YOU SEE THIS IN THE CONSOLE IT MEANS A TEST MANIFESTED AN ERROR AND THE CODE PRINTED IT. THIS IS THE CORRECT BEHAVIOR'
-const ErrorComponent = (props: { errors: string[] }) => {
+const TestErrorComponent = (props: { errors: string[] }) => {
   return (
     <div role={errorComponentRole}>
       {errorComponentText}
@@ -42,9 +42,9 @@ function renderSubject(args: any[] | undefined) {
         loadingComponent={
           <div role={loadingComponentRole}>{loadingComponentText}</div>
         }
-        errorComponent={<ErrorComponent errors={[]} />}
+        errorComponent={<TestErrorComponent errors={[]} />}
       >
-        <ChildComponent data={undefined} />
+        <TestChildComponent data={undefined} />
       </ApiRequestComponent>
     </BrowserRouter>
   )

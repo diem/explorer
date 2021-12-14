@@ -5,6 +5,7 @@ import NotFoundPage from './Pages/NotFoundPage'
 import eventPages from './Pages/EventPages/EventPages'
 import DiemIncirculationPage from './Pages/DiemInCirculationPage/DiemInCirculationPage'
 import AccountPage from './Pages/AccountPage/AccountPage'
+import AccountNotFoundPage from './Pages/AccountPage/AccountNotFoundPage'
 import LeaderboardPage from './Pages/LeaderboardPage/LeaderboardPage'
 
 export default function ExplorerRouter() {
@@ -22,6 +23,7 @@ export default function ExplorerRouter() {
         component={eventPages.AccountCreationEventsPage}
       />
       <Route path='/diemincirculation' component={DiemIncirculationPage} />
+      <Route path='/address/not-found' component={AccountNotFoundPage} />
       <Route path='/address/:address' component={AccountPage} />
       <Route path='/leaderboard' component={LeaderboardPage} />
       <Route component={NotFoundPage} />

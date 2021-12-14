@@ -16,7 +16,7 @@ const setGetNetworkError = (error: string) =>
 
 describe('Fetch Broker', function () {
   describe('getWithFetch', function () {
-    describe("when response returns an item", () => {
+    describe('when response returns an item', () => {
       it('should return a result containing the item', async function () {
         const goodResponse = 'this is good data'
         const expected = 'this is good data'
@@ -30,23 +30,22 @@ describe('Fetch Broker', function () {
       })
     })
 
-    describe("when response returns a 404 status", () => {
+    describe('when response returns a 404 status', () => {
       it('should return an error result "NOT_FOUND"', async () => {
-        setGetResponse({ ok: false }, {status: 404})
+        setGetResponse({ ok: false }, { status: 404 })
 
-        const result = await getWithFetch(
-          fakeUrl,
-          { headers: "don't matter since we're mocking the service workers" }
-        )
+        const result = await getWithFetch(fakeUrl, {
+          headers: "don't matter since we're mocking the service workers",
+        })
 
         expect(result).toEqual(Err(ResponseError.NOT_FOUND))
       })
     })
 
-    describe("when response returns a non-404 status code", () => {
+    describe('when response returns a non-404 status code', () => {
       it('should return an error result "UNHANDLED"', async function () {
         for (const errorStatusCode of [400, 500]) {
-          setGetResponse({ ok: false }, {status: errorStatusCode})
+          setGetResponse({ ok: false }, { status: errorStatusCode })
 
           const result = await getWithFetch(fakeUrl, {
             headers: "don't matter since we're mocking the service workers",
@@ -56,7 +55,7 @@ describe('Fetch Broker', function () {
       })
     })
 
-    describe("when api is unreachable", () => {
+    describe('when api is unreachable', () => {
       it('should return an error result "UNHANDLED"', async function () {
         setGetNetworkError('The internet went boom 💥')
 

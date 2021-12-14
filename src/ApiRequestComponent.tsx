@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
 import MainWrapper from './MainWrapper'
-import { DataOrErrors, FetchError } from './api_clients/FetchTypes'
+import { DataOrErrors } from './api_clients/FetchTypes'
 import { Card } from 'react-bootstrap'
+import Loadable, { LoadingState } from './Loadable'
 
 interface ApiRequestPageProps<T> {
   children: ReactElement
@@ -71,38 +71,29 @@ function ApiRequestComponent<T>({
   loadingComponent = <DefaultLoadingComponent />,
   errorComponent = <DefaultErrorComponent />,
 }: ApiRequestPageProps<T>) {
-  const [response, setResponse] = useState<T | undefined>(undefined)
-  const [errors, setErrors] = useState<FetchError[] | null>([])
-  const [loading, setLoading] = useState<boolean | undefined>(true)
+  const [loadingState, setLoadingState] = useState<LoadingState<T>>({
+    isLoading: true,
+  })
 
   useEffect(() => {
     async function getResponse() {
       await request(...args).then((apiResponse) => {
-        if ('data' in apiResponse) {
-          setResponse(apiResponse.data)
-          setLoading(false)
-        } else {
-          setErrors(apiResponse.errors)
-          setLoading(false)
-        }
+        setLoadingState(apiResponse)
       })
     }
 
     getResponse()
   }, [])
 
-  function renderContent(): ReactJSXElement {
-    if (loading) {
-      return <>{React.cloneElement(loadingComponent)}</>
-    } else if (errors && errors.length) {
-      console.error('Error loading the ApiRequestComponent: ', errors)
-      return <>{React.cloneElement(errorComponent, { errors })}</>
-    } else {
-      return <>{React.cloneElement(children, { data: response })}</>
-    }
-  }
-
-  return renderContent()
+  return (
+    <Loadable
+      state={loadingState}
+      loadingComponent={loadingComponent}
+      errorComponent={errorComponent}
+    >
+      {children}
+    </Loadable>
+  )
 }
 
 export default ApiRequestComponent

@@ -223,9 +223,9 @@ const testPassesApiErrorsThrough = async (
   path: string
 ) => {
   const expected = {
-    errors: [{ message: ResponseError.UNHANDLED}],
+    errors: [{ message: ResponseError.UNHANDLED }],
   }
-  setBlockchainRestApiResponse(server, path, { ok: false }, {status: 400})
+  setBlockchainRestApiResponse(server, path, { ok: false }, { status: 400 })
   const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
@@ -235,9 +235,9 @@ const testPasses404ErrorsThrough = async (
   path: string
 ) => {
   const expected = {
-    errors: [{ message: ResponseError.NOT_FOUND}],
+    errors: [{ message: ResponseError.NOT_FOUND }],
   }
-  setBlockchainRestApiResponse(server, path, { ok: false }, {status: 404})
+  setBlockchainRestApiResponse(server, path, { ok: false }, { status: 404 })
   const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
@@ -248,12 +248,14 @@ const testNetworkErrorsAreErrors = async (
 ) => {
   const error = 'The gateway times out, or the internet went boom 💥'
   const expected = {
-    errors: [{ message: ResponseError.UNHANDLED}],
+    errors: [{ message: ResponseError.UNHANDLED }],
   }
   setBlockchainRestNetworkError(server, path, error)
   const result = await methodUnderTest()
   expect(result).toEqual(expected)
 }
+
+beforeEach(server.resetHandlers)
 
 describe('Blockchain REST Client', function () {
   describe('getAccountResources', function () {
@@ -296,7 +298,10 @@ describe('Blockchain REST Client', function () {
       })
     })
     it('should pass 404 errors through with a `Not  Found` message', async () => {
-      await testPasses404ErrorsThrough(getAccountResourcesUnderTest, modulesPath)
+      await testPasses404ErrorsThrough(
+        getAccountResourcesUnderTest,
+        resourcesPath
+      )
     })
   })
   describe('getAccountModules', function () {
@@ -341,8 +346,11 @@ describe('Blockchain REST Client', function () {
         transactionPath
       )
     })
-    it('should pass 404 errors through with a `Not  Found` message', async () => {
-      await testPasses404ErrorsThrough(getBlockchainTransactionUnderTest, modulesPath)
+    it('getTransaction should pass 404 errors through with a "Not  Found" message', async () => {
+      await testPasses404ErrorsThrough(
+        getBlockchainTransactionUnderTest,
+        transactionPath
+      )
     })
   })
 })

@@ -6,20 +6,16 @@ export function setPostResponseForUrl(
   url: string,
   responseData: Object,
   options?: {
-    delay?: number,
+    delay?: number
     status?: number
   }
 ) {
   server.use(
     rest.post(url, (req, res, ctx) => {
-
       const delay = options?.delay || 0
       const status = options?.status || 200
 
-      return res(
-        ctx.status(status),
-        ctx.delay(delay),
-        ctx.json(responseData))
+      return res(ctx.status(status), ctx.delay(delay), ctx.json(responseData))
     })
   )
 }
@@ -28,7 +24,7 @@ export function setGetResponseForUrl(
   url: string,
   responseData: Object,
   options?: {
-    delay?: number,
+    delay?: number
     status?: number
   }
 ) {
@@ -37,10 +33,7 @@ export function setGetResponseForUrl(
 
   server.use(
     rest.get(url, (req, res, ctx) => {
-      return res(
-        ctx.status(status),
-        ctx.delay(delay),
-        ctx.json(responseData))
+      return res(ctx.status(status), ctx.delay(delay), ctx.json(responseData))
     })
   )
 }
@@ -94,7 +87,7 @@ export function setBlockchainRestApiResponse(
   path: string,
   responseData: Object,
   options?: {
-    delay?: number,
+    delay?: number
     status?: number
   }
 ) {
@@ -120,7 +113,7 @@ export function setBlockchainRestNetworkError(
 
 export function setupIntegrationTestApiServer(): SetupServerApi {
   const server = setupServer()
-  beforeAll(() => server.listen())
+  beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
   return server
