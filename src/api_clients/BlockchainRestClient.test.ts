@@ -346,7 +346,7 @@ describe('Blockchain REST Client', function () {
         transactionPath
       )
     })
-    it('getTransaction should pass 404 errors through with a "Not  Found" message', async () => {
+    it('getTransaction should pass 404 errors through with a "Not Found" message', async () => {
       await testPasses404ErrorsThrough(
         getBlockchainTransactionUnderTest,
         transactionPath
