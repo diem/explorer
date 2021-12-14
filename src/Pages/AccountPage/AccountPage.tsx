@@ -16,7 +16,7 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
@@ -32,10 +32,6 @@ import {
   transformAnalyticsTransactionIntoTransaction,
 } from '../Common/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
-import ApiRequestComponent, {
-  PlainErrorComponent,
-  PlainLoadingComponent,
-} from '../../ApiRequestComponent'
 import Loadable, { LoadingState } from '../../Loadable'
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({

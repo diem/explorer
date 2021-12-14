@@ -1,4 +1,4 @@
-import { DataOrErrors, FetchError } from './FetchTypes'
+import { DataOrErrors } from './FetchTypes'
 import { getWithFetch, ResponseError } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
@@ -10,7 +10,6 @@ export interface RestError {
   message: string
 }
 
-type RestApiResource = Resource[] | Module[] | RestError | ResponseError
 function toDataOrErrors<T>(
   result: Result<T, ResponseError>
 ): Promise<DataOrErrors<T>> {

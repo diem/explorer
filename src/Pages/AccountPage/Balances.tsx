@@ -7,7 +7,6 @@ import {
   KnownCurrency,
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
-import { DataOrErrors } from '../../api_clients/FetchTypes'
 
 function parseBalancesFromResources(
   resources: Resource[]
