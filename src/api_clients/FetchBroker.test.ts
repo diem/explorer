@@ -1,79 +1,69 @@
 import {
   setGetNetworkErrorForUrl,
   setGetResponseForUrl,
-  setPostNetworkErrorForUrl,
-  setPostResponseForUrl,
   setupIntegrationTestApiServer,
 } from '../test_utils/IntegrationTestApiServerTools'
-import { getWithFetch, postWithFetch } from './FetchBroker'
+import { getWithFetch, ResponseError } from './FetchBroker'
+import { Err, Ok } from 'ts-results'
 
 const server = setupIntegrationTestApiServer()
 const fakeUrl = 'http://localhost/fake_url'
 
-const setPostResponse = (response: any) =>
-  setPostResponseForUrl(server, fakeUrl, response)
-const setGetResponse = (response: any) =>
-  setGetResponseForUrl(server, fakeUrl, response)
-const setPostNetworkError = (error: string) =>
-  setPostNetworkErrorForUrl(server, fakeUrl, error)
+const setGetResponse = (response: any, options = {}) =>
+  setGetResponseForUrl(server, fakeUrl, response, options)
 const setGetNetworkError = (error: string) =>
   setGetNetworkErrorForUrl(server, fakeUrl, error)
 
 describe('Fetch Broker', function () {
-  describe('postWithFetch', function () {
-    it('should call .json before returning', async function () {
-      const goodResponse = 'this is good data'
-      const expected = 'this is good data'
-      setPostResponse(goodResponse)
-
-      const result = await postWithFetch(
-        fakeUrl,
-        "doesn't matter since we're mocking the service workers",
-        { headers: "don't matter since we're mocking the service workers" }
-      )
-
-      expect(result).toEqual(expected)
-    })
-
-    it('should pass network errors as failed promises', async function () {
-      const error = 'The internet went boom 💥'
-      const expected = {
-        message: `request to http://localhost/fake_url failed, reason: ${error}`,
-        type: 'system',
-      }
-      setPostNetworkError(error)
-
-      await postWithFetch(
-        fakeUrl,
-        "doesn't matter since we're mocking the service workers",
-        { headers: "don't matter since we're mocking the service workers" }
-      ).catch((thrownError) => {
-        expect(thrownError).toEqual(expected)
-      })
-    })
-  })
   describe('getWithFetch', function () {
-    it('should call .json before returning', async function () {
-      const goodResponse = 'this is good data'
-      const expected = 'this is good data'
-      setGetResponse(goodResponse)
+    describe('when response returns an item', () => {
+      it('should return a result containing the item', async function () {
+        const goodResponse = 'this is good data'
+        const expected = 'this is good data'
+        setGetResponse(goodResponse)
 
-      const result = await getWithFetch(fakeUrl, {
-        headers: "don't matter since we're mocking the service workers",
+        const result = await getWithFetch(fakeUrl, {
+          headers: "don't matter since we're mocking the service workers",
+        })
+
+        expect(result).toEqual(Ok(expected))
       })
-
-      expect(result).toEqual(expected)
     })
 
-    it('should pass network errors as failed promises', async function () {
-      const error = 'The internet went boom 💥'
-      const expectedMessage = `request to ${fakeUrl} failed, reason: ${error}`
-      setGetNetworkError(error)
+    describe('when response returns a 404 status', () => {
+      it('should return an error result "NOT_FOUND"', async () => {
+        setGetResponse({ ok: false }, { status: 404 })
 
-      await getWithFetch(fakeUrl, {
-        headers: "don't matter since we're mocking the service workers",
-      }).catch((thrownError) => {
-        expect(thrownError.message).toEqual(expectedMessage)
+        const result = await getWithFetch(fakeUrl, {
+          headers: "don't matter since we're mocking the service workers",
+        })
+
+        expect(result).toEqual(Err(ResponseError.NOT_FOUND))
+      })
+    })
+
+    describe('when response returns a non-404 status code', () => {
+      it('should return an error result "UNHANDLED"', async function () {
+        for (const errorStatusCode of [400, 500]) {
+          setGetResponse({ ok: false }, { status: errorStatusCode })
+
+          const result = await getWithFetch(fakeUrl, {
+            headers: "don't matter since we're mocking the service workers",
+          })
+          expect(result).toEqual(Err(ResponseError.UNHANDLED))
+        }
+      })
+    })
+
+    describe('when api is unreachable', () => {
+      it('should return an error result "UNHANDLED"', async function () {
+        setGetNetworkError('The internet went boom 💥')
+
+        const result = await getWithFetch(fakeUrl, {
+          headers: "don't matter since we're mocking the service workers",
+        })
+
+        expect(result).toEqual(Err(ResponseError.UNHANDLED))
       })
     })
   })

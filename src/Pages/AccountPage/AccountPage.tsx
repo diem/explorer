@@ -1,8 +1,4 @@
 import { RouteComponentProps } from 'react-router-dom'
-import ApiRequestComponent, {
-  PlainErrorComponent,
-  PlainLoadingComponent,
-} from '../../ApiRequestComponent'
 import {
   getAccountModules,
   getAccountResources,
@@ -12,7 +8,10 @@ import {
   transactionsBySenderAddressQuery,
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
-import { DataOrErrors } from '../../api_clients/FetchTypes'
+import {
+  DataOrErrors,
+  isNotFound as isNotFoundDataOrErrors,
+} from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
@@ -21,10 +20,9 @@ import React, { useEffect, useState } from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
-import { Alert, Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import {
   DiemAccountResource,
-  isBalanceResource,
   isDiemAccountResource,
   Module,
   Resource,
@@ -34,41 +32,7 @@ import {
   transformAnalyticsTransactionIntoTransaction,
 } from '../Common/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
-
-function accountIsSupported(data: {
-  resources: Resource[]
-  modules: Module[]
-}): boolean {
-  const hasStructs =
-    data.modules.length > 0 && data.modules[0].abi?.structs.length > 0
-  const hasMethods =
-    data.modules.length > 0 && data.modules[0].abi?.exposed_functions.length > 0
-  const hasBalance = data.resources.some(isBalanceResource)
-
-  return hasStructs || hasMethods || hasBalance
-}
-
-function UnsupportedAccountCard({
-  data,
-}: {
-  data: { resources: Resource[]; modules: Module[] }
-}) {
-  if (accountIsSupported(data)) {
-    return <></>
-  }
-  return (
-    <Alert variant={'warning'} style={{ width: '30rem' }}>
-      <h4>Unsupported Account</h4>
-      <p>
-        Diem Explorer is still being built and does not support this type of
-        account yet.
-      </p>
-      <p>
-        In the mean time the raw data is displayed here for your convenience
-      </p>
-    </Alert>
-  )
-}
+import Loadable, { LoadingState } from '../../Loadable'
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   data,
@@ -151,169 +115,142 @@ interface AccountPageMatch {
 }
 
 type AccountPageProps = RouteComponentProps<AccountPageMatch>
+
 interface AccountPageState {
-  resourcesResponse?: Promise<DataOrErrors<Resource[]>>
-  modulesResponse?: Promise<DataOrErrors<Module[]>>
-  recentTransactionsResponse?: Promise<DataOrErrors<TransactionRow[]>>
+  resourcesResponse: LoadingState<Resource[]>
+  modulesResponse: LoadingState<Module[]>
+  recentTransactionsResponse: LoadingState<TransactionRow[]>
+  accountResourceResponse: LoadingState<DiemAccountResource | null>
+}
+
+const getRecentTransactions = (
+  address: string
+): Promise<DataOrErrors<TransactionRow[]>> => {
+  return postQueryToAnalyticsApi<TransactionsQueryType>(
+    transactionsBySenderAddressQuery(address),
+    'transactions'
+  ).then((analyticsTransactionsOrError) => {
+    if ('data' in analyticsTransactionsOrError) {
+      return {
+        data: analyticsTransactionsOrError.data.map(
+          transformAnalyticsTransactionIntoTransaction
+        ),
+      }
+    } else {
+      return analyticsTransactionsOrError
+    }
+  })
+}
+
+const getAccountResourceResponse = (
+  result: DataOrErrors<Resource[]>
+): LoadingState<DiemAccountResource | null> => {
+  if ('errors' in result) return result
+  const data =
+    (result.data.find(isDiemAccountResource) as DiemAccountResource) || null
+  return { data: data }
+}
+
+function isNotFound<T>(loadingState: LoadingState<T> | undefined): boolean {
+  if (!loadingState) return false
+  if ('isLoading' in loadingState) return false
+  return isNotFoundDataOrErrors(loadingState)
 }
 
 export default function AccountPage(props: AccountPageProps) {
   const maybeAddress = getCanonicalAddress(props.match.params.address)
   if (maybeAddress.err) {
-    throw new Error(`Invalid address: "${maybeAddress.val}"`)
+    props.history.push('/address/not-found')
+    return null
   }
   const address = maybeAddress.val
 
   const [
-    { resourcesResponse, modulesResponse, recentTransactionsResponse },
+    {
+      resourcesResponse,
+      modulesResponse,
+      recentTransactionsResponse,
+      accountResourceResponse,
+    },
     setState,
-  ] = useState<AccountPageState>({})
+  ] = useState<AccountPageState>({
+    resourcesResponse: { isLoading: true },
+    modulesResponse: { isLoading: true },
+    recentTransactionsResponse: { isLoading: true },
+    accountResourceResponse: { isLoading: true },
+  })
+
   useEffect(() => {
-    setState({
-      resourcesResponse: getAccountResources(address),
-      modulesResponse: getAccountModules(address),
-      recentTransactionsResponse:
-        postQueryToAnalyticsApi<TransactionsQueryType>(
-          transactionsBySenderAddressQuery(address),
-          'transactions'
-        ).then((analyticsTransactionsOrError) => {
-          if ('data' in analyticsTransactionsOrError) {
-            return {
-              data: analyticsTransactionsOrError.data.map(
-                transformAnalyticsTransactionIntoTransaction
-              ),
-            }
-          } else {
-            return analyticsTransactionsOrError
-          }
-        }),
-    })
+    getAccountResources(address).then((result) =>
+      setState((oldState) => ({
+        ...oldState,
+        resourcesResponse: result,
+        accountResourceResponse: getAccountResourceResponse(result),
+      }))
+    )
+
+    getRecentTransactions(address).then((result) =>
+      setState((oldState) => ({
+        ...oldState,
+        recentTransactionsResponse: result,
+      }))
+    )
+
+    getAccountModules(address).then((result) =>
+      setState((oldState) => ({
+        ...oldState,
+        modulesResponse: result,
+      }))
+    )
   }, [])
-  if (!resourcesResponse || !modulesResponse || !recentTransactionsResponse) {
-    return <></>
+
+  if (
+    isNotFound<Resource[]>(resourcesResponse) ||
+    isNotFound<Module[]>(modulesResponse) ||
+    isNotFound<TransactionRow[]>(recentTransactionsResponse)
+  ) {
+    props.history.push('/address/not-found')
+    return null
   }
-
-  const resourcesAndModulesResponse = Promise.all([
-    resourcesResponse,
-    modulesResponse,
-  ]).then(([resourcesOrErrors, modulesOrErrors]) => {
-    if ('errors' in resourcesOrErrors || 'errors' in modulesOrErrors) {
-      const allErrors = []
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(resourcesOrErrors.errors)
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(modulesOrErrors.errors)
-        .filter((e) => e !== null)
-      return { errors: allErrors }
-    } else {
-      return {
-        data: {
-          resources: resourcesOrErrors.data,
-          modules: modulesOrErrors.data,
-        },
-      }
-    }
-  })
-
-  const accountResourceResponse: Promise<
-    DataOrErrors<DiemAccountResource | null>
-  > = resourcesResponse.then((resourcesOrError) => {
-    if ('data' in resourcesOrError) {
-      return {
-        data:
-          (resourcesOrError.data.find(
-            isDiemAccountResource
-          ) as DiemAccountResource) || null,
-      }
-    } else {
-      return resourcesOrError
-    }
-  })
 
   return (
     <MainWrapper>
       <>
         <h1>Account Details</h1>
-        <ApiRequestComponent
-          request={() => resourcesAndModulesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
-          <UnsupportedAccountCard data={{ modules: [], resources: [] }} />
-        </ApiRequestComponent>
-        <ApiRequestComponent
-          request={() => resourcesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        <Loadable state={resourcesResponse}>
           <Balances data={[]} />
-        </ApiRequestComponent>
+        </Loadable>
 
         <h2>Recent Transactions</h2>
-        <ApiRequestComponent
-          request={() => recentTransactionsResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        <Loadable state={recentTransactionsResponse}>
           <RecentTransactionsTable data={[]} />
-        </ApiRequestComponent>
+        </Loadable>
 
-        <ApiRequestComponent
-          request={() => modulesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        <Loadable state={modulesResponse}>
           <SmartContractMethods data={[]} />
-        </ApiRequestComponent>
-        <ApiRequestComponent
-          request={() => modulesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        </Loadable>
+        <Loadable state={modulesResponse}>
           <SmartContractStructs data={[]} />
-        </ApiRequestComponent>
-
-        <ApiRequestComponent
-          request={() => accountResourceResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        </Loadable>
+        <Loadable state={accountResourceResponse}>
           <SequenceNumber data={null} />
-        </ApiRequestComponent>
-
-        <ApiRequestComponent
-          request={() => accountResourceResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        </Loadable>
+        <Loadable state={accountResourceResponse}>
           <AuthenticationKey data={null} />
-        </ApiRequestComponent>
-
-        <ApiRequestComponent
-          request={() => accountResourceResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
+        </Loadable>
+        <Loadable state={accountResourceResponse}>
           <EventHandlesTable data={null} />
-        </ApiRequestComponent>
+        </Loadable>
 
         <h2>Raw Resources</h2>
-        <ApiRequestComponent
-          request={() => resourcesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
-          <JSONPretty data={[]} id='rawResources' />
-        </ApiRequestComponent>
+        <Loadable state={resourcesResponse}>
+          <JSONPretty data={resourcesResponse} id='rawResources' />
+        </Loadable>
 
         <h2>Raw Smart Contracts</h2>
-        <ApiRequestComponent
-          request={() => modulesResponse}
-          errorComponent={<PlainErrorComponent />}
-          loadingComponent={<PlainLoadingComponent />}
-        >
-          <JSONPretty data={[]} id='rawModules' />
-        </ApiRequestComponent>
+        <Loadable state={modulesResponse}>
+          <JSONPretty data={modulesResponse} id='rawModules' />
+        </Loadable>
       </>
     </MainWrapper>
   )

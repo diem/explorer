@@ -23,7 +23,6 @@ type Top10AccountsTableProps = { topAccounts: TopAccountEvent[] }
 
 function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
   const { topAccounts } = data
-  console.log(data)
   const paymentData = topAccounts.map((item, index) => ({
     ...item,
     rank: index + 1,

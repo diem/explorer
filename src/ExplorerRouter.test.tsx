@@ -15,6 +15,7 @@ import {
 import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 import { mockLeaderboardPageText } from './Pages/LeaderboardPage/__mocks__/LeaderboardPage'
+import { accountNotFoundPageText } from './Pages/AccountPage/AccountNotFoundPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
@@ -89,6 +90,11 @@ describe('ExplorerRouter', () => {
       name: 'Account',
       route: '/address/some_id',
       text: [mockAccountPageText, 'some_id'],
+    },
+    {
+      name: 'Account Not Found',
+      route: '/address/not-found',
+      text: [accountNotFoundPageText],
     },
     {
       name: '404',

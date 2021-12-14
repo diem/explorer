@@ -5,11 +5,17 @@ export function setPostResponseForUrl(
   server: SetupServerApi,
   url: string,
   responseData: Object,
-  delay: number = 0
+  options?: {
+    delay?: number
+    status?: number
+  }
 ) {
   server.use(
     rest.post(url, (req, res, ctx) => {
-      return res(ctx.delay(delay), ctx.json(responseData))
+      const delay = options?.delay || 0
+      const status = options?.status || 200
+
+      return res(ctx.status(status), ctx.delay(delay), ctx.json(responseData))
     })
   )
 }
@@ -17,11 +23,17 @@ export function setGetResponseForUrl(
   server: SetupServerApi,
   url: string,
   responseData: Object,
-  delay: number = 0
+  options?: {
+    delay?: number
+    status?: number
+  }
 ) {
+  const delay = options?.delay || 0
+  const status = options?.status || 200
+
   server.use(
     rest.get(url, (req, res, ctx) => {
-      return res(ctx.delay(delay), ctx.json(responseData))
+      return res(ctx.status(status), ctx.delay(delay), ctx.json(responseData))
     })
   )
 }
@@ -73,30 +85,35 @@ export function setAnalyticsNetworkError(
 export function setBlockchainRestApiResponse(
   server: SetupServerApi,
   path: string,
-  responseData: Object
+  responseData: Object,
+  options?: {
+    delay?: number
+    status?: number
+  }
 ) {
   setGetResponseForUrl(
     server,
     import.meta.env.VITE_BLOCKCHAIN_REST_URL + path,
-    responseData
+    responseData,
+    options
   )
 }
 
 export function setBlockchainRestNetworkError(
   server: SetupServerApi,
   path: string,
-  errorText: string
+  error: any
 ) {
   setGetNetworkErrorForUrl(
     server,
     import.meta.env.VITE_BLOCKCHAIN_REST_URL + path,
-    errorText
+    error
   )
 }
 
 export function setupIntegrationTestApiServer(): SetupServerApi {
   const server = setupServer()
-  beforeAll(() => server.listen())
+  beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
   return server

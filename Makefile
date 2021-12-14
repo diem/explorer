@@ -57,8 +57,14 @@ lint:
 lintfix: fmt
 	@yarn run eslint --fix 'src/**/*.?s' 'src/**/*.?sx' 'end2end/**/*.js'
 
+# make integration_test 							#=> run all tests
+# make integration_test name=your_test_name_here 	#=> run tests matching name pattern
 integration_test:
+ifdef name
+	VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose --testNamePattern="${name}" && echo "integration tests complete 👍"
+else
 	@VITE_BLOCKCHAIN_REST_URL=https://fn0api.premainnet.aosdev.diem.com node node_modules/jest/bin/jest.js --colors --verbose && echo "integration tests complete 👍"
+endif
 
 test: integration_test contract_test acceptance_test
 	@echo "integration tests, contract tests and acceptance tests complete 👍"

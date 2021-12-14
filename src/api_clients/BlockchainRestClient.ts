@@ -1,45 +1,33 @@
-import { DataOrErrors, FetchError } from './FetchTypes'
-import { getWithFetch } from './FetchBroker'
+import { DataOrErrors } from './FetchTypes'
+import { getWithFetch, ResponseError } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 import { BlockchainTransaction } from '../api_models/BlockchainTransaction'
+import { Result } from 'ts-results'
 
 export interface RestError {
   code: number
   message: string
 }
 
-type RestResponse = Resource[] | Module[] | RestError
-
-function transformBlockchainRestResponse<
-  T extends Module[] | Resource[] | BlockchainTransaction
->(response: RestResponse): DataOrErrors<T> {
-  if ('message' in response && 'code' in response) {
-    return {
-      errors: [{ message: response.message }],
-    }
+function toDataOrErrors<T>(
+  result: Result<T, ResponseError>
+): Promise<DataOrErrors<T>> {
+  if (result.ok) {
+    return Promise.resolve({ data: result.val })
   } else {
-    return {
-      data: response as T,
-    }
+    return Promise.resolve({ errors: [{ message: result.val }] })
   }
 }
 
-export function getBlockchainTransaction(
+export async function getBlockchainTransaction(
   txnVersion: string
 ): Promise<DataOrErrors<BlockchainTransaction>> {
   const url = `${
     import.meta.env.VITE_BLOCKCHAIN_REST_URL
   }/transactions/${txnVersion}`
-  return getWithFetch<RestResponse>(url, {})
-    .then((response) => {
-      return transformBlockchainRestResponse<BlockchainTransaction>(response)
-    })
-    .catch((error: FetchError) => {
-      return {
-        errors: [{ message: error.toString() }],
-      }
-    })
+
+  return toDataOrErrors(await getWithFetch<BlockchainTransaction>(url, {}))
 }
 
 async function getAccountAsset<T extends Resource[] | Module[]>(
@@ -57,15 +45,8 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
   const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
     canonicalAddress.val
   }/${assetType}`
-  return getWithFetch<RestResponse>(url, {})
-    .then((response) => {
-      return transformBlockchainRestResponse<T>(response)
-    })
-    .catch((error: FetchError) => {
-      return {
-        errors: [{ message: error.toString() }],
-      }
-    })
+
+  return toDataOrErrors(await getWithFetch<T>(url, {}))
 }
 
 export function getAccountModules(
