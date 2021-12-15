@@ -3,6 +3,7 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import ApiRequestComponent from './ApiRequestComponent'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { Err, Ok } from 'ts-results'
 
 const childComponentText = 'The data loaded and it was this: '
 const childComponentRole = 'main'
@@ -93,7 +94,7 @@ describe('ApiRequestComponent', () => {
     })
     it('should render children with data if no errors', async () => {
       act(() => {
-        resolveApiPromise({ data })
+        resolveApiPromise(Ok(data))
       })
 
       await waitFor(() => screen.getByRole(childComponentRole))
@@ -109,7 +110,7 @@ describe('ApiRequestComponent', () => {
 
     it('should render errorComponent with errors if there are errors', async () => {
       act(() => {
-        resolveApiPromise({ errors: [error] })
+        resolveApiPromise(Err([error]))
       })
 
       await waitFor(() => screen.getByRole(errorComponentRole))

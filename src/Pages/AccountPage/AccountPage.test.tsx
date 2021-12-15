@@ -23,9 +23,10 @@ import {
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import { ResponseError } from '../../api_clients/FetchBroker'
-import { DataOrErrors } from '../../api_clients/FetchTypes'
+import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 import { TransactionsQueryType } from '../../api_clients/AnalyticsQueries'
+import { Err, Ok, Result } from 'ts-results'
+import { FetchError } from '../../api_clients/FetchTypes'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
   ...jest.requireActual('../../api_clients/BlockchainRestClient'),
@@ -65,9 +66,9 @@ function renderWithAddress(address: string) {
 }
 
 const renderSubject = async (
-  resources: DataOrErrors<Resource[]> = { data: [] },
-  modules: DataOrErrors<Module[]> = { data: [] },
-  transactions: DataOrErrors<TransactionsQueryType[]> = { data: [] }
+  resources: Result<Resource[], ResponseError> = Ok([]),
+  modules: Result<Module[], ResponseError> = Ok([]),
+  transactions: Result<TransactionsQueryType[], FetchError[]> = Ok([])
 ) => {
   // @ts-ignore TS is bad at mocking
   getAccountResources.mockResolvedValue(resources)
@@ -103,10 +104,11 @@ describe('AccountPage', function () {
   })
   describe('when the account does not exists', function () {
     it('should forward to the 404 page', async () => {
-      const notFoundResponse = {
-        errors: [{ message: ResponseError.NOT_FOUND }],
-      }
-      await renderSubject(notFoundResponse, notFoundResponse, notFoundResponse)
+      await renderSubject(
+        Err({ type: ResponseErrorType.NOT_FOUND }),
+        Err({ type: ResponseErrorType.NOT_FOUND }),
+        Err([{ message: ResponseErrorType.NOT_FOUND }])
+      )
 
       expect(mockHistoryPush.mock.calls[0]).toEqual(['/address/not-found'])
     })
@@ -117,14 +119,8 @@ describe('AccountPage', function () {
       beforeEach(
         async () =>
           await renderSubject(
-            {
-              data: [
-                xdxBalanceResource,
-                xusBalanceResource,
-                diemAccountResource,
-              ],
-            },
-            { data: [] }
+            Ok([xdxBalanceResource, xusBalanceResource, diemAccountResource]),
+            Ok([])
           )
       )
 
@@ -210,23 +206,19 @@ describe('AccountPage', function () {
 
     describe('when there are recent transactions', () => {
       it('should display the recent transactions', async () => {
-        await renderSubject(
-          { data: [] },
-          { data: [] },
+        const recentTransactions: TransactionsQueryType[] = [
           {
-            data: [
-              {
-                // @ts-ignore
-                version: 372413434,
-                txn_type: 3,
-                expiration_timestamp: '2021-12-14T00:56:08+00:00',
-                commit_timestamp: '2021-11-29T19:57:52+00:00',
-                status: 1,
-                sender: '5D908A4BFCFF104F62ADBD423E449504',
-              },
-            ],
-          }
-        )
+            // @ts-ignore - tsc does not think 'version' is a property of type TransactionQueryType, yet it is
+            version: 372413434,
+            txn_type: 3,
+            expiration_timestamp: '2021-12-14T00:56:08+00:00',
+            commit_timestamp: '2021-11-29T19:57:52+00:00',
+            status: 1,
+            sender: '5D908A4BFCFF104F62ADBD423E449504',
+          },
+        ]
+
+        await renderSubject(Ok([]), Ok([]), Ok(recentTransactions))
 
         expect(document.getElementById('recentTransactions')).not.toEqual(null)
 
@@ -265,9 +257,7 @@ describe('AccountPage', function () {
     })
 
     describe('when there are Smart Contracts', function () {
-      beforeEach(
-        async () => await renderSubject({ data: [] }, { data: testModules })
-      )
+      beforeEach(async () => await renderSubject(Ok([]), Ok(testModules)))
 
       it('should display Smart Contract Method Signatures in a card', async () => {
         expect(document.getElementById('smart-contract-methods')).not.toEqual(

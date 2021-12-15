@@ -16,6 +16,7 @@ import {
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import userEvent from '@testing-library/user-event'
+import { Ok } from 'ts-results'
 
 jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
@@ -56,31 +57,34 @@ const renderSubject = async (
   countTxnsInLast10m: number = 42 * 600
 ) => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValueOnce({
-    data: { aggregate: { count: countTxnsInLast10m } },
-  })
+  postQueryToAnalyticsApi.mockResolvedValueOnce(
+    Ok({
+      aggregate: { count: countTxnsInLast10m },
+    })
+  )
+
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValueOnce({
-    data: transactions,
-  })
+  postQueryToAnalyticsApi.mockResolvedValueOnce(Ok(transactions))
+
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValueOnce({
-    data: [
+  postQueryToAnalyticsApi.mockResolvedValueOnce(
+    Ok([
       {
         total_burn_value: 700,
         total_mint_value: 800,
         total_net_value: 100,
       },
-    ],
-  })
+    ])
+  )
+
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValueOnce({
-    data: {
+  postQueryToAnalyticsApi.mockResolvedValueOnce(
+    Ok({
       aggregate: {
         count: 123,
       },
-    },
-  })
+    })
+  )
 
   render(
     <BrowserRouter>

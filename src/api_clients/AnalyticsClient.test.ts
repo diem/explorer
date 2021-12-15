@@ -4,13 +4,17 @@ import {
   setAnalyticsNetworkError,
   setupIntegrationTestApiServer,
 } from '../test_utils/IntegrationTestApiServerTools'
+import { Err, Ok } from 'ts-results'
+
 const server = setupIntegrationTestApiServer()
 
 describe('Analytics Client', function () {
   it('should call .json before then getting the data out of the data key before returning', async function () {
     const goodAnalyticsResponse = { data: { key: 'any string we want here' } }
-    const expected = { data: goodAnalyticsResponse.data.key }
+    const expected = Ok(goodAnalyticsResponse.data.key)
+
     setAnalyticsApiResponse(server, goodAnalyticsResponse)
+
     const result = await postQueryToAnalyticsApi<string>(
       "the query doesn't matter since we're mocking the service workers (msw)",
       'key'
@@ -22,10 +26,10 @@ describe('Analytics Client', function () {
     const badAnalyticsResponse = {
       errors: [{ message: 'This is a good error !!' }],
     }
-    const expected = {
-      errors: [{ message: badAnalyticsResponse.errors[0].message }],
-    }
+    const expected = Err([badAnalyticsResponse.errors[0].message])
+
     setAnalyticsApiResponse(server, badAnalyticsResponse)
+
     const result = await postQueryToAnalyticsApi(
       "the query doesn't matter since we're mocking the service workers (msw)",
       '_'
@@ -35,14 +39,12 @@ describe('Analytics Client', function () {
 
   it('should pass network errors through like any other error', async function () {
     const error = 'The internet went boom 💥'
-    const expected = {
-      errors: [
-        {
-          message: `request to http://localhost:8888/v1/graphql failed, reason: ${error}`,
-        },
-      ],
-    }
+    const expected = Err([
+      `request to http://localhost:8888/v1/graphql failed, reason: ${error}`,
+    ])
+
     setAnalyticsNetworkError(server, error)
+
     const result = await postQueryToAnalyticsApi(
       "the query doesn't matter since we're mocking the service workers (msw)",
       '_'

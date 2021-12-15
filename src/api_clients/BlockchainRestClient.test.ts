@@ -8,7 +8,8 @@ import {
   getAccountResources,
   getBlockchainTransaction,
 } from './BlockchainRestClient'
-import { ResponseError } from './FetchBroker'
+import { ResponseErrorType } from './FetchBroker'
+import { Err, Ok } from 'ts-results'
 
 const goodResourceResponse = [
   {
@@ -211,35 +212,33 @@ const testPassesDataThrough = async (
   path: string,
   response: any
 ) => {
-  const expected = { data: response }
   setBlockchainRestApiResponse(server, path, response)
 
   const result = await methodUnderTest()
-  expect(result).toEqual(expected)
+  expect(result).toEqual(Ok(response))
 }
 
 const testPassesApiErrorsThrough = async (
   methodUnderTest: Function,
   path: string
 ) => {
-  const expected = {
-    errors: [{ message: ResponseError.UNHANDLED }],
-  }
+  const expected = { type: ResponseErrorType.UNHANDLED, message: '' }
   setBlockchainRestApiResponse(server, path, { ok: false }, { status: 400 })
+
   const result = await methodUnderTest()
-  expect(result).toEqual(expected)
+
+  expect(result).toEqual(Err(expected))
 }
 
 const testPasses404ErrorsThrough = async (
   methodUnderTest: Function,
   path: string
 ) => {
-  const expected = {
-    errors: [{ message: ResponseError.NOT_FOUND }],
-  }
+  const expected = { message: ResponseErrorType.NOT_FOUND }
   setBlockchainRestApiResponse(server, path, { ok: false }, { status: 404 })
+
   const result = await methodUnderTest()
-  expect(result).toEqual(expected)
+  expect(result).toEqual(Err(expected))
 }
 
 const testNetworkErrorsAreErrors = async (
@@ -248,11 +247,13 @@ const testNetworkErrorsAreErrors = async (
 ) => {
   const error = 'The gateway times out, or the internet went boom 💥'
   const expected = {
-    errors: [{ message: ResponseError.UNHANDLED }],
+    type: ResponseErrorType.UNHANDLED,
+    message: 'TypeError: Only absolute URLs are supported',
   }
   setBlockchainRestNetworkError(server, path, error)
+
   const result = await methodUnderTest()
-  expect(result).toEqual(expected)
+  expect(result).toEqual(Err(expected))
 }
 
 beforeEach(server.resetHandlers)
@@ -280,22 +281,22 @@ describe('Blockchain REST Client', function () {
       )
     })
     it('should canonicalize the address before calling the blockchain', async () => {
-      const expected = { data: goodResourceResponse }
       setBlockchainRestApiResponse(server, resourcesPath, goodResourceResponse)
+
       const nonCanonicalFakeAddress = 'bf485d8190b38ecaa223d7'
       const result = await getAccountResources(nonCanonicalFakeAddress)
-      expect(result).toEqual(expected)
+
+      expect(result).toEqual(Ok(goodResourceResponse))
     })
     it('should return an error if the address is invalid', async () => {
       const result = await getAccountResources('this address is invalid')
-      expect(result).toEqual({
-        errors: [
-          {
-            message:
-              'getCanonicalAddress received Invalid address type : this address is invalid',
-          },
-        ],
-      })
+      expect(result).toEqual(
+        Err({
+          type: ResponseErrorType.UNHANDLED,
+          message:
+            'getCanonicalAddress received Invalid address type : this address is invalid',
+        })
+      )
     })
     it('should pass 404 errors through with a `Not  Found` message', async () => {
       await testPasses404ErrorsThrough(

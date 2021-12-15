@@ -1,15 +1,16 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import MainWrapper from './MainWrapper'
-import { DataOrErrors } from './api_clients/FetchTypes'
 import { Card } from 'react-bootstrap'
 import Loadable, { LoadingState } from './Loadable'
+import { Result } from 'ts-results'
+import { ResponseError } from './api_clients/FetchBroker'
 
-interface ApiRequestPageProps<T> {
-  children: ReactElement
-  request: (...args: any[]) => Promise<DataOrErrors<T>>
+interface ApiRequestComponentProps<T, E> {
+  children: ReactElement<{ data: T }>
+  request: (...args: any[]) => Promise<Result<T, E>>
   args?: any[]
   loadingComponent?: ReactElement
-  errorComponent?: ReactElement
+  errorComponent?: ReactElement<{ errors?: E }>
 }
 
 export function PlainValue<T>({ data }: { data?: T }) {
@@ -64,22 +65,20 @@ export const LoadingCardComponent = ({ title = '' }: { title?: string }) => (
 
 const DefaultLoadingComponent = FullPageLoadingComponent
 
-function ApiRequestComponent<T>({
+function ApiRequestComponent<T, E = ResponseError>({
   request,
   args = [],
   children,
   loadingComponent = <DefaultLoadingComponent />,
   errorComponent = <DefaultErrorComponent />,
-}: ApiRequestPageProps<T>) {
-  const [loadingState, setLoadingState] = useState<LoadingState<T>>({
+}: ApiRequestComponentProps<T, E>) {
+  const [loadingState, setLoadingState] = useState<LoadingState<T, E>>({
     isLoading: true,
   })
 
   useEffect(() => {
     async function getResponse() {
-      await request(...args).then((apiResponse) => {
-        setLoadingState(apiResponse)
-      })
+      await request(...args).then((apiResponse) => setLoadingState(apiResponse))
     }
 
     getResponse()

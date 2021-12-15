@@ -1,17 +1,23 @@
 import fetch from 'isomorphic-fetch'
 import { Err, Ok, Result } from 'ts-results'
 
-export enum ResponseError {
+export enum ResponseErrorType {
   NOT_FOUND = 'Not found',
   UNHANDLED = 'Unhandled',
 }
+
+export type ResponseError =
+  | { type: ResponseErrorType.NOT_FOUND }
+  | { type: ResponseErrorType.UNHANDLED; message: string }
 
 const toResult = async <T>(
   promise: Promise<T>
 ): Promise<Result<T, ResponseError>> =>
   await promise
     .then((response) => Ok(response))
-    .catch(() => Err(ResponseError.UNHANDLED))
+    .catch((error) =>
+      Err({ type: ResponseErrorType.UNHANDLED, message: error.toString() })
+    )
 
 const performFetch = async <T>(
   url: string,
@@ -23,9 +29,14 @@ const performFetch = async <T>(
     if (!response.ok) {
       switch (response.status) {
         case 404:
-          return Promise.resolve(Err(ResponseError.NOT_FOUND))
+          return Promise.resolve(Err({ type: ResponseErrorType.NOT_FOUND }))
         default:
-          return Promise.resolve(Err(ResponseError.UNHANDLED))
+          return Promise.resolve(
+            Err({
+              type: ResponseErrorType.UNHANDLED,
+              message: `request to ${url} failed, reason: ${response.statusText}`,
+            })
+          )
       }
     } else {
       return response.json().then((result) => Ok(result))

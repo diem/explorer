@@ -2,7 +2,7 @@ import ApiRequestComponent, {
   ErrorCardComponent,
   LoadingCardComponent,
 } from '../../../ApiRequestComponent'
-import { DataOrErrors } from '../../../api_clients/FetchTypes'
+import { FetchError } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
 import { KnownCurrency } from '../../../api_clients/BlockchainRestTypes'
@@ -10,6 +10,7 @@ import { Card } from 'react-bootstrap'
 import Table, { column } from '../../../Table'
 import ReactTooltip from 'react-tooltip'
 import { TransactionVersion } from '../../../TableComponents/Link'
+import { Ok, Result } from 'ts-results'
 
 export interface TopSentPaymentEvent {
   // eslint-disable-next-line camelcase
@@ -65,17 +66,13 @@ function Top10TransactionsTable({
 
 async function getTopTransactions(
   currency: KnownCurrency
-): Promise<DataOrErrors<Top10TransactionsTableProps>> {
-  const result: DataOrErrors<TopSentPaymentEvent[]> =
+): Promise<Result<Top10TransactionsTableProps, FetchError[]>> {
+  const result: Result<TopSentPaymentEvent[], FetchError[]> =
     await postQueryToAnalyticsApi(
       top10Transactions(currency),
       'sentpayment_events'
     )
-  if ('data' in result) {
-    return { data: { topPayments: result.data } }
-  } else {
-    return result
-  }
+  return result.ok ? Ok({ topPayments: result.val }) : result
 }
 
 export default function Top10TransactionsCard() {

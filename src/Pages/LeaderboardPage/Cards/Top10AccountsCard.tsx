@@ -2,7 +2,6 @@ import ApiRequestComponent, {
   ErrorCardComponent,
   LoadingCardComponent,
 } from '../../../ApiRequestComponent'
-import { DataOrErrors } from '../../../api_clients/FetchTypes'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import {
   AccountBalancesQueryType,
@@ -13,6 +12,8 @@ import { Card } from 'react-bootstrap'
 import Table, { column } from '../../../Table'
 import ReactTooltip from 'react-tooltip'
 import { AccountAddress } from '../../../TableComponents/Link'
+import { Ok, Result } from 'ts-results'
+import { FetchError } from '../../../api_clients/FetchTypes'
 
 export interface TopAccountEvent {
   address: string
@@ -54,17 +55,13 @@ function Top10AccountsTable({ data }: { data: Top10AccountsTableProps }) {
 
 async function getTopAccounts(
   currency: KnownCurrency
-): Promise<DataOrErrors<Top10AccountsTableProps>> {
-  const result: DataOrErrors<TopAccountEvent[]> =
+): Promise<Result<Top10AccountsTableProps, FetchError[]>> {
+  const result: Result<TopAccountEvent[], FetchError[]> =
     await postQueryToAnalyticsApi<AccountBalancesQueryType>(
       top10AccountsQuery(currency),
       'accounts_balances'
     )
-  if ('data' in result) {
-    return { data: { topAccounts: result.data } }
-  } else {
-    return result
-  }
+  return result.ok ? Ok({ topAccounts: result.val }) : result
 }
 
 export default function Top10AccountsCard() {

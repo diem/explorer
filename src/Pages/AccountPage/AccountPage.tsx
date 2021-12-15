@@ -9,8 +9,8 @@ import {
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import {
-  DataOrErrors,
-  isNotFound as isNotFoundDataOrErrors,
+  FetchError,
+  isNotFound as isNotFoundResult,
 } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
@@ -33,6 +33,8 @@ import {
 } from '../Common/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
 import Loadable, { LoadingState } from '../../Loadable'
+import { Err, Ok, Result } from 'ts-results'
+import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   data,
@@ -117,44 +119,60 @@ interface AccountPageMatch {
 type AccountPageProps = RouteComponentProps<AccountPageMatch>
 
 interface AccountPageState {
-  resourcesResponse: LoadingState<Resource[]>
-  modulesResponse: LoadingState<Module[]>
-  recentTransactionsResponse: LoadingState<TransactionRow[]>
-  accountResourceResponse: LoadingState<DiemAccountResource | null>
+  resourcesResponse: LoadingState<Resource[], ResponseError>
+  accountResourceResponse: LoadingState<
+    DiemAccountResource | null,
+    ResponseError
+  >
+  modulesResponse: LoadingState<Module[], ResponseError>
+  recentTransactionsResponse: LoadingState<TransactionRow[], FetchError[]>
 }
 
 const getRecentTransactions = (
   address: string
-): Promise<DataOrErrors<TransactionRow[]>> => {
+): Promise<Result<TransactionRow[], FetchError[]>> => {
   return postQueryToAnalyticsApi<TransactionsQueryType>(
     transactionsBySenderAddressQuery(address),
     'transactions'
-  ).then((analyticsTransactionsOrError) => {
-    if ('data' in analyticsTransactionsOrError) {
-      return {
-        data: analyticsTransactionsOrError.data.map(
-          transformAnalyticsTransactionIntoTransaction
-        ),
-      }
+  ).then((result) => {
+    if (result.ok) {
+      return Ok(result.val.map(transformAnalyticsTransactionIntoTransaction))
     } else {
-      return analyticsTransactionsOrError
+      return result
     }
   })
 }
 
 const getAccountResourceResponse = (
-  result: DataOrErrors<Resource[]>
-): LoadingState<DiemAccountResource | null> => {
-  if ('errors' in result) return result
-  const data =
-    (result.data.find(isDiemAccountResource) as DiemAccountResource) || null
-  return { data: data }
+  result: Result<Resource[], ResponseError>
+): LoadingState<DiemAccountResource | null, ResponseError> => {
+  if (result.err) return result
+  const diemAccountResource = result.val.find(
+    isDiemAccountResource
+  ) as DiemAccountResource
+  return diemAccountResource
+    ? Ok(diemAccountResource)
+    : Err({
+      type: ResponseErrorType.UNHANDLED,
+      message: 'Account resource not found',
+    })
 }
 
-function isNotFound<T>(loadingState: LoadingState<T> | undefined): boolean {
+function isNotFound<T>(
+  loadingState: LoadingState<T, FetchError[]> | undefined
+): boolean {
   if (!loadingState) return false
   if ('isLoading' in loadingState) return false
-  return isNotFoundDataOrErrors(loadingState)
+  return isNotFoundResult(loadingState)
+}
+
+function isNotFoundResponseError<T>(
+  loadingState: LoadingState<T, ResponseError> | undefined
+): boolean {
+  if (!loadingState) return false
+  else if ('isLoading' in loadingState) return false
+  else if (!loadingState.err) return false
+  return loadingState.val.type === ResponseErrorType.NOT_FOUND
 }
 
 export default function AccountPage(props: AccountPageProps) {
@@ -205,9 +223,9 @@ export default function AccountPage(props: AccountPageProps) {
   }, [])
 
   if (
-    isNotFound<Resource[]>(resourcesResponse) ||
-    isNotFound<Module[]>(modulesResponse) ||
-    isNotFound<TransactionRow[]>(recentTransactionsResponse)
+    isNotFoundResponseError(resourcesResponse) ||
+    isNotFoundResponseError(modulesResponse) ||
+    isNotFound(recentTransactionsResponse)
   ) {
     props.history.push('/address/not-found')
     return null

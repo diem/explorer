@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10AccountsQuery } from '../../../api_clients/AnalyticsQueries'
 import Top10AccountsCard, { TopAccountEvent } from './Top10AccountsCard'
+import { Ok } from 'ts-results'
 
 jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
@@ -17,9 +18,7 @@ jest.mock('../../../api_clients/AnalyticsClient', () => ({
 
 const renderSubject = async (accounts: TopAccountEvent[] = []) => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
-    data: accounts,
-  })
+  postQueryToAnalyticsApi.mockResolvedValue(Ok(accounts))
 
   render(
     <BrowserRouter>

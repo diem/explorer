@@ -10,6 +10,7 @@ import Top10TransactionsCard, {
 } from './Top10TransactionsCard'
 import { postQueryToAnalyticsApi } from '../../../api_clients/AnalyticsClient'
 import { top10Transactions } from '../../../api_clients/AnalyticsQueries'
+import { Ok } from 'ts-results'
 
 jest.useFakeTimers().setSystemTime(new Date('2021-01-01').getTime())
 
@@ -19,9 +20,7 @@ jest.mock('../../../api_clients/AnalyticsClient', () => ({
 
 const renderSubject = async (transactions: TopSentPaymentEvent[] = []) => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
-    data: transactions,
-  })
+  postQueryToAnalyticsApi.mockResolvedValue(Ok(transactions))
 
   render(
     <BrowserRouter>

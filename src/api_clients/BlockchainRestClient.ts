@@ -1,33 +1,17 @@
-import { DataOrErrors } from './FetchTypes'
-import { getWithFetch, ResponseError } from './FetchBroker'
+import { getWithFetch, ResponseError, ResponseErrorType } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 import { BlockchainTransaction } from '../api_models/BlockchainTransaction'
-import { Result } from 'ts-results'
-
-export interface RestError {
-  code: number
-  message: string
-}
-
-function toDataOrErrors<T>(
-  result: Result<T, ResponseError>
-): Promise<DataOrErrors<T>> {
-  if (result.ok) {
-    return Promise.resolve({ data: result.val })
-  } else {
-    return Promise.resolve({ errors: [{ message: result.val }] })
-  }
-}
+import { Err, Result } from 'ts-results'
 
 export async function getBlockchainTransaction(
   txnVersion: string
-): Promise<DataOrErrors<BlockchainTransaction>> {
+): Promise<Result<BlockchainTransaction, ResponseError>> {
   const url = `${
     import.meta.env.VITE_BLOCKCHAIN_REST_URL
   }/transactions/${txnVersion}`
 
-  return toDataOrErrors(await getWithFetch<BlockchainTransaction>(url, {}))
+  return await getWithFetch<BlockchainTransaction>(url, {})
 }
 
 async function getAccountAsset<T extends Resource[] | Module[]>(
@@ -37,26 +21,30 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
     : T extends Resource[]
     ? 'resources'
     : never
-): Promise<DataOrErrors<T>> {
+): Promise<Result<T, ResponseError>> {
   const canonicalAddress = getCanonicalAddress(address)
   if (canonicalAddress.err) {
-    return { errors: [{ message: canonicalAddress.val }] }
+    return Err({
+      type: ResponseErrorType.UNHANDLED,
+      message: canonicalAddress.val,
+    })
   }
+
   const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
     canonicalAddress.val
   }/${assetType}`
 
-  return toDataOrErrors(await getWithFetch<T>(url, {}))
+  return await getWithFetch<T>(url, {})
 }
 
 export function getAccountModules(
   address: string
-): Promise<DataOrErrors<Module[]>> {
+): Promise<Result<Module[], ResponseError>> {
   return getAccountAsset<Module[]>(address, 'modules')
 }
 
 export function getAccountResources(
   address: string
-): Promise<DataOrErrors<Resource[]>> {
+): Promise<Result<Resource[], ResponseError>> {
   return getAccountAsset<Resource[]>(address, 'resources')
 }
