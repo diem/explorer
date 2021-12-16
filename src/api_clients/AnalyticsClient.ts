@@ -17,10 +17,10 @@ export const postQueryToAnalyticsApi = async <T>(
   } catch (err: any) {
     return 'response' in err && 'errors' in err.response
       ? Err([
-        ...err.response.errors.map(
-          ({ message }: { message: string }) => message
-        ),
-      ])
+          ...err.response.errors.map(
+            ({ message }: { message: string }) => message
+          ),
+        ])
       : Err([{ message: err.message }])
   }
 }

@@ -153,9 +153,9 @@ const getAccountResourceResponse = (
   return diemAccountResource
     ? Ok(diemAccountResource)
     : Err({
-      type: ResponseErrorType.UNHANDLED,
-      message: 'Account resource not found',
-    })
+        type: ResponseErrorType.UNHANDLED,
+        message: 'Account resource not found',
+      })
 }
 
 function isNotFound<T>(

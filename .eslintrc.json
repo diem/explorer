@@ -39,9 +39,6 @@
         ],
         "space-before-function-paren": 0,
         "comma-dangle": "off",
-        "indent": ["error", 2, { "SwitchCase": 1 }],
-        "react/jsx-indent": ["error", 2],
-        "react/jsx-indent-props": ["error", 2],
         "dot-notation": "off"
     },
     "settings": {
