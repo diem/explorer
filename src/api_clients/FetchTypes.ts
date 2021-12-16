@@ -1,4 +1,5 @@
-import { ResponseError } from './FetchBroker'
+import { ResponseErrorType } from './FetchBroker'
+import { Result } from 'ts-results'
 
 export type FetchError = {
   message: string
@@ -6,12 +7,10 @@ export type FetchError = {
   code?: number
 }
 
-export type DataOrErrors<T, R = FetchError[]> = { data: T } | { errors: R }
-
-export function isNotFound<T, R>(dataOrError: DataOrErrors<T, R>): boolean {
-  if (!('errors' in dataOrError)) return false
-  if (!Array.isArray(dataOrError.errors)) return false
-  return dataOrError.errors.some(
-    (error) => error?.message === ResponseError.NOT_FOUND
+export function isNotFound<T>(result: Result<T, FetchError[]>): boolean {
+  if (!('err' in result)) return false
+  else if (!Array.isArray(result.val)) return false
+  return result.val.some(
+    (error) => error?.message === ResponseErrorType.NOT_FOUND
   )
 }

@@ -15,7 +15,6 @@ import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
 import { TransactionVersion } from '../../TableComponents/Link'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import { DataOrErrors } from '../../api_clients/FetchTypes'
 import {
   CountTotalPayments,
   countTransactionsInLast10Minutes,
@@ -28,6 +27,8 @@ import {
 import ReactTooltip from 'react-tooltip'
 import { GraphQLTypes } from '../../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import { getCanonicalAddress } from '../../utils'
+import { Err, Ok, Result } from 'ts-results'
+import { FetchError } from '../../api_clients/FetchTypes'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -100,9 +101,7 @@ function CurrentStatisticsCard({
                     totalPaymentsQuery(),
                     'sentpayment_events_aggregate'
                   ).then((result) =>
-                    'data' in result
-                      ? { data: result.data.aggregate.count }
-                      : result
+                    result.ok ? Ok(result.val.aggregate.count) : result
                   )
                 }
                 loadingComponent={<PlainLoadingComponent />}
@@ -118,7 +117,11 @@ function CurrentStatisticsCard({
   )
 }
 
-function TransactionTable(props: { transactions: TransactionRow[] }) {
+function TransactionTable({
+  transactions,
+}: {
+  transactions: TransactionRow[]
+}) {
   return (
     <>
       <h3 className='mb-2'>Recent Transactions</h3>
@@ -129,23 +132,29 @@ function TransactionTable(props: { transactions: TransactionRow[] }) {
           column('Type', 'txnType'),
           column('Status', 'status'),
         ]}
-        data={props.transactions}
+        data={transactions}
         id='landingPageTransactions'
       />
     </>
   )
 }
 
-type LandingPageWithResponseProps = {
-  data: {
-    recentTransactions: TransactionRow[]
-    averageTps: number
-    totalMintAmount: number
-    totalBurnAmount: number
-    totalNetAmount: number
-  }
+type LandingPageContentProps = {
+  recentTransactions: TransactionRow[]
+  averageTps: number
+  totalMintAmount: number
+  totalBurnAmount: number
+  totalNetAmount: number
 }
-function LandingPageWithResponse(props: LandingPageWithResponseProps) {
+
+function LandingPageContent({ data }: { data: LandingPageContentProps }) {
+  const {
+    averageTps,
+    totalMintAmount,
+    totalBurnAmount,
+    totalNetAmount,
+    recentTransactions,
+  } = data
   const history = useHistory()
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -193,85 +202,76 @@ function LandingPageWithResponse(props: LandingPageWithResponseProps) {
         </FormControl.Feedback>
       </InputGroup>
       <CurrentStatisticsCard
-        averageTps={props.data.averageTps}
-        totalMintValue={props.data.totalMintAmount}
-        totalBurnValue={props.data.totalBurnAmount}
-        totalNetValue={props.data.totalNetAmount}
+        averageTps={averageTps}
+        totalMintValue={totalMintAmount}
+        totalBurnValue={totalBurnAmount}
+        totalNetValue={totalNetAmount}
       />
-      <TransactionTable transactions={props.data.recentTransactions} />
+      <TransactionTable transactions={recentTransactions} />
     </Wrapper>
   )
 }
 
-function transformAnalyticsTransactionsOrErrors(
-  response: DataOrErrors<TransactionsQueryType>
-): DataOrErrors<TransactionRow[]> {
-  if ('data' in response) {
-    return {
-      data: response.data.map(transformAnalyticsTransactionIntoTransaction),
-    }
+function transformAnalyticsTransactionsResult(
+  result: Result<TransactionsQueryType, FetchError[]>
+): Result<TransactionRow[], FetchError[]> {
+  return result.ok
+    ? Ok(result.val.map(transformAnalyticsTransactionIntoTransaction))
+    : result
+}
+
+const handleData = async (): Promise<
+  Result<LandingPageContentProps, FetchError[]>
+> => {
+  const txnsInLast10m =
+    await postQueryToAnalyticsApi<CountTransactionsInLast10MinutesType>(
+      countTransactionsInLast10Minutes(),
+      'transactions_aggregate'
+    )
+
+  const recentTxns = await postQueryToAnalyticsApi<TransactionsQueryType>(
+    transactionsQuery(),
+    'transactions'
+  ).then(transformAnalyticsTransactionsResult)
+
+  const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<
+    GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
+  >(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
+
+  if (txnsInLast10m.err || recentTxns.err || latestMintBurnNetAmounts.err) {
+    return Err(
+      []
+        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+        .concat(txnsInLast10m.val)
+        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+        .concat(recentTxns.val)
+        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
+        .concat(latestMintBurnNetAmounts.val)
+        .filter((error) => error !== null)
+    )
   } else {
-    return {
-      errors: response.errors,
-    }
+    return Ok({
+      recentTransactions: recentTxns.val,
+      averageTps: txnsInLast10m.val.aggregate.count / 600,
+      totalMintAmount: latestMintBurnNetAmounts.val[0]?.total_mint_value,
+      totalBurnAmount: latestMintBurnNetAmounts.val[0]?.total_burn_value,
+      totalNetAmount: latestMintBurnNetAmounts.val[0]?.total_net_value,
+    })
   }
 }
 
 export default function LandingPage() {
-  const nullData = {
-    recentTransactions: [],
-    averageTps: NaN,
-    totalMintAmount: NaN,
-    totalBurnAmount: NaN,
-    totalNetAmount: NaN,
-  }
   return (
-    <ApiRequestComponent
-      request={async () => {
-        const txnsInLast10m =
-          await postQueryToAnalyticsApi<CountTransactionsInLast10MinutesType>(
-            countTransactionsInLast10Minutes(),
-            'transactions_aggregate'
-          )
-        const recentTxns = await postQueryToAnalyticsApi<TransactionsQueryType>(
-          transactionsQuery(),
-          'transactions'
-        ).then(transformAnalyticsTransactionsOrErrors)
-        const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<
-          GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
-        >(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
-
-        if (
-          'errors' in txnsInLast10m ||
-          'errors' in recentTxns ||
-          'errors' in latestMintBurnNetAmounts
-        ) {
-          return {
-            errors: []
-              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-              .concat(txnsInLast10m.errors)
-              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-              .concat(recentTxns.errors)
-              // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-              .concat(latestMintBurnNetAmounts.errors)
-              .filter((error) => error !== null),
-          }
-        } else {
-          return {
-            data: {
-              recentTransactions: recentTxns.data,
-              averageTps: txnsInLast10m.data.aggregate.count / 600,
-              totalMintAmount:
-                latestMintBurnNetAmounts.data[0]?.total_mint_value,
-              totalBurnAmount:
-                latestMintBurnNetAmounts.data[0]?.total_burn_value,
-              totalNetAmount: latestMintBurnNetAmounts.data[0]?.total_net_value,
-            },
-          }
-        }
-      }}
-    >
-      <LandingPageWithResponse data={nullData} />
+    <ApiRequestComponent request={handleData}>
+      <LandingPageContent
+        data={{
+          recentTransactions: [],
+          averageTps: NaN,
+          totalMintAmount: NaN,
+          totalBurnAmount: NaN,
+          totalNetAmount: NaN,
+        }}
+      />
     </ApiRequestComponent>
   )
 }

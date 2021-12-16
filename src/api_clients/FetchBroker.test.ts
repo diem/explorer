@@ -3,7 +3,7 @@ import {
   setGetResponseForUrl,
   setupIntegrationTestApiServer,
 } from '../test_utils/IntegrationTestApiServerTools'
-import { getWithFetch, ResponseError } from './FetchBroker'
+import { getWithFetch, ResponseErrorType } from './FetchBroker'
 import { Err, Ok } from 'ts-results'
 
 const server = setupIntegrationTestApiServer()
@@ -38,32 +38,61 @@ describe('Fetch Broker', function () {
           headers: "don't matter since we're mocking the service workers",
         })
 
-        expect(result).toEqual(Err(ResponseError.NOT_FOUND))
+        expect(result).toEqual(Err({ type: ResponseErrorType.NOT_FOUND }))
       })
     })
 
     describe('when response returns a non-404 status code', () => {
       it('should return an error result "UNHANDLED"', async function () {
-        for (const errorStatusCode of [400, 500]) {
-          setGetResponse({ ok: false }, { status: errorStatusCode })
+        const errors = [
+          {
+            errorStatusCode: 400,
+            statusText: `request to ${fakeUrl} failed, reason: bad request`,
+          },
+          {
+            errorStatusCode: 500,
+            statusText: `request to ${fakeUrl} failed, reason: internal server error`,
+          },
+        ]
+
+        for (const { errorStatusCode, statusText } of errors) {
+          setGetResponse(
+            { ok: false },
+            {
+              status: errorStatusCode,
+              statusText: statusText,
+            }
+          )
 
           const result = await getWithFetch(fakeUrl, {
             headers: "don't matter since we're mocking the service workers",
           })
-          expect(result).toEqual(Err(ResponseError.UNHANDLED))
+          expect(result).toEqual(
+            Err({
+              type: ResponseErrorType.UNHANDLED,
+              message: statusText,
+            })
+          )
         }
       })
     })
 
     describe('when api is unreachable', () => {
       it('should return an error result "UNHANDLED"', async function () {
-        setGetNetworkError('The internet went boom 💥')
+        const error = 'The internet went boom 💥'
+        const expectedMessage = `request to ${fakeUrl} failed, reason: ${error}`
+        setGetNetworkError(error)
 
         const result = await getWithFetch(fakeUrl, {
           headers: "don't matter since we're mocking the service workers",
         })
 
-        expect(result).toEqual(Err(ResponseError.UNHANDLED))
+        expect(result).toEqual(
+          Err({
+            type: ResponseErrorType.UNHANDLED,
+            message: expectedMessage,
+          })
+        )
       })
     })
   })

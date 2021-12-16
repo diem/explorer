@@ -15,6 +15,7 @@ import {
   BlockchainUserTxnData,
   BlockchainWritesetTxnData,
 } from '../../api_models/BlockchainTransaction'
+import { Ok } from 'ts-results'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
   ...jest.requireActual('../../api_clients/BlockchainRestClient'),
@@ -66,9 +67,8 @@ const renderWithTransaction = async (
   txn: BlockchainTransaction = mockUserTransaction
 ) => {
   // @ts-ignore TS is bad at mocking
-  getBlockchainTransaction.mockResolvedValue({
-    data: txn,
-  })
+  getBlockchainTransaction.mockResolvedValue(Ok(txn))
+
   const mockHistory = {
     history: {} as any,
     location: {} as any,
@@ -81,11 +81,13 @@ const renderWithTransaction = async (
       },
     },
   }
+
   render(
     <BrowserRouter>
       <TxnDetailsPage {...mockHistory} />
     </BrowserRouter>
   )
+
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 }
 

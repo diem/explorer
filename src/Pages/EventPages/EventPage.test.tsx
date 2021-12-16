@@ -9,6 +9,7 @@ import {
 import { BrowserRouter } from 'react-router-dom'
 import { TruncatedCell } from '../../TableComponents/TruncatedCell'
 import EventPage from './EventPage'
+import { Ok } from 'ts-results'
 
 jest.mock('../../api_clients/AnalyticsClient', () => ({
   ...jest.requireActual('../../api_clients/AnalyticsClient'),
@@ -39,9 +40,8 @@ const eventType = 'Arbitrary'
 
 beforeEach(async () => {
   // @ts-ignore TS is bad at mocking
-  postQueryToAnalyticsApi.mockResolvedValue({
-    data: [mockFakeEvent],
-  })
+  postQueryToAnalyticsApi.mockResolvedValue(Ok([mockFakeEvent]))
+
   render(
     <BrowserRouter>
       <EventPage
@@ -52,6 +52,7 @@ beforeEach(async () => {
       />
     </BrowserRouter>
   )
+
   await waitForElementToBeRemoved(screen.queryByRole('loading'))
 })
 

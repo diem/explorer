@@ -1,29 +1,26 @@
-import { DataOrErrors } from './FetchTypes'
+import { FetchError } from './FetchTypes'
 import { Gql } from '../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import fetch from 'isomorphic-fetch'
+import { Err, Ok, Result } from 'ts-results'
 
 globalThis.fetch = fetch
 
 export const postQueryToAnalyticsApi = async <T>(
   query: any,
   tableName?: string
-): Promise<DataOrErrors<T>> => {
+): Promise<Result<T, FetchError[]>> => {
   try {
     const gqlResponse = await Gql.query(query)
 
-    return {
-      // @ts-ignore property accessor syntax breaks the code here
-      data: tableName ? gqlResponse[tableName] : gqlResponse,
-    }
+    // @ts-ignore property accessor syntax breaks the code here
+    return Ok(tableName ? gqlResponse[tableName] : gqlResponse)
   } catch (err: any) {
-    if ('response' in err) {
-      return {
-        errors: [...err.response.errors],
-      }
-    } else {
-      return {
-        errors: [{ message: err.message }],
-      }
-    }
+    return 'response' in err && 'errors' in err.response
+      ? Err([
+        ...err.response.errors.map(
+          ({ message }: { message: string }) => message
+        ),
+      ])
+      : Err([{ message: err.message }])
   }
 }

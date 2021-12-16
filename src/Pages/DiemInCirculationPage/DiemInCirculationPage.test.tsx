@@ -14,6 +14,7 @@ import {
   DiemInCirculationHistoryType,
 } from '../../api_clients/AnalyticsQueries'
 import moment from 'moment'
+import { Ok } from 'ts-results'
 
 jest.useFakeTimers().setSystemTime(new Date('2021-11-01').getTime())
 
@@ -54,9 +55,9 @@ const renderSubject = async (
 ) => {
   postQueryToAnalyticsApi
     // @ts-ignore TS is bad at mocking
-    .mockResolvedValueOnce({ data: xusInCirculationResponse })
-    .mockResolvedValueOnce({ data: xdxInCirculationResponse })
-    .mockResolvedValueOnce({ data: historyResponse })
+    .mockResolvedValueOnce(Ok(xusInCirculationResponse))
+    .mockResolvedValueOnce(Ok(xdxInCirculationResponse))
+    .mockResolvedValueOnce(Ok(historyResponse))
   render(
     <BrowserRouter>
       <DiemInCirculationPage />
