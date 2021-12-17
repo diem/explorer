@@ -60,7 +60,7 @@ Scenario('user transaction', ({ I }) => {
 })
 
 Scenario('non-existent transaction', ({ I }) => {
-  I.amOnPage('/txn/notFound')
+  I.amOnPage('/txn/404')
   I.seeMainWrapper()
 
   I.seeInCurrentUrl('/txn/not-found')

@@ -6,7 +6,7 @@ import {
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import {
   BlockchainTransaction,
@@ -63,6 +63,8 @@ const mockUnsupportedTransaction: BlockchainTransaction = {
 
 const mockHistoryPush = jest.fn()
 
+const notFoundText = "The txn doesn't exist"
+
 const renderWithTransaction = async (
   txn: Result<BlockchainTransaction, ResponseError> = Ok(mockUserTransaction)
 ) => {
@@ -87,6 +89,7 @@ const renderWithTransaction = async (
   render(
     <BrowserRouter>
       <TxnDetailsPage {...mockHistory} />
+      <Route path="/txn/not-found">{notFoundText}</Route>
     </BrowserRouter>
   )
 
@@ -169,10 +172,9 @@ describe('TxnDetailsPage', function () {
     })
   })
   describe('Not Found transaction', () => {
-    it('should forward to /txn/not-found', async () => {
+    it('should redirect to /txn/not-found', async () => {
       await renderWithTransaction(Err({ type: ResponseErrorType.NOT_FOUND }))
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1)
-      expect(mockHistoryPush.mock.calls[0]).toEqual(['/txn/not-found'])
+      expect(screen.queryByText(notFoundText)).toBeInTheDocument()
     })
   })
 

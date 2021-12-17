@@ -7,11 +7,13 @@ import DiemIncirculationPage from './Pages/DiemInCirculationPage/DiemInCirculati
 import AccountPage from './Pages/AccountPage/AccountPage'
 import AccountNotFoundPage from './Pages/AccountPage/AccountNotFoundPage'
 import LeaderboardPage from './Pages/LeaderboardPage/LeaderboardPage'
+import TxnNotFoundPage from './Pages/TxnDetailsPage/TxnNotFoundPage'
 
 export default function ExplorerRouter() {
   return (
     <Switch>
       <Route exact path='/' component={ApiRequestPage} />
+      <Route path='/txn/not-found' component={TxnNotFoundPage} />
       <Route path='/txn/:version' component={TxnDetailsPage} />
       <Route path='/events/mint' component={eventPages.MintEventsPage} />
       <Route path='/events/burn' component={eventPages.BurnEventsPage} />
