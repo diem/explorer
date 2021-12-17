@@ -1,4 +1,4 @@
-import { RouteComponentProps } from 'react-router-dom'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
 import {
   getAccountModules,
   getAccountResources,
@@ -178,8 +178,7 @@ function isNotFoundResponseError<T>(
 export default function AccountPage(props: AccountPageProps) {
   const maybeAddress = getCanonicalAddress(props.match.params.address)
   if (maybeAddress.err) {
-    props.history.push('/address/not-found')
-    return null
+    return <Redirect to='/address/not-found' />
   }
   const address = maybeAddress.val
 
@@ -227,8 +226,7 @@ export default function AccountPage(props: AccountPageProps) {
     isNotFoundResponseError(modulesResponse) ||
     isNotFound(recentTransactionsResponse)
   ) {
-    props.history.push('/address/not-found')
-    return null
+    return <Redirect to='/address/not-found' />
   }
 
   return (

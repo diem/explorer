@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blockchainRestApi/transactions/404"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    "jsonBody": {
+      "code": 404,
+      "message": "transaction not found by version(9999999999999)",
+      "diem_ledger_version": "394035794"
+    }
+  }
+}

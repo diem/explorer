@@ -59,6 +59,15 @@ Scenario('user transaction', ({ I }) => {
   navigateToAddressPage(I)
 })
 
+Scenario('non-existent transaction', ({ I }) => {
+  I.amOnPage('/txn/404')
+  I.seeMainWrapper()
+
+  I.seeInCurrentUrl('/txn/not-found')
+  I.seeMainWrapper()
+  I.see('Transaction not found.')
+})
+
 Scenario('metadata transaction', ({ I }) => {
   I.amOnPage('/txn/321960031')
   I.seeMainWrapper()

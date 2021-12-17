@@ -1,16 +1,20 @@
-import ApiRequestComponent from '../../ApiRequestComponent'
+import ApiRequestComponent, {
+  ErrorComponentProps,
+  FullPageErrorComponent,
+} from '../../ApiRequestComponent'
 import React from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
 } from '../../api_models/BlockchainTransaction'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Redirect } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
+import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -48,15 +52,11 @@ function UserTxnDetailsTable({ data }: { data: BlockchainUserTxnData }) {
   return <ObjectPropertiesTable object={txnForDisplay} />
 }
 
-function transactionIsSupported(data: BlockchainTransaction | undefined) {
+function transactionIsSupported(data: BlockchainTransaction | null) {
   return !!data && data.type === 'user_transaction'
 }
 
-function TxnDetailsTable({
-  data,
-}: {
-  data: BlockchainTransaction | undefined
-}) {
+function TxnDetailsTable({ data }: { data: BlockchainTransaction | null }) {
   return (
     <>
       <h2 className='mb-5' role='note'>
@@ -71,7 +71,7 @@ function TxnDetailsTable({
   )
 }
 
-function RawTxn({ data }: { data: BlockchainTransaction | undefined }) {
+function RawTxn({ data }: { data: BlockchainTransaction | null }) {
   return (
     <Accordion activeKey={transactionIsSupported(data) ? undefined : '0'}>
       <Accordion.Item eventKey='0'>
@@ -87,7 +87,7 @@ function RawTxn({ data }: { data: BlockchainTransaction | undefined }) {
 function TxnDetailsPageWithResponse({
   data,
 }: {
-  data: BlockchainTransaction | undefined
+  data: BlockchainTransaction | null
 }) {
   return (
     <MainWrapper>
@@ -106,14 +106,24 @@ interface TxnDetailsPageMatch {
 interface TxnDetailsPageProps
   extends RouteComponentProps<TxnDetailsPageMatch> {}
 
+type ErrorProps = ErrorComponentProps<ResponseError | null>
+
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
+  const TxnDetailsErrorComponent: React.FC<ErrorProps> = ({ errors }) => {
+    return errors?.type === ResponseErrorType.NOT_FOUND ? (
+      <Redirect to='/txn/not-found' />
+    ) : (
+      <FullPageErrorComponent />
+    )
+  }
   return (
     <ApiRequestComponent
       request={() => {
         return getBlockchainTransaction(props.match.params.version)
       }}
+      errorComponent={<TxnDetailsErrorComponent errors={null} />}
     >
-      <TxnDetailsPageWithResponse data={undefined} />
+      <TxnDetailsPageWithResponse data={null} />
     </ApiRequestComponent>
   )
 }

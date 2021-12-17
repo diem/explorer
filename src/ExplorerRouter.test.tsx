@@ -16,6 +16,7 @@ import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__m
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
 import { mockLeaderboardPageText } from './Pages/LeaderboardPage/__mocks__/LeaderboardPage'
 import { accountNotFoundPageText } from './Pages/AccountPage/AccountNotFoundPage'
+import { txnNotFoundPageText } from './Pages/TxnDetailsPage/TxnNotFoundPage'
 
 jest.mock('./Pages/LandingPage/LandingPage')
 jest.mock('./Pages/TxnDetailsPage/TxnDetailsPage')
@@ -85,6 +86,11 @@ describe('ExplorerRouter', () => {
       name: 'Transaction Details',
       route: '/txn/some_id',
       text: [mockTxnDetailsPageText, 'some_id'],
+    },
+    {
+      name: 'Transaction Not Found',
+      route: '/txn/not-found',
+      text: [txnNotFoundPageText],
     },
     {
       name: 'Account',
