@@ -89,7 +89,7 @@ const renderWithTransaction = async (
   render(
     <BrowserRouter>
       <TxnDetailsPage {...mockHistory} />
-      <Route path="/txn/not-found">{notFoundText}</Route>
+      <Route path='/txn/not-found'>{notFoundText}</Route>
     </BrowserRouter>
   )
 

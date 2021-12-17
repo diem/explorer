@@ -5,7 +5,7 @@ import {
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import {
   getAccountModules,
   getAccountResources,
@@ -40,14 +40,11 @@ jest.mock('../../api_clients/AnalyticsClient', () => ({
 
 const mockAddress = '1fc5dd16a92e82a281a063e308ebcca9'
 
-const mockHistoryPush = jest.fn()
+const notFoundText = "The address doesn't exist"
 
 function renderWithAddress(address: string) {
-  mockHistoryPush.mockReset()
   const mockHistory = {
-    history: {
-      push: mockHistoryPush,
-    } as any,
+    history: {} as any,
     location: {} as any,
     match: {
       path: '/address/:address',
@@ -61,6 +58,7 @@ function renderWithAddress(address: string) {
   render(
     <BrowserRouter>
       <AccountPage {...mockHistory} />
+      <Route path='/address/not-found'>{notFoundText}</Route>
     </BrowserRouter>
   )
 }
@@ -98,8 +96,7 @@ describe('AccountPage', function () {
     it('should forward to the AccountNotFound page', async () => {
       renderWithAddress('thisAddressIsInvalid')
 
-      expect(mockHistoryPush).toHaveBeenCalledWith('/address/not-found')
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1)
+      expect(screen.queryByText(notFoundText)).toBeInTheDocument()
     })
   })
   describe('when the account does not exists', function () {
@@ -109,8 +106,7 @@ describe('AccountPage', function () {
         Err({ type: ResponseErrorType.NOT_FOUND }),
         Err([{ message: ResponseErrorType.NOT_FOUND }])
       )
-
-      expect(mockHistoryPush.mock.calls[0]).toEqual(['/address/not-found'])
+      expect(screen.queryByText(notFoundText)).toBeInTheDocument()
     })
   })
 

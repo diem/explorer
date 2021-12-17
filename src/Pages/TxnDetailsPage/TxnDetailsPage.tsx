@@ -7,7 +7,7 @@ import {
   BlockchainTransaction,
   BlockchainUserTxnData,
 } from '../../api_models/BlockchainTransaction'
-import { RouteComponentProps , Redirect } from 'react-router-dom'
+import { RouteComponentProps, Redirect } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
@@ -101,18 +101,20 @@ function TxnDetailsPageWithResponse({
 
 interface TxnDetailsPageMatch {
   version: string
-};
+}
 
 interface TxnDetailsPageProps
   extends RouteComponentProps<TxnDetailsPageMatch> {}
+
 type ErrorProps = ErrorComponentProps<ResponseError | null>
 
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   const TxnDetailsErrorComponent: React.FC<ErrorProps> = ({ errors }) => {
-    if (errors?.type === ResponseErrorType.NOT_FOUND) {
-      return <Redirect to='/txn/not-found' />
-    }
-    return <FullPageErrorComponent />
+    return errors?.type === ResponseErrorType.NOT_FOUND ? (
+      <Redirect to='/txn/not-found' />
+    ) : (
+      <FullPageErrorComponent />
+    )
   }
   return (
     <ApiRequestComponent
