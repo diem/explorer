@@ -13,6 +13,10 @@ interface ApiRequestComponentProps<T, E> {
   errorComponent?: ReactElement<{ errors?: E }>
 }
 
+export interface ErrorComponentProps<E> {
+  errors: E
+}
+
 export function PlainValue<T>({ data }: { data?: T }) {
   return data === undefined ? <></> : <>{`${data}`}</>
 }

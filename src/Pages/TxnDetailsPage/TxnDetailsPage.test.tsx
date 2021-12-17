@@ -9,13 +9,11 @@ import {
 import { BrowserRouter } from 'react-router-dom'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import {
-  BlockchainBlockmetadataTxnData,
   BlockchainTransaction,
-  BlockchainUnknownTxnData,
   BlockchainUserTxnData,
-  BlockchainWritesetTxnData,
 } from '../../api_models/BlockchainTransaction'
-import { Ok } from 'ts-results'
+import { Err, Ok, Result } from 'ts-results'
+import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 
 jest.mock('../../api_clients/BlockchainRestClient', () => ({
   ...jest.requireActual('../../api_clients/BlockchainRestClient'),
@@ -63,14 +61,18 @@ const mockUnsupportedTransaction: BlockchainTransaction = {
   vm_status: 'Executed successfully',
 }
 
+const mockHistoryPush = jest.fn()
+
 const renderWithTransaction = async (
-  txn: BlockchainTransaction = mockUserTransaction
+  txn: Result<BlockchainTransaction, ResponseError> = Ok(mockUserTransaction)
 ) => {
   // @ts-ignore TS is bad at mocking
-  getBlockchainTransaction.mockResolvedValue(Ok(txn))
+  getBlockchainTransaction.mockResolvedValue(txn)
 
   const mockHistory = {
-    history: {} as any,
+    history: {
+      push: mockHistoryPush,
+    } as any,
     location: {} as any,
     match: {
       path: '/txn/:version',
@@ -166,23 +168,22 @@ describe('TxnDetailsPage', function () {
       ).toBeInTheDocument()
     })
   })
+  describe('Not Found transaction', () => {
+    it('should forward to /txn/not-found', async () => {
+      await renderWithTransaction(Err({ type: ResponseErrorType.NOT_FOUND }))
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1)
+      expect(mockHistoryPush.mock.calls[0]).toEqual(['/txn/not-found'])
+    })
+  })
 
-  const metadataTxn: BlockchainBlockmetadataTxnData = {
-    ...mockUnsupportedTransaction,
-    type: 'blockmetadata',
-  }
-  const writesetTxn: BlockchainWritesetTxnData = {
-    ...mockUnsupportedTransaction,
-    type: 'writeset',
-  }
-  const unknownTxn: BlockchainUnknownTxnData = {
-    ...mockUnsupportedTransaction,
-    type: 'unknown',
-  }
   describe('Unsupported Transactions', () => {
-    ;[metadataTxn, writesetTxn, unknownTxn].forEach((txn) => {
+    ;[
+      { ...mockUnsupportedTransaction, type: 'blockmetadata' },
+      { ...mockUnsupportedTransaction, type: 'writeset' },
+      { ...mockUnsupportedTransaction, type: 'unknown' },
+    ].forEach((txn) => {
       it(`should display a helpful message for ${txn.type} transactions`, async () => {
-        await renderWithTransaction(txn)
+        await renderWithTransaction(Ok(txn))
         expect(
           screen.queryByText('Unsupported Transaction')
         ).toBeInTheDocument()
