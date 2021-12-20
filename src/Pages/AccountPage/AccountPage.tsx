@@ -30,7 +30,7 @@ import {
 import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction,
-} from '../Common/TransactionModel'
+} from '../../models/TransactionModel'
 import { getCanonicalAddress } from '../../utils'
 import Loadable, { LoadingState } from '../../Loadable'
 import { Err, Ok, Result } from 'ts-results'

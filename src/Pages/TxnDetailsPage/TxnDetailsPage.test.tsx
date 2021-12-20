@@ -11,7 +11,7 @@ import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
-} from '../../api_models/BlockchainTransaction'
+} from '../../models/BlockchainTransaction'
 import { Err, Ok, Result } from 'ts-results'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 

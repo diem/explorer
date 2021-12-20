@@ -1,7 +1,7 @@
 import { getWithFetch, ResponseError, ResponseErrorType } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
-import { BlockchainTransaction } from '../api_models/BlockchainTransaction'
+import { BlockchainTransaction } from '../models/BlockchainTransaction'
 import { Err, Result } from 'ts-results'
 
 export async function getBlockchainTransaction(

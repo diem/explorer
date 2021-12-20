@@ -9,7 +9,7 @@ import MainWrapper from '../../MainWrapper'
 import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction,
-} from '../Common/TransactionModel'
+} from '../../models/TransactionModel'
 import Table, { column } from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'

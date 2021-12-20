@@ -6,7 +6,7 @@ import React from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
-} from '../../api_models/BlockchainTransaction'
+} from '../../models/BlockchainTransaction'
 import { RouteComponentProps, Redirect } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert } from 'react-bootstrap'
