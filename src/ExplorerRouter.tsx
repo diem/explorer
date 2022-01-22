@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import ApiRequestPage from './Pages/LandingPage/LandingPage'
 import { Route, Switch } from 'react-router-dom'
 import TxnDetailsPage from './Pages/TxnDetailsPage/TxnDetailsPage'

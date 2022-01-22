@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { getWithFetch, ResponseError, ResponseErrorType } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'

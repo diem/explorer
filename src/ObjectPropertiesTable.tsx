@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import BTable from 'react-bootstrap/Table'
 import React, { ReactChild, ReactElement } from 'react'
 

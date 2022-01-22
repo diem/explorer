@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { FetchError } from './FetchTypes'
 import { Gql } from '../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import fetch from 'isomorphic-fetch'

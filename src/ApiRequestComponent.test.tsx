@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import '@testing-library/jest-dom' // provides `expect(...).toBeInTheDocument()`
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ApiRequestComponent from './ApiRequestComponent'

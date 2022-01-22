@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { Link as RouterLink } from 'react-router-dom'
 import React from 'react'
 import { getCanonicalAddress } from '../utils'

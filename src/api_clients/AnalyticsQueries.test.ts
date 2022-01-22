@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { transactionsBySenderAddressQuery } from './AnalyticsQueries'
 
 describe('Queries with addresses', () => {

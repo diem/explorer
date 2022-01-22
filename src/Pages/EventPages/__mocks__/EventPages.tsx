@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 export const mockAccountCreationEventsPageText =
   'This is account creation events page'
 const mockAccountCreationEventsPage = () => (

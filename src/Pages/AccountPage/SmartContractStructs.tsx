@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Module, Struct } from '../../api_clients/BlockchainRestTypes'

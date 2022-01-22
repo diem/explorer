@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { ReactElement } from 'react'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
 import {
