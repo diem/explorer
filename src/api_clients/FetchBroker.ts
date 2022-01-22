@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import fetch from 'isomorphic-fetch'
 import { Err, Ok, Result } from 'ts-results'
 

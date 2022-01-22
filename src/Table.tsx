@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { useTable, useFilters, useSortBy, TableOptions } from 'react-table'
 import BTable from 'react-bootstrap/Table'
 import React from 'react'

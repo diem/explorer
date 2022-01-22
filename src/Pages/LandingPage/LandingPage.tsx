@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import React, { FormEvent, KeyboardEvent, ReactNode, useState } from 'react'
 import ApiRequestComponent, {

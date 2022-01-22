@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { ReactElement, useEffect, useState } from 'react'
 import MainWrapper from './MainWrapper'
 import { Card } from 'react-bootstrap'

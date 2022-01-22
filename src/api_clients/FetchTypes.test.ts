@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { FetchError, isNotFound } from './FetchTypes'
 import { Err, Ok, Result } from 'ts-results'
 import { ResponseErrorType } from './FetchBroker'

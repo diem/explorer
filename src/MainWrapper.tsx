@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { ReactChild } from 'react'
 import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'

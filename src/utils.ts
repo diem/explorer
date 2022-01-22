@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { Ok, Err, Result } from 'ts-results'
 
 export function getCanonicalAddress(address: string): Result<string, string> {

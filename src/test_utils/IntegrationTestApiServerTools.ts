@@ -1,3 +1,6 @@
+// Copyright (c) The Diem Core Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { setupServer, SetupServerApi } from 'msw/node'
 import { rest } from 'msw'
 
