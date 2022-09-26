@@ -29,7 +29,7 @@ export function PlainErrorComponent(props?: any) {
   const { errMsg } = props
   return (
     <p role='dialog' className='network-error'>
-      {errMsg ? errMsg : "Something went wrong. Please try again later"}
+      {errMsg || "Something went wrong. Please try again later"}
     </p>
   )
 }
@@ -80,7 +80,6 @@ function ApiRequestComponent<T, E = ResponseError>({
   children,
   loadingComponent = <DefaultLoadingComponent />,
   errorComponent = <DefaultErrorComponent />,
-  refresh
 }: ApiRequestComponentProps<T, E>) {
   const [loadingState, setLoadingState] = useState<LoadingState<T, E>>({
     isLoading: true,

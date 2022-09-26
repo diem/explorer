@@ -5,12 +5,12 @@ import ApiRequestComponent, {
   ErrorComponentProps,
   FullPageErrorComponent,
 } from '../../ApiRequestComponent'
-import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
+import React, { FormEvent, KeyboardEvent, useState } from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
 } from '../../models/BlockchainTransaction'
-import { RouteComponentProps, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { RouteComponentProps, Redirect, useHistory } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert, FormControl, InputGroup } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
@@ -18,7 +18,7 @@ import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
-import { getCanonicalAddress, getSearchRouteFromSearchTerm } from '../../utils'
+import { getSearchRouteFromSearchTerm } from '../../utils'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -66,11 +66,14 @@ function TxnDetailsTable({ data, version }: { data: BlockchainTransaction | null
   const history = useHistory();
   const [isValid, setIsValid] = useState<boolean>(true);
   const [addresVal, setAddressVal] = useState<any>(version);
+
   function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
     const searchTerm = (event.target as HTMLInputElement).value
     const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
     setIsValid(searchRoute !== null || searchTerm === '')
   }
+
+
 
   function submitSearch(event: KeyboardEvent) {
     if (event.key === 'Enter') {
@@ -149,6 +152,7 @@ type ErrorProps = ErrorComponentProps<ResponseError | null>
 
 export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   const TxnDetailsErrorComponent: React.FC<ErrorProps> = ({ errors }) => {
+
     return errors?.type === ResponseErrorType.NOT_FOUND ? (
       <Redirect to='/txn/not-found' />
     ) : (
