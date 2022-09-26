@@ -5,19 +5,20 @@ import ApiRequestComponent, {
   ErrorComponentProps,
   FullPageErrorComponent,
 } from '../../ApiRequestComponent'
-import React from 'react'
+import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
 import {
   BlockchainTransaction,
   BlockchainUserTxnData,
 } from '../../models/BlockchainTransaction'
-import { RouteComponentProps, Redirect } from 'react-router-dom'
+import { RouteComponentProps, Redirect, useHistory, useLocation } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
-import { Accordion, Alert } from 'react-bootstrap'
+import { Accordion, Alert, FormControl, InputGroup } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
 import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
+import { getCanonicalAddress, getSearchRouteFromSearchTerm } from '../../utils'
 
 function UnsupportedTxnDetailsTable() {
   return (
@@ -59,12 +60,46 @@ function transactionIsSupported(data: BlockchainTransaction | null) {
   return !!data && data.type === 'user_transaction'
 }
 
-function TxnDetailsTable({ data }: { data: BlockchainTransaction | null }) {
+function TxnDetailsTable({ data, version }: { data: BlockchainTransaction | null, version: string | null }) {
+
+
+  const history = useHistory();
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [addresVal, setAddressVal] = useState<any>(version);
+  function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
+    const searchTerm = (event.target as HTMLInputElement).value
+    const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
+    setIsValid(searchRoute !== null || searchTerm === '')
+  }
+
+  function submitSearch(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const searchTerm = (event.target as HTMLInputElement).value
+      const searchRoute = getSearchRouteFromSearchTerm(searchTerm);
+      setAddressVal(searchTerm)
+      if (searchRoute !== null) {
+        history.push(searchRoute)
+      }
+    }
+  }
+
   return (
     <>
       <h2 className='mb-5' role='note'>
-        Transaction Details
+        Transaction Details   <h5 className='transactionVal'>({addresVal})</h5>
       </h2>
+      <InputGroup className='mb-5'>
+        <FormControl
+          placeholder='Search by Address or Transaction Version'
+          aria-label='Search by Address or Transaction Version'
+          onInput={validateSearchTerm}
+          onKeyPress={submitSearch}
+          isInvalid={!isValid}
+        />
+        <FormControl.Feedback type='invalid'>
+          Invalid address or transaction version
+        </FormControl.Feedback>
+      </InputGroup>
       {transactionIsSupported(data) ? (
         <UserTxnDetailsTable data={data as BlockchainUserTxnData} />
       ) : (
@@ -88,14 +123,15 @@ function RawTxn({ data }: { data: BlockchainTransaction | null }) {
 }
 
 function TxnDetailsPageWithResponse({
-  data,
+  data, version
 }: {
-  data: BlockchainTransaction | null
+  data: BlockchainTransaction | null,
+  version: string | null
 }) {
   return (
     <MainWrapper>
       <>
-        <TxnDetailsTable data={data} />
+        <TxnDetailsTable data={data} version={version} />
         <RawTxn data={data} />
       </>
     </MainWrapper>
@@ -107,7 +143,7 @@ interface TxnDetailsPageMatch {
 }
 
 interface TxnDetailsPageProps
-  extends RouteComponentProps<TxnDetailsPageMatch> {}
+  extends RouteComponentProps<TxnDetailsPageMatch> { }
 
 type ErrorProps = ErrorComponentProps<ResponseError | null>
 
@@ -125,8 +161,9 @@ export default function TxnDetailsPage(props: TxnDetailsPageProps) {
         return getBlockchainTransaction(props.match.params.version)
       }}
       errorComponent={<TxnDetailsErrorComponent errors={null} />}
+      refresh={props.match.params.version}
     >
-      <TxnDetailsPageWithResponse data={null} />
+      <TxnDetailsPageWithResponse data={null} version={props.match.params.version} />
     </ApiRequestComponent>
   )
 }

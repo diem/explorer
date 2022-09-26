@@ -9,13 +9,14 @@ import {
 } from './ApiRequestComponent'
 import { Result } from 'ts-results'
 
-export type LoadingState<T, E> = Result<T, E> | { isLoading: true }
+export type LoadingState<T, E> = Result<T, E> | { isLoading: true, errMsg?: any }
 
 type LoadableProps<T, E> = {
   state: LoadingState<T, E>
   children: ReactElement<{ data: T }>
   loadingComponent?: ReactElement
-  errorComponent?: ReactElement<{ errors?: E }>
+  errorComponent?: ReactElement<{ errors?: E, errMsg?: any }>
+  errMsg?: String
 }
 
 export default function Loadable<T, E>({
@@ -23,11 +24,12 @@ export default function Loadable<T, E>({
   loadingComponent = <PlainLoadingComponent />,
   errorComponent = <PlainErrorComponent />,
   children,
+  errMsg
 }: LoadableProps<T, E>): ReactJSXElement {
-  if (!state) return errorComponent
+  if (!state) return React.cloneElement(errorComponent, { errMsg: errMsg })
   else if ('isLoading' in state) return loadingComponent
   else if (state.err)
-    return React.cloneElement(errorComponent, { errors: state.val })
+    return React.cloneElement(errorComponent, { errors: state.val, errMsg: errMsg })
   else if (children) return React.cloneElement(children, { data: state.val })
   else return errorComponent
 }

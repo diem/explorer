@@ -14,6 +14,7 @@ interface ApiRequestComponentProps<T, E> {
   args?: any[]
   loadingComponent?: ReactElement
   errorComponent?: ReactElement<{ errors?: E }>
+  refresh?: any
 }
 
 export interface ErrorComponentProps<E> {
@@ -24,11 +25,12 @@ export function PlainValue<T>({ data }: { data?: T }) {
   return data === undefined ? <></> : <>{`${data}`}</>
 }
 
-export function PlainErrorComponent() {
+export function PlainErrorComponent(props?: any) {
+  const { errMsg } = props
   return (
-    <span role='dialog' className='network-error'>
-      Something went wrong. Please try again later
-    </span>
+    <p role='dialog' className='network-error'>
+      {errMsg ? errMsg : "Something went wrong. Please try again later"}
+    </p>
   )
 }
 
@@ -78,18 +80,17 @@ function ApiRequestComponent<T, E = ResponseError>({
   children,
   loadingComponent = <DefaultLoadingComponent />,
   errorComponent = <DefaultErrorComponent />,
+  refresh
 }: ApiRequestComponentProps<T, E>) {
   const [loadingState, setLoadingState] = useState<LoadingState<T, E>>({
     isLoading: true,
   })
-
   useEffect(() => {
     async function getResponse() {
       await request(...args).then((apiResponse) => setLoadingState(apiResponse))
     }
-
     getResponse()
-  }, [])
+  }, [request])
 
   return (
     <Loadable
