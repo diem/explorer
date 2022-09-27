@@ -80,6 +80,7 @@ function ApiRequestComponent<T, E = ResponseError>({
   children,
   loadingComponent = <DefaultLoadingComponent />,
   errorComponent = <DefaultErrorComponent />,
+  refresh
 }: ApiRequestComponentProps<T, E>) {
   const [loadingState, setLoadingState] = useState<LoadingState<T, E>>({
     isLoading: true,
@@ -89,7 +90,7 @@ function ApiRequestComponent<T, E = ResponseError>({
       await request(...args).then((apiResponse) => setLoadingState(apiResponse))
     }
     getResponse()
-  }, [request])
+  }, [refresh])
 
   return (
     <Loadable
