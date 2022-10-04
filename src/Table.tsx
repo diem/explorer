@@ -106,10 +106,7 @@ export default function Table<T extends object>(props: TableProps<T>) {
   }
   return (<div>
     <div className='d-flex justify-content-end cmb-15'>
-      <Form.Group as={Row} className="mb-6" controlId="formHorizontalEmail">
-        {/* <Form.Label column sm={8}>
-          No. of records
-        </Form.Label> */}
+      {showPaginationCus && <Form.Group as={Row} className="mb-6" controlId="formHorizontalEmail">
         <Col sm={12}>
           <Form.Control
             as="select"
@@ -125,7 +122,7 @@ export default function Table<T extends object>(props: TableProps<T>) {
             ))}
           </Form.Control>
         </Col>
-      </Form.Group>
+      </Form.Group>}
     </div>
     <BTable {...btableProps}>
       <thead>

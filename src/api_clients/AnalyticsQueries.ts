@@ -21,7 +21,7 @@ export function mintEventsQuery() {
   return {
     receivedmint_events: [
       {
-        limit: 299,
+        limit: 300,
         order_by: [{ transaction_version: order_by.desc }],
       },
       {
@@ -41,7 +41,7 @@ export function burnEventsQuery() {
   return {
     burn_events: [
       {
-        limit: 299,
+        limit: 300,
         order_by: [{ transaction_version: order_by.desc }],
       },
       {
@@ -61,7 +61,7 @@ export function paymentEventsQuery() {
   return {
     sentpayment_events: [
       {
-        limit: 299,
+        limit: 300,
         order_by: [{ transaction_version: order_by.desc }],
       },
       {
@@ -83,7 +83,7 @@ export function gasEventsQuery() {
   return {
     gas_payments: [
       {
-        limit: 299,
+        limit: 300,
         order_by: [{ version: order_by.desc }],
       },
       {
@@ -103,7 +103,7 @@ export function preburnEventsQuery() {
   return {
     preburn_events: [
       {
-        limit: 299,
+        limit: 300,
         order_by: [{ transaction_version: order_by.desc }],
       },
       {
@@ -122,7 +122,7 @@ export function accountcreationEventsQuery() {
   return {
     accounts: [
       {
-        limit: 299,
+        limit: 10,
         order_by: [{ transaction_version: order_by.desc }],
       },
       {
@@ -174,7 +174,7 @@ export function transactionsQuery() {
   return {
     transactions: [
       {
-        limit: 299,
+        limit: 10,
         where: { txn_type: { _eq: 3 } },
         order_by: [{ version: order_by.desc }],
       },
@@ -215,7 +215,7 @@ export function transactionsBySenderAddressQuery(senderAddress: string) {
   return {
     transactions: [
       {
-        limit: 299,
+        limit: 10,
         where: { sender: { _eq: canonicalAddress.val } },
         order_by: [{ version: order_by.desc }],
       },
