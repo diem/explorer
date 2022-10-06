@@ -27,11 +27,19 @@ function EventPageWithResponse({
   columns: EventPageProps['columns']
   eventType: EventPageProps['eventType']
 }) {
+  const showPagination = (data: any = [], count: number = 10) => {
+    return data.length > count
+  }
   return (
     <MainWrapper>
       <>
         <h3 className='mb-2'>{eventType} Events</h3>
-        <Table columns={columns} data={data} />
+        <Table columns={columns} data={data}
+          isPaginated={true}
+          pSize={10}
+          showPaginationCus={showPagination(data, 10)}
+          noOfRec={[10, 25, 50]}
+        />
       </>
     </MainWrapper>
   )
