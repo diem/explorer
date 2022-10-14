@@ -17,3 +17,8 @@
 .cmb-15 {
   margin-bottom: 15px;
 }
+
+.btn-light:active,
+.btn-light:focus {
+  box-shadow: 0 0 0 0.05rem rgb(211 212 213 / 50%);
+}
