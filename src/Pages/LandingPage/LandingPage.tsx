@@ -81,19 +81,19 @@ function CurrentStatisticsCard({
                 Transactions Per Second
               </ReactTooltip>
             </dt>
-            <dd>{new Intl.NumberFormat().format(averageTps)}</dd>
+            <dd>{averageTps ? new Intl.NumberFormat().format(averageTps) : 0}</dd>
           </div>
           <div>
             <dt>Total Mint Value</dt>
-            <dd>{new Intl.NumberFormat().format(totalMintValue)} XUS</dd>
+            <dd>{totalMintValue ? new Intl.NumberFormat().format(totalMintValue) : 0} XUS</dd>
           </div>
           <div>
             <dt>Total Burn Value</dt>
-            <dd>{new Intl.NumberFormat().format(totalBurnValue)} XUS</dd>
+            <dd>{totalBurnValue ? new Intl.NumberFormat().format(totalBurnValue) : 0} XUS</dd>
           </div>
           <div>
             <dt>XUS In Circulation</dt>
-            <dd>{new Intl.NumberFormat().format(totalNetValue)} XUS</dd>
+            <dd>{totalNetValue ? new Intl.NumberFormat().format(totalNetValue) : 0} XUS</dd>
           </div>
           <div>
             <dt>Total Payments</dt>
@@ -125,6 +125,10 @@ function TransactionTable({
 }: {
   transactions: TransactionRow[]
 }) {
+  const showPagination = (data: any = [], count: number = 10) => {
+    return data.length > count
+  }
+
   return (
     <>
       <h3 className='mb-2'>Recent Transactions</h3>
@@ -137,6 +141,10 @@ function TransactionTable({
         ]}
         data={transactions}
         id='landingPageTransactions'
+        isPaginated={true}
+        pSize={10}
+        showPaginationCus={showPagination(transactions, 10)}
+        noOfRec={[10, 25, 50]}
       />
     </>
   )

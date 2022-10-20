@@ -3,7 +3,7 @@
 
 import React, { ReactElement, useEffect, useState } from 'react'
 import MainWrapper from './MainWrapper'
-import { Card } from 'react-bootstrap'
+import { Card, Spinner } from 'react-bootstrap'
 import Loadable, { LoadingState } from './Loadable'
 import { Result } from 'ts-results'
 import { ResponseError } from './api_clients/FetchBroker'
@@ -50,19 +50,24 @@ export const ErrorCardComponent = ({ title = '' }: { title?: string }) => (
 
 const DefaultErrorComponent = FullPageErrorComponent
 
-export function PlainLoadingComponent() {
+
+export function PlainLoadingComponent({ styles = { width: "2rem", height: "2rem" }, lgLogo = false }: { styles?: any, lgLogo?: boolean }) {
   return (
-    <span className='loading' role='loading'>
-      Loading, please wait
+    <span className={`loading d-flex justify-content-center ${lgLogo ? "loader-center-styles" : ""}`} role='loading'>
+      {/*  Loading, please wait */}
+      <Spinner animation="border" role="status" style={styles}>
+        <span className="visually-hidden">Loading, please wait</span>
+      </Spinner>
     </span>
   )
 }
 
 export const FullPageLoadingComponent = () => (
-  <MainWrapper>
-    <PlainLoadingComponent />
-  </MainWrapper>
+  <div className="loader-center-styles">
+    <PlainLoadingComponent styles={{ width: "4rem", height: "4rem" }} lgLogo={true} />
+  </div>
 )
+
 export const LoadingCardComponent = ({ title = '' }: { title?: string }) => (
   <>
     <Card.Header>{title}</Card.Header>
