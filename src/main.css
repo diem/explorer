@@ -22,3 +22,17 @@
 .btn-light:focus {
   box-shadow: 0 0 0 0.05rem rgb(211 212 213 / 50%);
 }
+
+.loader-center-styles {
+  background-color: #efefef;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+}
+
+.loading .spinner-border {
+  color: var(--diem) !important;
+}
