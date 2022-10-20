@@ -11,6 +11,7 @@ import AccountPage from './Pages/AccountPage/AccountPage'
 import AccountNotFoundPage from './Pages/AccountPage/AccountNotFoundPage'
 import LeaderboardPage from './Pages/LeaderboardPage/LeaderboardPage'
 import TxnNotFoundPage from './Pages/TxnDetailsPage/TxnNotFoundPage'
+import VaspsPage from './Pages/VaspsPage/VaspsPage'
 
 export default function ExplorerRouter() {
   return (
@@ -31,6 +32,7 @@ export default function ExplorerRouter() {
       <Route path='/address/not-found' component={AccountNotFoundPage} />
       <Route path='/address/:address' component={AccountPage} />
       <Route path='/leaderboard' component={LeaderboardPage} />
+      <Route path='/vasps' component={VaspsPage} />
       <Route component={NotFoundPage} />
     </Switch>
   )

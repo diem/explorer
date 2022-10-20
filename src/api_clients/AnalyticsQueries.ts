@@ -151,6 +151,24 @@ export function accountcreationEventsQuery() {
   }
 }
 
+export type VaspsList = GraphQLTypes['preburn_events']
+export function vaspsList() {
+  return {
+    preburn_events: [
+      {
+        limit: 300,
+        order_by: [{ transaction_version: order_by.desc }],
+      },
+      {
+        transaction_version: true,
+        commit_timestamp: true,
+        address: true,
+        currency: true,
+      },
+    ],
+  }
+}
+
 export type AccountBalancesQueryType =
   GraphQLTypes['query_root']['accounts_balances']
 export function top10AccountsQuery(currency: KnownCurrency) {
