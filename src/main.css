@@ -1,5 +1,6 @@
 :root {
   --diem: #39298c;
+  --diemErr: #f72b2b;
 }
 
 .tbl-nav {
@@ -35,4 +36,4 @@
 
 .loading .spinner-border {
   color: var(--diem) !important;
-}
+ }

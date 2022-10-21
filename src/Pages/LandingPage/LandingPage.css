@@ -9,3 +9,16 @@
   text-decoration: none;
   font-weight: bold;
 }
+
+.transactionVal {
+  color: var(--diem);
+  display: inline-block;
+}
+
+.errorMsgClr {
+  color: var(--diemErr)
+}
+
+.themeBgClr {
+  background-color: var(--diem);
+}
