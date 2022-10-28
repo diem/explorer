@@ -1,7 +1,7 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Redirect, RouteComponentProps } from 'react-router-dom'
+import { Redirect, RouteComponentProps, useHistory } from 'react-router-dom'
 import {
   getAccountModules,
   getAccountResources,
@@ -19,11 +19,11 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import JSONPretty from 'react-json-pretty'
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
 import Balances from './Balances'
 import SmartContractMethods from './SmartContractMethods'
 import SmartContractStructs from './SmartContractStructs'
-import { Card } from 'react-bootstrap'
+import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import {
   DiemAccountResource,
   isDiemAccountResource,
@@ -34,16 +34,17 @@ import {
   TransactionRow,
   transformAnalyticsTransactionIntoTransaction,
 } from '../../models/TransactionModel'
-import { getCanonicalAddress } from '../../utils'
+import { getCanonicalAddress, getSearchRouteFromSearchTerm } from '../../utils'
 import Loadable, { LoadingState } from '../../Loadable'
 import { Err, Ok, Result } from 'ts-results'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
+import { NoRecords } from '../../TableComponents/NoRecords'
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   data,
 }) => {
-  return (
-    <Table
+  return (<div>
+    {data.length > 0 ? <Table
       columns={[
         column('Version', 'version', TransactionVersion),
         column('Timestamp', 'commitTimestamp'),
@@ -52,7 +53,8 @@ const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
       ]}
       data={data}
       id='recentTransactions'
-    />
+    /> : <NoRecords value="  Recent Transactions are not available " />
+    }</div>
   )
 }
 
@@ -156,9 +158,9 @@ const getAccountResourceResponse = (
   return diemAccountResource
     ? Ok(diemAccountResource)
     : Err({
-        type: ResponseErrorType.UNHANDLED,
-        message: 'Account resource not found',
-      })
+      type: ResponseErrorType.UNHANDLED,
+      message: 'Account resource not found',
+    })
 }
 
 function isNotFound<T>(
@@ -179,7 +181,12 @@ function isNotFoundResponseError<T>(
 }
 
 export default function AccountPage(props: AccountPageProps) {
-  const maybeAddress = getCanonicalAddress(props.match.params.address)
+
+  const maybeAddress = getCanonicalAddress(props.match.params.address);
+  const history = useHistory()
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [addresVal, setAddressVal] = useState<any>(maybeAddress.val);
+
   if (maybeAddress.err) {
     return <Redirect to='/address/not-found' />
   }
@@ -222,7 +229,7 @@ export default function AccountPage(props: AccountPageProps) {
         modulesResponse: result,
       }))
     )
-  }, [])
+  }, [addresVal])
 
   if (
     isNotFoundResponseError(resourcesResponse) ||
@@ -232,10 +239,43 @@ export default function AccountPage(props: AccountPageProps) {
     return <Redirect to='/address/not-found' />
   }
 
+  function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
+    const searchTerm = (event.target as HTMLInputElement).value
+    const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
+    setIsValid(searchRoute !== null || searchTerm === '')
+  }
+
+  function submitSearch(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const searchTerm = (event.target as HTMLInputElement).value
+      const searchRoute = getSearchRouteFromSearchTerm(searchTerm);
+      setAddressVal(searchTerm)
+      if (searchRoute !== null) {
+        history.push(searchRoute)
+      }
+    }
+  }
+
   return (
     <MainWrapper>
       <>
-        <h1>Account Details</h1>
+
+        <h1>Account Details <h5 className='transactionVal'>({addresVal})</h5></h1>
+
+        <InputGroup className='mb-5'>
+          <FormControl
+            placeholder='Search by Address or Transaction Version'
+            aria-label='Search by Address or Transaction Version'
+            onInput={validateSearchTerm}
+            onKeyPress={submitSearch}
+            isInvalid={!isValid}
+          />
+          <FormControl.Feedback type='invalid'>
+            Invalid address or transaction version
+          </FormControl.Feedback>
+        </InputGroup>
+
+        {/* <span><b>Account Address :</b>  {addresVal}</span> */}
         <Loadable state={resourcesResponse}>
           <Balances data={[]} />
         </Loadable>
@@ -251,13 +291,13 @@ export default function AccountPage(props: AccountPageProps) {
         <Loadable state={modulesResponse}>
           <SmartContractStructs data={[]} />
         </Loadable>
-        <Loadable state={accountResourceResponse}>
+        <Loadable state={accountResourceResponse} errMsg="SequenceNumber Not available">
           <SequenceNumber data={null} />
         </Loadable>
-        <Loadable state={accountResourceResponse}>
+        <Loadable state={accountResourceResponse} errMsg="AuthenticationKey Not available">
           <AuthenticationKey data={null} />
         </Loadable>
-        <Loadable state={accountResourceResponse}>
+        <Loadable state={accountResourceResponse} errMsg="EventHandlesTable Not available">
           <EventHandlesTable data={null} />
         </Loadable>
 
@@ -271,6 +311,6 @@ export default function AccountPage(props: AccountPageProps) {
           <JSONPretty data={modulesResponse} id='rawModules' />
         </Loadable>
       </>
-    </MainWrapper>
+    </MainWrapper >
   )
 }

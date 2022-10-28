@@ -14,6 +14,7 @@ import Table, { column } from '../../../Table'
 import ReactTooltip from 'react-tooltip'
 import { TransactionVersion } from '../../../TableComponents/Link'
 import { Ok, Result } from 'ts-results'
+import { NoRecords } from '../../../TableComponents/NoRecords'
 
 export interface TopSentPaymentEvent {
   // eslint-disable-next-line camelcase
@@ -54,14 +55,22 @@ function Top10TransactionsTable({
         </ReactTooltip>
       </Card.Header>
       <Card.Body>
-        <Table
+        {/* <Table
           columns={[
             column('Ranking', 'rank'),
             column('Version', 'version', TransactionVersion),
             column('Amount (XUS)', 'amount'),
           ]}
           data={paymentData}
-        />
+        /> */}
+        {paymentData.length > 0 ? <Table
+          columns={[
+            column('Ranking', 'rank'),
+            column('Version', 'version', TransactionVersion),
+            column('Amount (XUS)', 'amount'),
+          ]}
+          data={paymentData}
+        /> : <NoRecords value="No transactions available in last 24 hours" />}
       </Card.Body>
     </>
   )

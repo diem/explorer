@@ -15,3 +15,15 @@ export function getCanonicalAddress(address: string): Result<string, string> {
   }
   return Ok(address)
 }
+export function getSearchRouteFromSearchTerm(term: string): string | null {
+  if (/^[0-9]+$/i.test(term)) {
+    return `/txn/${term}`
+  }
+
+  const maybeAddress = getCanonicalAddress(term)
+  if (maybeAddress.ok) {
+    return `/address/${maybeAddress.val}`
+  }
+
+  return null
+}

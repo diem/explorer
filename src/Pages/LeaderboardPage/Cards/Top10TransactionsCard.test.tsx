@@ -94,6 +94,11 @@ describe('Top10TransactionsCard', () => {
     expect(cardBody!.rows[0].cells[1].textContent).toEqual('1')
     expect(cardBody!.rows[1].cells[1].textContent).toEqual('2')
   })
+  it('should render table  without  data in the order provided by the API', async () => {
+    await renderSubject([])
+    expect(screen.queryByText('No transactions available in last 24 hours')).toBeInTheDocument()
+
+  })
   it('should query the Analytics API correctly', async () => {
     await renderSubject()
     const expectedQuery = top10Transactions('XUS')
