@@ -96,7 +96,6 @@ export default function Table<T extends object>(props: TableProps<T>) {
   useEffect(() => {
     setPageSize(pSize)
   }, [pSize]);
-
   const btableProps = {
     responsive: true,
     bordered: true,
@@ -148,7 +147,7 @@ export default function Table<T extends object>(props: TableProps<T>) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {page.map((row) => {
+        {page.length > 0 ? page.map((row) => {
           prepareRow(row)
           return (
             <tr {...row.getRowProps()} key={`row-${row.id}`} role='menuitem'>
@@ -161,7 +160,7 @@ export default function Table<T extends object>(props: TableProps<T>) {
               })}
             </tr>
           )
-        })}
+        }) : <tr><td colSpan={columns.length} className="text-center">No Data Available</td></tr>}
       </tbody>
 
     </BTable>

@@ -1776,6 +1776,18 @@ transactions_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["transactions_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["transactions_bool_exp"] | null},ValueTypes["transactions_aggregate"]],
 transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+vasp_details?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["vasp_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["vasp_details_bool_exp"] | null},ValueTypes["vasp_details"]],
+vasp_details_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["vasp_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["vasp_details_bool_exp"] | null},ValueTypes["vasp_details_aggregate"]],
 		__typename?: true
 }>;
 	/** columns and relationships of "realtime_account_balances" */
@@ -1785,6 +1797,16 @@ transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]
 	blockchain_timestamp?:true,
 	currency?:true,
 	indexer_timestamp?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -1812,6 +1834,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	/** aggregate avg on columns */
 ["realtime_account_balances_avg_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -1825,6 +1857,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
 	currency?:ValueTypes["bpchar_comparison_exp"] | null,
 	indexer_timestamp?:ValueTypes["timestamptz_comparison_exp"] | null,
+	intervasp_transaction_value_received?:ValueTypes["bigint_comparison_exp"] | null,
+	intervasp_transaction_value_sent?:ValueTypes["bigint_comparison_exp"] | null,
+	intervasp_transaction_volume_received?:ValueTypes["bigint_comparison_exp"] | null,
+	intervasp_transaction_volume_sent?:ValueTypes["bigint_comparison_exp"] | null,
+	total_burn_value?:ValueTypes["bigint_comparison_exp"] | null,
+	total_mint_value?:ValueTypes["bigint_comparison_exp"] | null,
+	total_transaction_value_received?:ValueTypes["bigint_comparison_exp"] | null,
+	total_transaction_value_sent?:ValueTypes["bigint_comparison_exp"] | null,
+	total_transaction_volume_received?:ValueTypes["bigint_comparison_exp"] | null,
+	total_transaction_volume_sent?:ValueTypes["bigint_comparison_exp"] | null,
 	version?:ValueTypes["bigint_comparison_exp"] | null
 };
 	/** unique or primary key constraints on table "realtime_account_balances" */
@@ -1832,6 +1874,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	/** input type for incrementing numeric columns in table "realtime_account_balances" */
 ["realtime_account_balances_inc_input"]: {
 	balance?:ValueTypes["bigint"] | null,
+	intervasp_transaction_value_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_value_sent?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_sent?:ValueTypes["bigint"] | null,
+	total_burn_value?:ValueTypes["bigint"] | null,
+	total_mint_value?:ValueTypes["bigint"] | null,
+	total_transaction_value_received?:ValueTypes["bigint"] | null,
+	total_transaction_value_sent?:ValueTypes["bigint"] | null,
+	total_transaction_volume_received?:ValueTypes["bigint"] | null,
+	total_transaction_volume_sent?:ValueTypes["bigint"] | null,
 	version?:ValueTypes["bigint"] | null
 };
 	/** input type for inserting data into table "realtime_account_balances" */
@@ -1841,6 +1893,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	indexer_timestamp?:ValueTypes["timestamptz"] | null,
+	intervasp_transaction_value_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_value_sent?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_sent?:ValueTypes["bigint"] | null,
+	total_burn_value?:ValueTypes["bigint"] | null,
+	total_mint_value?:ValueTypes["bigint"] | null,
+	total_transaction_value_received?:ValueTypes["bigint"] | null,
+	total_transaction_value_sent?:ValueTypes["bigint"] | null,
+	total_transaction_volume_received?:ValueTypes["bigint"] | null,
+	total_transaction_volume_sent?:ValueTypes["bigint"] | null,
 	version?:ValueTypes["bigint"] | null
 };
 	/** aggregate max on columns */
@@ -1850,6 +1912,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:true,
 	currency?:true,
 	indexer_timestamp?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -1860,6 +1932,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:true,
 	currency?:true,
 	indexer_timestamp?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -1884,6 +1966,16 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:ValueTypes["order_by"] | null,
 	currency?:ValueTypes["order_by"] | null,
 	indexer_timestamp?:ValueTypes["order_by"] | null,
+	intervasp_transaction_value_received?:ValueTypes["order_by"] | null,
+	intervasp_transaction_value_sent?:ValueTypes["order_by"] | null,
+	intervasp_transaction_volume_received?:ValueTypes["order_by"] | null,
+	intervasp_transaction_volume_sent?:ValueTypes["order_by"] | null,
+	total_burn_value?:ValueTypes["order_by"] | null,
+	total_mint_value?:ValueTypes["order_by"] | null,
+	total_transaction_value_received?:ValueTypes["order_by"] | null,
+	total_transaction_value_sent?:ValueTypes["order_by"] | null,
+	total_transaction_volume_received?:ValueTypes["order_by"] | null,
+	total_transaction_volume_sent?:ValueTypes["order_by"] | null,
 	version?:ValueTypes["order_by"] | null
 };
 	/** primary key columns input for table: realtime_account_balances */
@@ -1901,29 +1993,79 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	blockchain_timestamp?:ValueTypes["timestamptz"] | null,
 	currency?:ValueTypes["bpchar"] | null,
 	indexer_timestamp?:ValueTypes["timestamptz"] | null,
+	intervasp_transaction_value_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_value_sent?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_received?:ValueTypes["bigint"] | null,
+	intervasp_transaction_volume_sent?:ValueTypes["bigint"] | null,
+	total_burn_value?:ValueTypes["bigint"] | null,
+	total_mint_value?:ValueTypes["bigint"] | null,
+	total_transaction_value_received?:ValueTypes["bigint"] | null,
+	total_transaction_value_sent?:ValueTypes["bigint"] | null,
+	total_transaction_volume_received?:ValueTypes["bigint"] | null,
+	total_transaction_volume_sent?:ValueTypes["bigint"] | null,
 	version?:ValueTypes["bigint"] | null
 };
 	/** aggregate stddev on columns */
 ["realtime_account_balances_stddev_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["realtime_account_balances_stddev_pop_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["realtime_account_balances_stddev_samp_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
 	/** aggregate sum on columns */
 ["realtime_account_balances_sum_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -1932,18 +2074,48 @@ count?: [{	columns?:ValueTypes["realtime_account_balances_select_column"][],	dis
 	/** aggregate var_pop on columns */
 ["realtime_account_balances_var_pop_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["realtime_account_balances_var_samp_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["realtime_account_balances_variance_fields"]: AliasType<{
 	balance?:true,
+	intervasp_transaction_value_received?:true,
+	intervasp_transaction_value_sent?:true,
+	intervasp_transaction_volume_received?:true,
+	intervasp_transaction_volume_sent?:true,
+	total_burn_value?:true,
+	total_mint_value?:true,
+	total_transaction_value_received?:true,
+	total_transaction_value_sent?:true,
+	total_transaction_volume_received?:true,
+	total_transaction_volume_sent?:true,
 	version?:true,
 		__typename?: true
 }>;
@@ -2517,6 +2689,18 @@ transactions_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["transactions_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["transactions_bool_exp"] | null},ValueTypes["transactions_aggregate"]],
 transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+vasp_details?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["vasp_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["vasp_details_bool_exp"] | null},ValueTypes["vasp_details"]],
+vasp_details_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["vasp_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["vasp_details_bool_exp"] | null},ValueTypes["vasp_details_aggregate"]],
 		__typename?: true
 }>;
 	["timestamptz"]:unknown;
@@ -2800,6 +2984,128 @@ count?: [{	columns?:ValueTypes["transactions_select_column"][],	distinct?:boolea
 	status?:true,
 	txn_type?:true,
 	version?:true,
+		__typename?: true
+}>;
+	/** columns and relationships of "vasp_details" */
+["vasp_details"]: AliasType<{
+	address?:true,
+	id?:true,
+	name?:true,
+	parent_address?:true,
+	transaction_version?:true,
+	type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "vasp_details" */
+["vasp_details_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["vasp_details_aggregate_fields"],
+	nodes?:ValueTypes["vasp_details"],
+		__typename?: true
+}>;
+	/** aggregate fields of "vasp_details" */
+["vasp_details_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["vasp_details_avg_fields"],
+count?: [{	columns?:ValueTypes["vasp_details_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["vasp_details_max_fields"],
+	min?:ValueTypes["vasp_details_min_fields"],
+	stddev?:ValueTypes["vasp_details_stddev_fields"],
+	stddev_pop?:ValueTypes["vasp_details_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["vasp_details_stddev_samp_fields"],
+	sum?:ValueTypes["vasp_details_sum_fields"],
+	var_pop?:ValueTypes["vasp_details_var_pop_fields"],
+	var_samp?:ValueTypes["vasp_details_var_samp_fields"],
+	variance?:ValueTypes["vasp_details_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["vasp_details_avg_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "vasp_details". All fields are combined with a logical 'AND'. */
+["vasp_details_bool_exp"]: {
+	_and?:ValueTypes["vasp_details_bool_exp"][],
+	_not?:ValueTypes["vasp_details_bool_exp"] | null,
+	_or?:ValueTypes["vasp_details_bool_exp"][],
+	address?:ValueTypes["bpchar_comparison_exp"] | null,
+	id?:ValueTypes["bigint_comparison_exp"] | null,
+	name?:ValueTypes["String_comparison_exp"] | null,
+	parent_address?:ValueTypes["bpchar_comparison_exp"] | null,
+	transaction_version?:ValueTypes["bigint_comparison_exp"] | null,
+	type?:ValueTypes["String_comparison_exp"] | null
+};
+	/** aggregate max on columns */
+["vasp_details_max_fields"]: AliasType<{
+	address?:true,
+	id?:true,
+	name?:true,
+	parent_address?:true,
+	transaction_version?:true,
+	type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["vasp_details_min_fields"]: AliasType<{
+	address?:true,
+	id?:true,
+	name?:true,
+	parent_address?:true,
+	transaction_version?:true,
+	type?:true,
+		__typename?: true
+}>;
+	/** Ordering options when selecting data from "vasp_details". */
+["vasp_details_order_by"]: {
+	address?:ValueTypes["order_by"] | null,
+	id?:ValueTypes["order_by"] | null,
+	name?:ValueTypes["order_by"] | null,
+	parent_address?:ValueTypes["order_by"] | null,
+	transaction_version?:ValueTypes["order_by"] | null,
+	type?:ValueTypes["order_by"] | null
+};
+	/** select columns of table "vasp_details" */
+["vasp_details_select_column"]:vasp_details_select_column;
+	/** aggregate stddev on columns */
+["vasp_details_stddev_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["vasp_details_stddev_pop_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["vasp_details_stddev_samp_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["vasp_details_sum_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate var_pop on columns */
+["vasp_details_var_pop_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["vasp_details_var_samp_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["vasp_details_variance_fields"]: AliasType<{
+	id?:true,
+	transaction_version?:true,
 		__typename?: true
 }>
   }
@@ -3092,7 +3398,7 @@ export type ModelTypes = {
 	currency:ModelTypes["bpchar"],
 	key:string,
 	sequence_number:ModelTypes["bigint"],
-	status:number,
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "burn_events" */
@@ -3735,7 +4041,7 @@ export type ModelTypes = {
 	currency:ModelTypes["bpchar"],
 	key:string,
 	sequence_number:ModelTypes["bigint"],
-	status:number,
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "preburn_events" */
@@ -3926,7 +4232,11 @@ export type ModelTypes = {
 	/** fetch aggregated fields from the table: "transactions" */
 	transactions_aggregate:ModelTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
-	transactions_by_pk?:ModelTypes["transactions"]
+	transactions_by_pk?:ModelTypes["transactions"],
+	/** fetch data from the table: "vasp_details" */
+	vasp_details:ModelTypes["vasp_details"][],
+	/** fetch aggregated fields from the table: "vasp_details" */
+	vasp_details_aggregate:ModelTypes["vasp_details_aggregate"]
 };
 	/** columns and relationships of "realtime_account_balances" */
 ["realtime_account_balances"]: {
@@ -3935,6 +4245,16 @@ export type ModelTypes = {
 	blockchain_timestamp:ModelTypes["timestamptz"],
 	currency:ModelTypes["bpchar"],
 	indexer_timestamp:ModelTypes["timestamptz"],
+	intervasp_transaction_value_received:ModelTypes["bigint"],
+	intervasp_transaction_value_sent:ModelTypes["bigint"],
+	intervasp_transaction_volume_received:ModelTypes["bigint"],
+	intervasp_transaction_volume_sent:ModelTypes["bigint"],
+	total_burn_value:ModelTypes["bigint"],
+	total_mint_value:ModelTypes["bigint"],
+	total_transaction_value_received:ModelTypes["bigint"],
+	total_transaction_value_sent:ModelTypes["bigint"],
+	total_transaction_volume_received:ModelTypes["bigint"],
+	total_transaction_volume_sent:ModelTypes["bigint"],
 	version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "realtime_account_balances" */
@@ -3959,6 +4279,16 @@ export type ModelTypes = {
 	/** aggregate avg on columns */
 ["realtime_account_balances_avg_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** Boolean expression to filter rows from the table "realtime_account_balances". All fields are combined with a logical 'AND'. */
@@ -3976,6 +4306,16 @@ export type ModelTypes = {
 	blockchain_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	indexer_timestamp?:ModelTypes["timestamptz"],
+	intervasp_transaction_value_received?:ModelTypes["bigint"],
+	intervasp_transaction_value_sent?:ModelTypes["bigint"],
+	intervasp_transaction_volume_received?:ModelTypes["bigint"],
+	intervasp_transaction_volume_sent?:ModelTypes["bigint"],
+	total_burn_value?:ModelTypes["bigint"],
+	total_mint_value?:ModelTypes["bigint"],
+	total_transaction_value_received?:ModelTypes["bigint"],
+	total_transaction_value_sent?:ModelTypes["bigint"],
+	total_transaction_volume_received?:ModelTypes["bigint"],
+	total_transaction_volume_sent?:ModelTypes["bigint"],
 	version?:ModelTypes["bigint"]
 };
 	/** aggregate min on columns */
@@ -3985,6 +4325,16 @@ export type ModelTypes = {
 	blockchain_timestamp?:ModelTypes["timestamptz"],
 	currency?:ModelTypes["bpchar"],
 	indexer_timestamp?:ModelTypes["timestamptz"],
+	intervasp_transaction_value_received?:ModelTypes["bigint"],
+	intervasp_transaction_value_sent?:ModelTypes["bigint"],
+	intervasp_transaction_volume_received?:ModelTypes["bigint"],
+	intervasp_transaction_volume_sent?:ModelTypes["bigint"],
+	total_burn_value?:ModelTypes["bigint"],
+	total_mint_value?:ModelTypes["bigint"],
+	total_transaction_value_received?:ModelTypes["bigint"],
+	total_transaction_value_sent?:ModelTypes["bigint"],
+	total_transaction_volume_received?:ModelTypes["bigint"],
+	total_transaction_volume_sent?:ModelTypes["bigint"],
 	version?:ModelTypes["bigint"]
 };
 	/** response of any mutation on the table "realtime_account_balances" */
@@ -4007,21 +4357,61 @@ export type ModelTypes = {
 	/** aggregate stddev on columns */
 ["realtime_account_balances_stddev_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** aggregate stddev_pop on columns */
 ["realtime_account_balances_stddev_pop_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** aggregate stddev_samp on columns */
 ["realtime_account_balances_stddev_samp_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** aggregate sum on columns */
 ["realtime_account_balances_sum_fields"]: {
 		balance?:ModelTypes["bigint"],
+	intervasp_transaction_value_received?:ModelTypes["bigint"],
+	intervasp_transaction_value_sent?:ModelTypes["bigint"],
+	intervasp_transaction_volume_received?:ModelTypes["bigint"],
+	intervasp_transaction_volume_sent?:ModelTypes["bigint"],
+	total_burn_value?:ModelTypes["bigint"],
+	total_mint_value?:ModelTypes["bigint"],
+	total_transaction_value_received?:ModelTypes["bigint"],
+	total_transaction_value_sent?:ModelTypes["bigint"],
+	total_transaction_volume_received?:ModelTypes["bigint"],
+	total_transaction_volume_sent?:ModelTypes["bigint"],
 	version?:ModelTypes["bigint"]
 };
 	/** update columns of table "realtime_account_balances" */
@@ -4029,16 +4419,46 @@ export type ModelTypes = {
 	/** aggregate var_pop on columns */
 ["realtime_account_balances_var_pop_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** aggregate var_samp on columns */
 ["realtime_account_balances_var_samp_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** aggregate variance on columns */
 ["realtime_account_balances_variance_fields"]: {
 		balance?:number,
+	intervasp_transaction_value_received?:number,
+	intervasp_transaction_value_sent?:number,
+	intervasp_transaction_volume_received?:number,
+	intervasp_transaction_volume_sent?:number,
+	total_burn_value?:number,
+	total_mint_value?:number,
+	total_transaction_value_received?:number,
+	total_transaction_value_sent?:number,
+	total_transaction_volume_received?:number,
+	total_transaction_volume_sent?:number,
 	version?:number
 };
 	/** columns and relationships of "receivedmint_events" */
@@ -4049,7 +4469,7 @@ export type ModelTypes = {
 	key:string,
 	receiver:ModelTypes["bpchar"],
 	sequence_number:ModelTypes["bigint"],
-	status:number,
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "receivedmint_events" */
@@ -4186,7 +4606,7 @@ export type ModelTypes = {
 	receiver:ModelTypes["bpchar"],
 	sender:ModelTypes["bpchar"],
 	sequence_number:ModelTypes["bigint"],
-	status:number,
+	status?:number,
 	transaction_version:ModelTypes["bigint"]
 };
 	/** aggregated selection of "sentpayment_events" */
@@ -4384,7 +4804,11 @@ export type ModelTypes = {
 	/** fetch aggregated fields from the table: "transactions" */
 	transactions_aggregate:ModelTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
-	transactions_by_pk?:ModelTypes["transactions"]
+	transactions_by_pk?:ModelTypes["transactions"],
+	/** fetch data from the table: "vasp_details" */
+	vasp_details:ModelTypes["vasp_details"][],
+	/** fetch aggregated fields from the table: "vasp_details" */
+	vasp_details_aggregate:ModelTypes["vasp_details_aggregate"]
 };
 	["timestamptz"]:any;
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -4570,6 +4994,98 @@ export type ModelTypes = {
 	status?:number,
 	txn_type?:number,
 	version?:number
+};
+	/** columns and relationships of "vasp_details" */
+["vasp_details"]: {
+		address?:ModelTypes["bpchar"],
+	id?:ModelTypes["bigint"],
+	name?:string,
+	parent_address?:ModelTypes["bpchar"],
+	transaction_version?:ModelTypes["bigint"],
+	type?:string
+};
+	/** aggregated selection of "vasp_details" */
+["vasp_details_aggregate"]: {
+		aggregate?:ModelTypes["vasp_details_aggregate_fields"],
+	nodes:ModelTypes["vasp_details"][]
+};
+	/** aggregate fields of "vasp_details" */
+["vasp_details_aggregate_fields"]: {
+		avg?:ModelTypes["vasp_details_avg_fields"],
+	count:number,
+	max?:ModelTypes["vasp_details_max_fields"],
+	min?:ModelTypes["vasp_details_min_fields"],
+	stddev?:ModelTypes["vasp_details_stddev_fields"],
+	stddev_pop?:ModelTypes["vasp_details_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["vasp_details_stddev_samp_fields"],
+	sum?:ModelTypes["vasp_details_sum_fields"],
+	var_pop?:ModelTypes["vasp_details_var_pop_fields"],
+	var_samp?:ModelTypes["vasp_details_var_samp_fields"],
+	variance?:ModelTypes["vasp_details_variance_fields"]
+};
+	/** aggregate avg on columns */
+["vasp_details_avg_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** Boolean expression to filter rows from the table "vasp_details". All fields are combined with a logical 'AND'. */
+["vasp_details_bool_exp"]: GraphQLTypes["vasp_details_bool_exp"];
+	/** aggregate max on columns */
+["vasp_details_max_fields"]: {
+		address?:ModelTypes["bpchar"],
+	id?:ModelTypes["bigint"],
+	name?:string,
+	parent_address?:ModelTypes["bpchar"],
+	transaction_version?:ModelTypes["bigint"],
+	type?:string
+};
+	/** aggregate min on columns */
+["vasp_details_min_fields"]: {
+		address?:ModelTypes["bpchar"],
+	id?:ModelTypes["bigint"],
+	name?:string,
+	parent_address?:ModelTypes["bpchar"],
+	transaction_version?:ModelTypes["bigint"],
+	type?:string
+};
+	/** Ordering options when selecting data from "vasp_details". */
+["vasp_details_order_by"]: GraphQLTypes["vasp_details_order_by"];
+	/** select columns of table "vasp_details" */
+["vasp_details_select_column"]: GraphQLTypes["vasp_details_select_column"];
+	/** aggregate stddev on columns */
+["vasp_details_stddev_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** aggregate stddev_pop on columns */
+["vasp_details_stddev_pop_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** aggregate stddev_samp on columns */
+["vasp_details_stddev_samp_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** aggregate sum on columns */
+["vasp_details_sum_fields"]: {
+		id?:ModelTypes["bigint"],
+	transaction_version?:ModelTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["vasp_details_var_pop_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** aggregate var_samp on columns */
+["vasp_details_var_samp_fields"]: {
+		id?:number,
+	transaction_version?:number
+};
+	/** aggregate variance on columns */
+["vasp_details_variance_fields"]: {
+		id?:number,
+	transaction_version?:number
 }
     }
 
@@ -5115,7 +5631,7 @@ export type GraphQLTypes = {
 	currency: GraphQLTypes["bpchar"],
 	key: string,
 	sequence_number: GraphQLTypes["bigint"],
-	status: number,
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "burn_events" */
@@ -5971,7 +6487,7 @@ export type GraphQLTypes = {
 	currency: GraphQLTypes["bpchar"],
 	key: string,
 	sequence_number: GraphQLTypes["bigint"],
-	status: number,
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "preburn_events" */
@@ -6227,7 +6743,11 @@ export type GraphQLTypes = {
 	/** fetch aggregated fields from the table: "transactions" */
 	transactions_aggregate: GraphQLTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
-	transactions_by_pk?: GraphQLTypes["transactions"]
+	transactions_by_pk?: GraphQLTypes["transactions"],
+	/** fetch data from the table: "vasp_details" */
+	vasp_details: Array<GraphQLTypes["vasp_details"]>,
+	/** fetch aggregated fields from the table: "vasp_details" */
+	vasp_details_aggregate: GraphQLTypes["vasp_details_aggregate"]
 };
 	/** columns and relationships of "realtime_account_balances" */
 ["realtime_account_balances"]: {
@@ -6237,6 +6757,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp: GraphQLTypes["timestamptz"],
 	currency: GraphQLTypes["bpchar"],
 	indexer_timestamp: GraphQLTypes["timestamptz"],
+	intervasp_transaction_value_received: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent: GraphQLTypes["bigint"],
+	total_burn_value: GraphQLTypes["bigint"],
+	total_mint_value: GraphQLTypes["bigint"],
+	total_transaction_value_received: GraphQLTypes["bigint"],
+	total_transaction_value_sent: GraphQLTypes["bigint"],
+	total_transaction_volume_received: GraphQLTypes["bigint"],
+	total_transaction_volume_sent: GraphQLTypes["bigint"],
 	version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "realtime_account_balances" */
@@ -6264,6 +6794,16 @@ export type GraphQLTypes = {
 ["realtime_account_balances_avg_fields"]: {
 	__typename: "realtime_account_balances_avg_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** Boolean expression to filter rows from the table "realtime_account_balances". All fields are combined with a logical 'AND'. */
@@ -6276,6 +6816,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
 	currency?: GraphQLTypes["bpchar_comparison_exp"],
 	indexer_timestamp?: GraphQLTypes["timestamptz_comparison_exp"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint_comparison_exp"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint_comparison_exp"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint_comparison_exp"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint_comparison_exp"],
+	total_burn_value?: GraphQLTypes["bigint_comparison_exp"],
+	total_mint_value?: GraphQLTypes["bigint_comparison_exp"],
+	total_transaction_value_received?: GraphQLTypes["bigint_comparison_exp"],
+	total_transaction_value_sent?: GraphQLTypes["bigint_comparison_exp"],
+	total_transaction_volume_received?: GraphQLTypes["bigint_comparison_exp"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint_comparison_exp"],
 	version?: GraphQLTypes["bigint_comparison_exp"]
 };
 	/** unique or primary key constraints on table "realtime_account_balances" */
@@ -6283,6 +6833,16 @@ export type GraphQLTypes = {
 	/** input type for incrementing numeric columns in table "realtime_account_balances" */
 ["realtime_account_balances_inc_input"]: {
 		balance?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** input type for inserting data into table "realtime_account_balances" */
@@ -6292,6 +6852,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** aggregate max on columns */
@@ -6302,6 +6872,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** aggregate min on columns */
@@ -6312,6 +6892,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** response of any mutation on the table "realtime_account_balances" */
@@ -6335,6 +6925,16 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["order_by"],
 	currency?: GraphQLTypes["order_by"],
 	indexer_timestamp?: GraphQLTypes["order_by"],
+	intervasp_transaction_value_received?: GraphQLTypes["order_by"],
+	intervasp_transaction_value_sent?: GraphQLTypes["order_by"],
+	intervasp_transaction_volume_received?: GraphQLTypes["order_by"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["order_by"],
+	total_burn_value?: GraphQLTypes["order_by"],
+	total_mint_value?: GraphQLTypes["order_by"],
+	total_transaction_value_received?: GraphQLTypes["order_by"],
+	total_transaction_value_sent?: GraphQLTypes["order_by"],
+	total_transaction_volume_received?: GraphQLTypes["order_by"],
+	total_transaction_volume_sent?: GraphQLTypes["order_by"],
 	version?: GraphQLTypes["order_by"]
 };
 	/** primary key columns input for table: realtime_account_balances */
@@ -6352,30 +6952,80 @@ export type GraphQLTypes = {
 	blockchain_timestamp?: GraphQLTypes["timestamptz"],
 	currency?: GraphQLTypes["bpchar"],
 	indexer_timestamp?: GraphQLTypes["timestamptz"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** aggregate stddev on columns */
 ["realtime_account_balances_stddev_fields"]: {
 	__typename: "realtime_account_balances_stddev_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** aggregate stddev_pop on columns */
 ["realtime_account_balances_stddev_pop_fields"]: {
 	__typename: "realtime_account_balances_stddev_pop_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** aggregate stddev_samp on columns */
 ["realtime_account_balances_stddev_samp_fields"]: {
 	__typename: "realtime_account_balances_stddev_samp_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** aggregate sum on columns */
 ["realtime_account_balances_sum_fields"]: {
 	__typename: "realtime_account_balances_sum_fields",
 	balance?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_value_sent?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_received?: GraphQLTypes["bigint"],
+	intervasp_transaction_volume_sent?: GraphQLTypes["bigint"],
+	total_burn_value?: GraphQLTypes["bigint"],
+	total_mint_value?: GraphQLTypes["bigint"],
+	total_transaction_value_received?: GraphQLTypes["bigint"],
+	total_transaction_value_sent?: GraphQLTypes["bigint"],
+	total_transaction_volume_received?: GraphQLTypes["bigint"],
+	total_transaction_volume_sent?: GraphQLTypes["bigint"],
 	version?: GraphQLTypes["bigint"]
 };
 	/** update columns of table "realtime_account_balances" */
@@ -6384,18 +7034,48 @@ export type GraphQLTypes = {
 ["realtime_account_balances_var_pop_fields"]: {
 	__typename: "realtime_account_balances_var_pop_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** aggregate var_samp on columns */
 ["realtime_account_balances_var_samp_fields"]: {
 	__typename: "realtime_account_balances_var_samp_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** aggregate variance on columns */
 ["realtime_account_balances_variance_fields"]: {
 	__typename: "realtime_account_balances_variance_fields",
 	balance?: number,
+	intervasp_transaction_value_received?: number,
+	intervasp_transaction_value_sent?: number,
+	intervasp_transaction_volume_received?: number,
+	intervasp_transaction_volume_sent?: number,
+	total_burn_value?: number,
+	total_mint_value?: number,
+	total_transaction_value_received?: number,
+	total_transaction_value_sent?: number,
+	total_transaction_volume_received?: number,
+	total_transaction_volume_sent?: number,
 	version?: number
 };
 	/** columns and relationships of "receivedmint_events" */
@@ -6407,7 +7087,7 @@ export type GraphQLTypes = {
 	key: string,
 	receiver: GraphQLTypes["bpchar"],
 	sequence_number: GraphQLTypes["bigint"],
-	status: number,
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "receivedmint_events" */
@@ -6609,7 +7289,7 @@ export type GraphQLTypes = {
 	receiver: GraphQLTypes["bpchar"],
 	sender: GraphQLTypes["bpchar"],
 	sequence_number: GraphQLTypes["bigint"],
-	status: number,
+	status?: number,
 	transaction_version: GraphQLTypes["bigint"]
 };
 	/** aggregated selection of "sentpayment_events" */
@@ -6890,7 +7570,11 @@ export type GraphQLTypes = {
 	/** fetch aggregated fields from the table: "transactions" */
 	transactions_aggregate: GraphQLTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
-	transactions_by_pk?: GraphQLTypes["transactions"]
+	transactions_by_pk?: GraphQLTypes["transactions"],
+	/** fetch data from the table: "vasp_details" */
+	vasp_details: Array<GraphQLTypes["vasp_details"]>,
+	/** fetch aggregated fields from the table: "vasp_details" */
+	vasp_details_aggregate: GraphQLTypes["vasp_details_aggregate"]
 };
 	["timestamptz"]:any;
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -7174,6 +7858,128 @@ export type GraphQLTypes = {
 	status?: number,
 	txn_type?: number,
 	version?: number
+};
+	/** columns and relationships of "vasp_details" */
+["vasp_details"]: {
+	__typename: "vasp_details",
+	address?: GraphQLTypes["bpchar"],
+	id?: GraphQLTypes["bigint"],
+	name?: string,
+	parent_address?: GraphQLTypes["bpchar"],
+	transaction_version?: GraphQLTypes["bigint"],
+	type?: string
+};
+	/** aggregated selection of "vasp_details" */
+["vasp_details_aggregate"]: {
+	__typename: "vasp_details_aggregate",
+	aggregate?: GraphQLTypes["vasp_details_aggregate_fields"],
+	nodes: Array<GraphQLTypes["vasp_details"]>
+};
+	/** aggregate fields of "vasp_details" */
+["vasp_details_aggregate_fields"]: {
+	__typename: "vasp_details_aggregate_fields",
+	avg?: GraphQLTypes["vasp_details_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["vasp_details_max_fields"],
+	min?: GraphQLTypes["vasp_details_min_fields"],
+	stddev?: GraphQLTypes["vasp_details_stddev_fields"],
+	stddev_pop?: GraphQLTypes["vasp_details_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["vasp_details_stddev_samp_fields"],
+	sum?: GraphQLTypes["vasp_details_sum_fields"],
+	var_pop?: GraphQLTypes["vasp_details_var_pop_fields"],
+	var_samp?: GraphQLTypes["vasp_details_var_samp_fields"],
+	variance?: GraphQLTypes["vasp_details_variance_fields"]
+};
+	/** aggregate avg on columns */
+["vasp_details_avg_fields"]: {
+	__typename: "vasp_details_avg_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** Boolean expression to filter rows from the table "vasp_details". All fields are combined with a logical 'AND'. */
+["vasp_details_bool_exp"]: {
+		_and?: Array<GraphQLTypes["vasp_details_bool_exp"]>,
+	_not?: GraphQLTypes["vasp_details_bool_exp"],
+	_or?: Array<GraphQLTypes["vasp_details_bool_exp"]>,
+	address?: GraphQLTypes["bpchar_comparison_exp"],
+	id?: GraphQLTypes["bigint_comparison_exp"],
+	name?: GraphQLTypes["String_comparison_exp"],
+	parent_address?: GraphQLTypes["bpchar_comparison_exp"],
+	transaction_version?: GraphQLTypes["bigint_comparison_exp"],
+	type?: GraphQLTypes["String_comparison_exp"]
+};
+	/** aggregate max on columns */
+["vasp_details_max_fields"]: {
+	__typename: "vasp_details_max_fields",
+	address?: GraphQLTypes["bpchar"],
+	id?: GraphQLTypes["bigint"],
+	name?: string,
+	parent_address?: GraphQLTypes["bpchar"],
+	transaction_version?: GraphQLTypes["bigint"],
+	type?: string
+};
+	/** aggregate min on columns */
+["vasp_details_min_fields"]: {
+	__typename: "vasp_details_min_fields",
+	address?: GraphQLTypes["bpchar"],
+	id?: GraphQLTypes["bigint"],
+	name?: string,
+	parent_address?: GraphQLTypes["bpchar"],
+	transaction_version?: GraphQLTypes["bigint"],
+	type?: string
+};
+	/** Ordering options when selecting data from "vasp_details". */
+["vasp_details_order_by"]: {
+		address?: GraphQLTypes["order_by"],
+	id?: GraphQLTypes["order_by"],
+	name?: GraphQLTypes["order_by"],
+	parent_address?: GraphQLTypes["order_by"],
+	transaction_version?: GraphQLTypes["order_by"],
+	type?: GraphQLTypes["order_by"]
+};
+	/** select columns of table "vasp_details" */
+["vasp_details_select_column"]: vasp_details_select_column;
+	/** aggregate stddev on columns */
+["vasp_details_stddev_fields"]: {
+	__typename: "vasp_details_stddev_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** aggregate stddev_pop on columns */
+["vasp_details_stddev_pop_fields"]: {
+	__typename: "vasp_details_stddev_pop_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** aggregate stddev_samp on columns */
+["vasp_details_stddev_samp_fields"]: {
+	__typename: "vasp_details_stddev_samp_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** aggregate sum on columns */
+["vasp_details_sum_fields"]: {
+	__typename: "vasp_details_sum_fields",
+	id?: GraphQLTypes["bigint"],
+	transaction_version?: GraphQLTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["vasp_details_var_pop_fields"]: {
+	__typename: "vasp_details_var_pop_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** aggregate var_samp on columns */
+["vasp_details_var_samp_fields"]: {
+	__typename: "vasp_details_var_samp_fields",
+	id?: number,
+	transaction_version?: number
+};
+	/** aggregate variance on columns */
+["vasp_details_variance_fields"]: {
+	__typename: "vasp_details_variance_fields",
+	id?: number,
+	transaction_version?: number
 }
     }
 /** unique or primary key constraints on table "accounts_balances" */
@@ -7374,6 +8180,16 @@ export const enum realtime_account_balances_select_column {
 	blockchain_timestamp = "blockchain_timestamp",
 	currency = "currency",
 	indexer_timestamp = "indexer_timestamp",
+	intervasp_transaction_value_received = "intervasp_transaction_value_received",
+	intervasp_transaction_value_sent = "intervasp_transaction_value_sent",
+	intervasp_transaction_volume_received = "intervasp_transaction_volume_received",
+	intervasp_transaction_volume_sent = "intervasp_transaction_volume_sent",
+	total_burn_value = "total_burn_value",
+	total_mint_value = "total_mint_value",
+	total_transaction_value_received = "total_transaction_value_received",
+	total_transaction_value_sent = "total_transaction_value_sent",
+	total_transaction_volume_received = "total_transaction_volume_received",
+	total_transaction_volume_sent = "total_transaction_volume_sent",
 	version = "version"
 }
 /** update columns of table "realtime_account_balances" */
@@ -7383,6 +8199,16 @@ export const enum realtime_account_balances_update_column {
 	blockchain_timestamp = "blockchain_timestamp",
 	currency = "currency",
 	indexer_timestamp = "indexer_timestamp",
+	intervasp_transaction_value_received = "intervasp_transaction_value_received",
+	intervasp_transaction_value_sent = "intervasp_transaction_value_sent",
+	intervasp_transaction_volume_received = "intervasp_transaction_volume_received",
+	intervasp_transaction_volume_sent = "intervasp_transaction_volume_sent",
+	total_burn_value = "total_burn_value",
+	total_mint_value = "total_mint_value",
+	total_transaction_value_received = "total_transaction_value_received",
+	total_transaction_value_sent = "total_transaction_value_sent",
+	total_transaction_volume_received = "total_transaction_volume_received",
+	total_transaction_volume_sent = "total_transaction_volume_sent",
 	version = "version"
 }
 /** unique or primary key constraints on table "receivedmint_events" */
@@ -7476,6 +8302,15 @@ export const enum transactions_update_column {
 	status = "status",
 	txn_type = "txn_type",
 	version = "version"
+}
+/** select columns of table "vasp_details" */
+export const enum vasp_details_select_column {
+	address = "address",
+	id = "id",
+	name = "name",
+	parent_address = "parent_address",
+	transaction_version = "transaction_version",
+	type = "type"
 }
 export class GraphQLError extends Error {
     constructor(public response: GraphQLResponse) {

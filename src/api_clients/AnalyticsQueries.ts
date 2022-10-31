@@ -151,19 +151,19 @@ export function accountcreationEventsQuery() {
   }
 }
 
-export type VaspsList = GraphQLTypes['preburn_events']
+export type VaspsDetails = GraphQLTypes['vasp_details']
 export function vaspsList() {
   return {
-    preburn_events: [
+    vasp_details: [
       {
-        limit: 300,
-        order_by: [{ transaction_version: order_by.desc }],
+
       },
       {
-        transaction_version: true,
-        commit_timestamp: true,
+        name: true,
         address: true,
-        currency: true,
+        type: true,
+        transaction_version: true,
+        parent_address: true
       },
     ],
   }
