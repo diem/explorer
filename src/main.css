@@ -36,4 +36,13 @@
 
 .loading .spinner-border {
   color: var(--diem) !important;
- }
+}
+
+.vasp .form-check-input:checked {
+  background-color: var(--diem);
+  border-color: var(--diem);
+}
+
+.vasp .form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 10%);
+}

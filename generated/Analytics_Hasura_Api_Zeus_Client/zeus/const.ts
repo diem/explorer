@@ -4151,6 +4151,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:true
 			}
+		},
+		vasp_details:{
+			distinct_on:{
+				type:"vasp_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"vasp_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"vasp_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		vasp_details_aggregate:{
+			distinct_on:{
+				type:"vasp_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"vasp_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"vasp_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	realtime_account_balances_aggregate_fields:{
@@ -4218,6 +4282,66 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		intervasp_transaction_value_received:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_sent:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_received:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_sent:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burn_value:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mint_value:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_received:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_sent:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_received:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_sent:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		version:{
 			type:"bigint_comparison_exp",
 			array:false,
@@ -4228,6 +4352,66 @@ export const AllTypesProps: Record<string,any> = {
 	realtime_account_balances_constraint: "enum",
 	realtime_account_balances_inc_input:{
 		balance:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burn_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mint_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_sent:{
 			type:"bigint",
 			array:false,
 			arrayRequired:false,
@@ -4267,6 +4451,66 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		indexer_timestamp:{
 			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burn_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mint_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_sent:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -4329,6 +4573,66 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		intervasp_transaction_value_received:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_sent:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_received:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_sent:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burn_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mint_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_received:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_sent:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_received:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_sent:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		version:{
 			type:"order_by",
 			array:false,
@@ -4384,6 +4688,66 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		indexer_timestamp:{
 			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		intervasp_transaction_volume_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_burn_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_mint_value:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_value_sent:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_received:{
+			type:"bigint",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_transaction_volume_sent:{
+			type:"bigint",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -5933,6 +6297,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:true
 			}
+		},
+		vasp_details:{
+			distinct_on:{
+				type:"vasp_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"vasp_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"vasp_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		vasp_details_aggregate:{
+			distinct_on:{
+				type:"vasp_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"vasp_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"vasp_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	timestamptz: "String",
@@ -6426,7 +6854,118 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	transactions_update_column: "enum"
+	transactions_update_column: "enum",
+	vasp_details_aggregate_fields:{
+		count:{
+			columns:{
+				type:"vasp_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	vasp_details_bool_exp:{
+		_and:{
+			type:"vasp_details_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"vasp_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"vasp_details_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		address:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		parent_address:{
+			type:"bpchar_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	vasp_details_order_by:{
+		address:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		parent_address:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	vasp_details_select_column: "enum"
 }
 
 export const ReturnTypes: Record<string,any> = {
@@ -7213,7 +7752,9 @@ export const ReturnTypes: Record<string,any> = {
 		sentpayment_events_by_pk:"sentpayment_events",
 		transactions:"transactions",
 		transactions_aggregate:"transactions_aggregate",
-		transactions_by_pk:"transactions"
+		transactions_by_pk:"transactions",
+		vasp_details:"vasp_details",
+		vasp_details_aggregate:"vasp_details_aggregate"
 	},
 	realtime_account_balances:{
 		account:"bpchar",
@@ -7221,6 +7762,16 @@ export const ReturnTypes: Record<string,any> = {
 		blockchain_timestamp:"timestamptz",
 		currency:"bpchar",
 		indexer_timestamp:"timestamptz",
+		intervasp_transaction_value_received:"bigint",
+		intervasp_transaction_value_sent:"bigint",
+		intervasp_transaction_volume_received:"bigint",
+		intervasp_transaction_volume_sent:"bigint",
+		total_burn_value:"bigint",
+		total_mint_value:"bigint",
+		total_transaction_value_received:"bigint",
+		total_transaction_value_sent:"bigint",
+		total_transaction_volume_received:"bigint",
+		total_transaction_volume_sent:"bigint",
 		version:"bigint"
 	},
 	realtime_account_balances_aggregate:{
@@ -7242,6 +7793,16 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	realtime_account_balances_avg_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_max_fields:{
@@ -7250,6 +7811,16 @@ export const ReturnTypes: Record<string,any> = {
 		blockchain_timestamp:"timestamptz",
 		currency:"bpchar",
 		indexer_timestamp:"timestamptz",
+		intervasp_transaction_value_received:"bigint",
+		intervasp_transaction_value_sent:"bigint",
+		intervasp_transaction_volume_received:"bigint",
+		intervasp_transaction_volume_sent:"bigint",
+		total_burn_value:"bigint",
+		total_mint_value:"bigint",
+		total_transaction_value_received:"bigint",
+		total_transaction_value_sent:"bigint",
+		total_transaction_volume_received:"bigint",
+		total_transaction_volume_sent:"bigint",
 		version:"bigint"
 	},
 	realtime_account_balances_min_fields:{
@@ -7258,6 +7829,16 @@ export const ReturnTypes: Record<string,any> = {
 		blockchain_timestamp:"timestamptz",
 		currency:"bpchar",
 		indexer_timestamp:"timestamptz",
+		intervasp_transaction_value_received:"bigint",
+		intervasp_transaction_value_sent:"bigint",
+		intervasp_transaction_volume_received:"bigint",
+		intervasp_transaction_volume_sent:"bigint",
+		total_burn_value:"bigint",
+		total_mint_value:"bigint",
+		total_transaction_value_received:"bigint",
+		total_transaction_value_sent:"bigint",
+		total_transaction_volume_received:"bigint",
+		total_transaction_volume_sent:"bigint",
 		version:"bigint"
 	},
 	realtime_account_balances_mutation_response:{
@@ -7266,30 +7847,100 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	realtime_account_balances_stddev_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_stddev_pop_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_stddev_samp_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_sum_fields:{
 		balance:"bigint",
+		intervasp_transaction_value_received:"bigint",
+		intervasp_transaction_value_sent:"bigint",
+		intervasp_transaction_volume_received:"bigint",
+		intervasp_transaction_volume_sent:"bigint",
+		total_burn_value:"bigint",
+		total_mint_value:"bigint",
+		total_transaction_value_received:"bigint",
+		total_transaction_value_sent:"bigint",
+		total_transaction_volume_received:"bigint",
+		total_transaction_volume_sent:"bigint",
 		version:"bigint"
 	},
 	realtime_account_balances_var_pop_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_var_samp_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	realtime_account_balances_variance_fields:{
 		balance:"Float",
+		intervasp_transaction_value_received:"Float",
+		intervasp_transaction_value_sent:"Float",
+		intervasp_transaction_volume_received:"Float",
+		intervasp_transaction_volume_sent:"Float",
+		total_burn_value:"Float",
+		total_mint_value:"Float",
+		total_transaction_value_received:"Float",
+		total_transaction_value_sent:"Float",
+		total_transaction_volume_received:"Float",
+		total_transaction_volume_sent:"Float",
 		version:"Float"
 	},
 	receivedmint_events:{
@@ -7528,7 +8179,9 @@ export const ReturnTypes: Record<string,any> = {
 		sentpayment_events_by_pk:"sentpayment_events",
 		transactions:"transactions",
 		transactions_aggregate:"transactions_aggregate",
-		transactions_by_pk:"transactions"
+		transactions_by_pk:"transactions",
+		vasp_details:"vasp_details",
+		vasp_details_aggregate:"vasp_details_aggregate"
 	},
 	transactions:{
 		chain_id:"smallint",
@@ -7675,5 +8328,78 @@ export const ReturnTypes: Record<string,any> = {
 		status:"Float",
 		txn_type:"Float",
 		version:"Float"
+	},
+	vasp_details:{
+		address:"bpchar",
+		id:"bigint",
+		name:"String",
+		parent_address:"bpchar",
+		transaction_version:"bigint",
+		type:"String"
+	},
+	vasp_details_aggregate:{
+		aggregate:"vasp_details_aggregate_fields",
+		nodes:"vasp_details"
+	},
+	vasp_details_aggregate_fields:{
+		avg:"vasp_details_avg_fields",
+		count:"Int",
+		max:"vasp_details_max_fields",
+		min:"vasp_details_min_fields",
+		stddev:"vasp_details_stddev_fields",
+		stddev_pop:"vasp_details_stddev_pop_fields",
+		stddev_samp:"vasp_details_stddev_samp_fields",
+		sum:"vasp_details_sum_fields",
+		var_pop:"vasp_details_var_pop_fields",
+		var_samp:"vasp_details_var_samp_fields",
+		variance:"vasp_details_variance_fields"
+	},
+	vasp_details_avg_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_max_fields:{
+		address:"bpchar",
+		id:"bigint",
+		name:"String",
+		parent_address:"bpchar",
+		transaction_version:"bigint",
+		type:"String"
+	},
+	vasp_details_min_fields:{
+		address:"bpchar",
+		id:"bigint",
+		name:"String",
+		parent_address:"bpchar",
+		transaction_version:"bigint",
+		type:"String"
+	},
+	vasp_details_stddev_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_stddev_pop_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_stddev_samp_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_sum_fields:{
+		id:"bigint",
+		transaction_version:"bigint"
+	},
+	vasp_details_var_pop_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_var_samp_fields:{
+		id:"Float",
+		transaction_version:"Float"
+	},
+	vasp_details_variance_fields:{
+		id:"Float",
+		transaction_version:"Float"
 	}
 }

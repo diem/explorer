@@ -151,6 +151,24 @@ export function accountcreationEventsQuery() {
   }
 }
 
+export type VaspsDetails = GraphQLTypes['vasp_details']
+export function vaspsList() {
+  return {
+    vasp_details: [
+      {
+
+      },
+      {
+        name: true,
+        address: true,
+        type: true,
+        transaction_version: true,
+        parent_address: true
+      },
+    ],
+  }
+}
+
 export type AccountBalancesQueryType =
   GraphQLTypes['query_root']['accounts_balances']
 export function top10AccountsQuery(currency: KnownCurrency) {

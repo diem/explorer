@@ -74,6 +74,9 @@ function MainWrapper(props: MainWrapperProps) {
                 <Link className='nav-link' to='/leaderboard'>
                   Leaderboard
                 </Link>
+                <Link className='nav-link' to='/vasps'>
+                  VASPs
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
