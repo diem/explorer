@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import ApiRequestComponent, { PlainErrorComponent, PlainLoadingComponent } from '../../ApiRequestComponent'
+import ApiRequestComponent, { FullPageLoadingComponent, PlainErrorComponent } from '../../ApiRequestComponent'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import { FetchError } from '../../api_clients/FetchTypes'
 import MainWrapper from '../../MainWrapper'
@@ -20,7 +20,7 @@ export function VaspTbl({
         return vaspRes.length > count
     }
     const nameValidate = (data: any) => {
-        return <span>Vasp Name {data.row.index}</span>
+        return <span>No.  {data.row.index + 1} VASP</span>
     }
 
     return (
@@ -97,7 +97,7 @@ export default function VaspsPage() {
                 </header>
                 <ApiRequestComponent
                     request={handleData}
-                    loadingComponent={<PlainLoadingComponent />}
+                    loadingComponent={<FullPageLoadingComponent />}
                     errorComponent={<PlainErrorComponent />}
                 >
                     <div>

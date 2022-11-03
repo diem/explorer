@@ -12,7 +12,7 @@ import {
   diemInCirculationHistoryQuery,
   DiemInCirculationHistoryType,
 } from '../../api_clients/AnalyticsQueries'
-import { Line, LineChart, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import moment from 'moment'
 import { FetchError } from '../../api_clients/FetchTypes'
 import { Card } from 'react-bootstrap'
@@ -42,6 +42,26 @@ type DiemInCirculationResponse = {
 const DiemInCirculationGraph: React.FC<{ data: DiemCirculationHistory[] }> = ({
   data,
 }) => {
+  const customTooltipOnYourLine = (e: any) => {
+    if (e.active && e.payload != null && e.payload[0] != null) {
+      return (<div className="custom-tooltip">
+        <p className='graphTooltip'>{e.payload[0].payload["totalNet"]}</p>
+      </div>);
+    }
+    else {
+      return "";
+    }
+  }
+  const graphWidth = (len: number) => {
+    let gWidth = 350;
+    if (len > 1 && len < 8) {
+      gWidth = len * 135
+    }
+    else if (len >= 8) {
+      gWidth = 850
+    }
+    return gWidth
+  }
   return (
     <Card
       data-testid='circulation-graph-card'
@@ -49,18 +69,23 @@ const DiemInCirculationGraph: React.FC<{ data: DiemCirculationHistory[] }> = ({
     >
       <Card.Header>Diem In Circulation History In Past Week</Card.Header>
       <Card.Body>
-        <LineChart width={500} height={300} data={data}>
-          <XAxis
-            dataKey='timestamp'
-            tickFormatter={(timestamp) =>
-              moment(timestamp).format('MM/DD HH:mm')
-            }
-          />
-          <YAxis />
-          <Line type='monotone' dataKey='totalNet' stroke='#82ca9d' />
-        </LineChart>
+        {data.length > 0 ?
+          <LineChart width={graphWidth(data.length)} height={300} data={data}
+            margin={{ top: 10, bottom: 10, left: 100, right: 10 }}
+          >
+            <CartesianGrid strokeDasharray="2 7" />
+            <XAxis padding={{ left: 30, right: 30 }}
+              dataKey='timestamp'
+              tickFormatter={(timestamp) =>
+                moment(timestamp).format('MM/DD HH:mm')
+              }
+            />
+            <YAxis dataKey='totalNet' />
+            <Tooltip content={customTooltipOnYourLine} />
+            <Line type='monotone' dataKey='totalNet' stroke='#8884d8' />
+          </LineChart> : "No Data Available"}
       </Card.Body>
-    </Card>
+    </Card >
   )
 }
 
