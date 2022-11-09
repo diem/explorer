@@ -9,6 +9,7 @@ import { VaspsDetails, vaspsList } from '../../api_clients/AnalyticsQueries'
 import Table, { column } from '../../Table'
 import { AccountAddress, TransactionVersion } from '../../TableComponents/Link'
 import { Form } from 'react-bootstrap'
+import TablewithSorting from '../../TableWithSorting'
 
 
 export function VaspTbl({
@@ -25,7 +26,7 @@ export function VaspTbl({
 
     return (
         <div>
-            <Table
+            <TablewithSorting
                 columns={[
                     column('Name', 'name', nameValidate),
                     column('Address', 'address', AccountAddress),
