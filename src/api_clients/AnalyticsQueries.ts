@@ -169,6 +169,21 @@ export function vaspsList() {
   }
 }
 
+
+export type TransactionsGraph = GraphQLTypes['transactions_graph']
+export function transactionsGraph() {
+  return {
+    transactions_graph: [
+      {},
+      {
+        id: true,
+        count: true,
+        transaction_date: true,
+      },
+    ],
+  }
+}
+
 export type AccountBalancesQueryType =
   GraphQLTypes['query_root']['accounts_balances']
 export function top10AccountsQuery(currency: KnownCurrency) {

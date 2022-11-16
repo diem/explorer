@@ -32,6 +32,7 @@ import { GraphQLTypes } from '../../../generated/Analytics_Hasura_Api_Zeus_Clien
 import { getCanonicalAddress } from '../../utils'
 import { Err, Ok, Result } from 'ts-results'
 import { FetchError } from '../../api_clients/FetchTypes'
+import TransactionHistory from '../Graphs/TransactionHistory'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -218,6 +219,7 @@ function LandingPageContent({ data }: { data: LandingPageContentProps }) {
         totalBurnValue={totalBurnAmount}
         totalNetValue={totalNetAmount}
       />
+      <TransactionHistory />
       <TransactionTable transactions={recentTransactions} />
     </Wrapper>
   )

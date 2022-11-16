@@ -1492,6 +1492,63 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	burn_events_update_column: "enum",
+	date: "String",
+	date_comparison_exp:{
+		_eq:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gt:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gte:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_in:{
+			type:"date",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_is_null:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lt:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lte:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_neq:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_nin:{
+			type:"date",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	diem_in_circulation_dynamic_aggregate_fields:{
 		count:{
 			columns:{
@@ -4152,6 +4209,70 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		transactions_graph:{
+			distinct_on:{
+				type:"transactions_graph_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"transactions_graph_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"transactions_graph_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		transactions_graph_aggregate:{
+			distinct_on:{
+				type:"transactions_graph_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"transactions_graph_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"transactions_graph_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		vasp_details:{
 			distinct_on:{
 				type:"vasp_details_select_column",
@@ -6298,6 +6419,70 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		transactions_graph:{
+			distinct_on:{
+				type:"transactions_graph_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"transactions_graph_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"transactions_graph_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		transactions_graph_aggregate:{
+			distinct_on:{
+				type:"transactions_graph_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"transactions_graph_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"transactions_graph_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		vasp_details:{
 			distinct_on:{
 				type:"vasp_details_select_column",
@@ -6535,6 +6720,81 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	transactions_constraint: "enum",
+	transactions_graph_aggregate_fields:{
+		count:{
+			columns:{
+				type:"transactions_graph_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	transactions_graph_bool_exp:{
+		_and:{
+			type:"transactions_graph_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"transactions_graph_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"transactions_graph_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		count:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"bigint_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_date:{
+			type:"date_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	transactions_graph_order_by:{
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		transaction_date:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	transactions_graph_select_column: "enum",
 	transactions_inc_input:{
 		chain_id:{
 			type:"smallint",
@@ -7753,6 +8013,8 @@ export const ReturnTypes: Record<string,any> = {
 		transactions:"transactions",
 		transactions_aggregate:"transactions_aggregate",
 		transactions_by_pk:"transactions",
+		transactions_graph:"transactions_graph",
+		transactions_graph_aggregate:"transactions_graph_aggregate",
 		vasp_details:"vasp_details",
 		vasp_details_aggregate:"vasp_details_aggregate"
 	},
@@ -8180,6 +8442,8 @@ export const ReturnTypes: Record<string,any> = {
 		transactions:"transactions",
 		transactions_aggregate:"transactions_aggregate",
 		transactions_by_pk:"transactions",
+		transactions_graph:"transactions_graph",
+		transactions_graph_aggregate:"transactions_graph_aggregate",
 		vasp_details:"vasp_details",
 		vasp_details_aggregate:"vasp_details_aggregate"
 	},
@@ -8224,6 +8488,70 @@ export const ReturnTypes: Record<string,any> = {
 		status:"Float",
 		txn_type:"Float",
 		version:"Float"
+	},
+	transactions_graph:{
+		count:"bigint",
+		id:"bigint",
+		transaction_date:"date"
+	},
+	transactions_graph_aggregate:{
+		aggregate:"transactions_graph_aggregate_fields",
+		nodes:"transactions_graph"
+	},
+	transactions_graph_aggregate_fields:{
+		avg:"transactions_graph_avg_fields",
+		count:"Int",
+		max:"transactions_graph_max_fields",
+		min:"transactions_graph_min_fields",
+		stddev:"transactions_graph_stddev_fields",
+		stddev_pop:"transactions_graph_stddev_pop_fields",
+		stddev_samp:"transactions_graph_stddev_samp_fields",
+		sum:"transactions_graph_sum_fields",
+		var_pop:"transactions_graph_var_pop_fields",
+		var_samp:"transactions_graph_var_samp_fields",
+		variance:"transactions_graph_variance_fields"
+	},
+	transactions_graph_avg_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_max_fields:{
+		count:"bigint",
+		id:"bigint",
+		transaction_date:"date"
+	},
+	transactions_graph_min_fields:{
+		count:"bigint",
+		id:"bigint",
+		transaction_date:"date"
+	},
+	transactions_graph_stddev_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_stddev_pop_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_stddev_samp_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_sum_fields:{
+		count:"bigint",
+		id:"bigint"
+	},
+	transactions_graph_var_pop_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_var_samp_fields:{
+		count:"Float",
+		id:"Float"
+	},
+	transactions_graph_variance_fields:{
+		count:"Float",
+		id:"Float"
 	},
 	transactions_max_fields:{
 		chain_id:"smallint",

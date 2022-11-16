@@ -737,6 +737,19 @@ count?: [{	columns?:ValueTypes["burn_events_select_column"][],	distinct?:boolean
 	transaction_version?:true,
 		__typename?: true
 }>;
+	["date"]:unknown;
+	/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+["date_comparison_exp"]: {
+	_eq?:ValueTypes["date"] | null,
+	_gt?:ValueTypes["date"] | null,
+	_gte?:ValueTypes["date"] | null,
+	_in?:ValueTypes["date"][],
+	_is_null?:boolean | null,
+	_lt?:ValueTypes["date"] | null,
+	_lte?:ValueTypes["date"] | null,
+	_neq?:ValueTypes["date"] | null,
+	_nin?:ValueTypes["date"][]
+};
 	/** columns and relationships of "diem_in_circulation_dynamic" */
 ["diem_in_circulation_dynamic"]: AliasType<{
 	burns?:true,
@@ -1776,6 +1789,18 @@ transactions_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["transactions_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["transactions_bool_exp"] | null},ValueTypes["transactions_aggregate"]],
 transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+transactions_graph?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["transactions_graph_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["transactions_graph_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["transactions_graph_bool_exp"] | null},ValueTypes["transactions_graph"]],
+transactions_graph_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["transactions_graph_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["transactions_graph_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["transactions_graph_bool_exp"] | null},ValueTypes["transactions_graph_aggregate"]],
 vasp_details?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2689,6 +2714,18 @@ transactions_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["transactions_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["transactions_bool_exp"] | null},ValueTypes["transactions_aggregate"]],
 transactions_by_pk?: [{	version:ValueTypes["bigint"]},ValueTypes["transactions"]],
+transactions_graph?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["transactions_graph_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["transactions_graph_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["transactions_graph_bool_exp"] | null},ValueTypes["transactions_graph"]],
+transactions_graph_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["transactions_graph_select_column"][],	/** limit the number of rows returned */
+	limit?:number | null,	/** skip the first n rows. Use only with order_by */
+	offset?:number | null,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["transactions_graph_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["transactions_graph_bool_exp"] | null},ValueTypes["transactions_graph_aggregate"]],
 vasp_details?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["vasp_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number | null,	/** skip the first n rows. Use only with order_by */
@@ -2787,6 +2824,113 @@ count?: [{	columns?:ValueTypes["transactions_select_column"][],	distinct?:boolea
 };
 	/** unique or primary key constraints on table "transactions" */
 ["transactions_constraint"]:transactions_constraint;
+	/** columns and relationships of "transactions_graph" */
+["transactions_graph"]: AliasType<{
+	count?:true,
+	id?:true,
+	transaction_date?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "transactions_graph" */
+["transactions_graph_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["transactions_graph_aggregate_fields"],
+	nodes?:ValueTypes["transactions_graph"],
+		__typename?: true
+}>;
+	/** aggregate fields of "transactions_graph" */
+["transactions_graph_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["transactions_graph_avg_fields"],
+count?: [{	columns?:ValueTypes["transactions_graph_select_column"][],	distinct?:boolean | null},true],
+	max?:ValueTypes["transactions_graph_max_fields"],
+	min?:ValueTypes["transactions_graph_min_fields"],
+	stddev?:ValueTypes["transactions_graph_stddev_fields"],
+	stddev_pop?:ValueTypes["transactions_graph_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["transactions_graph_stddev_samp_fields"],
+	sum?:ValueTypes["transactions_graph_sum_fields"],
+	var_pop?:ValueTypes["transactions_graph_var_pop_fields"],
+	var_samp?:ValueTypes["transactions_graph_var_samp_fields"],
+	variance?:ValueTypes["transactions_graph_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["transactions_graph_avg_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "transactions_graph". All fields are combined with a logical 'AND'. */
+["transactions_graph_bool_exp"]: {
+	_and?:ValueTypes["transactions_graph_bool_exp"][],
+	_not?:ValueTypes["transactions_graph_bool_exp"] | null,
+	_or?:ValueTypes["transactions_graph_bool_exp"][],
+	count?:ValueTypes["bigint_comparison_exp"] | null,
+	id?:ValueTypes["bigint_comparison_exp"] | null,
+	transaction_date?:ValueTypes["date_comparison_exp"] | null
+};
+	/** aggregate max on columns */
+["transactions_graph_max_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+	transaction_date?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["transactions_graph_min_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+	transaction_date?:true,
+		__typename?: true
+}>;
+	/** Ordering options when selecting data from "transactions_graph". */
+["transactions_graph_order_by"]: {
+	count?:ValueTypes["order_by"] | null,
+	id?:ValueTypes["order_by"] | null,
+	transaction_date?:ValueTypes["order_by"] | null
+};
+	/** select columns of table "transactions_graph" */
+["transactions_graph_select_column"]:transactions_graph_select_column;
+	/** aggregate stddev on columns */
+["transactions_graph_stddev_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["transactions_graph_stddev_pop_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["transactions_graph_stddev_samp_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate sum on columns */
+["transactions_graph_sum_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_pop on columns */
+["transactions_graph_var_pop_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["transactions_graph_var_samp_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["transactions_graph_variance_fields"]: AliasType<{
+	count?:true,
+	id?:true,
+		__typename?: true
+}>;
 	/** input type for incrementing numeric columns in table "transactions" */
 ["transactions_inc_input"]: {
 	chain_id?:ValueTypes["smallint"] | null,
@@ -3525,6 +3669,9 @@ export type ModelTypes = {
 	status?:number,
 	transaction_version?:number
 };
+	["date"]:any;
+	/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+["date_comparison_exp"]: GraphQLTypes["date_comparison_exp"];
 	/** columns and relationships of "diem_in_circulation_dynamic" */
 ["diem_in_circulation_dynamic"]: {
 		burns?:ModelTypes["bigint"],
@@ -4233,6 +4380,10 @@ export type ModelTypes = {
 	transactions_aggregate:ModelTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?:ModelTypes["transactions"],
+	/** fetch data from the table: "transactions_graph" */
+	transactions_graph:ModelTypes["transactions_graph"][],
+	/** fetch aggregated fields from the table: "transactions_graph" */
+	transactions_graph_aggregate:ModelTypes["transactions_graph_aggregate"],
 	/** fetch data from the table: "vasp_details" */
 	vasp_details:ModelTypes["vasp_details"][],
 	/** fetch aggregated fields from the table: "vasp_details" */
@@ -4805,6 +4956,10 @@ export type ModelTypes = {
 	transactions_aggregate:ModelTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?:ModelTypes["transactions"],
+	/** fetch data from the table: "transactions_graph" */
+	transactions_graph:ModelTypes["transactions_graph"][],
+	/** fetch aggregated fields from the table: "transactions_graph" */
+	transactions_graph_aggregate:ModelTypes["transactions_graph_aggregate"],
 	/** fetch data from the table: "vasp_details" */
 	vasp_details:ModelTypes["vasp_details"][],
 	/** fetch aggregated fields from the table: "vasp_details" */
@@ -4863,6 +5018,89 @@ export type ModelTypes = {
 ["transactions_bool_exp"]: GraphQLTypes["transactions_bool_exp"];
 	/** unique or primary key constraints on table "transactions" */
 ["transactions_constraint"]: GraphQLTypes["transactions_constraint"];
+	/** columns and relationships of "transactions_graph" */
+["transactions_graph"]: {
+		count?:ModelTypes["bigint"],
+	id?:ModelTypes["bigint"],
+	transaction_date?:ModelTypes["date"]
+};
+	/** aggregated selection of "transactions_graph" */
+["transactions_graph_aggregate"]: {
+		aggregate?:ModelTypes["transactions_graph_aggregate_fields"],
+	nodes:ModelTypes["transactions_graph"][]
+};
+	/** aggregate fields of "transactions_graph" */
+["transactions_graph_aggregate_fields"]: {
+		avg?:ModelTypes["transactions_graph_avg_fields"],
+	count:number,
+	max?:ModelTypes["transactions_graph_max_fields"],
+	min?:ModelTypes["transactions_graph_min_fields"],
+	stddev?:ModelTypes["transactions_graph_stddev_fields"],
+	stddev_pop?:ModelTypes["transactions_graph_stddev_pop_fields"],
+	stddev_samp?:ModelTypes["transactions_graph_stddev_samp_fields"],
+	sum?:ModelTypes["transactions_graph_sum_fields"],
+	var_pop?:ModelTypes["transactions_graph_var_pop_fields"],
+	var_samp?:ModelTypes["transactions_graph_var_samp_fields"],
+	variance?:ModelTypes["transactions_graph_variance_fields"]
+};
+	/** aggregate avg on columns */
+["transactions_graph_avg_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** Boolean expression to filter rows from the table "transactions_graph". All fields are combined with a logical 'AND'. */
+["transactions_graph_bool_exp"]: GraphQLTypes["transactions_graph_bool_exp"];
+	/** aggregate max on columns */
+["transactions_graph_max_fields"]: {
+		count?:ModelTypes["bigint"],
+	id?:ModelTypes["bigint"],
+	transaction_date?:ModelTypes["date"]
+};
+	/** aggregate min on columns */
+["transactions_graph_min_fields"]: {
+		count?:ModelTypes["bigint"],
+	id?:ModelTypes["bigint"],
+	transaction_date?:ModelTypes["date"]
+};
+	/** Ordering options when selecting data from "transactions_graph". */
+["transactions_graph_order_by"]: GraphQLTypes["transactions_graph_order_by"];
+	/** select columns of table "transactions_graph" */
+["transactions_graph_select_column"]: GraphQLTypes["transactions_graph_select_column"];
+	/** aggregate stddev on columns */
+["transactions_graph_stddev_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** aggregate stddev_pop on columns */
+["transactions_graph_stddev_pop_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** aggregate stddev_samp on columns */
+["transactions_graph_stddev_samp_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** aggregate sum on columns */
+["transactions_graph_sum_fields"]: {
+		count?:ModelTypes["bigint"],
+	id?:ModelTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["transactions_graph_var_pop_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** aggregate var_samp on columns */
+["transactions_graph_var_samp_fields"]: {
+		count?:number,
+	id?:number
+};
+	/** aggregate variance on columns */
+["transactions_graph_variance_fields"]: {
+		count?:number,
+	id?:number
+};
 	/** input type for incrementing numeric columns in table "transactions" */
 ["transactions_inc_input"]: GraphQLTypes["transactions_inc_input"];
 	/** input type for inserting data into table "transactions" */
@@ -5822,6 +6060,19 @@ export type GraphQLTypes = {
 	status?: number,
 	transaction_version?: number
 };
+	["date"]:any;
+	/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+["date_comparison_exp"]: {
+		_eq?: GraphQLTypes["date"],
+	_gt?: GraphQLTypes["date"],
+	_gte?: GraphQLTypes["date"],
+	_in?: Array<GraphQLTypes["date"]>,
+	_is_null?: boolean,
+	_lt?: GraphQLTypes["date"],
+	_lte?: GraphQLTypes["date"],
+	_neq?: GraphQLTypes["date"],
+	_nin?: Array<GraphQLTypes["date"]>
+};
 	/** columns and relationships of "diem_in_circulation_dynamic" */
 ["diem_in_circulation_dynamic"]: {
 	__typename: "diem_in_circulation_dynamic",
@@ -6744,6 +6995,10 @@ export type GraphQLTypes = {
 	transactions_aggregate: GraphQLTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?: GraphQLTypes["transactions"],
+	/** fetch data from the table: "transactions_graph" */
+	transactions_graph: Array<GraphQLTypes["transactions_graph"]>,
+	/** fetch aggregated fields from the table: "transactions_graph" */
+	transactions_graph_aggregate: GraphQLTypes["transactions_graph_aggregate"],
 	/** fetch data from the table: "vasp_details" */
 	vasp_details: Array<GraphQLTypes["vasp_details"]>,
 	/** fetch aggregated fields from the table: "vasp_details" */
@@ -7571,6 +7826,10 @@ export type GraphQLTypes = {
 	transactions_aggregate: GraphQLTypes["transactions_aggregate"],
 	/** fetch data from the table: "transactions" using primary key columns */
 	transactions_by_pk?: GraphQLTypes["transactions"],
+	/** fetch data from the table: "transactions_graph" */
+	transactions_graph: Array<GraphQLTypes["transactions_graph"]>,
+	/** fetch aggregated fields from the table: "transactions_graph" */
+	transactions_graph_aggregate: GraphQLTypes["transactions_graph_aggregate"],
 	/** fetch data from the table: "vasp_details" */
 	vasp_details: Array<GraphQLTypes["vasp_details"]>,
 	/** fetch aggregated fields from the table: "vasp_details" */
@@ -7660,6 +7919,113 @@ export type GraphQLTypes = {
 };
 	/** unique or primary key constraints on table "transactions" */
 ["transactions_constraint"]: transactions_constraint;
+	/** columns and relationships of "transactions_graph" */
+["transactions_graph"]: {
+	__typename: "transactions_graph",
+	count?: GraphQLTypes["bigint"],
+	id?: GraphQLTypes["bigint"],
+	transaction_date?: GraphQLTypes["date"]
+};
+	/** aggregated selection of "transactions_graph" */
+["transactions_graph_aggregate"]: {
+	__typename: "transactions_graph_aggregate",
+	aggregate?: GraphQLTypes["transactions_graph_aggregate_fields"],
+	nodes: Array<GraphQLTypes["transactions_graph"]>
+};
+	/** aggregate fields of "transactions_graph" */
+["transactions_graph_aggregate_fields"]: {
+	__typename: "transactions_graph_aggregate_fields",
+	avg?: GraphQLTypes["transactions_graph_avg_fields"],
+	count: number,
+	max?: GraphQLTypes["transactions_graph_max_fields"],
+	min?: GraphQLTypes["transactions_graph_min_fields"],
+	stddev?: GraphQLTypes["transactions_graph_stddev_fields"],
+	stddev_pop?: GraphQLTypes["transactions_graph_stddev_pop_fields"],
+	stddev_samp?: GraphQLTypes["transactions_graph_stddev_samp_fields"],
+	sum?: GraphQLTypes["transactions_graph_sum_fields"],
+	var_pop?: GraphQLTypes["transactions_graph_var_pop_fields"],
+	var_samp?: GraphQLTypes["transactions_graph_var_samp_fields"],
+	variance?: GraphQLTypes["transactions_graph_variance_fields"]
+};
+	/** aggregate avg on columns */
+["transactions_graph_avg_fields"]: {
+	__typename: "transactions_graph_avg_fields",
+	count?: number,
+	id?: number
+};
+	/** Boolean expression to filter rows from the table "transactions_graph". All fields are combined with a logical 'AND'. */
+["transactions_graph_bool_exp"]: {
+		_and?: Array<GraphQLTypes["transactions_graph_bool_exp"]>,
+	_not?: GraphQLTypes["transactions_graph_bool_exp"],
+	_or?: Array<GraphQLTypes["transactions_graph_bool_exp"]>,
+	count?: GraphQLTypes["bigint_comparison_exp"],
+	id?: GraphQLTypes["bigint_comparison_exp"],
+	transaction_date?: GraphQLTypes["date_comparison_exp"]
+};
+	/** aggregate max on columns */
+["transactions_graph_max_fields"]: {
+	__typename: "transactions_graph_max_fields",
+	count?: GraphQLTypes["bigint"],
+	id?: GraphQLTypes["bigint"],
+	transaction_date?: GraphQLTypes["date"]
+};
+	/** aggregate min on columns */
+["transactions_graph_min_fields"]: {
+	__typename: "transactions_graph_min_fields",
+	count?: GraphQLTypes["bigint"],
+	id?: GraphQLTypes["bigint"],
+	transaction_date?: GraphQLTypes["date"]
+};
+	/** Ordering options when selecting data from "transactions_graph". */
+["transactions_graph_order_by"]: {
+		count?: GraphQLTypes["order_by"],
+	id?: GraphQLTypes["order_by"],
+	transaction_date?: GraphQLTypes["order_by"]
+};
+	/** select columns of table "transactions_graph" */
+["transactions_graph_select_column"]: transactions_graph_select_column;
+	/** aggregate stddev on columns */
+["transactions_graph_stddev_fields"]: {
+	__typename: "transactions_graph_stddev_fields",
+	count?: number,
+	id?: number
+};
+	/** aggregate stddev_pop on columns */
+["transactions_graph_stddev_pop_fields"]: {
+	__typename: "transactions_graph_stddev_pop_fields",
+	count?: number,
+	id?: number
+};
+	/** aggregate stddev_samp on columns */
+["transactions_graph_stddev_samp_fields"]: {
+	__typename: "transactions_graph_stddev_samp_fields",
+	count?: number,
+	id?: number
+};
+	/** aggregate sum on columns */
+["transactions_graph_sum_fields"]: {
+	__typename: "transactions_graph_sum_fields",
+	count?: GraphQLTypes["bigint"],
+	id?: GraphQLTypes["bigint"]
+};
+	/** aggregate var_pop on columns */
+["transactions_graph_var_pop_fields"]: {
+	__typename: "transactions_graph_var_pop_fields",
+	count?: number,
+	id?: number
+};
+	/** aggregate var_samp on columns */
+["transactions_graph_var_samp_fields"]: {
+	__typename: "transactions_graph_var_samp_fields",
+	count?: number,
+	id?: number
+};
+	/** aggregate variance on columns */
+["transactions_graph_variance_fields"]: {
+	__typename: "transactions_graph_variance_fields",
+	count?: number,
+	id?: number
+};
 	/** input type for incrementing numeric columns in table "transactions" */
 ["transactions_inc_input"]: {
 		chain_id?: GraphQLTypes["smallint"],
@@ -8270,6 +8636,12 @@ export const enum sentpayment_events_update_column {
 /** unique or primary key constraints on table "transactions" */
 export const enum transactions_constraint {
 	transactions_pkey = "transactions_pkey"
+}
+/** select columns of table "transactions_graph" */
+export const enum transactions_graph_select_column {
+	count = "count",
+	id = "id",
+	transaction_date = "transaction_date"
 }
 /** select columns of table "transactions" */
 export const enum transactions_select_column {

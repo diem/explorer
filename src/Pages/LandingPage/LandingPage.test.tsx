@@ -15,6 +15,7 @@ import {
   countTransactionsInLast10Minutes,
   LatestMintBurnNetQuery,
   totalPaymentsQuery,
+  transactionsGraph,
   transactionsQuery,
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
@@ -89,6 +90,34 @@ const renderSubject = async (
     })
   )
 
+  // @ts-ignore TS is bad at mocking
+  postQueryToAnalyticsApi.mockResolvedValueOnce(
+    Ok([
+      {
+        "id": 1,
+        "count": 1,
+        "transaction_date": "2020-11-22",
+        "timestamp": 1605983400000
+      },
+      {
+        "id": 2,
+        "count": 1,
+        "transaction_date": "2020-11-23",
+        "timestamp": 1606069800000
+      },
+      {
+        "id": 3,
+        "count": 1,
+        "transaction_date": "2020-11-30",
+        "timestamp": 1606674600000
+      },
+      {
+        "id": 4,
+        "count": 3,
+        "transaction_date": "2020-12-22",
+        "timestamp": 1608575400000
+      }])
+  )
   render(
     <BrowserRouter>
       <LandingPage />
@@ -105,7 +134,7 @@ describe('LandingPage', function () {
   })
   it('should get data from the AnalyticsClient', async function () {
     await renderSubject()
-    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(4)
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledTimes(5)
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       transactionsQuery(),
       'transactions'
@@ -118,9 +147,14 @@ describe('LandingPage', function () {
       LatestMintBurnNetQuery(),
       'diem_in_circulation_realtime_aggregates'
     )
+
     expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
       totalPaymentsQuery(),
       'sentpayment_events_aggregate'
+    )
+    expect(postQueryToAnalyticsApi).toHaveBeenCalledWith(
+      transactionsGraph(),
+      'transactions_graph'
     )
   })
 
