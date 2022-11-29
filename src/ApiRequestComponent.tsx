@@ -94,6 +94,7 @@ function ApiRequestComponent<T, E = ResponseError>({
     async function getResponse() {
       await request(...args).then((apiResponse) => setLoadingState(apiResponse))
     }
+    setLoadingState({ isLoading: true })
     getResponse()
   }, [refresh])
 

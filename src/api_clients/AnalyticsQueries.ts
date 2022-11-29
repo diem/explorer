@@ -171,10 +171,10 @@ export function vaspsList() {
 
 
 export type TransactionsGraph = GraphQLTypes['transactions_graph']
-export function transactionsGraph() {
+export function transactionsGraph(fromDt: any, toDt: any) {
   return {
     transactions_graph: [
-      {},
+      { where: { transaction_date: { _gte: fromDt, _lte: toDt } } },
       {
         id: true,
         count: true,
