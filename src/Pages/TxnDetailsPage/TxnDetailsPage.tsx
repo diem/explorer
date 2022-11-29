@@ -14,7 +14,7 @@ import { RouteComponentProps, Redirect, useHistory } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
 import { Accordion, Alert, FormControl, InputGroup } from 'react-bootstrap'
 import JSONPretty from 'react-json-pretty'
-import { getBlockchainTransaction } from '../../api_clients/BlockchainRestClient'
+import { getTransactionDetails } from '../../api_clients/BlockchainRestClient'
 import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 import { AccountAddress } from '../../TableComponents/Link'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
@@ -162,7 +162,7 @@ export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
     <ApiRequestComponent
       request={() => {
-        return getBlockchainTransaction(props.match.params.version)
+        return getTransactionDetails(props.match.params.version)
       }}
       errorComponent={<TxnDetailsErrorComponent errors={null} />}
       refresh={props.match.params.version}

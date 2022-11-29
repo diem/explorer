@@ -10,11 +10,16 @@ import { Err, Result } from 'ts-results'
 export async function getBlockchainTransaction(
   txnVersion: string
 ): Promise<Result<BlockchainTransaction, ResponseError>> {
-  const url = `${
-    import.meta.env.VITE_BLOCKCHAIN_REST_URL
-  }/transactions/${txnVersion}`
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL
+    }/transactions/${txnVersion}`
 
   return await getWithFetch<BlockchainTransaction>(url, {})
+}
+
+export async function getTransactionDetails(txnVersion: string) {
+  const url = 'https://testnet.diem.com/v1';
+  const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_transactions", "params": [`${txnVersion}`, 1, false], "id": 1 })
+  return await getWithFetch<BlockchainTransaction>(url, { method: "POST", body: reqBody })
 }
 
 async function getAccountAsset<T extends Resource[] | Module[]>(
@@ -33,9 +38,8 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
     })
   }
 
-  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
-    canonicalAddress.val
-  }/${assetType}`
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${canonicalAddress.val
+    }/${assetType}`
 
   return await getWithFetch<T>(url, {})
 }

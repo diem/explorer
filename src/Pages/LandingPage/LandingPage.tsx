@@ -1,37 +1,15 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Card, FormControl, InputGroup } from 'react-bootstrap'
+import { FormControl, InputGroup } from 'react-bootstrap'
 import React, { FormEvent, KeyboardEvent, ReactNode, useState } from 'react'
-import ApiRequestComponent, {
-  PlainErrorComponent,
-  PlainLoadingComponent,
-  PlainValue,
-} from '../../ApiRequestComponent'
 import MainWrapper from '../../MainWrapper'
 import {
   TransactionRow,
-  transformAnalyticsTransactionIntoTransaction,
 } from '../../models/TransactionModel'
-import Table, { column } from '../../Table'
 import { useHistory } from 'react-router-dom'
 import './LandingPage.css'
-import { TransactionVersion } from '../../TableComponents/Link'
-import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
-import {
-  CountTotalPayments,
-  countTransactionsInLast10Minutes,
-  CountTransactionsInLast10MinutesType,
-  LatestMintBurnNetQuery,
-  totalPaymentsQuery,
-  transactionsQuery,
-  TransactionsQueryType,
-} from '../../api_clients/AnalyticsQueries'
-import ReactTooltip from 'react-tooltip'
-import { GraphQLTypes } from '../../../generated/Analytics_Hasura_Api_Zeus_Client/zeus'
 import { getCanonicalAddress } from '../../utils'
-import { Err, Ok, Result } from 'ts-results'
-import { FetchError } from '../../api_clients/FetchTypes'
 
 function Wrapper(props: { children: ReactNode }) {
   return (
@@ -46,14 +24,9 @@ function Wrapper(props: { children: ReactNode }) {
   )
 }
 
-type CurrentStatisticsCardProps = {
-  averageTps: number
-  totalMintValue: number
-  totalBurnValue: number
-  totalNetValue: number
-}
 
-function CurrentStatisticsCard({
+
+/* function CurrentStatisticsCard({
   averageTps,
   totalMintValue,
   totalBurnValue,
@@ -148,7 +121,7 @@ function TransactionTable({
       />
     </>
   )
-}
+} */
 
 type LandingPageContentProps = {
   recentTransactions: TransactionRow[]
@@ -159,13 +132,13 @@ type LandingPageContentProps = {
 }
 
 function LandingPageContent({ data }: { data: LandingPageContentProps }) {
-  const {
+  /* const {
     averageTps,
     totalMintAmount,
     totalBurnAmount,
     totalNetAmount,
     recentTransactions,
-  } = data
+  } = data */
   const history = useHistory()
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -212,77 +185,29 @@ function LandingPageContent({ data }: { data: LandingPageContentProps }) {
           Invalid address or transaction version
         </FormControl.Feedback>
       </InputGroup>
-      <CurrentStatisticsCard
+      {/* <CurrentStatisticsCard
         averageTps={averageTps}
         totalMintValue={totalMintAmount}
         totalBurnValue={totalBurnAmount}
         totalNetValue={totalNetAmount}
       />
-      <TransactionTable transactions={recentTransactions} />
+      <TransactionTable transactions={recentTransactions} /> */}
     </Wrapper>
   )
 }
 
-function transformAnalyticsTransactionsResult(
-  result: Result<TransactionsQueryType, FetchError[]>
-): Result<TransactionRow[], FetchError[]> {
-  return result.ok
-    ? Ok(result.val.map(transformAnalyticsTransactionIntoTransaction))
-    : result
-}
 
-const handleData = async (): Promise<
-  Result<LandingPageContentProps, FetchError[]>
-> => {
-  const txnsInLast10m =
-    await postQueryToAnalyticsApi<CountTransactionsInLast10MinutesType>(
-      countTransactionsInLast10Minutes(),
-      'transactions_aggregate'
-    )
-
-  const recentTxns = await postQueryToAnalyticsApi<TransactionsQueryType>(
-    transactionsQuery(),
-    'transactions'
-  ).then(transformAnalyticsTransactionsResult)
-
-  const latestMintBurnNetAmounts = await postQueryToAnalyticsApi<
-    GraphQLTypes['diem_in_circulation_realtime_aggregates'][]
-  >(LatestMintBurnNetQuery(), 'diem_in_circulation_realtime_aggregates')
-
-  if (txnsInLast10m.err || recentTxns.err || latestMintBurnNetAmounts.err) {
-    return Err(
-      []
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(txnsInLast10m.val)
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(recentTxns.val)
-        // @ts-ignore nulls work in concat -- this will smash together the error arrays then remove nulls
-        .concat(latestMintBurnNetAmounts.val)
-        .filter((error) => error !== null)
-    )
-  } else {
-    return Ok({
-      recentTransactions: recentTxns.val,
-      averageTps: txnsInLast10m.val.aggregate.count / 600,
-      totalMintAmount: latestMintBurnNetAmounts.val[0]?.total_mint_value,
-      totalBurnAmount: latestMintBurnNetAmounts.val[0]?.total_burn_value,
-      totalNetAmount: latestMintBurnNetAmounts.val[0]?.total_net_value,
-    })
-  }
-}
 
 export default function LandingPage() {
   return (
-    <ApiRequestComponent request={handleData}>
-      <LandingPageContent
-        data={{
-          recentTransactions: [],
-          averageTps: NaN,
-          totalMintAmount: NaN,
-          totalBurnAmount: NaN,
-          totalNetAmount: NaN,
-        }}
-      />
-    </ApiRequestComponent>
+    <LandingPageContent
+      data={{
+        recentTransactions: [],
+        averageTps: NaN,
+        totalMintAmount: NaN,
+        totalBurnAmount: NaN,
+        totalNetAmount: NaN,
+      }}
+    />
   )
 }

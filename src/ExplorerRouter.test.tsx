@@ -7,17 +7,7 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { mockLandingPageText } from './Pages/LandingPage/__mocks__/LandingPage'
 import { mockTxnDetailsPageText } from './Pages/TxnDetailsPage/__mocks__/TxnDetailsPage'
-import {
-  mockMintEventsPageText,
-  mockBurnEventsPageText,
-  mockPaymentEventsPageText,
-  mockGasEventsPageText,
-  mockPreburnEventsPageText,
-  mockAccountCreationEventsPageText,
-} from './Pages/EventPages/__mocks__/EventPages'
-import { mockDiemInCirculationPageText } from './Pages/DiemInCirculationPage/__mocks__/DiemInCirculationPage'
 import { mockAccountPageText } from './Pages/AccountPage/__mocks__/AccountPage'
-import { mockLeaderboardPageText } from './Pages/LeaderboardPage/__mocks__/LeaderboardPage'
 import { accountNotFoundPageText } from './Pages/AccountPage/AccountNotFoundPage'
 import { txnNotFoundPageText } from './Pages/TxnDetailsPage/TxnNotFoundPage'
 
@@ -44,46 +34,6 @@ describe('ExplorerRouter', () => {
       name: 'Landing',
       route: '/',
       text: [mockLandingPageText],
-    },
-    {
-      name: 'Mint Events',
-      route: '/events/mint',
-      text: [mockMintEventsPageText],
-    },
-    {
-      name: 'Burn Events',
-      route: '/events/burn',
-      text: [mockBurnEventsPageText],
-    },
-    {
-      name: 'Payment Events',
-      route: '/events/payment',
-      text: [mockPaymentEventsPageText],
-    },
-    {
-      name: 'Gas Events',
-      route: '/events/gas',
-      text: [mockGasEventsPageText],
-    },
-    {
-      name: 'Preburn Events',
-      route: '/events/preburn',
-      text: [mockPreburnEventsPageText],
-    },
-    {
-      name: 'Account Creation Events',
-      route: '/events/accountcreation',
-      text: [mockAccountCreationEventsPageText],
-    },
-    {
-      name: 'Diem In Circulation',
-      route: '/diemincirculation',
-      text: [mockDiemInCirculationPageText],
-    },
-    {
-      name: 'Leaderboard',
-      route: '/leaderboard',
-      text: [mockLeaderboardPageText],
     },
     {
       name: 'Transaction Details',

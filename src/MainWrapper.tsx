@@ -6,13 +6,12 @@ import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'
 import {
   Container,
-  Dropdown,
-  DropdownButton,
   Nav,
-  NavDropdown,
+  /* Dropdown,
+  DropdownButton,
+  NavDropdown, */
 } from 'react-bootstrap'
 import logo from '../static/logo.svg'
-import { Link } from 'react-router-dom'
 interface MainWrapperProps {
   children?: ReactChild
 }
@@ -32,13 +31,13 @@ function MainWrapper(props: MainWrapperProps) {
             <Navbar.Brand href='/' className='d-flex align-items-center'>
               <img src={logo} alt='Diem logo' />
               &nbsp;
-              <span className='navbar-text'>explorer</span>
+              <span className='navbar-text'>   Testnet explorer for DPN</span>
               &nbsp;
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
             <Navbar.Collapse id='responsive-navbar-nav'>
               <Nav className='me-auto align-items-center'>
-                <DropdownButton
+                {/* <DropdownButton
                   id='dropdown-basic-button'
                   title={'DPN Dev'}
                   className='d-inline'
@@ -46,9 +45,9 @@ function MainWrapper(props: MainWrapperProps) {
                   variant='secondary'
                 >
                   <Dropdown.Item href='#'>DPN Premainnet</Dropdown.Item>
-                </DropdownButton>{' '}
+                </DropdownButton>{' '} 
                 <Nav.Link href='/'>Home</Nav.Link>
-                <NavDropdown title='Events' id='collasible-nav-dropdown'>
+                 <NavDropdown title='Events' id='collasible-nav-dropdown'>
                   <Link className='dropdown-item' to='/events/mint'>
                     Mint Events
                   </Link>
@@ -76,7 +75,7 @@ function MainWrapper(props: MainWrapperProps) {
                 </Link>
                 <Link className='nav-link' to='/vasps'>
                   VASPs
-                </Link>
+                </Link> */}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -89,7 +88,7 @@ function MainWrapper(props: MainWrapperProps) {
 
       <footer className='footer mt-auto py-3 bg-light'>
         <div className='container'>
-          <span>© 2021 Diem Association</span>
+          <span>© 2022 Diem Association</span>
         </div>
       </footer>
     </div>

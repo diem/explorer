@@ -54,6 +54,7 @@ export async function getWithFetch<T>(
   url: string,
   headers: any
 ): Promise<Result<T, ResponseError>> {
+  console.log("headers", headers)
   return await performFetch(url, {
     method: 'GET',
     headers,
