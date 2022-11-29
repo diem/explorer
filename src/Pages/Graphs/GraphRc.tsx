@@ -151,7 +151,7 @@ export default function GraphRc({ data, filterData, callApiwithDate }: { data: a
                         </Col>
                         <Col className="graphStsticDt" xs={12} md={4} >
                             <span>
-                                {staticDts.fromDt} - {staticDts.toDt}
+                                <b>{moment(staticDts.fromDt).format("MMM Do YY")} - {moment(staticDts.toDt).format("MMM Do YY")}</b>
                             </span>
                         </Col>
 
