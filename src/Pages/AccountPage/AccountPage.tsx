@@ -3,6 +3,7 @@
 
 import { Redirect, RouteComponentProps, useHistory } from 'react-router-dom'
 import {
+  getAccount,
   getAccountModules,
   getAccountResources,
 } from '../../api_clients/BlockchainRestClient'
@@ -191,8 +192,43 @@ export default function AccountPage(props: AccountPageProps) {
     return <Redirect to='/address/not-found' />
   }
   const address = maybeAddress.val
-
-  const [
+  const getAddresStRes = {
+    "diem_chain_id": 2,
+    "diem_ledger_version": 17969772,
+    "diem_ledger_timestampusec": 1669726927303980,
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+      "address": "c83e0a52bb11f4ea617630415196e19b",
+      "authentication_key": "ed7ca669451e61b92eeac4e2e861cb7ac83e0a52bb11f4ea617630415196e19b",
+      "balances": [
+        {
+          "amount": 7998424,
+          "currency": "XUS"
+        }
+      ],
+      "delegated_key_rotation_capability": false,
+      "delegated_withdrawal_capability": false,
+      "is_frozen": false,
+      "received_events_key": "0200000000000000c83e0a52bb11f4ea617630415196e19b",
+      "role": {
+        "base_url": "",
+        "base_url_rotation_events_key": "0100000000000000c83e0a52bb11f4ea617630415196e19b",
+        "compliance_key": "",
+        "compliance_key_rotation_events_key": "0000000000000000c83e0a52bb11f4ea617630415196e19b",
+        "expiration_time": 18446744073709551615,
+        "human_name": "No. 61 VASP",
+        "num_children": 1,
+        "type": "parent_vasp",
+        "vasp_domains": []
+      },
+      "sent_events_key": "0300000000000000c83e0a52bb11f4ea617630415196e19b",
+      "sequence_number": 2,
+      "version": 17969772
+    }
+  }
+  const [{ getAccountState }, setState] = useState<any>({ getAccountState: { isLoading: true } })
+  /* const [
     {
       resourcesResponse,
       modulesResponse,
@@ -205,39 +241,47 @@ export default function AccountPage(props: AccountPageProps) {
     modulesResponse: { isLoading: true },
     recentTransactionsResponse: { isLoading: true },
     accountResourceResponse: { isLoading: true },
-  })
+  }) */
 
   useEffect(() => {
-    getAccountResources(address).then((result) =>
+    /* getAccountResources(address).then((result) =>
       setState((oldState) => ({
         ...oldState,
         resourcesResponse: result,
         accountResourceResponse: getAccountResourceResponse(result),
       }))
     )
-
+  
     getRecentTransactions(address).then((result) =>
       setState((oldState) => ({
         ...oldState,
         recentTransactionsResponse: result,
       }))
     )
-
+  
     getAccountModules(address).then((result) =>
       setState((oldState) => ({
         ...oldState,
         modulesResponse: result,
       }))
+    ) */
+    getAccount(address).then((result) => {
+      console.log("result", result)
+      setState((oldState: any) => ({
+        ...oldState,
+        getAccountState: getAddresStRes,
+      }))
+    }
     )
   }, [addresVal])
 
-  if (
+  /* if (
     isNotFoundResponseError(resourcesResponse) ||
     isNotFoundResponseError(modulesResponse) ||
     isNotFound(recentTransactionsResponse)
   ) {
     return <Redirect to='/address/not-found' />
-  }
+  } */
 
   function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
     const searchTerm = (event.target as HTMLInputElement).value
@@ -275,8 +319,9 @@ export default function AccountPage(props: AccountPageProps) {
           </FormControl.Feedback>
         </InputGroup>
 
+        <JSONPretty data={getAccountState} id='rawResources' />
         {/* <span><b>Account Address :</b>  {addresVal}</span> */}
-        <Loadable state={resourcesResponse}>
+        {/* <Loadable state={resourcesResponse}>
           <Balances data={[]} />
         </Loadable>
 
@@ -309,7 +354,7 @@ export default function AccountPage(props: AccountPageProps) {
         <h2>Raw Smart Contracts</h2>
         <Loadable state={modulesResponse}>
           <JSONPretty data={modulesResponse} id='rawModules' />
-        </Loadable>
+        </Loadable> */}
       </>
     </MainWrapper >
   )
