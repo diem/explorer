@@ -4,8 +4,7 @@
 import { Redirect, RouteComponentProps, useHistory } from 'react-router-dom'
 import {
   getAccount,
-  getAccountModules,
-  getAccountResources,
+  getAccountTransactions,
 } from '../../api_clients/BlockchainRestClient'
 import { postQueryToAnalyticsApi } from '../../api_clients/AnalyticsClient'
 import {
@@ -13,22 +12,17 @@ import {
   TransactionsQueryType,
 } from '../../api_clients/AnalyticsQueries'
 import {
-  FetchError,
-  isNotFound as isNotFoundResult,
+  FetchError
 } from '../../api_clients/FetchTypes'
 import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
-import JSONPretty from 'react-json-pretty'
 import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
 import Balances from './Balances'
-import SmartContractMethods from './SmartContractMethods'
-import SmartContractStructs from './SmartContractStructs'
 import { Card, FormControl, InputGroup } from 'react-bootstrap'
 import {
   DiemAccountResource,
   isDiemAccountResource,
-  Module,
   Resource,
 } from '../../api_clients/BlockchainRestTypes'
 import {
@@ -40,6 +34,7 @@ import Loadable, { LoadingState } from '../../Loadable'
 import { Err, Ok, Result } from 'ts-results'
 import { ResponseError, ResponseErrorType } from '../../api_clients/FetchBroker'
 import { NoRecords } from '../../TableComponents/NoRecords'
+import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 
 const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   data,
@@ -59,38 +54,6 @@ const RecentTransactionsTable: React.FC<{ data: TransactionRow[] }> = ({
   )
 }
 
-const EventHandlesTable: React.FC<{
-  data: DiemAccountResource | null
-}> = ({ data }) => {
-  if (!data) {
-    return <></>
-  }
-  const eventHandleData = [
-    {
-      key: 'received_events',
-      ...data.value.received_events,
-    },
-    {
-      key: 'sent_events',
-      ...data.value.sent_events,
-    },
-  ]
-  return (
-    <Card data-testid='event-handles-card'>
-      <Card.Header className='Header'>Event Handles</Card.Header>
-      <Card.Body>
-        <Table
-          columns={[
-            column('Event Handle', 'key'),
-            column('Counter', 'counter'),
-            column('GUID', 'guid'),
-          ]}
-          data={eventHandleData}
-        />
-      </Card.Body>
-    </Card>
-  )
-}
 
 function SequenceNumber({ data }: { data: DiemAccountResource | null }) {
   if (!data) {
@@ -124,15 +87,6 @@ interface AccountPageMatch {
 
 type AccountPageProps = RouteComponentProps<AccountPageMatch>
 
-interface AccountPageState {
-  resourcesResponse: LoadingState<Resource[], ResponseError>
-  accountResourceResponse: LoadingState<
-    DiemAccountResource | null,
-    ResponseError
-  >
-  modulesResponse: LoadingState<Module[], ResponseError>
-  recentTransactionsResponse: LoadingState<TransactionRow[], FetchError[]>
-}
 
 const getRecentTransactions = (
   address: string
@@ -164,13 +118,7 @@ const getAccountResourceResponse = (
     })
 }
 
-function isNotFound<T>(
-  loadingState: LoadingState<T, FetchError[]> | undefined
-): boolean {
-  if (!loadingState) return false
-  if ('isLoading' in loadingState) return false
-  return isNotFoundResult(loadingState)
-}
+
 
 function isNotFoundResponseError<T>(
   loadingState: LoadingState<T, ResponseError> | undefined
@@ -192,96 +140,47 @@ export default function AccountPage(props: AccountPageProps) {
     return <Redirect to='/address/not-found' />
   }
   const address = maybeAddress.val
-  const getAddresStRes = {
-    "diem_chain_id": 2,
-    "diem_ledger_version": 17969772,
-    "diem_ledger_timestampusec": 1669726927303980,
-    "jsonrpc": "2.0",
-    "id": 1,
-    "result": {
-      "address": "c83e0a52bb11f4ea617630415196e19b",
-      "authentication_key": "ed7ca669451e61b92eeac4e2e861cb7ac83e0a52bb11f4ea617630415196e19b",
-      "balances": [
-        {
-          "amount": 7998424,
-          "currency": "XUS"
-        }
-      ],
-      "delegated_key_rotation_capability": false,
-      "delegated_withdrawal_capability": false,
-      "is_frozen": false,
-      "received_events_key": "0200000000000000c83e0a52bb11f4ea617630415196e19b",
-      "role": {
-        "base_url": "",
-        "base_url_rotation_events_key": "0100000000000000c83e0a52bb11f4ea617630415196e19b",
-        "compliance_key": "",
-        "compliance_key_rotation_events_key": "0000000000000000c83e0a52bb11f4ea617630415196e19b",
-        "expiration_time": 18446744073709551615,
-        "human_name": "No. 61 VASP",
-        "num_children": 1,
-        "type": "parent_vasp",
-        "vasp_domains": []
-      },
-      "sent_events_key": "0300000000000000c83e0a52bb11f4ea617630415196e19b",
-      "sequence_number": 2,
-      "version": 17969772
-    }
-  }
-  const [{ getAccountState }, setState] = useState<any>({ getAccountState: { isLoading: true } })
-  /* const [
-    {
-      resourcesResponse,
-      modulesResponse,
-      recentTransactionsResponse,
-      accountResourceResponse,
-    },
-    setState,
-  ] = useState<AccountPageState>({
-    resourcesResponse: { isLoading: true },
-    modulesResponse: { isLoading: true },
-    recentTransactionsResponse: { isLoading: true },
-    accountResourceResponse: { isLoading: true },
-  }) */
+
+  const [{ getAccountState, getAccountTraansactionState, roleDetails }, setState] = useState<any>({ getAccountState: { isLoading: true }, getAccountTraansactionState: { isLoading: true }, roleDetails: { isLoading: true } })
+
 
   useEffect(() => {
-    /* getAccountResources(address).then((result) =>
-      setState((oldState) => ({
-        ...oldState,
-        resourcesResponse: result,
-        accountResourceResponse: getAccountResourceResponse(result),
-      }))
-    )
-  
-    getRecentTransactions(address).then((result) =>
-      setState((oldState) => ({
+    /* getRecentTransactions(address).then((result) =>
+      setState((oldState: any) => ({
         ...oldState,
         recentTransactionsResponse: result,
       }))
-    )
-  
-    getAccountModules(address).then((result) =>
-      setState((oldState) => ({
-        ...oldState,
-        modulesResponse: result,
-      }))
     ) */
     getAccount(address).then((result) => {
-      console.log("result", result)
+      const res = result.val.result;
+      const detailTbl = { address: res.address, authentication_key: res.authentication_key, balance: res.balances[0].amount + "~" + res.balances[0].currency, ...res.role, sent_events_key: res.sent_events_key, sequence_number: res.sequence_number, version: res.version }
+      delete detailTbl.vasp_domains;
+      Object.keys(detailTbl).forEach(key => {
+        if (detailTbl[key] === '' || detailTbl[key] === undefined) {
+          delete detailTbl[key];
+        }
+      });
+      console.log("detailTbl", detailTbl)
+      setState((oldState: any) => ({
+        ...oldState, roleDetails: detailTbl,
+        getAccountState: result.val,
+      }))
+    }
+    )
+    getAccountTransactions(address).then((result) => {
       setState((oldState: any) => ({
         ...oldState,
-        getAccountState: getAddresStRes,
+        getAccountTraansactionState: result.val,
       }))
     }
     )
   }, [addresVal])
 
-  /* if (
-    isNotFoundResponseError(resourcesResponse) ||
-    isNotFoundResponseError(modulesResponse) ||
-    isNotFound(recentTransactionsResponse)
+  if (
+    isNotFoundResponseError(getAccountState)
   ) {
     return <Redirect to='/address/not-found' />
-  } */
+  }
 
   function validateSearchTerm(event: FormEvent<HTMLInputElement>) {
     const searchTerm = (event.target as HTMLInputElement).value
@@ -304,7 +203,7 @@ export default function AccountPage(props: AccountPageProps) {
     <MainWrapper>
       <>
 
-        <h1>Account Details <h5 className='transactionVal'>({addresVal})</h5></h1>
+        <h1>Account Details <span className='transactionVal'>({addresVal})</span></h1>
 
         <InputGroup className='mb-5'>
           <FormControl
@@ -318,12 +217,16 @@ export default function AccountPage(props: AccountPageProps) {
             Invalid address or transaction version
           </FormControl.Feedback>
         </InputGroup>
-
-        <JSONPretty data={getAccountState} id='rawResources' />
-        {/* <span><b>Account Address :</b>  {addresVal}</span> */}
-        {/* <Loadable state={resourcesResponse}>
-          <Balances data={[]} />
+        <Loadable state={roleDetails}>
+          {/* <Balances data={[]} /> */}
+          <ObjectPropertiesTable object={roleDetails} />
         </Loadable>
+        <h2>Account Details Raw Data</h2>
+        <Loadable state={getAccountState}>
+          <p><pre>{JSON.stringify(getAccountState, null, 2)}</pre></p>
+        </Loadable>
+        {/* <span><b>Account Address :</b>  {addresVal}</span> */}
+        {/* 
 
         <h2>Recent Transactions</h2>
         <Loadable state={recentTransactionsResponse}>

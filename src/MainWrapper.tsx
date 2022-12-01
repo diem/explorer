@@ -6,7 +6,6 @@ import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'
 import {
   Container,
-  Nav,
   /* Dropdown,
   DropdownButton,
   NavDropdown, */
@@ -34,52 +33,8 @@ function MainWrapper(props: MainWrapperProps) {
               <span className='navbar-text'>   Testnet explorer for DPN</span>
               &nbsp;
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-            <Navbar.Collapse id='responsive-navbar-nav'>
-              <Nav className='me-auto align-items-center'>
-                {/* <DropdownButton
-                  id='dropdown-basic-button'
-                  title={'DPN Dev'}
-                  className='d-inline'
-                  size='sm'
-                  variant='secondary'
-                >
-                  <Dropdown.Item href='#'>DPN Premainnet</Dropdown.Item>
-                </DropdownButton>{' '} 
-                <Nav.Link href='/'>Home</Nav.Link>
-                 <NavDropdown title='Events' id='collasible-nav-dropdown'>
-                  <Link className='dropdown-item' to='/events/mint'>
-                    Mint Events
-                  </Link>
-                  <Link className='dropdown-item' to='/events/burn'>
-                    Burn Events
-                  </Link>
-                  <Link className='dropdown-item' to='/events/payment'>
-                    Payment Events
-                  </Link>
-                  <Link className='dropdown-item' to='/events/gas'>
-                    Gas Events
-                  </Link>
-                  <Link className='dropdown-item' to='/events/preburn'>
-                    Preburn Events
-                  </Link>
-                  <Link className='dropdown-item' to='/events/accountcreation'>
-                    Account Creation Events
-                  </Link>
-                </NavDropdown>
-                <Link className='nav-link' to='/diemincirculation'>
-                  Diem-In-Circulation
-                </Link>
-                <Link className='nav-link' to='/leaderboard'>
-                  Leaderboard
-                </Link>
-                <Link className='nav-link' to='/vasps'>
-                  VASPs
-                </Link> */}
-              </Nav>
-            </Navbar.Collapse>
           </Container>
-        </Navbar>{' '}
+        </Navbar>
       </header>
 
       <main className='flex-shrink-0'>

@@ -1,7 +1,7 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getWithFetch, ResponseError, ResponseErrorType } from './FetchBroker'
+import { getWithFetch, getWithFetchIso, ResponseError, ResponseErrorType } from './FetchBroker'
 import { Module, Resource } from './BlockchainRestTypes'
 import { getCanonicalAddress } from '../utils'
 import { BlockchainTransaction } from '../models/BlockchainTransaction'
@@ -62,11 +62,28 @@ export async function getTransactionDetails(txnVersion: string) {
 export async function getAccount(address: string): Promise<Result<any, ResponseError>> {
   const url = 'https://testnet.diem.com/v1';
   const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_account", "params": [`${address}`], "id": 1 })
-  return await getWithFetch<BlockchainTransaction>(url, { method: "POST", body: reqBody })
+  return await getWithFetchIso(url, {
+    method: 'POST',
+    headers: {
+      // Check what headers the API needs. A couple of usuals right below
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: reqBody
+  })
+
 }
 
 export async function getAccountTransactions(address: string) {
   const url = 'https://testnet.diem.com/v1';
   const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_account_transactions", "params": [`${address}`, 0, 100, false], "id": 1 })
-  return await getWithFetch<BlockchainTransaction>(url, { method: "POST", body: reqBody })
+  return await getWithFetchIso(url, {
+    method: 'POST',
+    headers: {
+      // Check what headers the API needs. A couple of usuals right below
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: reqBody
+  })
 }

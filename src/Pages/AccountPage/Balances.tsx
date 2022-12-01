@@ -31,7 +31,7 @@ function parseBalancesFromResources(
 function BalancesTable({
   balances,
 }: {
-  balances: Record<KnownCurrency, string>
+  balances: any
 }) {
   return (
     <>
@@ -42,6 +42,7 @@ function BalancesTable({
 }
 
 export default function Balances({ data }: { data: Resource[] }) {
+  console.log("balances", data);
   const balances = parseBalancesFromResources(data)
   return (
     <>

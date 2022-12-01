@@ -7,7 +7,8 @@ import fetch from 'isomorphic-fetch'
 import { Err, Ok, Result } from 'ts-results'
 
 globalThis.fetch = fetch
-const GraphQlUrl = import.meta.env.MODE === 'test' ? 'http://localhost:8888' : import.meta.env.VITE_GRAPHQL_URL;
+const GraphQlUrl = import.meta.env.MODE === 'test' ? 'http://localhost:8888' : import.meta.env.DIEMX_GRAPHQL_URL;
+console.log("import.meta.env", import.meta.env);
 const GqlNew = Chain(`${GraphQlUrl}/v1/graphql`)
 export const postQueryToAnalyticsApi = async <T>(
   query: any,
