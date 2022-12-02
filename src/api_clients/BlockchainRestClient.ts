@@ -54,8 +54,17 @@ export function getAccountResources(
 
 export async function getTransactionDetails(txnVersion: string) {
   const url = 'https://testnet.diem.com/v1';
-  const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_transactions", "params": [`${txnVersion}`, 1, false], "id": 1 })
-  return await getWithFetch<BlockchainTransaction>(url, { method: "POST", body: reqBody })
+  const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_transactions", "params": [Number(txnVersion), 1, false], "id": 1 })
+  return await getWithFetchIso(url, {
+    method: 'POST',
+    headers: {
+      // Check what headers the API needs. A couple of usuals right below
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: reqBody
+  })
+
 }
 
 
@@ -74,7 +83,7 @@ export async function getAccount(address: string): Promise<Result<any, ResponseE
 
 }
 
-export async function getAccountTransactions(address: string) {
+export async function getAccountTransactions(address: string): Promise<Result<any, ResponseError>> {
   const url = 'https://testnet.diem.com/v1';
   const reqBody = JSON.stringify({ "jsonrpc": "2.0", "method": "get_account_transactions", "params": [`${address}`, 0, 100, false], "id": 1 })
   return await getWithFetchIso(url, {

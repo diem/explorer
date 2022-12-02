@@ -7,17 +7,24 @@ import React, { ReactChild, ReactElement } from 'react'
 interface ObjectPropertiesTableProps {
   object: {
     [key: string]:
-      | string
-      | number
-      | undefined
-      | null
-      | ReactChild
-      | ReactElement
+    | string
+    | number
+    | undefined
+    | null
+    | ReactChild
+    | ReactElement
   }
 }
 export default function ObjectPropertiesTable({
   object,
 }: ObjectPropertiesTableProps) {
+  function txtrep(txt: any) {
+    if (typeof (txt) === "string") {
+      return txt.replace(/_/g, " ")
+    }
+    return txt
+  }
+
   return (
     <BTable
       responsive
@@ -30,9 +37,9 @@ export default function ObjectPropertiesTable({
         {Object.keys(object).map(function (property) {
           return (
             <tr key={property}>
-              <td>{property}</td>
+              <td className="txtCaptil">{property.replace(/_/g, " ")}</td>
               {/* @ts-ignore (TS doesn't like property accessor syntax) */}
-              <td>{object[property]}</td>
+              <td className="txtCaptil">{txtrep(object[property])}</td>
             </tr>
           )
         })}

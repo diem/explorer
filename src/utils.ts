@@ -4,6 +4,7 @@
 import { Ok, Err, Result } from 'ts-results'
 
 export function getCanonicalAddress(address: string): Result<string, string> {
+  console.log("address", address)
   address = address.trim().toLowerCase()
   address = address.replace(/^(0x)/, '')
   if (!/^[0-9A-F]+$/i.test(address)) {

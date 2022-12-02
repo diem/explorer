@@ -8,7 +8,6 @@ import ApiRequestComponent, {
 import React, { FormEvent, KeyboardEvent, useState } from 'react'
 import {
   BlockchainTransaction,
-  BlockchainUserTxnData,
 } from '../../models/BlockchainTransaction'
 import { RouteComponentProps, Redirect, useHistory } from 'react-router-dom'
 import MainWrapper from '../../MainWrapper'
@@ -35,32 +34,34 @@ function UnsupportedTxnDetailsTable() {
   )
 }
 
-function UserTxnDetailsTable({ data }: { data: BlockchainUserTxnData }) {
+function UserTxnDetailsTable({ data }: { data: any }) {
+  data = data.result[0];
+  console.log("data", data)
   const txnForDisplay = {
     'Version ID': data.version,
-    Status: data.vm_status,
-    'Transaction Type': data.type,
-    To: AccountAddress({ value: data.payload.arguments[0] }),
-    From: AccountAddress({ value: data.sender }),
-    Amount: data.payload.arguments[1],
-    Expiration: data.expiration_timestamp_secs,
-    'Currency Code': data.payload.type_arguments.toString(),
-    'Sequence Number': data.sequence_number,
+    Status: data.vm_status.type,
+    'Transaction Type': data.transaction.script.type,
+    To: AccountAddress({ value: data.transaction.script.receiver }),
+    From: AccountAddress({ value: data.transaction.sender }),
+    Amount: data.transaction.script.amount,
+    Expiration: data.transaction.expiration_timestamp_secs,
+    'Currency Code': data.transaction.script.currency,
+    'Sequence Number': data.transaction.sequence_number,
     'Gas Used': data.gas_used,
-    'Gas Unit Price': data.gas_unit_price,
-    'Max Gas Amount': data.max_gas_amount,
-    'Public Key': data.signature.public_key,
-    Signature: data.signature.signature,
+    'Gas Unit Price': data.transaction.gas_unit_price,
+    'Max Gas Amount': data.transaction.max_gas_amount,
+    'Public Key': data.transaction.public_key,
+    Signature: data.transaction.signature,
     'Script Hash': data.hash,
   }
   return <ObjectPropertiesTable object={txnForDisplay} />
 }
 
 function transactionIsSupported(data: BlockchainTransaction | null) {
-  return !!data && data.type === 'user_transaction'
+  return true
 }
 
-function TxnDetailsTable({ data, version }: { data: BlockchainTransaction | null, version: string | null }) {
+function TxnDetailsTable({ data, version }: { data: any | null, version: string | null }) {
 
 
   const history = useHistory();
@@ -104,7 +105,7 @@ function TxnDetailsTable({ data, version }: { data: BlockchainTransaction | null
         </FormControl.Feedback>
       </InputGroup>
       {transactionIsSupported(data) ? (
-        <UserTxnDetailsTable data={data as BlockchainUserTxnData} />
+        <UserTxnDetailsTable data={data as any} />
       ) : (
         <UnsupportedTxnDetailsTable />
       )}
@@ -128,7 +129,7 @@ function RawTxn({ data }: { data: BlockchainTransaction | null }) {
 function TxnDetailsPageWithResponse({
   data, version
 }: {
-  data: BlockchainTransaction | null,
+  data: any | null,
   version: string | null
 }) {
   return (
@@ -162,7 +163,8 @@ export default function TxnDetailsPage(props: TxnDetailsPageProps) {
   return (
     <ApiRequestComponent
       request={() => {
-        return getTransactionDetails(props.match.params.version)
+        return getTransactionDetails(props.match.params.version);
+
       }}
       errorComponent={<TxnDetailsErrorComponent errors={null} />}
       refresh={props.match.params.version}
