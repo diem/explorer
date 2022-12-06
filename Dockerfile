@@ -10,7 +10,7 @@ COPY package.json /app
 COPY yarn.lock /app
 RUN yarn install
 COPY . /app
-RUN yarn run -- vite build
+RUN yarn run -- vite build   --mode testing
 
 FROM nginx:1.21
 ENV JSFOLDER=/usr/share/nginx/html/assets/*.js
