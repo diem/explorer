@@ -50,3 +50,11 @@
 .txtCaptil {
   text-transform: capitalize;
 }
+
+.m-20 {
+  margin: 20px 0px;
+}
+
+.ml-15 {
+  margin-left: 15px;
+}

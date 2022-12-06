@@ -5,6 +5,7 @@ import { ReactChild } from 'react'
 import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'
 import {
+  Button,
   Container,
   /* Dropdown,
   DropdownButton,
@@ -30,7 +31,8 @@ function MainWrapper(props: MainWrapperProps) {
             <Navbar.Brand href='/' className='d-flex align-items-center'>
               <img src={logo} alt='Diem logo' />
               &nbsp;
-              <span className='navbar-text'>   Testnet explorer for DPN</span>
+              <span className='navbar-text'>     explorer for DPN Team</span>
+              <Button className="ml-15" size="sm" variant="warning">Testnet</Button>
               &nbsp;
             </Navbar.Brand>
           </Container>

@@ -36,25 +36,31 @@ function UnsupportedTxnDetailsTable() {
 
 function UserTxnDetailsTable({ data }: { data: any }) {
   data = data.result[0];
+
   console.log("data", data)
-  const txnForDisplay = {
-    'Version ID': data.version,
-    Status: data.vm_status.type,
-    'Transaction Type': data.transaction.script.type,
-    To: AccountAddress({ value: data.transaction.script.receiver }),
-    From: AccountAddress({ value: data.transaction.sender }),
-    Amount: data.transaction.script.amount,
-    Expiration: data.transaction.expiration_timestamp_secs,
-    'Currency Code': data.transaction.script.currency,
-    'Sequence Number': data.transaction.sequence_number,
-    'Gas Used': data.gas_used,
-    'Gas Unit Price': data.transaction.gas_unit_price,
-    'Max Gas Amount': data.transaction.max_gas_amount,
-    'Public Key': data.transaction.public_key,
-    Signature: data.transaction.signature,
-    'Script Hash': data.hash,
+  if (data.transaction.signature) {
+    const txnForDisplay = {
+      'Version ID': data.version,
+      Status: data.vm_status.type,
+      'Transaction Type': data.transaction.script.type,
+      To: AccountAddress({ value: data.transaction.script.receiver }),
+      From: AccountAddress({ value: data.transaction.sender }),
+      Amount: data.transaction.script.amount,
+      Expiration: data.transaction.expiration_timestamp_secs,
+      'Currency Code': data.transaction.script.currency,
+      'Sequence Number': data.transaction.sequence_number,
+      'Gas Used': data.gas_used,
+      'Gas Unit Price': data.transaction.gas_unit_price,
+      'Max Gas Amount': data.transaction.max_gas_amount,
+      'Public Key': data.transaction.public_key,
+      Signature: data.transaction.signature,
+      'Script Hash': data.hash,
+    }
+    return <ObjectPropertiesTable object={txnForDisplay} />
   }
-  return <ObjectPropertiesTable object={txnForDisplay} />
+  else {
+    return <Redirect to='/txn/not-found' />
+  }
 }
 
 function transactionIsSupported(data: BlockchainTransaction | null) {
@@ -113,13 +119,14 @@ function TxnDetailsTable({ data, version }: { data: any | null, version: string 
   )
 }
 
-function RawTxn({ data }: { data: BlockchainTransaction | null }) {
+function RawTxn({ data }: { data: any | null }) {
+  const result = data.result
   return (
     <Accordion activeKey={transactionIsSupported(data) ? undefined : '0'}>
       <Accordion.Item eventKey='0'>
         <Accordion.Header>Raw Transaction</Accordion.Header>
         <Accordion.Body>
-          <JSONPretty data={data}></JSONPretty>
+          <JSONPretty data={result}></JSONPretty>
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

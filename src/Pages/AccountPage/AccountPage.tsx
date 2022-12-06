@@ -10,7 +10,7 @@ import { TransactionVersion } from '../../TableComponents/Link'
 import Table, { column } from '../../Table'
 import MainWrapper from '../../MainWrapper'
 import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
-import { FormControl, InputGroup } from 'react-bootstrap'
+import { Accordion, FormControl, InputGroup } from 'react-bootstrap'
 import { getCanonicalAddress, getSearchRouteFromSearchTerm } from '../../utils'
 import Loadable from '../../Loadable'
 import { NoRecords } from '../../TableComponents/NoRecords'
@@ -19,11 +19,30 @@ import ObjectPropertiesTable from '../../ObjectPropertiesTable'
 const RecentTransactionsTable: React.FC<{ data: any }> = ({
   data,
 }) => {
+  function txtTrim(txt: any) {
+    return <span className="txtCaptil">{txt.value.replace(/_/g, " ")}</span>
+
+  }
+  function dateCon(dt: any) {
+    let d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    let dt2 = d.setUTCSeconds(Number(dt.value))
+    console.log("dt2", new Date(dt2))
+    return <span className="txtCaptil">{new Date(dt2).toISOString()}</span>
+  }
+  const showPagination = (data: any = [], count: number = 10) => {
+    return data.length > count
+  }
+
   return (<div>
     {data.length > 0 ? <Table
+      isPaginated={true}
+      pSize={10}
+      showPaginationCus={showPagination(data, 10)}
+      noOfRec={[10, 25, 50]}
       columns={[
         column('Version', 'version', TransactionVersion),
-        column('Timestamp', 'commitTimestamp'),
+        column('Timestamp', 'commitTimestamp', dateCon),
+        column('Transaction Type', 'transactionType', txtTrim),
         column('Type', 'txnType'),
         column('Status', 'status'),
       ]}
@@ -71,11 +90,16 @@ export default function AccountPage(props: AccountPageProps) {
       let detailTbl: any;
       if (result.val.result) {
         const res = result.val.result;
-        detailTbl = { address: res.address, authentication_key: res.authentication_key, balance: res.balances[0].amount + "~" + res.balances[0].currency, ...res.role, sent_events_key: res.sent_events_key, sequence_number: res.sequence_number, version: res.version }
+        detailTbl = { address: res.address, authentication_key: res.authentication_key, ...res.role, sent_events_key: res.sent_events_key, sequence_number: res.sequence_number, version: res.version }
         delete detailTbl.vasp_domains;
         Object.keys(detailTbl).forEach(key => {
-          if (detailTbl[key] === '' || detailTbl[key] === undefined) {
-            delete detailTbl[key];
+          console.log("typeof (detailTbl[key])", detailTbl[key])
+          console.log("typeof (detailTbl[key])", typeof (detailTbl[key]) !== 'number')
+          if (detailTbl[key] === '' || detailTbl[key] === undefined || typeof (detailTbl[key]) !== 'string') {
+            if (typeof (detailTbl[key]) !== 'number') {
+
+              delete detailTbl[key];
+            }
           }
         });
       }
@@ -92,11 +116,11 @@ export default function AccountPage(props: AccountPageProps) {
     getAccountTransactions(address).then((result) => {
       const res = result.val.result;
 
+      console.log("item", res)
       const resupdate = res.map((item: any) => {
-        return { version: item.version, commitTimestamp: "", txnType: item.transaction.type, status: item.vm_status.type }
+        return { version: item.version, commitTimestamp: item.transaction.expiration_timestamp_secs, txnType: item.transaction.type, status: item.vm_status.type, transactionType: item.transaction.script.type }
       })
 
-      console.log("item", resupdate)
       setState((oldState: any) => ({
         ...oldState,
         getAccountTraansactionState: { val: resupdate },
@@ -155,14 +179,29 @@ export default function AccountPage(props: AccountPageProps) {
         <Loadable state={getAccountTraansactionState}>
           <RecentTransactionsTable data={[]} />
         </Loadable>
-        <h2>Account Details Raw Data</h2>
         <Loadable state={getAccountState}>
-          <p><pre>{JSON.stringify(getAccountState, null, 2)}</pre></p>
+          <Accordion activeKey={getAccountState ? undefined : '0'}>
+            <Accordion.Item eventKey='0'>
+              <Accordion.Header>Account Details Raw Data</Accordion.Header>
+              <Accordion.Body>
+                <p><pre>{JSON.stringify(getAccountState, null, 2)}</pre></p>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
         </Loadable>
-        <h2>Transactions  Raw Data</h2>
-        <Loadable state={getAccountTraansactionRawState}>
-          <p><pre>{JSON.stringify(getAccountTraansactionRawState, null, 2)}</pre></p>
-        </Loadable>
+        <div className="m-20">
+          <Loadable state={getAccountTraansactionRawState}>
+            <Accordion activeKey={getAccountTraansactionRawState ? undefined : '1'}>
+              <Accordion.Item eventKey='1'>
+                <Accordion.Header>Transactions  Raw Data</Accordion.Header>
+                <Accordion.Body>
+                  <p><pre>{JSON.stringify(getAccountTraansactionRawState, null, 2)}</pre></p>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Loadable>
+        </div>
 
       </>
     </MainWrapper >
