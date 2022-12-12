@@ -10,9 +10,10 @@ import { Err, Result } from 'ts-results'
 export async function getBlockchainTransaction(
   txnVersion: string
 ): Promise<Result<BlockchainTransaction, ResponseError>> {
-  const url = `${
-    import.meta.env.VITE_BLOCKCHAIN_REST_URL
-  }/transactions/${txnVersion}`
+
+  const ProdGraphQlUrl = window.location.origin.includes('siblockchain.net') ? import.meta.env.VITE_SI_BLOCKCHAIN_REST_URL : import.meta.env.VITE_BLOCKCHAIN_REST_URL;
+
+  const url = `${ProdGraphQlUrl}/transactions/${txnVersion}`
 
   return await getWithFetch<BlockchainTransaction>(url, {})
 }
@@ -33,9 +34,8 @@ async function getAccountAsset<T extends Resource[] | Module[]>(
     })
   }
 
-  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${
-    canonicalAddress.val
-  }/${assetType}`
+  const url = `${import.meta.env.VITE_BLOCKCHAIN_REST_URL}/accounts/${canonicalAddress.val
+    }/${assetType}`
 
   return await getWithFetch<T>(url, {})
 }
