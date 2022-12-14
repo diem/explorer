@@ -1,7 +1,7 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FormControl, InputGroup } from 'react-bootstrap'
+import { Form, FormControl, InputGroup } from 'react-bootstrap'
 import React, { FormEvent, KeyboardEvent, ReactNode, useState } from 'react'
 import MainWrapper from '../../MainWrapper'
 import {
@@ -166,7 +166,7 @@ function LandingPageContent({ data }: { data: LandingPageContentProps }) {
       const searchTerm = (event.target as HTMLInputElement).value
       const searchRoute = getSearchRouteFromSearchTerm(searchTerm)
       if (searchRoute !== null) {
-        history.push(searchRoute)
+        history.push(searchRoute, { checkbox: true })
       }
     }
   }
@@ -174,6 +174,15 @@ function LandingPageContent({ data }: { data: LandingPageContentProps }) {
   return (
     <Wrapper>
       <InputGroup className='mb-5'>
+        <Form.Check
+          type='checkbox'
+          id='checkbox'
+          label="I want events  also"
+          checked={true}
+        />
+
+      </InputGroup>
+      <InputGroup>
         <FormControl
           placeholder='Search by Address or Transaction Version'
           aria-label='Search by Address or Transaction Version'
@@ -185,6 +194,8 @@ function LandingPageContent({ data }: { data: LandingPageContentProps }) {
           Invalid address or transaction version
         </FormControl.Feedback>
       </InputGroup>
+
+
       {/* <CurrentStatisticsCard
         averageTps={averageTps}
         totalMintValue={totalMintAmount}

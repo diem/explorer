@@ -70,7 +70,7 @@ export default function AccountPage(props: AccountPageProps) {
   const history = useHistory()
   const [isValid, setIsValid] = useState<boolean>(true);
   const [addresVal, setAddressVal] = useState<any>(maybeAddress.val);
-
+  console.log("history", history.location.state);
   if (maybeAddress.err) {
     return <Redirect to='/address/not-found' />
   }
@@ -106,7 +106,6 @@ export default function AccountPage(props: AccountPageProps) {
       else {
         detailTbl = {}
       }
-      console.log("detailTbl", detailTbl)
       setState((oldState: any) => ({
         ...oldState, roleDetails: detailTbl,
         getAccountState: result.val,
@@ -149,7 +148,7 @@ export default function AccountPage(props: AccountPageProps) {
       const searchRoute = getSearchRouteFromSearchTerm(searchTerm);
       setAddressVal(searchTerm)
       if (searchRoute !== null) {
-        history.push(searchRoute)
+        history.push(searchRoute, { checkbox: true })
       }
     }
   }
