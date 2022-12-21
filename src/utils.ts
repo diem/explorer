@@ -27,3 +27,21 @@ export function getSearchRouteFromSearchTerm(term: string): string | null {
 
   return null
 }
+
+export function getGraphQlUrl() {
+  const url = window.location.origin
+  if (url.includes('siblockchain.net')) {
+    if (url.includes('aosdev.azure.siblockchain.net')) {
+      return "TESTING"
+    }
+    else if (url.includes('aosstg.azure.siblockchain.net')) {
+      return "PREMAINNET"
+    }
+    else if (url.includes('aosprod.azure.siblockchain.net')) {
+      return "PRODUCTION"
+    }
+  }
+  else {
+    return "DEVELOPMEMT"
+  }
+}
