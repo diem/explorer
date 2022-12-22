@@ -17,8 +17,33 @@ interface MainWrapperProps {
   children?: ReactChild
 }
 
+
+
 function MainWrapper(props: MainWrapperProps) {
   const { children } = props
+  const host = window.location.host;
+  function EnvDropDown() {
+    let envVal = "Development";
+    let envUrl = "http://localhost:3000"
+    if (host.includes('siblockchain.net')) {
+      if (host === 'aosdev.azure.siblockchain.net') {
+        envVal = "Testnet"
+        envUrl = "https://aosstg.azure.siblockchain.net"
+      }
+      else if (host === 'aosstg.azure.siblockchain.net') {
+        envVal = "Premainnet"
+        envUrl = "https://aosdev.azure.siblockchain.net"
+      }
+    }
+    return (
+      <DropdownButton className='d-inline'
+        size='sm'
+        variant='secondary'
+        id="dropdown-basic-button" title={envVal}>
+        <Dropdown.Item href={envUrl}>{envVal === "Testnet" ? "Premainnet" : "Testnet"}</Dropdown.Item>
+      </DropdownButton>
+    );
+  }
   return (
     <div className='d-flex flex-column min-vh-100'>
       <header>
@@ -38,15 +63,7 @@ function MainWrapper(props: MainWrapperProps) {
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
             <Navbar.Collapse id='responsive-navbar-nav'>
               <Nav className='me-auto align-items-center'>
-                <DropdownButton
-                  id='dropdown-basic-button'
-                  title={'DPN Dev'}
-                  className='d-inline'
-                  size='sm'
-                  variant='secondary'
-                >
-                  <Dropdown.Item href='#'>DPN Premainnet</Dropdown.Item>
-                </DropdownButton>{' '}
+                {host.includes('siblockchain.net') && <EnvDropDown />}
                 <Nav.Link href='/'>Home</Nav.Link>
                 <NavDropdown title='Events' id='collasible-nav-dropdown'>
                   <Link className='dropdown-item' to='/events/mint'>
