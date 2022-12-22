@@ -10,7 +10,7 @@ import { getGraphQlUrl } from '../utils'
 globalThis.fetch = fetch
 
 function getEnvUrl() {
-  let envVal = getGraphQlUrl();
+  const envVal = getGraphQlUrl();
   let envUrl;
   switch (envVal) {
     case "TESTING":

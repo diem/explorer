@@ -9,7 +9,7 @@ import { Err, Result } from 'ts-results'
 
 
 function getEnvUrl() {
-  let envVal = getGraphQlUrl();
+  const envVal = getGraphQlUrl();
   let envUrl;
   switch (envVal) {
     case "TESTING":
