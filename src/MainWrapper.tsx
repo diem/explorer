@@ -26,13 +26,13 @@ function MainWrapper(props: MainWrapperProps) {
     let envVal = "Development";
     let envUrl = "http://localhost:3000"
     if (host.includes('siblockchain.net')) {
-      if (host === 'aosdev.azure.siblockchain.net') {
+      if (host === 'explorer.aosdev.azure.siblockchain.net') {
         envVal = "Testnet"
-        envUrl = "https://aosstg.azure.siblockchain.net"
+        envUrl = "https://explorer.aosstg.azure.siblockchain.net"
       }
-      else if (host === 'aosstg.azure.siblockchain.net') {
+      else if (host === 'explorer.aosstg.azure.siblockchain.net') {
         envVal = "Premainnet"
-        envUrl = "https://aosdev.azure.siblockchain.net"
+        envUrl = "https://explorer.aosdev.azure.siblockchain.net"
       }
     }
     return (
