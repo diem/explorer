@@ -16,10 +16,10 @@ function getEnvUrl() {
       envUrl = import.meta.env.VITE_SI_BLOCKCHAIN_TESTNET_REST_URL;
       break;
     case "PREMAINNET":
-      envUrl = import.meta.env.VITE_GRAPHQL_SI_PERMAINNET_URL;
+      envUrl = import.meta.env.VITE_SI_BLOCKCHAIN_PERMAINNET_REST_URL;
       break;
     case "PRODUCTION":
-      envUrl = import.meta.env.VITE_GRAPHQL_SI_PROD_URL;
+      envUrl = import.meta.env.VITE_SI_BLOCKCHAIN_PROD_REST_URL;
       break;
     default:
       envUrl = import.meta.env.VITE_BLOCKCHAIN_REST_URL;
