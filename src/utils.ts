@@ -32,6 +32,9 @@ export function getGraphQlUrl() {
   const url = window.location.origin
   if (url.includes('siblockchain.net')) {
     if (url.includes('aosdev.azure.siblockchain.net')) {
+      if(url.includes('dpn.testnet')){
+        return "DPNTESTNET"
+      }
       return "TESTING"
     }
     else if (url.includes('aosstg.azure.siblockchain.net')) {
@@ -39,7 +42,7 @@ export function getGraphQlUrl() {
     }
     else if (url.includes('aosprod.azure.siblockchain.net')) {
       return "PRODUCTION"
-    }
+    } 
   }
   else {
     return "DEVELOPMEMT"

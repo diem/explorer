@@ -21,6 +21,9 @@ function getEnvUrl() {
     case "PRODUCTION":
       envUrl = import.meta.env.VITE_SI_BLOCKCHAIN_PROD_REST_URL;
       break;
+     case "DPNTESTNET":
+      envUrl = import.meta.env.VITE_DPN_BLOCKCHAIN_TESTNET_REST_URL;
+      break;
     default:
       envUrl = import.meta.env.VITE_BLOCKCHAIN_REST_URL;
   }

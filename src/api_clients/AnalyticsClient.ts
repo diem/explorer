@@ -22,6 +22,9 @@ function getEnvUrl() {
     case "PRODUCTION":
       envUrl = import.meta.env.VITE_GRAPHQL_SI_PROD_URL;
       break;
+    case "DPNTESTNET":
+       envUrl = import.meta.env.VITE_GRAPHQL_DPN_TESTNET_URL;
+       break;
     default:
       envUrl = import.meta.env.VITE_GRAPHQL_URL;
   }
