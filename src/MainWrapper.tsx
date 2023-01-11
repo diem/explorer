@@ -5,6 +5,7 @@ import { ReactChild } from 'react'
 import './MainWrapper.css'
 import Navbar from 'react-bootstrap/Navbar'
 import {
+  Button,
   Container,
   Dropdown,
   DropdownButton,
@@ -59,11 +60,13 @@ function MainWrapper(props: MainWrapperProps) {
               &nbsp;
               <span className='navbar-text'>explorer</span>
               &nbsp;
+              
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
             <Navbar.Collapse id='responsive-navbar-nav'>
               <Nav className='me-auto align-items-center'>
-                {host.includes('siblockchain.net') && <EnvDropDown />}
+              <Button className="ml-15" size="sm" variant="warning">DPN Testnet</Button>
+                {/* {host.includes('siblockchain.net') && <EnvDropDown />} */}
                 <Nav.Link href='/'>Home</Nav.Link>
                 <NavDropdown title='Events' id='collasible-nav-dropdown'>
                   <Link className='dropdown-item' to='/events/mint'>
