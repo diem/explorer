@@ -46,3 +46,12 @@
 .vasp .form-check-input:focus {
   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 10%);
 }
+
+.vasp {
+  margin-top: 15px;
+}
+
+.graphTooltip {
+  padding: 5px;
+  border: 1px solid;
+}
